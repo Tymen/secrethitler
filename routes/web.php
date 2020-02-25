@@ -16,5 +16,4 @@ Route::get('/', function () {
 });
 Route::get('/hello', function (){
 //
-
 });
