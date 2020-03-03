@@ -11,7 +11,6 @@
 |
 */
 
-
 Route::get('/', function (){
     return view('index');
 });
@@ -27,10 +26,6 @@ Route::get('/about', function (){
 Route::get('/game', function (){
     return view('game');
 });
-
-//Route::get('/home', function (){
-//    return view('index');
-//});
 
 Auth::routes();
 

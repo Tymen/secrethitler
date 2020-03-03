@@ -10,5 +10,5 @@
     @else
         <p>You are logged in</p>
     @endif
-    
+
 @endsection
