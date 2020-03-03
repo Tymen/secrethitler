@@ -28,6 +28,10 @@ Route::get('/game', function (){
     return view('game');
 });
 
+//Route::get('/home', function (){
+//    return view('index');
+//});
+
 Auth::routes();
 
-//Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index')->name('home');
