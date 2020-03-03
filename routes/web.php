@@ -11,11 +11,21 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', function (){
+    return view('index');
 });
-Route::get('/hello', function (){
-//
+
+Route::get('/profile', function (){
+    return view('profile');
+});
+
+Route::get('/about', function (){
+    return view('about');
+});
+
+Route::get('/game', function (){
+    return view('game');
+
 });
 
 Auth::routes();
