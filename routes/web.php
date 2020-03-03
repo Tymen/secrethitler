@@ -25,6 +25,7 @@ Route::get('/about', function (){
 
 Route::get('/game', function (){
     return view('game');
+
 });
 
 Auth::routes();
