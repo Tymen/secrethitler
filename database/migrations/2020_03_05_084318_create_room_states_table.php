@@ -15,6 +15,13 @@ class CreateRoomStatesTable extends Migration
     {
         Schema::create('room_states', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->integer('fascist_board_amount');
+            $table->integer('liberal_board_amount');
+            $table->integer('fascist_policies');
+            $table->integer('liberal_policies');
+            $table->integer('chosen_fascist');
+            $table->integer('chosen_liberal');
+            $table->integer('election_tracker');
             $table->timestamps();
         });
     }
