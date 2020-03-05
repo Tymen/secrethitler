@@ -16,8 +16,8 @@ class Room extends Model
         return $this->hasMany(User::class);
     }
 
-    public function room()
+    public function roomState()
     {
-        return $this->belongsTo(Room::class);
+        return $this->hasOne(RoomState::class);
     }
 }
