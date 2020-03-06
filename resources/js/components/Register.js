@@ -8,7 +8,7 @@ export default class Register extends Component {
             username: '',
             email: '',
             password: '',
-            confirmPassword: '',
+            password_confirmation: '',
             errors: ''
         };
 
@@ -28,6 +28,7 @@ export default class Register extends Component {
             username: this.state.username,
             email: this.state.email,
             password: this.state.password,
+            password_confirmation: this.state.password_confirmation,
         })
             .then(response => {
                 window.location.href = '/'
@@ -38,7 +39,6 @@ export default class Register extends Component {
                 })
             })
     }
-
 
     render() {
         return (
@@ -63,8 +63,8 @@ export default class Register extends Component {
                                        value={this.state.password} onChange={(e) => this.onChange(e)}/>
                             </div>
                             <div className="form-group">
-                                <input type="password" name="confirmPassword" placeholder="Confirm Password..."
-                                       className="input-login"/>
+                                <input type="password" name="password_confirmation" placeholder="Confirm Password..."
+                                       className="input-login"  value={this.state.password_confirmation} onChange={(e) => this.onChange(e)}/>
                             </div>
                             <button className="btn btn-custom">Register</button>
                             <div className="text-center">
