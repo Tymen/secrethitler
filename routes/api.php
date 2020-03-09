@@ -13,5 +13,11 @@ use Illuminate\Http\Request;
 |
 */
 Route::namespace('Api')->prefix('v1')->middleware('auth:api')->group(function() {
-    Route::get('users/me', 'UsersApiController@me');
+    Route::prefix('users')->group(function() {
+        Route::get('me', 'UsersApiController@me');
+    });
+
+    Route::prefix('rooms')->group(function() {
+        Route::post('/', 'RoomApiController@store');
+    });
 });
