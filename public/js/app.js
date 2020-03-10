@@ -82922,8 +82922,8 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.Pusher = __webpack_require__(/*! pusher-js */ "./node_modules/pusher-js/dist/web/pusher.js");
 window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   broadcaster: 'pusher',
-  key: "907c0cc5fd80d95efe06",
-  cluster: "eu",
+  key: "",
+  cluster: "mt1",
   encrypted: true
 });
 
@@ -82951,13 +82951,15 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
 
@@ -82967,19 +82969,50 @@ function (_Component) {
   _inherits(CreateRoom, _Component);
 
   function CreateRoom() {
+    var _this;
+
     _classCallCheck(this, CreateRoom);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(CreateRoom).apply(this, arguments));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(CreateRoom).call(this));
+
+    _defineProperty(_assertThisInitialized(_this), "state", {
+      name: '',
+      rooms: []
+    });
+
+    _this.onChange = _this.onChange.bind(_assertThisInitialized(_this));
+    _this.createRoom = _this.createRoom.bind(_assertThisInitialized(_this));
+    return _this;
   }
 
   _createClass(CreateRoom, [{
+    key: "onChange",
+    value: function onChange(e) {
+      this.setState({
+        name: e.target.value
+      });
+    }
+  }, {
+    key: "createRoom",
+    value: function createRoom(e) {
+      e.preventDefault();
+      axios.post('/api/v1/rooms', {
+        name: this.state.name
+      }).then(function (response) {})["catch"](function (error) {});
+    }
+  }, {
     key: "render",
     value: function render() {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "container"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        onSubmit: this.createRoom
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
-        placeholder: "Create room"
+        placeholder: "Create room",
+        name: "roomName",
+        value: this.state.name,
+        onChange: this.onChange
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", null, "Create room")));
     }
   }]);
@@ -83701,8 +83734,8 @@ function (_Component) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\joost\PhpstormProjects\SecretHitler\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\joost\PhpstormProjects\SecretHitler\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\Websites\The%20SS%20-%20SecretHitler\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\Websites\The%20SS%20-%20SecretHitler\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
