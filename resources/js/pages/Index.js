@@ -5,7 +5,7 @@ import Login from '../components/Login';
 import Register from '../components/Register';
 import Footer from '../components/Footer';
 import CreateRoom from "../components/CreateRoom";
-import IndexPage from "./IndexPage";
+import Home from "./Home";
 
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
@@ -15,7 +15,7 @@ export default class Index extends Component {
             <Router>
                 <Nav/>
                 <Switch>
-                    <Route path="/" exact component={IndexPage}/>
+                    <Route path="/" exact component={Home}/>
                     <Route path="/login" exact component={Login}/>
                     <Route path="/register" exact component={Register}/>
                 </Switch>
