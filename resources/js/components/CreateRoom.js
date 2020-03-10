@@ -32,19 +32,19 @@ export default class CreateRoom extends Component {
 
             })
     }
-    
+
     render() {
         return (
             <div>
                 <form onSubmit={this.createRoom}>
                     <div>
                         <div>
-                            <input type="text" placeholder="Create room" name="roomName" className="inputRoomName"
+                            <input type="text" placeholder="Create room" name="roomName" className="input-room-name"
                                    value={this.state.name}
                                    onChange={this.onChange}/>
                         </div>
                         <div>
-                            <button className="btn createRoom">Create room</button>
+                            <button className="btn create-room">Create room</button>
                         </div>
                     </div>
                 </form>

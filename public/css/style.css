@@ -111,33 +111,11 @@ body{
     width: 100%;
 }
 
-.createRoom {
-    color: #fff;
-    background-color: #2B2929;
-    border-color: #2B2929;
-    padding: 10px 86px;
-    font-size: 25px;
-}
-
-.createRoom:hover {
-    color: #fff;
-    background-color: #2B2929;
-    border-color: #2B2929;
-}
-
-.createRoom:focus,
-.createRoom.focus {
-    color: #fff;
-    background-color: #2B2929;
-    border-color: #2B2929;
-    box-shadow: 0 0 0 0.2rem rgba(82, 88, 93, 0.5);
-}
-
-.inputRoomName::placeholder{
+.input-room-name::placeholder{
     color: black;
 }
 
-.inputRoomName {
+.input-room-name {
     font-size: 25px;
     font-weight: 500;
     padding: 10px;
@@ -146,5 +124,51 @@ body{
     background-color: #B2B2B2;
     border-color: #323232;
     border-radius: 0.25rem;
+}
+
+
+.create-room {
+    color: #fff;
+    background-color: #2B2929;
+    border-color: #2B2929;
+    padding: 10px 86px;
+    font-size: 25px;
+}
+
+.create-room:hover {
+    color: #fff;
+    background-color: #2B2929;
+    border-color: #2B2929;
+}
+
+.create-room:focus,
+.create-room.focus {
+    color: #fff;
+    background-color: #2B2929;
+    border-color: #2B2929;
+    box-shadow: 0 0 0 0.2rem rgba(82, 88, 93, 0.5);
+}
+
+
+.join-room {
+    color: #fff;
+    background-color: #2B2929;
+    border-color: #2B2929;
+    padding: 10px 102px;
+    font-size: 25px;
+}
+
+.join-room:hover {
+    color: #fff;
+    background-color: #2B2929;
+    border-color: #2B2929;
+}
+
+.join-room:focus,
+.join-room.focus {
+    color: #fff;
+    background-color: #2B2929;
+    border-color: #2B2929;
+    box-shadow: 0 0 0 0.2rem rgba(82, 88, 93, 0.5);
 }
 
