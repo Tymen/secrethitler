@@ -4,6 +4,7 @@ import Login from '../components/Login';
 import Register from '../components/Register';
 import Footer from '../components/Footer';
 import CreateRoom from "../components/CreateRoom";
+import JoinRoom from "../components/JoinRoom";
 
 export default class Home extends Component {
     render() {
@@ -11,6 +12,9 @@ export default class Home extends Component {
             <div className="container">
                 <div className="row">
                     <div className="col-4 offset-2 text-center">
+                        <JoinRoom/>
+                    </div>
+                    <div className="col-4 text-center">
                         <CreateRoom/>
                     </div>
                 </div>
