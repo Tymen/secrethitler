@@ -5,11 +5,15 @@ import Register from '../components/Register';
 import Footer from '../components/Footer';
 import CreateRoom from "../components/CreateRoom";
 
-export default class IndexPage extends Component {
+export default class Home extends Component {
     render() {
         return (
-            <div>
-                <CreateRoom />
+            <div className="container">
+                <div className="row">
+                    <div className="col-4 offset-2 text-center">
+                        <CreateRoom/>
+                    </div>
+                </div>
             </div>
         );
     }

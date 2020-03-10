@@ -74,18 +74,6 @@ body{
     border-bottom: 1px solid rgba(0, 0, 0, 0.125);
 }
 
-/*.block{*/
-/*    position: absolute;*/
-/*    left: 50%;*/
-/*    top: 30%;*/
-/*    background-color: #363535;*/
-/*    width: 3000px;*/
-/*    height: 2000px;*/
-/*    padding: 50px;*/
-/*    transform: rotate(20deg);*/
-/*    z-index: -1;*/
-/*}*/
-
 .btn-custom{
     color: #fff;
     background-color: #2B2929;
@@ -122,3 +110,41 @@ body{
     border-bottom: 2px solid black;
     width: 100%;
 }
+
+.createRoom {
+    color: #fff;
+    background-color: #2B2929;
+    border-color: #2B2929;
+    padding: 10px 86px;
+    font-size: 25px;
+}
+
+.createRoom:hover {
+    color: #fff;
+    background-color: #2B2929;
+    border-color: #2B2929;
+}
+
+.createRoom:focus,
+.createRoom.focus {
+    color: #fff;
+    background-color: #2B2929;
+    border-color: #2B2929;
+    box-shadow: 0 0 0 0.2rem rgba(82, 88, 93, 0.5);
+}
+
+.inputRoomName::placeholder{
+    color: black;
+}
+
+.inputRoomName {
+    font-size: 25px;
+    font-weight: 500;
+    padding: 10px;
+    outline: none;
+    color: black;
+    background-color: #B2B2B2;
+    border-color: #323232;
+    border-radius: 0.25rem;
+}
+
