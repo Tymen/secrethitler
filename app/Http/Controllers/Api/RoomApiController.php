@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Events\CreatedRoomEvent;
 use App\Room;
 use App\RoomState;
 use Illuminate\Http\Request;
@@ -38,6 +39,8 @@ class RoomApiController extends Controller
         $roomState = new RoomState();
         $roomState->room_id = $room->id;
         $roomState->save();
+
+        event(new CreatedRoomEvent());
 
         return Response::create(['completed' => true]);
     }
