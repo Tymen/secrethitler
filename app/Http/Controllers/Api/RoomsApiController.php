@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Events\CreatedRoomEvent;
+use App\Http\Resources\RoomsCollection;
 use App\Room;
 use App\RoomState;
 use Illuminate\Http\Request;
@@ -10,7 +11,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 
-class RoomApiController extends Controller
+class RoomsApiController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,9 +20,8 @@ class RoomApiController extends Controller
      */
     public function index()
     {
-        //
+        return Response::create(new RoomsCollection(Room::with('user')->get()));
     }
-
     /**
      * Store a newly created resource in storage.
      *
