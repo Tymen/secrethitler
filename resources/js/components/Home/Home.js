@@ -9,6 +9,9 @@ export default class Home extends Component {
         return (
             <div className="container">
                 <div className="row">
+                    <img className="home-logo" src="images/Secrethitler-no-bg.png"/>
+                </div>
+                <div className="row">
                     <div className="col-4 offset-2 text-center">
                         <JoinRoom/>
 
@@ -19,12 +22,15 @@ export default class Home extends Component {
                     </div>
                 </div>
                 <div className="row">
-                    <div className="card">
-                        <div class="card-header">
-                            Featured
+                    <div className="rooms">
+                        <div className="join-text">
+                            Join a game
                         </div>
-                        <div className="card-body">
-                            <Rooms/>
+                        <div className="rooms-body">
+                            <div className="room-name">
+                                <Rooms/>
+
+                            </div>
                         </div>
                     </div>
                 </div>
