@@ -128,6 +128,7 @@ body{
 
 
 .create-room {
+    margin: 10px;
     color: #fff;
     background-color: #2B2929;
     border-color: #2B2929;
@@ -151,6 +152,7 @@ body{
 
 
 .join-room {
+    margin: 10px;
     color: #fff;
     background-color: #2B2929;
     border-color: #2B2929;

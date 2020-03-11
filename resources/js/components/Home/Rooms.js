@@ -6,7 +6,7 @@ export default class Rooms extends Component {
     state = {
         rooms: []
     }
-
+x
     componentDidMount() {
         this._isMounted = true
         this.getRooms()
@@ -33,9 +33,9 @@ export default class Rooms extends Component {
     showRooms = () => {
         return this.state.rooms.map(room => {
             return (
-                <li key={room.id}>
+                <p key={room.id}>
                     {room.name}
-                </li>
+                </p>
             )
         })
     }
