@@ -24,11 +24,11 @@ export default class Index extends Component {
                     <Route path="/" exact component={IndexPage}/>
                     <Route path="/login" exact component={Login}/>
                     <Route path="/register" exact component={Register}/>
-                    <Route path="/Home" exact component={Home}/>
-                    <Route path="/Game" exact component={Game}/>
-                    <Route path="/Gamerules" exact component={GameRule}/>
-                    <Route path="/About" exact component={About}/>
-                    <Route path="/Lobby" exact component={Lobby}/>
+                    <Route path="/home" exact component={Home}/>
+                    <Route path="/game" exact component={Game}/>
+                    <Route path="/gamerules" exact component={GameRule}/>
+                    <Route path="/about" exact component={About}/>
+                    <Route path="/lobby" exact component={Lobby}/>
                 </Switch>
                 <Footer/>
             </Router>
