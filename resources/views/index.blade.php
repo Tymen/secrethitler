@@ -6,9 +6,4 @@
 
     </div>
 
-<<<<<<< HEAD
-=======
-
-
->>>>>>> CreatRoom component
 @endsection
