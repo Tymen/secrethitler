@@ -6,7 +6,7 @@ export default class Rooms extends Component {
     state = {
         rooms: []
     }
-x
+
     componentDidMount() {
         this._isMounted = true
         this.getRooms()
@@ -42,10 +42,8 @@ x
 
     render() {
         return (
-            <div>
-                <ul>
-                    {this.showRooms()}
-                </ul>
+            <div className="show-rooms">
+                {this.showRooms()}
             </div>
         )
     }
