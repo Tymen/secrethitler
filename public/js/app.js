@@ -83081,9 +83081,9 @@ function (_Component) {
         className: "row"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-4 offset-2 text-center"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Home_CreateRoom__WEBPACK_IMPORTED_MODULE_2__["default"], null)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Home_JoinRoom__WEBPACK_IMPORTED_MODULE_1__["default"], null)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-4 text-center"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Home_JoinRoom__WEBPACK_IMPORTED_MODULE_1__["default"], null))));
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Home_CreateRoom__WEBPACK_IMPORTED_MODULE_2__["default"], null))));
     }
   }]);
 
@@ -83142,7 +83142,7 @@ function (_Component) {
     value: function render() {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
-        placeholder: "join Room",
+        placeholder: "Join Room",
         name: "joinRoom",
         className: "input-room-name"
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {

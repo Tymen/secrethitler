@@ -2,11 +2,12 @@ import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 
 export default class Nav extends Component {
+
     state = {
         loggedIn: false,
         loaded: false
-    }
 
+    }
     componentDidMount() {
         axios.get('api/v1/users/me')
             .then(response => {
