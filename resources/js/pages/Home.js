@@ -3,26 +3,32 @@ import JoinRoom from "../components/Home/JoinRoom";
 import CreateRoom from "../components/Home/CreateRoom";
 import Rooms from "../components/Home/Rooms"
 import { messagesConfig } from "../appSettings";
-import Notification from "../components/Universal/Notification";
+
 export default class Home extends Component {
     state = {
-        getMsg: messagesConfig.pages.home,
+        error: true,
+        getMsg: messagesConfig.pages.home
+    }
+    errorMSG = () => {
+        if(this.state.error) {
+            return (
+                <div className="alert alert-danger" role="alert">
+                    {this.state.getMsg.auth.noLogin}
+                </div>
+            )
+        }
     };
-    constructor(props) {
-        super(props);
-        this.child = React.createRef();
-    };
-    notify = () => {
-        this.child.getNotify(this.state.getMsg.auth.noLogin);
+    ifError = () => {
+        if(this.state.error){
+            this.setState({error: false})
+        }else {
+            this.setState({error: true})
+        }
     };
     render() {
         return (
             <div className="container">
-                <Notification onRef={ref => (this.child = ref)} />
-                <button onClick={this.notify}>Child.method()</button>
-                <div className="row">
-                    <img className="home-logo" src="images/Secrethitler-no-bg.png"/>
-                </div>
+                {this.errorMSG()}
                 <div className="row">
                     <div className="col-4 offset-2 text-center">
                         <JoinRoom/>
@@ -34,15 +40,12 @@ export default class Home extends Component {
                     </div>
                 </div>
                 <div className="row">
-                    <div className="rooms">
-                        <div className="join-text">
-                            Join a game
+                    <div className="card">
+                        <div class="card-header">
+                            Featured
                         </div>
-                        <div className="rooms-body">
-                            <div className="room-name">
-                                <Rooms/>
-
-                            </div>
+                        <div className="card-body">
+                            <Rooms/>
                         </div>
                     </div>
                 </div>

@@ -62574,7 +62574,7 @@ var currentlyProcessingQueue;
   didWarnUpdateInsideUpdate = false;
   currentlyProcessingQueue = null;
 
-
+  
 }
 
 function createUpdateQueue(baseState) {
@@ -66889,7 +66889,7 @@ function insertNonHydratedInstance(returnFiber, fiber) {
               break;
 
             case SuspenseComponent:
-
+              
               break;
           }
 
@@ -82904,6 +82904,7 @@ __webpack_require__(/*! ./pages/Index */ "./resources/js/pages/Index.js");
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "messagesConfig", function() { return messagesConfig; });
+<<<<<<< HEAD
 /**
 
  // route to get the message: messageConfig to the subject pages, to the page home.
@@ -82930,6 +82931,8 @@ var msgTypes = {
   Two: "success",
   Three: "warning"
 };
+=======
+>>>>>>> Added notifications
 var messagesConfig = {
   components: {
     example: {
@@ -82942,6 +82945,7 @@ var messagesConfig = {
       subscriptSel: {
         subscriptionErr: "Subscription is required"
       }
+<<<<<<< HEAD
     },
     rooms: {
       internalServer: {
@@ -82949,6 +82953,8 @@ var messagesConfig = {
         title: "Connection issue",
         message: "Internal server error"
       }
+=======
+>>>>>>> Added notifications
     }
   },
   pages: {
@@ -82962,11 +82968,15 @@ var messagesConfig = {
     },
     home: {
       auth: {
+<<<<<<< HEAD
         noLogin: {
           type: msgTypes.One,
           title: "Authentication Error",
           message: "You're not logged in"
         }
+=======
+        noLogin: "You're not logged in"
+>>>>>>> Added notifications
       }
     },
     about: {},
@@ -84109,7 +84119,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_Home_CreateRoom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/Home/CreateRoom */ "./resources/js/components/Home/CreateRoom.js");
 /* harmony import */ var _components_Home_Rooms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/Home/Rooms */ "./resources/js/components/Home/Rooms.js");
 /* harmony import */ var _appSettings__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../appSettings */ "./resources/js/appSettings.js");
+<<<<<<< HEAD
 /* harmony import */ var _components_Universal_Notification__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/Universal/Notification */ "./resources/js/components/Universal/Notification.js");
+=======
+>>>>>>> Added notifications
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -84136,17 +84149,27 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> Added notifications
 var Home =
 /*#__PURE__*/
 function (_Component) {
   _inherits(Home, _Component);
 
+<<<<<<< HEAD
   function Home(props) {
+=======
+  function Home() {
+    var _getPrototypeOf2;
+
+>>>>>>> Added notifications
     var _this;
 
     _classCallCheck(this, Home);
 
+<<<<<<< HEAD
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Home).call(this, props));
 
     _defineProperty(_assertThisInitialized(_this), "state", {
@@ -84158,12 +84181,47 @@ function (_Component) {
     });
 
     _this.child = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
+=======
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(Home)).call.apply(_getPrototypeOf2, [this].concat(args)));
+
+    _defineProperty(_assertThisInitialized(_this), "state", {
+      error: true,
+      getMsg: _appSettings__WEBPACK_IMPORTED_MODULE_4__["messagesConfig"].pages.home
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "errorMSG", function () {
+      if (_this.state.error) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "alert alert-danger",
+          role: "alert"
+        }, _this.state.getMsg.auth.noLogin);
+      }
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "ifError", function () {
+      if (_this.state.error) {
+        _this.setState({
+          error: false
+        });
+      } else {
+        _this.setState({
+          error: true
+        });
+      }
+    });
+
+>>>>>>> Added notifications
     return _this;
   }
 
   _createClass(Home, [{
     key: "render",
     value: function render() {
+<<<<<<< HEAD
       var _this2 = this;
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -84175,6 +84233,11 @@ function (_Component) {
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: this.notify
       }, "Child.method()"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+=======
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "container"
+      }, this.errorMSG(), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+>>>>>>> Added notifications
         className: "row"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-4 offset-2 text-center"
@@ -84185,7 +84248,11 @@ function (_Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "card"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+<<<<<<< HEAD
         className: "card-header"
+=======
+        "class": "card-header"
+>>>>>>> Added notifications
       }, "Featured"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "card-body"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Home_Rooms__WEBPACK_IMPORTED_MODULE_3__["default"], null)))));
@@ -84386,6 +84453,12 @@ function (_Component) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
+<<<<<<< HEAD
+=======
+__webpack_require__(/*! C:\Users\tymen\Documents\A-Coderen\The SS - SecretHitler\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\tymen\Documents\A-Coderen\The SS - SecretHitler\resources\sass\app.scss */"./resources/sass/app.scss");
+
+>>>>>>> Added notifications
 
 /***/ })
 
