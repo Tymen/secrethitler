@@ -18,6 +18,7 @@ Route::namespace('Api')->prefix('v1')->middleware('auth:api')->group(function() 
     });
 
     Route::prefix('rooms')->group(function() {
-        Route::post('/', 'RoomApiController@store');
+        Route::get('/', 'RoomsApiController@index');
+        Route::post('/', 'RoomsApiController@store');
     });
 });
