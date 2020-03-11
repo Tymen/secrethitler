@@ -83784,11 +83784,7 @@ function (_Component) {
         className: "col-4 offset-2 text-center"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_JoinRoom__WEBPACK_IMPORTED_MODULE_6__["default"], null)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-4 text-center"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_CreateRoom__WEBPACK_IMPORTED_MODULE_5__["default"], null))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "row"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Home_Rooms__WEBPACK_IMPORTED_MODULE_7__["default"], null))));
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_CreateRoom__WEBPACK_IMPORTED_MODULE_5__["default"], null))));
     }
   }]);
 

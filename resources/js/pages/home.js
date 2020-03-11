@@ -19,11 +19,6 @@ export default class Home extends Component {
                         <CreateRoom/>
                     </div>
                 </div>
-                <div className='row'>
-                    <div className='col'>
-                        <Rooms/>
-                    </div>
-                </div>
             </div>
         );
     }
