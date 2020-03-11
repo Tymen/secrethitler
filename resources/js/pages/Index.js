@@ -4,6 +4,7 @@ import Nav from '../components/Nav';
 import Login from '../components/Login';
 import Register from '../components/Register';
 import Footer from '../components/Footer';
+
 import Home from './Home';
 import Game from './Game';
 import About from './About';
