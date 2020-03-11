@@ -5,7 +5,7 @@ import Login from '../components/Login';
 import Register from '../components/Register';
 import Footer from '../components/Footer';
 import CreateRoom from "../components/CreateRoom";
-import Home from "./Home";
+// import Home from "./Home";
 
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
