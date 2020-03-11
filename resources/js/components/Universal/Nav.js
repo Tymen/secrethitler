@@ -2,24 +2,35 @@ import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 
 export default class Nav extends Component {
+    _isMounted = false;
+
     state = {
         loggedIn: false,
         loaded: false
     }
 
     componentDidMount() {
+        this._isMounted = true
         axios.get('api/v1/users/me')
             .then(response => {
-                this.setState({
-                    loggedIn: response.data,
-                    loaded: true
-                })
+                if (this._isMounted) {
+                    this.setState({
+                        loggedIn: response.data,
+                        loaded: true
+                    })
+                }
             })
             .catch(error => {
-                this.setState({
-                    loaded: true
-                })
+                if (this._isMounted) {
+                    this.setState({
+                        loaded: true
+                    })
+                }
             })
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false;
     }
 
     authCheck() {

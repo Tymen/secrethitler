@@ -10,7 +10,6 @@ import Game from './Game';
 import About from './About';
 import GameRule from './GameRule';
 import Lobby from './Lobby';
-import IndexPage from "./IndexPage";
 
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
@@ -20,10 +19,9 @@ export default class Index extends Component {
             <Router>
                 <Nav/>
                 <Switch>
-                    <Route path="/" exact component={IndexPage}/>
+                    <Route path="/" exact component={Home}/>
                     <Route path="/login" exact component={Login}/>
                     <Route path="/register" exact component={Register}/>
-                    <Route path="/home" exact component={Home}/>
                     <Route path="/game" exact component={Game}/>
                     <Route path="/gamerules" exact component={GameRule}/>
                     <Route path="/about" exact component={About}/>
