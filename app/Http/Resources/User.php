@@ -19,7 +19,7 @@ class User extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'email' => $this->email,
-            'room' => new RoomResource($this->whenLoaded('room')),
+            'room' => $this->room,
             'created_at' => $this->created_at
         ];
     }

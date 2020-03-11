@@ -83142,20 +83142,32 @@ function (_Component) {
       rooms: []
     });
 
+    _defineProperty(_assertThisInitialized(_this), "showRooms", function () {
+      return _this.state.rooms.map(function (room) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+          key: room.id
+        }, room.name);
+      });
+    });
+
     return _this;
   }
 
   _createClass(Rooms, [{
     key: "componentDidMount",
     value: function componentDidMount() {
+      var _this2 = this;
+
       axios.get('/api/v1/rooms').then(function (response) {
-        console.log(response.data);
+        _this2.setState({
+          rooms: response.data
+        });
       });
     }
   }, {
     key: "render",
     value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null);
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, this.showRooms()));
     }
   }]);
 

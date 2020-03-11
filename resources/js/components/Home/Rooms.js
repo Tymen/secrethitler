@@ -8,14 +8,26 @@ export default class Rooms extends Component {
     componentDidMount() {
         axios.get('/api/v1/rooms')
             .then(response => {
-                console.log(response.data)
+                this.setState({rooms: response.data})
             })
+    }
+
+    showRooms = () => {
+        return this.state.rooms.map(room => {
+            return (
+                <li key={room.id}>
+                    {room.name}
+                </li>
+            )
+        })
     }
 
     render() {
         return (
             <div>
-
+                <ul>
+                    {this.showRooms()}
+                </ul>
             </div>
         )
     }
