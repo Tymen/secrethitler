@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
+use App\Http\Resources\Room as RoomResource;
 
 class RoomsCollection extends ResourceCollection
 {
@@ -14,6 +15,13 @@ class RoomsCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return $this->map(function ($room) {
+            return [
+                'id' => $room->id,
+                'name' => $room->name,
+                'created_at' => $room->created_at,
+                'owner' => $room->user,
+            ];
+        });
     }
 }

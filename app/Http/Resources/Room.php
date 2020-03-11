@@ -19,7 +19,8 @@ class Room extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'created_at' => $this->created_at,
-            'owner' => new UserResource($this->whenLoaded('user')),
+            'owner' => $this->user,
+            'users' => $this->users
         ];
     }
 }

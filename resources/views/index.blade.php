@@ -5,5 +5,4 @@
     <div id="index">
 
     </div>
-
 @endsection
