@@ -1,6 +1,6 @@
 const messagesConfig = {
     components: {
-        sam_mover: {
+        example: {
             spnLogin: {
                 default: "Error",
                 clientId: "Error",
@@ -13,22 +13,35 @@ const messagesConfig = {
         },
     },
     pages: {
-        sam_mover: {
+        example: {
             index: {
                 snackbarErrorInvalid: "Your credentials are invalid!",
                 snackbarSucces: "Succecfully logged in!",
                 snackbarErrorTextValidation: "Please fill in all required fields",
                 subscripSelError: "Select valid subscriptions"
             }
-        }
-    },
-    vuex: {
-        global: {
+        },
+        home: {
+            auth: {
+                noLogin: "You're not logged in",
+            }
+        },
+        about: {
+
+        },
+        game: {
+
+        },
+        gameRule: {
+
+        },
+        auth: {
 
         }
+
     },
     universal: {
 
     }
-}
+};
 export { messagesConfig }
