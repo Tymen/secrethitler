@@ -7,25 +7,25 @@ export default class CreateRoom extends Component {
         rooms: []
     }
 
-    constructor() {
+    constructor(){
         super()
 
         this.onChange = this.onChange.bind(this)
         this.createRoom = this.createRoom.bind(this)
     }
 
-    onChange(e) {
+    onChange(e){
         this.setState({
             name: e.target.value
         })
     }
 
-    createRoom(e) {
+    createRoom(e){
         e.preventDefault()
-        axios.post('/api/v1/rooms', {
+        axios.post('/api/v1/rooms',{
             name: this.state.name
         })
-            .then(response => {
+            .then(response =>{
 
             })
             .catch(error => {
@@ -35,18 +35,10 @@ export default class CreateRoom extends Component {
 
     render() {
         return (
-            <div>
+            <div className="container">
                 <form onSubmit={this.createRoom}>
-                    <div>
-                        <div>
-                            <input type="text" placeholder="Create room" name="roomName" className="input-room-name"
-                                   value={this.state.name}
-                                   onChange={this.onChange}/>
-                        </div>
-                        <div>
-                            <button className="btn create-room">Create room</button>
-                        </div>
-                    </div>
+                    <input type="text" placeholder="Create room" name="roomName" value={this.state.name} onChange={this.onChange}/>
+                    <button>Create room</button>
                 </form>
             </div>
         );
