@@ -51,7 +51,7 @@ export default class Nav extends Component {
         } else {
             return (
                 <div>
-                    <Link className="nav-item" to="/login">
+                    <Link className="nav-item" to="/auth/login">
                         <li className="nav-link">Login</li>
                     </Link>
                     <Link className="nav-item" to="/register">
