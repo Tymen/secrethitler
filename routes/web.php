@@ -27,6 +27,9 @@ Route::get('/game', function (){
     return view('game');
 
 });
+Route::get('/auth/login', function () {
+    return view('auth');
+});
 
 Auth::routes();
 
