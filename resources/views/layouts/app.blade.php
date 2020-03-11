@@ -28,7 +28,4 @@
         </main>
 
 </body>
-
-    <!-- Javascript -->
-    <script src="js/app.js"></script>
 </html>
