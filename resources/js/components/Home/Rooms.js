@@ -33,19 +33,17 @@ export default class Rooms extends Component {
     showRooms = () => {
         return this.state.rooms.map(room => {
             return (
-                <li key={room.id}>
+                <p key={room.id}>
                     {room.name}
-                </li>
+                </p>
             )
         })
     }
 
     render() {
         return (
-            <div>
-                <ul>
-                    {this.showRooms()}
-                </ul>
+            <div className="show-rooms">
+                {this.showRooms()}
             </div>
         )
     }
