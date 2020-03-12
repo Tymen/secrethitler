@@ -1,3 +1,31 @@
+/**
+
+ // route to get the message: messageConfig to the subject pages, to the page home.
+ state = {
+        getMsg: messagesConfig.pages.home,
+    };
+
+ // Needed to call the this.child.getNotify function.
+ constructor(props) {
+        super(props);
+        this.child = React.createRef();
+    };
+
+ // Call the getNotify function, Define the message it should display.
+ notify = () => {
+        this.child.getNotify(this.state.getMsg.auth.noLogin);
+    };
+
+ // Place in the render section
+ <Notification onRef={ref => (this.child = ref)} />
+ **/
+
+const msgTypes = {
+    One: "error",
+    Two: "success",
+    Three: "warning",
+};
+
 const messagesConfig = {
     components: {
         example: {
@@ -11,6 +39,13 @@ const messagesConfig = {
                 subscriptionErr: "Subscription is required"
             }
         },
+        rooms: {
+            internalServer: {
+                type: msgTypes.One,
+                title: "Connection issue",
+                message: "Internal server error"
+            }
+        }
     },
     pages: {
         example: {
@@ -23,7 +58,11 @@ const messagesConfig = {
         },
         home: {
             auth: {
-                noLogin: "You're not logged in",
+                noLogin: {
+                    type: msgTypes.One,
+                    title: "Authentication Error",
+                    message: "You're not logged in",
+                }
             }
         },
         about: {
@@ -44,4 +83,5 @@ const messagesConfig = {
 
     }
 };
+
 export { messagesConfig }
