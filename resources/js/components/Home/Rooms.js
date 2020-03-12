@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Link} from "react-router-dom";
 
 export default class Rooms extends Component {
     _isMounted = false
@@ -33,9 +34,13 @@ export default class Rooms extends Component {
     showRooms = () => {
         return this.state.rooms.map(room => {
             return (
-                <p key={room.id}>
-                    {room.name}
-                </p>
+                // <a key={room.id} className="room-p">
+                //     {room.name}
+                // </a>
+
+                <Link className="" to={"/"+room.id}>
+                    <li className="room-name-li">{room.name}</li>
+                </Link>
             )
         })
     }
