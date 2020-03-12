@@ -38,7 +38,7 @@ export default class Rooms extends Component {
                 //     {room.name}
                 // </a>
 
-                <Link className="" to={"/"+room.id}>
+                <Link className="" to={"/room/"+room.id}>
                     <li className="room-name-li">{room.name}</li>
                 </Link>
             )

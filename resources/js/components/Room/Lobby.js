@@ -4,7 +4,7 @@ export default class Lobby extends Component {
     render() {
         return (
             <div>
-                <h1>Lobby</h1>
+                <button onClick={() => this.props.setActive()}>Start game!</button>
             </div>
         );
     }
