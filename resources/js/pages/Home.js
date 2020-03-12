@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import JoinRoom from "../Home/JoinRoom";
-import CreateRoom from "../Home/CreateRoom";
-import Rooms from "../Home/Rooms"
+import JoinRoom from "../components/Home/JoinRoom";
+import CreateRoom from "../components/Home/CreateRoom";
+import Rooms from "../components/Home/Rooms"
 
 export default class Home extends Component {
 

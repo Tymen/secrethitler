@@ -5,11 +5,11 @@ import Login from '../components/Login/Login';
 import Register from '../components/Register/Register';
 import Footer from '../components/Universal/Footer';
 
-import Home from '../components/Home/Home';
-import Game from './Game';
+import Home from './Home';
+import Game from '../components/Room/Game';
 import About from './About';
 import GameRule from './GameRule';
-import Lobby from './Lobby';
+import Lobby from '../components/Room/Lobby';
 
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
