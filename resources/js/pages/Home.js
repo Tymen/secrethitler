@@ -3,32 +3,23 @@ import JoinRoom from "../components/Home/JoinRoom";
 import CreateRoom from "../components/Home/CreateRoom";
 import Rooms from "../components/Home/Rooms"
 import { messagesConfig } from "../appSettings";
-
+import Notification from "../components/Universal/Notification";
 export default class Home extends Component {
     state = {
-        error: true,
-        getMsg: messagesConfig.pages.home
-    }
-    errorMSG = () => {
-        if(this.state.error) {
-            return (
-                <div className="alert alert-danger" role="alert">
-                    {this.state.getMsg.auth.noLogin}
-                </div>
-            )
-        }
+        getMsg: messagesConfig.pages.home,
     };
-    ifError = () => {
-        if(this.state.error){
-            this.setState({error: false})
-        }else {
-            this.setState({error: true})
-        }
+    constructor(props) {
+        super(props);
+        this.child = React.createRef();
+    };
+    notify = () => {
+        this.child.getNotify(this.state.getMsg.auth.noLogin);
     };
     render() {
         return (
             <div className="container">
-                {this.errorMSG()}
+                <Notification onRef={ref => (this.child = ref)} />
+                <button onClick={this.notify}>Child.method()</button>
                 <div className="row">
                     <div className="col-4 offset-2 text-center">
                         <JoinRoom/>
@@ -41,7 +32,7 @@ export default class Home extends Component {
                 </div>
                 <div className="row">
                     <div className="card">
-                        <div class="card-header">
+                        <div className="card-header">
                             Featured
                         </div>
                         <div className="card-body">

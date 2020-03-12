@@ -82905,6 +82905,9 @@ __webpack_require__(/*! ./pages/Index */ "./resources/js/pages/Index.js");
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "messagesConfig", function() { return messagesConfig; });
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> Added the new notification system
 /**
 
  // route to get the message: messageConfig to the subject pages, to the page home.
@@ -82931,8 +82934,11 @@ var msgTypes = {
   Two: "success",
   Three: "warning"
 };
+<<<<<<< HEAD
 =======
 >>>>>>> Added notifications
+=======
+>>>>>>> Added the new notification system
 var messagesConfig = {
   components: {
     example: {
@@ -82946,6 +82952,9 @@ var messagesConfig = {
         subscriptionErr: "Subscription is required"
       }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> Added the new notification system
     },
     rooms: {
       internalServer: {
@@ -82953,8 +82962,11 @@ var messagesConfig = {
         title: "Connection issue",
         message: "Internal server error"
       }
+<<<<<<< HEAD
 =======
 >>>>>>> Added notifications
+=======
+>>>>>>> Added the new notification system
     }
   },
   pages: {
@@ -82969,14 +82981,20 @@ var messagesConfig = {
     home: {
       auth: {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> Added the new notification system
         noLogin: {
           type: msgTypes.One,
           title: "Authentication Error",
           message: "You're not logged in"
         }
+<<<<<<< HEAD
 =======
         noLogin: "You're not logged in"
 >>>>>>> Added notifications
+=======
+>>>>>>> Added the new notification system
       }
     },
     about: {},
@@ -83852,7 +83870,11 @@ function (_Component) {
     // Same as this.props.onRef.....
     value: function componentWillUnmount() {
       this.props.onRef(undefined);
+<<<<<<< HEAD
     } // This will give the state a message as an object
+=======
+    } // This will give the state a message as a object
+>>>>>>> Added the new notification system
 
   }, {
     key: "render",
@@ -84120,9 +84142,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_Home_Rooms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/Home/Rooms */ "./resources/js/components/Home/Rooms.js");
 /* harmony import */ var _appSettings__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../appSettings */ "./resources/js/appSettings.js");
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* harmony import */ var _components_Universal_Notification__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/Universal/Notification */ "./resources/js/components/Universal/Notification.js");
 =======
 >>>>>>> Added notifications
+=======
+/* harmony import */ var _components_Universal_Notification__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/Universal/Notification */ "./resources/js/components/Universal/Notification.js");
+>>>>>>> Added the new notification system
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -84150,14 +84176,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 >>>>>>> Added notifications
+=======
+
+>>>>>>> Added the new notification system
 var Home =
 /*#__PURE__*/
 function (_Component) {
   _inherits(Home, _Component);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
   function Home(props) {
 =======
@@ -84165,10 +84196,14 @@ function (_Component) {
     var _getPrototypeOf2;
 
 >>>>>>> Added notifications
+=======
+  function Home(props) {
+>>>>>>> Added the new notification system
     var _this;
 
     _classCallCheck(this, Home);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Home).call(this, props));
 
@@ -84187,40 +84222,30 @@ function (_Component) {
     }
 
     _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(Home)).call.apply(_getPrototypeOf2, [this].concat(args)));
+=======
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Home).call(this, props));
+>>>>>>> Added the new notification system
 
     _defineProperty(_assertThisInitialized(_this), "state", {
-      error: true,
       getMsg: _appSettings__WEBPACK_IMPORTED_MODULE_4__["messagesConfig"].pages.home
     });
 
-    _defineProperty(_assertThisInitialized(_this), "errorMSG", function () {
-      if (_this.state.error) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "alert alert-danger",
-          role: "alert"
-        }, _this.state.getMsg.auth.noLogin);
-      }
+    _defineProperty(_assertThisInitialized(_this), "notify", function () {
+      _this.child.getNotify(_this.state.getMsg.auth.noLogin);
     });
 
-    _defineProperty(_assertThisInitialized(_this), "ifError", function () {
-      if (_this.state.error) {
-        _this.setState({
-          error: false
-        });
-      } else {
-        _this.setState({
-          error: true
-        });
-      }
-    });
-
+<<<<<<< HEAD
 >>>>>>> Added notifications
+=======
+    _this.child = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
+>>>>>>> Added the new notification system
     return _this;
   }
 
   _createClass(Home, [{
     key: "render",
     value: function render() {
+<<<<<<< HEAD
 <<<<<<< HEAD
       var _this2 = this;
 
@@ -84238,6 +84263,19 @@ function (_Component) {
         className: "container"
       }, this.errorMSG(), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
 >>>>>>> Added notifications
+=======
+      var _this2 = this;
+
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "container"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Universal_Notification__WEBPACK_IMPORTED_MODULE_5__["default"], {
+        onRef: function onRef(ref) {
+          return _this2.child = ref;
+        }
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: this.notify
+      }, "Child.method()"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+>>>>>>> Added the new notification system
         className: "row"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-4 offset-2 text-center"
@@ -84249,10 +84287,14 @@ function (_Component) {
         className: "card"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
 <<<<<<< HEAD
+<<<<<<< HEAD
         className: "card-header"
 =======
         "class": "card-header"
 >>>>>>> Added notifications
+=======
+        className: "card-header"
+>>>>>>> Added the new notification system
       }, "Featured"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "card-body"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Home_Rooms__WEBPACK_IMPORTED_MODULE_3__["default"], null)))));
