@@ -78,8 +78,8 @@ export default class Nav extends Component {
                             </Link>
                         </ul>
                         <ul className="navbar-nav ml-auto">
-                            <Link className="nav-item" to="/game">
-                                <li className="nav-link">Game</li>
+                            <Link className="nav-item" to="/gamerules">
+                                <li className="nav-link">Gamerules</li>
                             </Link>
                             <Link className="nav-item" to="/profile">
                                 <li className="nav-link">Profile</li>

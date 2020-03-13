@@ -26,7 +26,6 @@ export default class Index extends Component {
                     <Route path="/auth/:type" exact component={Auth}/>
                     <Route path="/login" exact component={Login}/>
                     <Route path="/auth/:type" exact component={Auth}/>
-                    <Route path="/register" exact component={Register}/>
                     <Route path="/gamerules" exact component={GameRule}/>
                     <Route path="/about" exact component={About}/>
                 </Switch>
