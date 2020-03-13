@@ -83041,6 +83041,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return CreateRoom; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Universal_Notification__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Universal/Notification */ "./resources/js/components/Universal/Notification.js");
+/* harmony import */ var _appSettings__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../appSettings */ "./resources/js/appSettings.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -83063,6 +83065,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
+
+
 var CreateRoom =
 /*#__PURE__*/
 function (_Component) {
@@ -83077,9 +83081,11 @@ function (_Component) {
 
     _defineProperty(_assertThisInitialized(_this), "state", {
       name: '',
-      rooms: []
+      rooms: [],
+      getMsg: _appSettings__WEBPACK_IMPORTED_MODULE_2__["messagesConfig"].pages.home
     });
 
+    _this.child = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
     _this.onChange = _this.onChange.bind(_assertThisInitialized(_this));
     _this.createRoom = _this.createRoom.bind(_assertThisInitialized(_this));
     return _this;
@@ -83095,15 +83101,25 @@ function (_Component) {
   }, {
     key: "createRoom",
     value: function createRoom(e) {
+      var _this2 = this;
+
       e.preventDefault();
       axios.post('/api/v1/rooms', {
         name: this.state.name
-      }).then(function (response) {})["catch"](function (error) {});
+      }).then(function (response) {})["catch"](function (error) {
+        _this2.child.getNotify(_this2.state.getMsg.auth.noLogin);
+      });
     }
   }, {
     key: "render",
     value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+      var _this3 = this;
+
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Universal_Notification__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        onRef: function onRef(ref) {
+          return _this3.child = ref;
+        }
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         onSubmit: this.createRoom
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
@@ -83201,6 +83217,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Rooms; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Universal_Notification__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Universal/Notification */ "./resources/js/components/Universal/Notification.js");
+/* harmony import */ var _appSettings__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../appSettings */ "./resources/js/appSettings.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -83223,28 +83241,25 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
+
+
 var Rooms =
 /*#__PURE__*/
 function (_Component) {
   _inherits(Rooms, _Component);
 
-  function Rooms() {
-    var _getPrototypeOf2;
-
+  function Rooms(props) {
     var _this;
 
     _classCallCheck(this, Rooms);
 
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(Rooms)).call.apply(_getPrototypeOf2, [this].concat(args)));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Rooms).call(this, props));
 
     _defineProperty(_assertThisInitialized(_this), "_isMounted", false);
 
     _defineProperty(_assertThisInitialized(_this), "state", {
-      rooms: []
+      rooms: [],
+      getMsg: _appSettings__WEBPACK_IMPORTED_MODULE_2__["messagesConfig"].components.rooms
     });
 
     _defineProperty(_assertThisInitialized(_this), "getRooms", function () {
@@ -83254,6 +83269,8 @@ function (_Component) {
             rooms: response.data
           });
         }
+      })["catch"](function (error) {
+        _this.child.getNotify(_this.state.getMsg.internalServer);
       });
     });
 
@@ -83265,6 +83282,7 @@ function (_Component) {
       });
     });
 
+    _this.child = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
     return _this;
   }
 
@@ -83288,9 +83306,6 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "show-rooms"
-      }, this.showRooms());
     }
   }]);
 
@@ -83827,7 +83842,7 @@ function (_Component) {
     // Same as this.props.onRef.....
     value: function componentWillUnmount() {
       this.props.onRef(undefined);
-    } // This will give the state a message as a object
+    } // This will give the state a message as an object
 
   }, {
     key: "render",
