@@ -6,11 +6,6 @@ export default class Rooms extends Component {
     _isMounted = false;
 
     state = {
-<<<<<<< HEAD
-        rooms: []
-    }
-
-=======
         rooms: [],
         getMsg: messagesConfig.components.rooms,
     };
@@ -19,7 +14,6 @@ x;
         super(props);
         this.child = React.createRef();
     };
->>>>>>> Notification system
     componentDidMount() {
         this._isMounted = true
         this.getRooms()
@@ -58,16 +52,11 @@ x;
 
     render() {
         return (
-<<<<<<< HEAD
-            <div className="show-rooms">
-                {this.showRooms()}
-=======
             <div>
                 <ul>
                     {this.showRooms()}
                     <Notification onRef={ref => (this.child = ref)} />
                 </ul>
->>>>>>> Notification system
             </div>
         )
     }

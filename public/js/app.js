@@ -83334,6 +83334,16 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
+<<<<<<< HEAD
+=======
+      var _this3 = this;
+
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, this.showRooms(), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Universal_Notification__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        onRef: function onRef(ref) {
+          return _this3.child = ref;
+        }
+      })));
+>>>>>>> Notification system
     }
   }]);
 
@@ -83871,10 +83881,14 @@ function (_Component) {
     value: function componentWillUnmount() {
       this.props.onRef(undefined);
 <<<<<<< HEAD
+<<<<<<< HEAD
     } // This will give the state a message as an object
 =======
     } // This will give the state a message as a object
 >>>>>>> Added the new notification system
+=======
+    } // This will give the state a message as an object
+>>>>>>> Notification system
 
   }, {
     key: "render",
