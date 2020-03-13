@@ -83247,16 +83247,13 @@ function (_Component) {
 
     _defineProperty(_assertThisInitialized(_this), "showRooms", function () {
       return _this.state.rooms.map(function (room) {
-        return (// <a key={room.id} className="room-p">
-          //     {room.name}
-          // </a>
-          react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-            className: "",
-            to: "/room/" + room.id
-          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-            className: "room-name-li"
-          }, room.name))
-        );
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+          className: "",
+          to: "/room/" + room.id,
+          key: room.id
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+          className: "room-name-li"
+        }, room.name));
       });
     });
 
@@ -84271,7 +84268,7 @@ function (_Component) {
     key: "componentDidMount",
     value: function componentDidMount() {
       this.getActive();
-      Echo.join("room.".concat(this.props.match.params.id)).here(function (users) {
+      Echo.join('room.' + this.props.match.params.id).here(function (users) {
         console.log(users);
       }).joining(function (user) {
         // this.setState({
