@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import Nav from '../components/Universal/Nav';
 import Auth from "./Auth";
 import Register from '../components/Register/Register';
+import Login from '../components/Login/Login';
 import Footer from '../components/Universal/Footer';
 
 import Home from './Home';
