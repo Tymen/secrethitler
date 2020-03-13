@@ -21,7 +21,7 @@ class RoomsApiController extends Controller
      */
     public function index()
     {
-        return Response::create(new RoomsCollection(Room::with('user')->paginate(10)));
+        return Response::create(new RoomsCollection(Room::with('user')->get()));
     }
 
     /**
