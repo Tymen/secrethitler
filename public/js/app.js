@@ -83164,16 +83164,13 @@ function (_Component) {
 
     _defineProperty(_assertThisInitialized(_this), "showRooms", function () {
       return _this.state.rooms.map(function (room) {
-        return (// <a key={room.id} className="room-p">
-          //     {room.name}
-          // </a>
-          react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-            className: "",
-            to: "/room/" + room.id
-          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-            className: "room-name-li"
-          }, room.name))
-        );
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+          className: "",
+          key: room.id,
+          to: "/room/" + room.id
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+          className: "room-name-li"
+        }, room.name));
       });
     });
 
@@ -84202,6 +84199,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_Room_Lobby__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/Room/Lobby */ "./resources/js/components/Room/Lobby.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -84261,25 +84266,29 @@ function (_Component) {
   _createClass(Room, [{
     key: "componentDidMount",
     value: function componentDidMount() {
+      var _this2 = this;
+
       this.getActive();
       Echo.join("room.".concat(this.props.match.params.id)).here(function (users) {
-        console.log(users);
+        _this2.setState({
+          users: users
+        });
       }).joining(function (user) {
-        // this.setState({
-        //     users: user
-        // })
-        console.log(user);
+        _this2.setState({
+          users: [].concat(_toConsumableArray(_this2.state.users), [user])
+        });
       }).leaving(function (user) {
-        // this.setState({
-        //     users: user
-        // })
-        console.log(user);
+        _this2.setState({
+          users: _this2.state.users.filter(function (u) {
+            return u.id !== user.id;
+          })
+        });
       });
     }
   }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
+      var _this3 = this;
 
       if (this.state.active) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Room_Game__WEBPACK_IMPORTED_MODULE_1__["default"], null);
@@ -84287,7 +84296,7 @@ function (_Component) {
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Room_Lobby__WEBPACK_IMPORTED_MODULE_2__["default"], {
         setActive: function setActive() {
-          return _this2.setActive();
+          return _this3.setActive();
         }
       });
     }
