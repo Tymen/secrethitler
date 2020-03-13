@@ -52,12 +52,16 @@ export default class Room extends Component {
                 <Game/>
             )
         }
-        
+
         return (
-            <div>
-                <Lobby setActive={() => this.setActive()}/>
-                <PlayersLobby users={this.state.users}/>
-                <ChatLobby/>
+            <div className="container">
+                <div className="row">
+                    <PlayersLobby users={this.state.users}/>
+                    <ChatLobby id={this.props.match.params.id}/>
+                </div>
+                <div className="row">
+                    <Lobby setActive={() => this.setActive()}/>
+                </div>
             </div>
         )
     }
