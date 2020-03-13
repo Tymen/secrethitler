@@ -62574,7 +62574,7 @@ var currentlyProcessingQueue;
   didWarnUpdateInsideUpdate = false;
   currentlyProcessingQueue = null;
 
-
+  
 }
 
 function createUpdateQueue(baseState) {
@@ -66889,7 +66889,7 @@ function insertNonHydratedInstance(returnFiber, fiber) {
               break;
 
             case SuspenseComponent:
-
+              
               break;
           }
 
@@ -82904,13 +82904,6 @@ __webpack_require__(/*! ./pages/Index */ "./resources/js/pages/Index.js");
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "messagesConfig", function() { return messagesConfig; });
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> Added the new notification system
-=======
->>>>>>> 477d2f0189899ad19a8f206d1101db087f2a7e1d
 /**
 
  // route to get the message: messageConfig to the subject pages, to the page home.
@@ -82937,14 +82930,6 @@ var msgTypes = {
   Two: "success",
   Three: "warning"
 };
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> Added notifications
-=======
->>>>>>> Added the new notification system
-=======
->>>>>>> 477d2f0189899ad19a8f206d1101db087f2a7e1d
 var messagesConfig = {
   components: {
     example: {
@@ -82957,13 +82942,15 @@ var messagesConfig = {
       subscriptSel: {
         subscriptionErr: "Subscription is required"
       }
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> Added the new notification system
-=======
->>>>>>> 477d2f0189899ad19a8f206d1101db087f2a7e1d
+    },
+    register: {
+      auth: {
+        registerError: {
+          type: msgTypes.One,
+          title: "Invalid",
+          message: "Incorrect inputs"
+        }
+      }
     },
     rooms: {
       internalServer: {
@@ -82971,14 +82958,6 @@ var messagesConfig = {
         title: "Connection issue",
         message: "Internal server error"
       }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> Added notifications
-=======
->>>>>>> Added the new notification system
-=======
->>>>>>> 477d2f0189899ad19a8f206d1101db087f2a7e1d
     }
   },
   pages: {
@@ -82992,27 +82971,11 @@ var messagesConfig = {
     },
     home: {
       auth: {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> Added the new notification system
-=======
->>>>>>> 477d2f0189899ad19a8f206d1101db087f2a7e1d
         noLogin: {
           type: msgTypes.One,
           title: "Authentication Error",
           message: "You're not logged in"
         }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-        noLogin: "You're not logged in"
->>>>>>> Added notifications
-=======
->>>>>>> Added the new notification system
-=======
->>>>>>> 477d2f0189899ad19a8f206d1101db087f2a7e1d
       }
     },
     about: {},
@@ -83308,6 +83271,8 @@ function (_Component) {
       getMsg: _appSettings__WEBPACK_IMPORTED_MODULE_2__["messagesConfig"].components.rooms
     });
 
+    _defineProperty(_assertThisInitialized(_this), "x", void 0);
+
     _defineProperty(_assertThisInitialized(_this), "getRooms", function () {
       axios.get('/api/v1/rooms').then(function (response) {
         if (_this._isMounted) {
@@ -83352,9 +83317,6 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
       var _this3 = this;
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, this.showRooms(), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Universal_Notification__WEBPACK_IMPORTED_MODULE_1__["default"], {
@@ -83362,9 +83324,6 @@ function (_Component) {
           return _this3.child = ref;
         }
       })));
->>>>>>> Notification system
-=======
->>>>>>> 477d2f0189899ad19a8f206d1101db087f2a7e1d
     }
   }]);
 
@@ -83387,6 +83346,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Register; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _appSettings__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../appSettings */ "./resources/js/appSettings.js");
+/* harmony import */ var _Universal_Notification__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Universal/Notification */ "./resources/js/components/Universal/Notification.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
@@ -83417,11 +83378,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
+
+
 var Register =
 /*#__PURE__*/
 function (_Component) {
   _inherits(Register, _Component);
 
+  // Place in the render section
   function Register(props) {
     var _this;
 
@@ -83438,8 +83402,10 @@ function (_Component) {
       email: '',
       password: '',
       password_confirmation: '',
-      errors: ''
+      errors: '',
+      getMsg: _appSettings__WEBPACK_IMPORTED_MODULE_1__["messagesConfig"].components.register
     };
+    _this.child = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
     _this.onChange = _this.onChange.bind(_assertThisInitialized(_this));
     _this.onSubmit = _this.onSubmit.bind(_assertThisInitialized(_this));
     return _this;
@@ -83450,6 +83416,7 @@ function (_Component) {
     value: function onSubmit(e) {
       var _this2 = this;
 
+      console.log("test");
       e.preventDefault();
       axios.post('/register', {
         username: this.state.username,
@@ -83459,9 +83426,14 @@ function (_Component) {
       }).then(function (response) {
         window.location.href = '/';
       })["catch"](function (error) {
+        console.log(_this2.state.getMsg);
+        _this2.state.getMsg.auth.registerError.message = error.response.data.errors;
+
         _this2.setState({
           errors: [].concat(_toConsumableArray(_this2.state.errors), [error])
         });
+
+        _this2.child.getNotify(_this2.state.getMsg.auth.registerError);
       });
     }
   }, {
@@ -83471,7 +83443,11 @@ function (_Component) {
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "container"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Universal_Notification__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        onRef: function onRef(ref) {
+          return _this3.child = ref;
+        }
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "block"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "card-login rounded-bottom-left"
@@ -83844,42 +83820,58 @@ function (_Component) {
 
     _defineProperty(_assertThisInitialized(_this), "notifyMSG", function () {
       if (_this.state) {
-        switch (_this.state.MSG.type) {
-          case "error":
-            pnotify_dist_es_PNotify__WEBPACK_IMPORTED_MODULE_1__["default"].error({
-              title: _this.state.MSG.title,
-              text: _this.state.MSG.message,
-              modules: {
-                Desktop: {
-                  desktop: true
+        if (_this.state.MSG) {
+          switch (_this.state.MSG.type) {
+            case "error":
+              pnotify_dist_es_PNotify__WEBPACK_IMPORTED_MODULE_1__["default"].error({
+                title: _this.state.MSG.title,
+                text: _this.state.MSG.message,
+                modules: {
+                  Desktop: {
+                    desktop: true
+                  },
+                  Buttons: {
+                    closer: true,
+                    closerHover: true
+                  }
                 }
-              }
-            });
-            break;
+              });
+              break;
 
-          case "success":
-            pnotify_dist_es_PNotify__WEBPACK_IMPORTED_MODULE_1__["default"].success({
-              title: _this.state.MSG.title,
-              text: _this.state.MSG.message,
-              modules: {
-                Desktop: {
-                  desktop: true
+            case "success":
+              pnotify_dist_es_PNotify__WEBPACK_IMPORTED_MODULE_1__["default"].success({
+                title: _this.state.MSG.title,
+                text: _this.state.MSG.message,
+                modules: {
+                  Desktop: {
+                    desktop: true
+                  },
+                  Buttons: {
+                    closer: true
+                  }
                 }
-              }
-            });
-            break;
+              });
+              break;
 
-          case "warning":
-            pnotify_dist_es_PNotify__WEBPACK_IMPORTED_MODULE_1__["default"].notice({
-              title: _this.state.MSG.title,
-              text: _this.state.MSG.message,
-              modules: {
-                Desktop: {
-                  desktop: true
+            case "warning":
+              pnotify_dist_es_PNotify__WEBPACK_IMPORTED_MODULE_1__["default"].notice({
+                title: _this.state.MSG.title,
+                text: _this.state.MSG.message,
+                modules: {
+                  Desktop: {
+                    desktop: true
+                  },
+                  Buttons: {
+                    closer: true
+                  }
                 }
-              }
-            });
-            break;
+              });
+              break;
+          }
+
+          _this.setState({
+            MSG: ""
+          });
         }
       }
     });
@@ -83894,6 +83886,7 @@ function (_Component) {
     value: function componentDidMount() {
       pnotify_dist_es_PNotify__WEBPACK_IMPORTED_MODULE_1__["default"].defaults.styling = 'bootstrap4'; // Bootstrap version 4
 
+      pnotify_dist_es_PNotify__WEBPACK_IMPORTED_MODULE_1__["default"].defaults.icons = 'fontawesome4';
       this.props.onRef(this);
     }
   }, {
@@ -83901,19 +83894,7 @@ function (_Component) {
     // Same as this.props.onRef.....
     value: function componentWillUnmount() {
       this.props.onRef(undefined);
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
     } // This will give the state a message as an object
-=======
-    } // This will give the state a message as a object
->>>>>>> Added the new notification system
-=======
-    } // This will give the state a message as an object
->>>>>>> Notification system
-=======
-    } // This will give the state a message as an object
->>>>>>> 477d2f0189899ad19a8f206d1101db087f2a7e1d
 
   }, {
     key: "render",
@@ -84180,6 +84161,83 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_Home_CreateRoom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/Home/CreateRoom */ "./resources/js/components/Home/CreateRoom.js");
 /* harmony import */ var _components_Home_Rooms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/Home/Rooms */ "./resources/js/components/Home/Rooms.js");
 /* harmony import */ var _appSettings__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../appSettings */ "./resources/js/appSettings.js");
+/* harmony import */ var _components_Universal_Notification__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/Universal/Notification */ "./resources/js/components/Universal/Notification.js");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+
+
+
+
+
+var Home =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(Home, _Component);
+
+  function Home(props) {
+    var _this;
+
+    _classCallCheck(this, Home);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Home).call(this, props));
+
+    _defineProperty(_assertThisInitialized(_this), "state", {
+      getMsg: _appSettings__WEBPACK_IMPORTED_MODULE_4__["messagesConfig"].pages.home
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "notify", function () {
+      _this.child.getNotify(_this.state.getMsg.auth.noLogin);
+    });
+
+    _this.child = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
+    return _this;
+  }
+
+  _createClass(Home, [{
+    key: "render",
+    value: function render() {
+      var _this2 = this;
+
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "container"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Universal_Notification__WEBPACK_IMPORTED_MODULE_5__["default"], {
+        onRef: function onRef(ref) {
+          return _this2.child = ref;
+        }
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: this.notify
+      }, "Child.method()"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "row"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-4 offset-2 text-center"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Home_JoinRoom__WEBPACK_IMPORTED_MODULE_1__["default"], null)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-4 text-center"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Home_CreateRoom__WEBPACK_IMPORTED_MODULE_2__["default"], null))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "row"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "card"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "card-header"
       }, "Featured"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "card-body"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Home_Rooms__WEBPACK_IMPORTED_MODULE_3__["default"], null)))));
@@ -84379,6 +84437,11 @@ function (_Component) {
   \*************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(/*! C:\Users\tymen\Documents\A-Coderen\The SS - SecretHitler\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\tymen\Documents\A-Coderen\The SS - SecretHitler\resources\sass\app.scss */"./resources/sass/app.scss");
+
+
 /***/ })
 
 /******/ });
