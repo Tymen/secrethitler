@@ -23,8 +23,8 @@ Route::get('/about', function (){
     return view('about');
 });
 
-Route::get('/game', function (){
-    return view('game');
+Route::get('/room/{id}', function (){
+    return view('room');
 
 });
 
