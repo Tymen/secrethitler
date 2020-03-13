@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
 
 class RoomsApiController extends Controller
 {
@@ -20,16 +21,25 @@ class RoomsApiController extends Controller
      */
     public function index()
     {
-        return Response::create(new RoomsCollection(Room::with('user')->get()));
+        return Response::create(new RoomsCollection(Room::with('user')->paginate(10)));
     }
+
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @return Response|void
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|unique:rooms|max:18|min:3',
+        ]);
+
+        if ($validator->fails()) {
+            return Response::create($validator->errors(), 400);
+        }
+
         $room = new Room();
         $room->name = $request->name;
         $room->user_id = Auth::user()->id;
