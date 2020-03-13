@@ -34,6 +34,21 @@ Route::get('/auth/login', function () {
     return view('auth');
 });
 
-Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::middleware('guest')->group(function() {
+
+
+    Route::get('auth/login', function() {
+        return view('auth');
+    });
+
+    Route::get('/auth/register', function () {
+        return view('auth');
+    });
+
+    Route::post('/register', 'Auth\RegisterController@register');
+    Route::post('/login', 'Auth\LoginController@login');
+
+});
+
+Route::post('logout', 'Auth\LoginController@logout');
