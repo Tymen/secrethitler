@@ -21,9 +21,6 @@ export default class Home extends Component {
                 <Notification onRef={ref => (this.child = ref)} />
                 <button onClick={this.notify}>Child.method()</button>
                 <div className="row">
-                    <img className="home-logo" src="images/Secrethitler-no-bg.png"/>
-                </div>
-                <div className="row">
                     <div className="col-4 offset-2 text-center">
                         <JoinRoom/>
 
@@ -34,15 +31,12 @@ export default class Home extends Component {
                     </div>
                 </div>
                 <div className="row">
-                    <div className="rooms">
-                        <div className="join-text">
-                            Join a game
+                    <div className="card">
+                        <div className="card-header">
+                            Featured
                         </div>
-                        <div className="rooms-body">
-                            <div className="room-name">
-                                <Rooms/>
-
-                            </div>
+                        <div className="card-body">
+                            <Rooms/>
                         </div>
                     </div>
                 </div>
