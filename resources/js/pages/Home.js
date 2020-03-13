@@ -30,16 +30,12 @@ export default class Home extends Component {
 
                     </div>
                 </div>
-                <div className="row">
-                    <div className="card">
-                        <div className="card-header">
-                            Featured
+                        <div className="col-12 join-text">
+                            Join a game
                         </div>
-                        <div className="card-body">
-                            <Rooms/>
-                        </div>
+                    <div className="background-rooms">
+                        <Rooms/>
                     </div>
-                </div>
             </div>
         );
     }

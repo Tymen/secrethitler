@@ -45,13 +45,11 @@ x;
     showRooms = () => {
         return this.state.rooms.map(room => {
             return (
-                // <a key={room.id} className="room-p">
-                //     {room.name}
-                // </a>
-
-                <Link className="" to={"/room/"+room.id}>
-                    <li className="room-name-li">{room.name}</li>
+                <div className="col-3 background-room">
+                <Link key={room.id} to={"/room/"+room.id}>
+                    <p className="room-name-li">{room.name}</p>
                 </Link>
+                </div>
             )
         })
     };
@@ -59,10 +57,10 @@ x;
     render() {
         return (
             <div>
-                <ul>
+                <div className="row background-rooms">
                     {this.showRooms()}
                     <Notification onRef={ref => (this.child = ref)} />
-                </ul>
+                </div>
             </div>
         )
     }

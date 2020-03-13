@@ -1,17 +1,21 @@
 import React, {Component} from 'react';
+import Login from "../components/Login/Login";
+import Register from "../components/Register/Register";
 
 export default class Auth extends Component {
+    state = {
+        type: '',
+    }
     componentDidMount() {
         const {match: { params } } = this.props;
-        console.log(params.type);
+        this.setState({type:params.type})
     }
 
     render() {
-        return (
-            <div>
-                <h1>Login</h1>
-            </div>
-        );
+        if (this.state.type === 'login'){
+            return <Login/>;
+        }
+        return <Register/>;
     }
 }
 

@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Link} from "react-router-dom";
 
 export default class JoinRoom extends Component {
 
@@ -11,7 +12,7 @@ export default class JoinRoom extends Component {
                             <input type="text" placeholder="Join Room" name="joinRoom" className="input-room-name"/>
                         </div>
                         <div>
-                            <button className="btn join-room">Join room</button>
+                            <Link className="btn join-room" to="/room/1">Join room</Link>
                         </div>
                     </div>
                 </form>

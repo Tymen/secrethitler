@@ -2,14 +2,11 @@ import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import Nav from '../components/Universal/Nav';
 import Auth from "./Auth";
-import Register from '../components/Register/Register';
 import Footer from '../components/Universal/Footer';
 
 import Home from './Home';
-import Game from './Game';
 import About from './About';
 import GameRule from './GameRule';
-import Lobby from '../components/Room/Lobby';
 import Room from "./Room";
 
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';

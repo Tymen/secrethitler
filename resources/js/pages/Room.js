@@ -14,19 +14,17 @@ export default class Room extends Component {
 
         Echo.join(`room.${this.props.match.params.id}`)
             .here((users) => {
-                console.log(users)
+                this.setState({
+                    users: users
+                })
             })
             .joining((user) => {
-                // this.setState({
-                //     users: user
-                // })
-                console.log(user.name)
+                this.setState({
+                    users: [...this.state.users, user]
+                })
             })
-            .leaving((user) => {
-                // this.setState({
-                //     users: user
-                // })
-                console.log(user.name)
+            .leaving(user => {
+                this.setState({users: this.state.users.filter(u => (u.id !== user.id))})
             })
     }
 
@@ -50,4 +48,3 @@ export default class Room extends Component {
 
     }
 }
-

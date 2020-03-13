@@ -54,7 +54,7 @@ export default class Nav extends Component {
                     <Link className="nav-item" to="/auth/login">
                         <li className="nav-link">Login</li>
                     </Link>
-                    <Link className="nav-item" to="/register">
+                    <Link className="nav-item" to="/auth/register">
                         <li className="nav-link">Register</li>
                     </Link>
                 </div>
