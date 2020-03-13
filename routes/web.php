@@ -27,10 +27,21 @@ Route::get('/room/{id}', function (){
     return view('room');
 
 });
-Route::get('/auth/login', function () {
-    return view('auth');
+
+Route::middleware('guest')->group(function() {
+
+
+    Route::get('auth/login', function() {
+        return view('auth');
+    });
+
+    Route::get('/auth/register', function () {
+        return view('auth');
+    });
+
+    Route::post('/register', 'Auth\RegisterController@register');
+    Route::post('/login', 'Auth\LoginController@login');
+
 });
 
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
+Route::post('logout', 'Auth\LoginController@logout');
