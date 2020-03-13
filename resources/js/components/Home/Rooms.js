@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Link} from "react-router-dom";
 import Notification from "../Universal/Notification";
 import {messagesConfig} from "../../appSettings";
 
@@ -43,9 +44,12 @@ x;
     showRooms = () => {
         return this.state.rooms.map(room => {
             return (
-                <p key={room.id}>
-                    {room.name}
-                </p>
+
+                <Link className="" to={"/room/"+room.id} key={room.id}>
+
+
+                    <li className="room-name-li">{room.name}</li>
+                </Link>
             )
         })
     };

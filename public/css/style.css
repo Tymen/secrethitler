@@ -20,6 +20,8 @@ body{
 .navbar{
     padding: 0px;
     box-shadow: 0 2px 8px -2px rgba(0,0,0,.2);
+
+
 }
 
 .bg-custom{
@@ -60,11 +62,13 @@ body{
     color: white;
     background-color: #2B2929;
 
-    position: relative;
     left: 0;
     bottom: 0;
-    width: 100%;
     text-align: center;
+
+    position: fixed; /* Set the navbar to fixed position */
+    bottom: 0; /* Position the navbar at the top of the page */
+    width: 100%; /* Full width */
 }
 
 .card-login{
@@ -199,6 +203,7 @@ body{
     min-width: 0;
     word-wrap: break-word;
     background-clip: border-box;
+    max-height: 40px;
 }
 
 .join-text{
@@ -210,21 +215,32 @@ body{
 .rooms-body{
     background-color: #B8B8B8;
 
+
 }
 
 .room-name{
     margin: 10px;
-    text-align: center;
     color: white;
     background: #615E5D;
 }
 
 .home-logo{
     margin: 0 auto;
-    max-width: auto;
     max-height: 300px;
 }
 
 .show-rooms{
-    display: flex;
+    overflow-y: scroll;
+    max-height: auto;
+
+}
+
+.room-block{
+}
+
+.room-name-li{
+    font-size: 20px;
+    text-align: center;
+    color: white;
+    list-style-type: none;
 }

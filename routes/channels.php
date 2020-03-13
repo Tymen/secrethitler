@@ -14,3 +14,10 @@
 Broadcast::channel('room-created', function () {
     return true;
 });
+
+Broadcast::channel('room.{id}', function ($id) {
+    if (auth()->check()) {
+        return new \App\Http\Resources\User(auth()->user());
+    }
+});
+

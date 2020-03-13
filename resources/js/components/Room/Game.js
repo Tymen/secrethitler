@@ -4,7 +4,7 @@ export default class Game extends Component {
     render() {
         return (
             <div>
-                <h1>Game</h1>
+                <h1>Game has started</h1>
             </div>
         );
     }
