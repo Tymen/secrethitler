@@ -10885,12 +10885,26 @@ a.text-dark:focus {
 }
 
 .background-rooms {
-  padding: 15px;
+  padding: 30px;
   background-color: #B8B8B8;
 }
 
 .background-room {
+  text-align: center;
   background-color: #707070;
+}
+
+.background-room i {
+  margin: 10px 0px;
+  font-size: 125px;
+}
+
+.room-name-li {
+  width: 230px;
+  margin-left: -15px;
+  margin-bottom: 0px;
+  padding: 5px 10px;
+  background-color: #615E5D;
 }
 
 .rooms-body {

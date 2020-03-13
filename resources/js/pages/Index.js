@@ -10,6 +10,8 @@ import GameRule from './GameRule';
 import Room from "./Room";
 
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import Login from "../components/Login/Login";
+import Register from "../components/Register/Register";
 
 
 export default class Index extends Component {

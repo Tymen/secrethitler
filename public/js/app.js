@@ -83284,15 +83284,17 @@ function (_Component) {
     _defineProperty(_assertThisInitialized(_this), "showRooms", function () {
       return _this.state.rooms.map(function (room) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "col-3 background-room"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+          className: "col-md-3"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "col-12 background-room  "
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "fas fa-mug-hot"
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
           key: room.id,
           to: "/room/" + room.id
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
           className: "room-name-li"
-        }, room.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-          className: "room-name-li"
-        }, room.name)));
+        }, room.name))));
       });
     });
 
@@ -83323,7 +83325,7 @@ function (_Component) {
       var _this3 = this;
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "row background-rooms"
+        className: "row"
       }, this.showRooms(), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Universal_Notification__WEBPACK_IMPORTED_MODULE_2__["default"], {
         onRef: function onRef(ref) {
           return _this3.child = ref;
@@ -84498,6 +84500,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_Home_JoinRoom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/Home/JoinRoom */ "./resources/js/components/Home/JoinRoom.js");
 /* harmony import */ var _components_Home_CreateRoom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/Home/CreateRoom */ "./resources/js/components/Home/CreateRoom.js");
 /* harmony import */ var _components_Home_Rooms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/Home/Rooms */ "./resources/js/components/Home/Rooms.js");
+/* harmony import */ var _appSettings__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../appSettings */ "./resources/js/appSettings.js");
+/* harmony import */ var _components_Universal_Notification__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/Universal/Notification */ "./resources/js/components/Universal/Notification.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -84508,13 +84512,17 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
 
 
 
@@ -84526,39 +84534,49 @@ var Home =
 function (_Component) {
   _inherits(Home, _Component);
 
-  function Home() {
+  function Home(props) {
+    var _this;
+
     _classCallCheck(this, Home);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(Home).apply(this, arguments));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Home).call(this, props));
+
+    _defineProperty(_assertThisInitialized(_this), "state", {
+      getMsg: _appSettings__WEBPACK_IMPORTED_MODULE_4__["messagesConfig"].pages.home
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "notify", function () {
+      _this.child.getNotify(_this.state.getMsg.auth.noLogin);
+    });
+
+    _this.child = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
+    return _this;
   }
 
   _createClass(Home, [{
     key: "render",
     value: function render() {
+      var _this2 = this;
+
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "container"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "row"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        className: "home-logo",
-        src: "images/Secrethitler-no-bg.png"
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Universal_Notification__WEBPACK_IMPORTED_MODULE_5__["default"], {
+        onRef: function onRef(ref) {
+          return _this2.child = ref;
+        }
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: this.notify
+      }, "Child.method()"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "row"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-4 offset-2 text-center"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Home_JoinRoom__WEBPACK_IMPORTED_MODULE_1__["default"], null)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-4 text-center"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Home_CreateRoom__WEBPACK_IMPORTED_MODULE_2__["default"], null))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "row"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "rooms"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "join-text"
+        className: "col-12 join-text"
       }, "Join a game"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "rooms-body"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "room-name"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Home_Rooms__WEBPACK_IMPORTED_MODULE_3__["default"], null))))));
+        className: "background-rooms"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Home_Rooms__WEBPACK_IMPORTED_MODULE_3__["default"], null)));
     }
   }]);
 
@@ -84591,6 +84609,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _GameRule__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./GameRule */ "./resources/js/pages/GameRule.js");
 /* harmony import */ var _Room__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Room */ "./resources/js/pages/Room.js");
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _components_Login_Login__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../components/Login/Login */ "./resources/js/components/Login/Login.js");
+/* harmony import */ var _components_Register_Register__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../components/Register/Register */ "./resources/js/components/Register/Register.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -84608,6 +84628,8 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
 
 
 
@@ -84649,7 +84671,7 @@ function (_Component) {
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_9__["Route"], {
         path: "/login",
         exact: true,
-        component: Login
+        component: _components_Login_Login__WEBPACK_IMPORTED_MODULE_10__["default"]
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_9__["Route"], {
         path: "/auth/:type",
         exact: true,
@@ -84657,7 +84679,7 @@ function (_Component) {
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_9__["Route"], {
         path: "/register",
         exact: true,
-        component: Register
+        component: _components_Register_Register__WEBPACK_IMPORTED_MODULE_11__["default"]
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_9__["Route"], {
         path: "/gamerules",
         exact: true,
