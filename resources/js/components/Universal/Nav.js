@@ -51,7 +51,7 @@ export default class Nav extends Component {
         } else {
             return (
                 <div>
-                    <Link className="nav-item" to="/login">
+                    <Link className="nav-item" to="/auth/login">
                         <li className="nav-link">Login</li>
                     </Link>
                     <Link className="nav-item" to="/register">
@@ -74,7 +74,7 @@ export default class Nav extends Component {
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav mr-auto">
                             <Link className="navbar-brand" to="/">
-                                <li className="nav-link ">Logo</li>
+                                <li className="navbar-logo"><img src="images/Secrethitler-no-bg.png"></img></li>
                             </Link>
                         </ul>
                         <ul className="navbar-nav ml-auto">
