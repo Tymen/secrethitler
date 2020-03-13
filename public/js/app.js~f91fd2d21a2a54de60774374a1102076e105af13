@@ -62560,7 +62560,7 @@ var currentlyProcessingQueue;
   didWarnUpdateInsideUpdate = false;
   currentlyProcessingQueue = null;
 
-  
+
 }
 
 function createUpdateQueue(baseState) {
@@ -66875,7 +66875,7 @@ function insertNonHydratedInstance(returnFiber, fiber) {
               break;
 
             case SuspenseComponent:
-              
+
               break;
           }
 
@@ -82879,7 +82879,102 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 __webpack_require__(/*! ./pages/Index */ "./resources/js/pages/Index.js");
 
 /***/ }),
+/***/ "./resources/js/appSettings.js":
+/*!*************************************!*\
+  !*** ./resources/js/appSettings.js ***!
+  \*************************************/
+/*! exports provided: messagesConfig */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "messagesConfig", function() { return messagesConfig; });
+/**
+
+ // route to get the message: messageConfig to the subject pages, to the page home.
+ state = {
+        getMsg: messagesConfig.pages.home,
+    };
+
+ // Needed to call the this.child.getNotify function.
+ constructor(props) {
+        super(props);
+        this.child = React.createRef();
+    };
+
+ // Call the getNotify function, Define the message it should display.
+ notify = () => {
+        this.child.getNotify(this.state.getMsg.auth.noLogin);
+    };
+
+ // Place in the render section
+ <Notification onRef={ref => (this.child = ref)} />
+ **/
+var msgTypes = {
+  One: "error",
+  Two: "success",
+  Three: "warning"
+};
+var messagesConfig = {
+  components: {
+    example: {
+      spnLogin: {
+        "default": "Error",
+        clientId: "Error",
+        secretKey: "Error",
+        tenantId: "Error"
+      },
+      subscriptSel: {
+        subscriptionErr: "Subscription is required"
+      }
+    },
+    register: {
+      auth: {
+        registerError: {
+          type: msgTypes.One,
+          title: "Invalid",
+          message: "Incorrect inputs"
+        }
+      }
+    },
+    rooms: {
+      internalServer: {
+        type: msgTypes.One,
+        title: "Connection issue",
+        message: "Internal server error"
+      }
+    }
+  },
+  pages: {
+    example: {
+      index: {
+        snackbarErrorInvalid: "Your credentials are invalid!",
+        snackbarSucces: "Succecfully logged in!",
+        snackbarErrorTextValidation: "Please fill in all required fields",
+        subscripSelError: "Select valid subscriptions"
+      }
+    },
+    home: {
+      auth: {
+        noLogin: {
+          type: msgTypes.One,
+          title: "Authentication Error",
+          message: "You're not logged in"
+        }
+      }
+    },
+    about: {},
+    game: {},
+    gameRule: {},
+    auth: {}
+  },
+  universal: {}
+};
+
+
+/***/ }),
+
+>>>>>>> Fixed a bug:public/js/app.js
 /***/ "./resources/js/bootstrap.js":
 /*!***********************************!*\
   !*** ./resources/js/bootstrap.js ***!
@@ -83078,8 +83173,31 @@ function (_Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Login).call(this, props));
 
+<<<<<<< HEAD:public/js/app.js~f91fd2d21a2a54de60774374a1102076e105af13
     _defineProperty(_assertThisInitialized(_this), "onChange", function (e) {
       _this.setState(_defineProperty({}, e.target.name, e.target.value));
+=======
+    _defineProperty(_assertThisInitialized(_this), "x", void 0);
+
+    _defineProperty(_assertThisInitialized(_this), "getRooms", function () {
+      axios.get('/api/v1/rooms').then(function (response) {
+        if (_this._isMounted) {
+          _this.setState({
+            rooms: response.data
+          });
+        }
+      })["catch"](function (error) {
+        _this.child.getNotify(_this.state.getMsg.internalServer);
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "showRooms", function () {
+      return _this.state.rooms.map(function (room) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+          key: room.id
+        }, room.name);
+      });
+>>>>>>> Fixed a bug:public/js/app.js
     });
 
     _this.state = {
@@ -83114,6 +83232,7 @@ function (_Component) {
     value: function render() {
       var _this3 = this;
 
+<<<<<<< HEAD:public/js/app.js~f91fd2d21a2a54de60774374a1102076e105af13
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "container "
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -83156,6 +83275,13 @@ function (_Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         className: "checking-account"
       }, "Dont have an account? Signup here"))))));
+=======
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, this.showRooms(), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Universal_Notification__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        onRef: function onRef(ref) {
+          return _this3.child = ref;
+        }
+      })));
+>>>>>>> Fixed a bug:public/js/app.js
     }
   }]);
 
@@ -83178,6 +83304,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Register; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _appSettings__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../appSettings */ "./resources/js/appSettings.js");
+/* harmony import */ var _Universal_Notification__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Universal/Notification */ "./resources/js/components/Universal/Notification.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
@@ -83208,11 +83336,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
+
+
 var Register =
 /*#__PURE__*/
 function (_Component) {
   _inherits(Register, _Component);
 
+  // Place in the render section
   function Register(props) {
     var _this;
 
@@ -83229,8 +83360,10 @@ function (_Component) {
       email: '',
       password: '',
       password_confirmation: '',
-      errors: ''
+      errors: '',
+      getMsg: _appSettings__WEBPACK_IMPORTED_MODULE_1__["messagesConfig"].components.register
     };
+    _this.child = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
     _this.onChange = _this.onChange.bind(_assertThisInitialized(_this));
     _this.onSubmit = _this.onSubmit.bind(_assertThisInitialized(_this));
     return _this;
@@ -83241,6 +83374,7 @@ function (_Component) {
     value: function onSubmit(e) {
       var _this2 = this;
 
+      console.log("test");
       e.preventDefault();
       axios.post('/register', {
         username: this.state.username,
@@ -83250,9 +83384,14 @@ function (_Component) {
       }).then(function (response) {
         window.location.href = '/';
       })["catch"](function (error) {
+        console.log(_this2.state.getMsg);
+        _this2.state.getMsg.auth.registerError.message = error.response.data.errors;
+
         _this2.setState({
           errors: [].concat(_toConsumableArray(_this2.state.errors), [error])
         });
+
+        _this2.child.getNotify(_this2.state.getMsg.auth.registerError);
       });
     }
   }, {
@@ -83262,7 +83401,11 @@ function (_Component) {
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "container"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Universal_Notification__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        onRef: function onRef(ref) {
+          return _this3.child = ref;
+        }
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "block"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "card-login rounded-bottom-left"
@@ -83559,6 +83702,162 @@ function (_Component) {
 
 /***/ }),
 
+<<<<<<< HEAD:public/js/app.js~f91fd2d21a2a54de60774374a1102076e105af13
+=======
+/***/ "./resources/js/components/Universal/Notification.js":
+/*!***********************************************************!*\
+  !*** ./resources/js/components/Universal/Notification.js ***!
+  \***********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Home; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var pnotify_dist_es_PNotify__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! pnotify/dist/es/PNotify */ "./node_modules/pnotify/dist/es/PNotify.js");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+
+var Home =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(Home, _Component);
+
+  function Home() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    _classCallCheck(this, Home);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(Home)).call.apply(_getPrototypeOf2, [this].concat(args)));
+
+    _defineProperty(_assertThisInitialized(_this), "getNotify", function (getMsg) {
+      _this.setState({
+        MSG: getMsg
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "notifyMSG", function () {
+      if (_this.state) {
+        if (_this.state.MSG) {
+          switch (_this.state.MSG.type) {
+            case "error":
+              pnotify_dist_es_PNotify__WEBPACK_IMPORTED_MODULE_1__["default"].error({
+                title: _this.state.MSG.title,
+                text: _this.state.MSG.message,
+                modules: {
+                  Desktop: {
+                    desktop: true
+                  },
+                  Buttons: {
+                    closer: true,
+                    closerHover: true
+                  }
+                }
+              });
+              break;
+
+            case "success":
+              pnotify_dist_es_PNotify__WEBPACK_IMPORTED_MODULE_1__["default"].success({
+                title: _this.state.MSG.title,
+                text: _this.state.MSG.message,
+                modules: {
+                  Desktop: {
+                    desktop: true
+                  },
+                  Buttons: {
+                    closer: true
+                  }
+                }
+              });
+              break;
+
+            case "warning":
+              pnotify_dist_es_PNotify__WEBPACK_IMPORTED_MODULE_1__["default"].notice({
+                title: _this.state.MSG.title,
+                text: _this.state.MSG.message,
+                modules: {
+                  Desktop: {
+                    desktop: true
+                  },
+                  Buttons: {
+                    closer: true
+                  }
+                }
+              });
+              break;
+          }
+
+          _this.setState({
+            MSG: ""
+          });
+        }
+      }
+    });
+
+    return _this;
+  }
+
+  _createClass(Home, [{
+    key: "componentDidMount",
+    // Set notification style
+    // this.props.onRef..... This allowes other components to call functions inside this component
+    value: function componentDidMount() {
+      pnotify_dist_es_PNotify__WEBPACK_IMPORTED_MODULE_1__["default"].defaults.styling = 'bootstrap4'; // Bootstrap version 4
+
+      pnotify_dist_es_PNotify__WEBPACK_IMPORTED_MODULE_1__["default"].defaults.icons = 'fontawesome4';
+      this.props.onRef(this);
+    }
+  }, {
+    key: "componentWillUnmount",
+    // Same as this.props.onRef.....
+    value: function componentWillUnmount() {
+      this.props.onRef(undefined);
+    } // This will give the state a message as an object
+
+  }, {
+    key: "render",
+    // This is needed so the notification will be shown if the state changes.
+    value: function render() {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.notifyMSG());
+    }
+  }]);
+
+  return Home;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+
+
+
+/***/ }),
+
+>>>>>>> Fixed a bug:public/js/app.js
 /***/ "./resources/js/pages/About.js":
 /*!*************************************!*\
   !*** ./resources/js/pages/About.js ***!
@@ -83742,6 +84041,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Home; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+<<<<<<< HEAD:public/js/app.js~f91fd2d21a2a54de60774374a1102076e105af13
+=======
+/* harmony import */ var _components_Home_JoinRoom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/Home/JoinRoom */ "./resources/js/components/Home/JoinRoom.js");
+/* harmony import */ var _components_Home_CreateRoom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/Home/CreateRoom */ "./resources/js/components/Home/CreateRoom.js");
+/* harmony import */ var _components_Home_Rooms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/Home/Rooms */ "./resources/js/components/Home/Rooms.js");
+/* harmony import */ var _appSettings__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../appSettings */ "./resources/js/appSettings.js");
+/* harmony import */ var _components_Universal_Notification__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/Universal/Notification */ "./resources/js/components/Universal/Notification.js");
+>>>>>>> Fixed a bug:public/js/app.js
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -83752,14 +84059,31 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
+<<<<<<< HEAD:public/js/app.js~f91fd2d21a2a54de60774374a1102076e105af13
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
+=======
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+>>>>>>> Fixed a bug:public/js/app.js
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
+<<<<<<< HEAD:public/js/app.js~f91fd2d21a2a54de60774374a1102076e105af13
+=======
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+
+
+
+>>>>>>> Fixed a bug:public/js/app.js
 
 
 var Home =
@@ -83767,16 +84091,64 @@ var Home =
 function (_Component) {
   _inherits(Home, _Component);
 
+<<<<<<< HEAD:public/js/app.js~f91fd2d21a2a54de60774374a1102076e105af13
   function Home() {
     _classCallCheck(this, Home);
 
     return _possibleConstructorReturn(this, _getPrototypeOf(Home).apply(this, arguments));
+=======
+  function Home(props) {
+    var _this;
+
+    _classCallCheck(this, Home);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Home).call(this, props));
+
+    _defineProperty(_assertThisInitialized(_this), "state", {
+      getMsg: _appSettings__WEBPACK_IMPORTED_MODULE_4__["messagesConfig"].pages.home
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "notify", function () {
+      _this.child.getNotify(_this.state.getMsg.auth.noLogin);
+    });
+
+    _this.child = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
+    return _this;
+>>>>>>> Fixed a bug:public/js/app.js
   }
 
   _createClass(Home, [{
     key: "render",
     value: function render() {
+<<<<<<< HEAD:public/js/app.js~f91fd2d21a2a54de60774374a1102076e105af13
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Home"));
+=======
+      var _this2 = this;
+
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "container"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Universal_Notification__WEBPACK_IMPORTED_MODULE_5__["default"], {
+        onRef: function onRef(ref) {
+          return _this2.child = ref;
+        }
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: this.notify
+      }, "Child.method()"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "row"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-4 offset-2 text-center"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Home_JoinRoom__WEBPACK_IMPORTED_MODULE_1__["default"], null)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-4 text-center"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Home_CreateRoom__WEBPACK_IMPORTED_MODULE_2__["default"], null))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "row"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "card"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "card-header"
+      }, "Featured"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "card-body"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Home_Rooms__WEBPACK_IMPORTED_MODULE_3__["default"], null)))));
+>>>>>>> Fixed a bug:public/js/app.js
     }
   }]);
 

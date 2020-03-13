@@ -39,6 +39,15 @@ const messagesConfig = {
                 subscriptionErr: "Subscription is required"
             }
         },
+        register: {
+            auth: {
+                registerError: {
+                    type: msgTypes.One,
+                    title: "Invalid",
+                    message: "Incorrect inputs"
+                }
+            },
+        },
         rooms: {
             internalServer: {
                 type: msgTypes.One,
