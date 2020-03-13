@@ -28,8 +28,8 @@ export default class Room extends Component {
                 // })
                 console.log(user)
             })
-
     }
+
 
     getActive = () => {
 

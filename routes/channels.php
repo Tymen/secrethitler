@@ -21,6 +21,3 @@ Broadcast::channel('room.{id}', function ($id) {
     }
 });
 
-
-
-
