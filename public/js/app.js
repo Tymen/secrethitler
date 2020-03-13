@@ -83791,7 +83791,7 @@ function (_Component) {
           "aria-controls": "navbarSupportedContent",
           "aria-expanded": "false",
           "aria-label": "Toggle navigation"
-        }, ">", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
           className: "navbar-toggler-icon"
         })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "collapse navbar-collapse",
