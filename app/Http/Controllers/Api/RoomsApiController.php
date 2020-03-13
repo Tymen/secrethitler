@@ -50,6 +50,8 @@ class RoomsApiController extends Controller
         $roomState->room_id = $room->id;
         $roomState->save();
 
+//        Auth::user()->assignRole('Host');
+
         event(new CreatedRoomEvent());
 
         return Response::create(['completed' => true]);
@@ -76,6 +78,17 @@ class RoomsApiController extends Controller
     public function update(Request $request, Room $room)
     {
         //
+    }
+
+    public function setActive($id)
+    {
+
+    }
+
+    public function getActive($id)
+    {
+        $room = Room::find($id);
+        return Response::create($room->active);
     }
 
     /**
