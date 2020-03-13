@@ -14,7 +14,7 @@ export default class Home extends Component {
         this.props.onRef(undefined)
     }
 
-    // This will give the state a message as a object
+    // This will give the state a message as an object
     getNotify = (getMsg) => {
         this.setState( {
             MSG: getMsg,

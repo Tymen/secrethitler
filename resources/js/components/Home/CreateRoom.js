@@ -1,16 +1,19 @@
 import React, {Component} from 'react';
+import Notification from "../Universal/Notification";
+import {messagesConfig} from "../../appSettings";
 
 export default class CreateRoom extends Component {
 
     state = {
         name: '',
-        rooms: []
+        rooms: [],
+        getMsg: messagesConfig.pages.home,
     }
 
 
     constructor() {
         super()
-
+        this.child = React.createRef();
         this.onChange = this.onChange.bind(this)
         this.createRoom = this.createRoom.bind(this)
     }
@@ -30,13 +33,14 @@ export default class CreateRoom extends Component {
 
             })
             .catch(error => {
-
+                this.child.getNotify(this.state.getMsg.auth.noLogin);
             })
     }
 
     render() {
         return (
             <div>
+                <Notification onRef={ref => (this.child = ref)} />
                 <form onSubmit={this.createRoom}>
                     <div>
                         <div>

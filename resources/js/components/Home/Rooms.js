@@ -1,12 +1,19 @@
 import React, {Component} from 'react';
+import Notification from "../Universal/Notification";
+import {messagesConfig} from "../../appSettings";
 
 export default class Rooms extends Component {
-    _isMounted = false
+    _isMounted = false;
 
     state = {
-        rooms: []
-    }
-x
+        rooms: [],
+        getMsg: messagesConfig.components.rooms,
+    };
+x;
+    constructor(props) {
+        super(props);
+        this.child = React.createRef();
+    };
     componentDidMount() {
         this._isMounted = true
         this.getRooms()
@@ -24,7 +31,10 @@ x
                     this.setState({rooms: response.data})
                 }
             })
-    }
+            .catch(error => {
+            this.child.getNotify(this.state.getMsg.internalServer);
+        })
+    };
 
     componentWillUnmount() {
         this._isMounted = false
@@ -38,13 +48,14 @@ x
                 </p>
             )
         })
-    }
+    };
 
     render() {
         return (
             <div>
                 <ul>
                     {this.showRooms()}
+                    <Notification onRef={ref => (this.child = ref)} />
                 </ul>
             </div>
         )
