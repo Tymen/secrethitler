@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import Login from "../components/Login/Login";
-import Register from "../components/Register/Register";
+import Login from "../components/Auth/Login";
+import Register from "../components/Auth/Register";
 
 export default class Auth extends Component {
     state = {

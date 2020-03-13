@@ -18,8 +18,7 @@ export default class Home extends Component {
     render() {
         return (
             <div className="container">
-                <Notification onRef={ref => (this.child = ref)} />
-                <button onClick={this.notify}>Child.method()</button>
+                <img className="home-logo" src="images/Secrethitler-no-bg.png"/>
                 <div className="row">
                     <div className="col-4 offset-2 text-center">
                         <JoinRoom/>

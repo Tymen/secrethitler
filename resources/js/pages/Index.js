@@ -10,8 +10,7 @@ import GameRule from './GameRule';
 import Room from "./Room";
 
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
-import Login from "../components/Login/Login";
-import Register from "../components/Register/Register";
+
 
 
 export default class Index extends Component {
@@ -23,8 +22,6 @@ export default class Index extends Component {
                 <Switch>
                     <Route path="/" exact component={Home}/>
                     <Route path="/room/:id" exact component={Room}/>
-                    <Route path="/auth/:type" exact component={Auth}/>
-                    <Route path="/login" exact component={Login}/>
                     <Route path="/auth/:type" exact component={Auth}/>
                     <Route path="/gamerules" exact component={GameRule}/>
                     <Route path="/about" exact component={About}/>
