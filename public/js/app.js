@@ -83037,6 +83037,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return JoinRoom; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -83054,6 +83055,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -83076,8 +83078,9 @@ function (_Component) {
         placeholder: "Join Room",
         name: "joinRoom",
         className: "input-room-name"
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("link", {
-        className: "btn join-room"
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+        className: "btn join-room",
+        to: "/room/1"
       }, "Join room")))));
     }
   }]);
@@ -83101,6 +83104,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Rooms; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -83120,6 +83124,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -83159,9 +83164,16 @@ function (_Component) {
 
     _defineProperty(_assertThisInitialized(_this), "showRooms", function () {
       return _this.state.rooms.map(function (room) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-          key: room.id
-        }, room.name);
+        return (// <a key={room.id} className="room-p">
+          //     {room.name}
+          // </a>
+          react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+            className: "",
+            to: "/room/" + room.id
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+            className: "room-name-li"
+          }, room.name))
+        );
       });
     });
 
@@ -83557,7 +83569,7 @@ function (_Component) {
   _createClass(Game, [{
     key: "render",
     value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Game"));
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Game has started"));
     }
   }]);
 
@@ -83614,7 +83626,13 @@ function (_Component) {
   _createClass(Lobby, [{
     key: "render",
     value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Lobby"));
+      var _this = this;
+
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: function onClick() {
+          return _this.props.setActive();
+        }
+      }, "Start game!"));
     }
   }]);
 
@@ -83756,7 +83774,7 @@ function (_Component) {
       var _this2 = this;
 
       this._isMounted = true;
-      axios.get('api/v1/users/me').then(function (response) {
+      axios.get('/api/v1/users/me').then(function (response) {
         if (_this2._isMounted) {
           _this2.setState({
             loggedIn: response.data,
@@ -84081,11 +84099,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_Register_Register__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/Register/Register */ "./resources/js/components/Register/Register.js");
 /* harmony import */ var _components_Universal_Footer__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/Universal/Footer */ "./resources/js/components/Universal/Footer.js");
 /* harmony import */ var _Home__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Home */ "./resources/js/pages/Home.js");
-/* harmony import */ var _components_Room_Game__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../components/Room/Game */ "./resources/js/components/Room/Game.js");
-/* harmony import */ var _About__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./About */ "./resources/js/pages/About.js");
-/* harmony import */ var _GameRule__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./GameRule */ "./resources/js/pages/GameRule.js");
-/* harmony import */ var _components_Room_Lobby__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../components/Room/Lobby */ "./resources/js/components/Room/Lobby.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _About__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./About */ "./resources/js/pages/About.js");
+/* harmony import */ var _GameRule__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./GameRule */ "./resources/js/pages/GameRule.js");
+/* harmony import */ var _Room__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Room */ "./resources/js/pages/Room.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -84116,7 +84133,6 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
-
 var Index =
 /*#__PURE__*/
 function (_Component) {
@@ -84131,34 +84147,30 @@ function (_Component) {
   _createClass(Index, [{
     key: "render",
     value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_11__["BrowserRouter"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Universal_Nav__WEBPACK_IMPORTED_MODULE_2__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_11__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_11__["Route"], {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__["BrowserRouter"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Universal_Nav__WEBPACK_IMPORTED_MODULE_2__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__["Route"], {
         path: "/",
         exact: true,
         component: _Home__WEBPACK_IMPORTED_MODULE_6__["default"]
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_11__["Route"], {
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__["Route"], {
+        path: "/room/:id",
+        exact: true,
+        component: _Room__WEBPACK_IMPORTED_MODULE_9__["default"]
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__["Route"], {
         path: "/login",
         exact: true,
         component: _components_Login_Login__WEBPACK_IMPORTED_MODULE_3__["default"]
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_11__["Route"], {
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__["Route"], {
         path: "/register",
         exact: true,
         component: _components_Register_Register__WEBPACK_IMPORTED_MODULE_4__["default"]
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_11__["Route"], {
-        path: "/game",
-        exact: true,
-        component: _components_Room_Game__WEBPACK_IMPORTED_MODULE_7__["default"]
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_11__["Route"], {
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__["Route"], {
         path: "/gamerules",
         exact: true,
-        component: _GameRule__WEBPACK_IMPORTED_MODULE_9__["default"]
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_11__["Route"], {
+        component: _GameRule__WEBPACK_IMPORTED_MODULE_8__["default"]
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__["Route"], {
         path: "/about",
         exact: true,
-        component: _About__WEBPACK_IMPORTED_MODULE_8__["default"]
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_11__["Route"], {
-        path: "/lobby",
-        exact: true,
-        component: _components_Room_Lobby__WEBPACK_IMPORTED_MODULE_10__["default"]
+        component: _About__WEBPACK_IMPORTED_MODULE_7__["default"]
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Universal_Footer__WEBPACK_IMPORTED_MODULE_5__["default"], null));
     }
   }]);
@@ -84171,6 +84183,120 @@ function (_Component) {
 if (document.getElementById('index')) {
   react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Index, null), document.getElementById('index'));
 }
+
+/***/ }),
+
+/***/ "./resources/js/pages/Room.js":
+/*!************************************!*\
+  !*** ./resources/js/pages/Room.js ***!
+  \************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Room; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _components_Room_Game__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/Room/Game */ "./resources/js/components/Room/Game.js");
+/* harmony import */ var _components_Room_Lobby__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/Room/Lobby */ "./resources/js/components/Room/Lobby.js");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+
+
+var Room =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(Room, _Component);
+
+  function Room() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    _classCallCheck(this, Room);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(Room)).call.apply(_getPrototypeOf2, [this].concat(args)));
+
+    _defineProperty(_assertThisInitialized(_this), "state", {
+      users: [],
+      active: false
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "getActive", function () {});
+
+    _defineProperty(_assertThisInitialized(_this), "setActive", function () {
+      _this.setState({
+        active: true
+      });
+    });
+
+    return _this;
+  }
+
+  _createClass(Room, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.getActive();
+      Echo.join("room.".concat(this.props.match.params.id)).here(function (users) {
+        console.log(users);
+      }).joining(function (user) {
+        // this.setState({
+        //     users: user
+        // })
+        console.log(user);
+      }).leaving(function (user) {
+        // this.setState({
+        //     users: user
+        // })
+        console.log(user);
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this2 = this;
+
+      if (this.state.active) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Room_Game__WEBPACK_IMPORTED_MODULE_1__["default"], null);
+      }
+
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Room_Lobby__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        setActive: function setActive() {
+          return _this2.setActive();
+        }
+      });
+    }
+  }]);
+
+  return Room;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+
+
 
 /***/ }),
 

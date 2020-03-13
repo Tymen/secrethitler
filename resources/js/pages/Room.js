@@ -1,16 +1,52 @@
 import React, {Component} from 'react';
+import Game from "../components/Room/Game";
+import Lobby from "../components/Room/Lobby";
 
-export default class Lobby extends Component {
+export default class Room extends Component {
+
     state = {
+        users: [],
         active: false
     }
 
+    componentDidMount() {
+        this.getActive()
+
+        Echo.join(`room.${this.props.match.params.id}`)
+            .here((users) => {
+                console.log(users)
+            })
+            .joining((user) => {
+                // this.setState({
+                //     users: user
+                // })
+                console.log(user)
+            })
+            .leaving((user) => {
+                // this.setState({
+                //     users: user
+                // })
+                console.log(user)
+            })
+
+    }
+
+    getActive = () => {
+
+    }
+
+    setActive = () => {
+        this.setState({
+            active: true
+        })
+    }
+
     render() {
-        if (this.s)
-        return (
-            <div>
-                <h1>Room</h1>
-            </div>
-        );
+        if (this.state.active) {
+            return <Game/>
+        }
+        return <Lobby setActive={() => this.setActive()}/>
+
+
     }
 }
