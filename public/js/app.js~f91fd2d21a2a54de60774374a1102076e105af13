@@ -83173,10 +83173,8 @@ function (_Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Login).call(this, props));
 
-<<<<<<< HEAD:public/js/app.js~f91fd2d21a2a54de60774374a1102076e105af13
-    _defineProperty(_assertThisInitialized(_this), "onChange", function (e) {
-      _this.setState(_defineProperty({}, e.target.name, e.target.value));
-=======
+    _defineProperty(_assertThisInitialized(_this), "x", void 0);
+
     _defineProperty(_assertThisInitialized(_this), "x", void 0);
 
     _defineProperty(_assertThisInitialized(_this), "getRooms", function () {
@@ -83281,7 +83279,10 @@ function (_Component) {
           return _this3.child = ref;
         }
       })));
+<<<<<<< HEAD:public/js/app.js~f91fd2d21a2a54de60774374a1102076e105af13
 >>>>>>> Fixed a bug:public/js/app.js
+=======
+>>>>>>> 5b3007eede07041a65e23ffdf44dc80ae0b91fe8:public/js/app.js
     }
   }]);
 
@@ -84048,7 +84049,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_Home_Rooms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/Home/Rooms */ "./resources/js/components/Home/Rooms.js");
 /* harmony import */ var _appSettings__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../appSettings */ "./resources/js/appSettings.js");
 /* harmony import */ var _components_Universal_Notification__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/Universal/Notification */ "./resources/js/components/Universal/Notification.js");
+<<<<<<< HEAD:public/js/app.js~f91fd2d21a2a54de60774374a1102076e105af13
 >>>>>>> Fixed a bug:public/js/app.js
+=======
+>>>>>>> 5b3007eede07041a65e23ffdf44dc80ae0b91fe8:public/js/app.js
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -84060,22 +84064,31 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
 <<<<<<< HEAD:public/js/app.js~f91fd2d21a2a54de60774374a1102076e105af13
+<<<<<<< HEAD:public/js/app.js~f91fd2d21a2a54de60774374a1102076e105af13
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 =======
+=======
+>>>>>>> 5b3007eede07041a65e23ffdf44dc80ae0b91fe8:public/js/app.js
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
+<<<<<<< HEAD:public/js/app.js~f91fd2d21a2a54de60774374a1102076e105af13
 >>>>>>> Fixed a bug:public/js/app.js
+=======
+>>>>>>> 5b3007eede07041a65e23ffdf44dc80ae0b91fe8:public/js/app.js
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 <<<<<<< HEAD:public/js/app.js~f91fd2d21a2a54de60774374a1102076e105af13
+<<<<<<< HEAD:public/js/app.js~f91fd2d21a2a54de60774374a1102076e105af13
 =======
+=======
+>>>>>>> 5b3007eede07041a65e23ffdf44dc80ae0b91fe8:public/js/app.js
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
@@ -84083,7 +84096,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
+<<<<<<< HEAD:public/js/app.js~f91fd2d21a2a54de60774374a1102076e105af13
 >>>>>>> Fixed a bug:public/js/app.js
+=======
+>>>>>>> 5b3007eede07041a65e23ffdf44dc80ae0b91fe8:public/js/app.js
 
 
 var Home =
@@ -84092,11 +84108,14 @@ function (_Component) {
   _inherits(Home, _Component);
 
 <<<<<<< HEAD:public/js/app.js~f91fd2d21a2a54de60774374a1102076e105af13
+<<<<<<< HEAD:public/js/app.js~f91fd2d21a2a54de60774374a1102076e105af13
   function Home() {
     _classCallCheck(this, Home);
 
     return _possibleConstructorReturn(this, _getPrototypeOf(Home).apply(this, arguments));
 =======
+=======
+>>>>>>> 5b3007eede07041a65e23ffdf44dc80ae0b91fe8:public/js/app.js
   function Home(props) {
     var _this;
 
@@ -84114,15 +84133,21 @@ function (_Component) {
 
     _this.child = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
     return _this;
+<<<<<<< HEAD:public/js/app.js~f91fd2d21a2a54de60774374a1102076e105af13
 >>>>>>> Fixed a bug:public/js/app.js
+=======
+>>>>>>> 5b3007eede07041a65e23ffdf44dc80ae0b91fe8:public/js/app.js
   }
 
   _createClass(Home, [{
     key: "render",
     value: function render() {
 <<<<<<< HEAD:public/js/app.js~f91fd2d21a2a54de60774374a1102076e105af13
+<<<<<<< HEAD:public/js/app.js~f91fd2d21a2a54de60774374a1102076e105af13
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Home"));
 =======
+=======
+>>>>>>> 5b3007eede07041a65e23ffdf44dc80ae0b91fe8:public/js/app.js
       var _this2 = this;
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
