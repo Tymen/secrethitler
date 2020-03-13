@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import Nav from '../components/Universal/Nav';
-import Login from '../components/Login/Login';
+import Auth from "./Auth";
 import Register from '../components/Register/Register';
 import Footer from '../components/Universal/Footer';
 
-import Home from '../components/Home/Home';
-import Game from '../components/Room/Game';
+import Home from './Home';
+import Game from './Game';
 import About from './About';
 import GameRule from './GameRule';
 import Lobby from '../components/Room/Lobby';
@@ -24,12 +24,9 @@ export default class Index extends Component {
                 <Switch>
                     <Route path="/" exact component={Home}/>
                     <Route path="/room/:id" exact component={Room}/>
-                    <Route path="/login" exact component={Login}/>
-                    <Route path="/register" exact component={Register}/>
-                    <Route path="/game" exact component={Game}/>
+                    <Route path="/auth/:type" exact component={Auth}/>
                     <Route path="/gamerules" exact component={GameRule}/>
                     <Route path="/about" exact component={About}/>
-                    <Route path="/lobby" exact component={Lobby}/>
                 </Switch>
                 <Footer/>
             </Router>

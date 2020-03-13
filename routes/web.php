@@ -27,6 +27,9 @@ Route::get('/room/{id}', function (){
     return view('room');
 
 });
+Route::get('/auth/login', function () {
+    return view('auth');
+});
 
 Auth::routes();
 
