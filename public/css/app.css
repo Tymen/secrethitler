@@ -10884,3 +10884,13 @@ a.text-dark:focus {
   }
 }
 
+.rooms-body {
+  text-align: center;
+  background-color: #B8B8B8;
+}
+
+.rooms-body i {
+  color: black;
+  font-size: 80px;
+}
+

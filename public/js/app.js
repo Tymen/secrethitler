@@ -83093,14 +83093,12 @@ function (_Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Home_CreateRoom__WEBPACK_IMPORTED_MODULE_2__["default"], null))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "row"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "rooms"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "join-text"
+        className: "col-12 join-text"
       }, "Join a game"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "rooms-body"
+        className: "background-rooms"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "room-name"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Home_Rooms__WEBPACK_IMPORTED_MODULE_3__["default"], null))))));
+        className: "col-3"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Home_Rooms__WEBPACK_IMPORTED_MODULE_3__["default"], null)))));
     }
   }]);
 
