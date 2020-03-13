@@ -28,7 +28,7 @@ class RoomsApiController extends Controller
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @return Response|void
+     * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
