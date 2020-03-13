@@ -3,7 +3,6 @@ import {Link} from "react-router-dom";
 import Notification from "../Universal/Notification";
 import {messagesConfig} from "../../appSettings";
 
-
 export default class Rooms extends Component {
     _isMounted = false;
 
@@ -48,6 +47,7 @@ x;
                 <div className="col-3 background-room">
                 <Link key={room.id} to={"/room/"+room.id}>
                     <p className="room-name-li">{room.name}</p>
+                    <li className="room-name-li">{room.name}</li>
                 </Link>
                 </div>
             )

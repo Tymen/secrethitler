@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import Game from "../components/Room/Game";
 import Lobby from "../components/Room/Lobby";
+import ChatLobby from "../components/Lobby/ChatLobby";
+import PlayersLobby from "../components/Lobby/PlayersLobby";
 
 export default class Room extends Component {
 
@@ -12,8 +14,9 @@ export default class Room extends Component {
     componentDidMount() {
         this.getActive()
 
-        Echo.join(`room.${this.props.match.params.id}`)
+        Echo.join('room.' + this.props.match.params.id)
             .here((users) => {
+
                 this.setState({
                     users: users
                 })
@@ -24,7 +27,9 @@ export default class Room extends Component {
                 })
             })
             .leaving(user => {
-                this.setState({users: this.state.users.filter(u => (u.id !== user.id))})
+                this.setState({
+                    users: this.state.users.filter(u => u.id !== user.id)
+                });
             })
     }
 
@@ -37,14 +42,23 @@ export default class Room extends Component {
         this.setState({
             active: true
         })
+
+
     }
 
     render() {
         if (this.state.active) {
-            return <Game/>
+            return (
+                <Game/>
+            )
         }
-        return <Lobby setActive={() => this.setActive()}/>
-
-
+        
+        return (
+            <div>
+                <Lobby setActive={() => this.setActive()}/>
+                <PlayersLobby users={this.state.users}/>
+                <ChatLobby/>
+            </div>
+        )
     }
 }
