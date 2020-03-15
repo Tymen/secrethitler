@@ -82943,6 +82943,15 @@ var messagesConfig = {
         subscriptionErr: "Subscription is required"
       }
     },
+    register: {
+      auth: {
+        registerError: {
+          type: msgTypes.One,
+          title: "Invalid",
+          message: "Incorrect inputs"
+        }
+      }
+    },
     rooms: {
       internalServer: {
         type: msgTypes.One,
@@ -83183,6 +83192,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Register; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _appSettings__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../appSettings */ "./resources/js/appSettings.js");
+/* harmony import */ var _Universal_Notification__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Universal/Notification */ "./resources/js/components/Universal/Notification.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
@@ -83213,11 +83224,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
+
+
 var Register =
 /*#__PURE__*/
 function (_Component) {
   _inherits(Register, _Component);
 
+  // Place in the render section
   function Register(props) {
     var _this;
 
@@ -83234,8 +83248,10 @@ function (_Component) {
       email: '',
       password: '',
       password_confirmation: '',
-      errors: ''
+      errors: '',
+      getMsg: _appSettings__WEBPACK_IMPORTED_MODULE_1__["messagesConfig"].components.register
     };
+    _this.child = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
     _this.onChange = _this.onChange.bind(_assertThisInitialized(_this));
     _this.onSubmit = _this.onSubmit.bind(_assertThisInitialized(_this));
     return _this;
@@ -83246,6 +83262,7 @@ function (_Component) {
     value: function onSubmit(e) {
       var _this2 = this;
 
+      console.log("test");
       e.preventDefault();
       axios.post('/register', {
         username: this.state.username,
@@ -83255,9 +83272,14 @@ function (_Component) {
       }).then(function (response) {
         window.location.href = '/';
       })["catch"](function (error) {
+        console.log(_this2.state.getMsg);
+        _this2.state.getMsg.auth.registerError.message = error.response.data.errors;
+
         _this2.setState({
           errors: [].concat(_toConsumableArray(_this2.state.errors), [error])
         });
+
+        _this2.child.getNotify(_this2.state.getMsg.auth.registerError);
       });
     }
   }, {
@@ -83267,7 +83289,11 @@ function (_Component) {
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "container"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Universal_Notification__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        onRef: function onRef(ref) {
+          return _this3.child = ref;
+        }
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "block"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "card-login rounded-bottom-left"
@@ -83930,7 +83956,13 @@ function (_Component) {
   _createClass(Game, [{
     key: "render",
     value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Game has started"));
+      var _this = this;
+
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Game has started"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: function onClick() {
+          return _this.props.setInactive();
+        }
+      }, "Inactive"));
     }
   }]);
 
@@ -84306,42 +84338,58 @@ function (_Component) {
 
     _defineProperty(_assertThisInitialized(_this), "notifyMSG", function () {
       if (_this.state) {
-        switch (_this.state.MSG.type) {
-          case "error":
-            pnotify_dist_es_PNotify__WEBPACK_IMPORTED_MODULE_1__["default"].error({
-              title: _this.state.MSG.title,
-              text: _this.state.MSG.message,
-              modules: {
-                Desktop: {
-                  desktop: true
+        if (_this.state.MSG) {
+          switch (_this.state.MSG.type) {
+            case "error":
+              pnotify_dist_es_PNotify__WEBPACK_IMPORTED_MODULE_1__["default"].error({
+                title: _this.state.MSG.title,
+                text: _this.state.MSG.message,
+                modules: {
+                  Desktop: {
+                    desktop: true
+                  },
+                  Buttons: {
+                    closer: true,
+                    closerHover: true
+                  }
                 }
-              }
-            });
-            break;
+              });
+              break;
 
-          case "success":
-            pnotify_dist_es_PNotify__WEBPACK_IMPORTED_MODULE_1__["default"].success({
-              title: _this.state.MSG.title,
-              text: _this.state.MSG.message,
-              modules: {
-                Desktop: {
-                  desktop: true
+            case "success":
+              pnotify_dist_es_PNotify__WEBPACK_IMPORTED_MODULE_1__["default"].success({
+                title: _this.state.MSG.title,
+                text: _this.state.MSG.message,
+                modules: {
+                  Desktop: {
+                    desktop: true
+                  },
+                  Buttons: {
+                    closer: true
+                  }
                 }
-              }
-            });
-            break;
+              });
+              break;
 
-          case "warning":
-            pnotify_dist_es_PNotify__WEBPACK_IMPORTED_MODULE_1__["default"].notice({
-              title: _this.state.MSG.title,
-              text: _this.state.MSG.message,
-              modules: {
-                Desktop: {
-                  desktop: true
+            case "warning":
+              pnotify_dist_es_PNotify__WEBPACK_IMPORTED_MODULE_1__["default"].notice({
+                title: _this.state.MSG.title,
+                text: _this.state.MSG.message,
+                modules: {
+                  Desktop: {
+                    desktop: true
+                  },
+                  Buttons: {
+                    closer: true
+                  }
                 }
-              }
-            });
-            break;
+              });
+              break;
+          }
+
+          _this.setState({
+            MSG: ""
+          });
         }
       }
     });
@@ -84356,6 +84404,7 @@ function (_Component) {
     value: function componentDidMount() {
       pnotify_dist_es_PNotify__WEBPACK_IMPORTED_MODULE_1__["default"].defaults.styling = 'bootstrap4'; // Bootstrap version 4
 
+      pnotify_dist_es_PNotify__WEBPACK_IMPORTED_MODULE_1__["default"].defaults.icons = 'fontawesome4';
       this.props.onRef(this);
     }
   }, {
@@ -84847,14 +84896,30 @@ function (_Component) {
 
     _defineProperty(_assertThisInitialized(_this), "state", {
       users: [],
-      active: false
+      active: 0
     });
 
-    _defineProperty(_assertThisInitialized(_this), "getActive", function () {});
+    _defineProperty(_assertThisInitialized(_this), "getActive", function () {
+      axios.get("/api/v1/rooms/".concat(_this.props.match.params.id, "/active")).then(function (response) {
+        _this.setState({
+          active: response.data
+        });
+      });
+    });
 
     _defineProperty(_assertThisInitialized(_this), "setActive", function () {
-      _this.setState({
-        active: true
+      axios.post("/api/v1/rooms/".concat(_this.props.match.params.id, "/active")).then(function (response) {
+        _this.setState({
+          active: 1
+        });
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "setInactive", function () {
+      axios.post("/api/v1/rooms/".concat(_this.props.match.params.id, "/inactive")).then(function (response) {
+        _this.setState({
+          active: 0
+        });
       });
     });
 
@@ -84889,7 +84954,11 @@ function (_Component) {
       var _this3 = this;
 
       if (this.state.active) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Room_Game__WEBPACK_IMPORTED_MODULE_1__["default"], null);
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Room_Game__WEBPACK_IMPORTED_MODULE_1__["default"], {
+          setInactive: function setInactive() {
+            return _this3.setInactive();
+          }
+        });
       }
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -84935,8 +85004,8 @@ function (_Component) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\Websites\The%20SS%20-%20SecretHitler\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\Websites\The%20SS%20-%20SecretHitler\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\joost\PhpstormProjects\SecretHitler\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\joost\PhpstormProjects\SecretHitler\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

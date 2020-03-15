@@ -8,7 +8,7 @@ export default class Room extends Component {
 
     state = {
         users: [],
-        active: false
+        active: 0,
     }
 
     componentDidMount() {
@@ -35,21 +35,35 @@ export default class Room extends Component {
 
 
     getActive = () => {
-
+        axios.get(`/api/v1/rooms/${this.props.match.params.id}/active`).then(response => {
+            this.setState({
+                active: response.data
+            })
+        })
     }
 
     setActive = () => {
-        this.setState({
-            active: true
-        })
+        axios.post(`/api/v1/rooms/${this.props.match.params.id}/active`).then(response => {
+                this.setState({
+                    active: 1
+                })
+            }
+        )
+    }
 
-
+    setInactive = () => {
+        axios.post(`/api/v1/rooms/${this.props.match.params.id}/inactive`).then(response => {
+                this.setState({
+                    active: 0
+                })
+            }
+        )
     }
 
     render() {
         if (this.state.active) {
             return (
-                <Game/>
+                <Game setInactive={() => this.setInactive()}/>
             )
         }
 
