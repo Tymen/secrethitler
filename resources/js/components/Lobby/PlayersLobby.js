@@ -17,7 +17,14 @@ export default class PlayersLobby extends Component {
     render() {
         return (
             <div>
-                {this.showPlayers()}
+                <div className="show-players">
+                    <div>
+                        {this.showPlayers()}
+                    </div>
+                </div>
+                <div className="players-in-lobby">
+                    <h4>Players in lobby</h4>
+                </div>
             </div>
         )
 
