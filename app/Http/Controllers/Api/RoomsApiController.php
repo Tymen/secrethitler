@@ -6,6 +6,7 @@ use App\Events\CreatedRoomEvent;
 use App\Http\Resources\RoomsCollection;
 use App\Room;
 use App\RoomState;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -32,6 +33,7 @@ class RoomsApiController extends Controller
      */
     public function store(Request $request)
     {
+        // Needs a new rule to check if the user already ahs a room and has to return an error if it is true
         $validator = Validator::make($request->all(), [
             'name' => 'required|unique:rooms|max:18|min:3',
         ]);
@@ -43,18 +45,18 @@ class RoomsApiController extends Controller
         $room = new Room();
         $room->name = $request->name;
         $room->user_id = Auth::user()->id;
-        $room->password = $request->password || null;
+        $room->password = $request->password;
         $room->save();
 
         $roomState = new RoomState();
         $roomState->room_id = $room->id;
         $roomState->save();
 
-//        Auth::user()->assignRole('Host');
+        Auth::user()->assignRole('Host');
 
         event(new CreatedRoomEvent());
 
-        return Response::create(['completed' => true]);
+        return Response::create('completed');
     }
 
     /**
@@ -82,7 +84,24 @@ class RoomsApiController extends Controller
 
     public function setActive($id)
     {
+        if (Auth::user()->hasRole('Host')) {
+            $room = Room::find($id);
+            $room->active = true;
+            $room->save();
+            return Response::create('completed');
+        }
+        return Response::create('Nice try, you are not the host!', 400);
+    }
 
+    public function setInactive($id)
+    {
+        if (Auth::user()->hasRole('Host')) {
+            $room = Room::find($id);
+            $room->active = false;
+            $room->save();
+            return Response::create('completed');
+        }
+        return Response::create('Nice try, you are not the host!', 400);
     }
 
     public function getActive($id)

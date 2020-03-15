@@ -5,6 +5,7 @@ export default class Game extends Component {
         return (
             <div>
                 <h1>Game has started</h1>
+                <button onClick={() => this.props.setInactive()}>Inactive</button>
             </div>
         );
     }

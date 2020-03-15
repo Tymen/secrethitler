@@ -22,6 +22,7 @@ Route::namespace('Api')->prefix('v1')->middleware('auth:api')->group(function() 
         Route::post('/', 'RoomsApiController@store');
 
         Route::get('{id}/active', 'RoomsApiController@getActive');
+        Route::post('{id}/inactive', 'RoomsApiController@setInactive');
         Route::post('{id}/active', 'RoomsApiController@setActive');
     });
 });
