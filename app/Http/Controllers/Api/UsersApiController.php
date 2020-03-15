@@ -68,6 +68,4 @@ class UsersApiController extends Controller
     {
         return response()->json(Auth::check());
     }
-
-
 }
