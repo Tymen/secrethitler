@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Events\CreatedRoomEvent;
-use App\Http\Resources\RoomsCollection;
 use App\Room;
 use App\RoomState;
-use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use App\Events\CreatedRoomEvent;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\RoomsCollection;
 use Illuminate\Support\Facades\Validator;
 
 class RoomsApiController extends Controller
