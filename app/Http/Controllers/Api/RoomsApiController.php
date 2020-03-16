@@ -32,7 +32,7 @@ class RoomsApiController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->name, [
+        $validator = Validator::make($request->all(), [
             'name' => 'required|unique:rooms|max:18|min:3',
         ]);
 
