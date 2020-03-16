@@ -394,3 +394,31 @@ body{
     max-width: 298px;
     border-right: 1px solid white;
 }
+
+.player-name{
+    margin-bottom: 0px;
+    padding: 10px;
+    font-size: 20px;
+    background-color: #929292;
+    color: white;
+    border-bottom: 1px solid white;
+}
+.room-info{
+    width: 1239px;
+    max-width: 1239px;
+    padding: 10px;
+    font-size: 20px;
+    margin-bottom: 0px;
+    color: white;
+    background-color: #606060;
+}
+
+.room-name{
+    display: inline;
+}
+
+.player-count{
+    float: right;
+    display: inline;
+    margin-bottom: 0px;
+}
