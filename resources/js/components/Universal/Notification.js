@@ -6,6 +6,7 @@ export default class Home extends Component {
     // this.props.onRef..... This allowes other components to call functions inside this component
     componentDidMount() {
         PNotify.defaults.styling = 'bootstrap4'; // Bootstrap version 4
+        PNotify.defaults.icons = 'fontawesome4';
         this.props.onRef(this)
     };
 
@@ -24,40 +25,53 @@ export default class Home extends Component {
     // Function to show the right type of notification
     notifyMSG = () => {
         if (this.state) {
-            switch(this.state.MSG.type){
-                case "error":
-                    PNotify.error({
-                        title: this.state.MSG.title,
-                        text: this.state.MSG.message,
-                        modules: {
-                            Desktop: {
-                                desktop: true
-                            },
-                        }
-                    });
-                    break;
-                case "success":
-                    PNotify.success({
-                        title: this.state.MSG.title,
-                        text: this.state.MSG.message,
-                        modules: {
-                            Desktop: {
-                                desktop: true
-                            },
-                        }
-                    });
-                    break;
-                case "warning":
-                    PNotify.notice({
-                        title: this.state.MSG.title,
-                        text: this.state.MSG.message,
-                        modules: {
-                            Desktop: {
-                                desktop: true
-                            },
-                        }
-                    });
-                    break;
+            if (this.state.MSG){
+                switch(this.state.MSG.type){
+                    case "error":
+                        PNotify.error({
+                            title: this.state.MSG.title,
+                            text: this.state.MSG.message,
+                            modules: {
+                                Desktop: {
+                                    desktop: true
+                                },
+                                Buttons: {
+                                    closer: true,
+                                    closerHover: true
+                                }
+                            }
+                        });
+                        break;
+                    case "success":
+                        PNotify.success({
+                            title: this.state.MSG.title,
+                            text: this.state.MSG.message,
+                            modules: {
+                                Desktop: {
+                                    desktop: true
+                                },
+                                Buttons: {
+                                    closer: true,
+                                }
+                            }
+                        });
+                        break;
+                    case "warning":
+                        PNotify.notice({
+                            title: this.state.MSG.title,
+                            text: this.state.MSG.message,
+                            modules: {
+                                Desktop: {
+                                    desktop: true
+                                },
+                                Buttons: {
+                                    closer: true,
+                                }
+                            }
+                        });
+                        break;
+                }
+                this.setState({MSG: ""})
             }
         }
     };
