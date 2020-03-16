@@ -40,12 +40,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function room()
+    public function hostsRoom()
     {
-        if (Auth::user()->hasRole('Host')) {
-            return $this->hasOne(Room::class);
-        }
-        return $this->belongsTo(Room::class);
+        return $this->hasOne(Room::class, 'user_id');
+    }
+
+    public function inRoom()
+    {
+        return $this->belongsTo(Room::class, 'room_id');
     }
 
     public function roomState()

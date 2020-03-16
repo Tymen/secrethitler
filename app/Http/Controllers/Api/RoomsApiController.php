@@ -32,7 +32,6 @@ class RoomsApiController extends Controller
      */
     public function store(Request $request)
     {
-        // Needs a new rule to check if the user already has a room and has to return an error if it is true
         $validator = Validator::make($request->all(), [
             'name' => 'required|unique:rooms|max:18|min:3',
         ]);
@@ -41,10 +40,14 @@ class RoomsApiController extends Controller
             return Response::create($validator->errors(), 400);
         }
 
+        if (Auth::user()->hostsRoom || Auth::user()->inRoom) {
+            return Response::create('You already have a room or in a room', 400);
+        }
+
         $room = new Room();
         $room->name = $request->name;
         $room->user_id = Auth::user()->id;
-        $room->password = $request->password;
+//        $room->password = $request->password;
         $room->save();
 
         $roomState = new RoomState();
