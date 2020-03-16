@@ -70,6 +70,15 @@ export default class Room extends Component {
         return (
             <div className="container">
                 <div className="row">
+                    {/*<img className="home-logo" src="/images/Secrethitler-no-bg.png"/>*/}
+                </div>
+                <div className="row">
+                    <div className="room-info">
+                        <p className="room-name">Room: {this.props.match.params.id}</p>
+                        <p className="player-count">{this.state.users.length}/8 Players</p>
+                    </div>
+                </div>
+                <div className="row">
                     <PlayersLobby users={this.state.users}/>
                     <ChatLobby id={this.props.match.params.id}/>
                 </div>

@@ -83603,8 +83603,6 @@ function (_Component) {
       getMsg: _appSettings__WEBPACK_IMPORTED_MODULE_3__["messagesConfig"].components.rooms
     });
 
-    _defineProperty(_assertThisInitialized(_this), "x", void 0);
-
     _defineProperty(_assertThisInitialized(_this), "getRooms", function () {
       axios.get('/api/v1/rooms').then(function (response) {
         if (_this._isMounted) {
@@ -83884,6 +83882,7 @@ function (_Component) {
     _defineProperty(_assertThisInitialized(_this), "showPlayers", function () {
       return _this.props.users.map(function (user) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+          className: "player-name",
           key: user.id
         }, user.username);
       });
@@ -84965,6 +84964,16 @@ function (_Component) {
         className: "container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "row"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "row"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "room-info"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "room-name"
+      }, "Room: ", this.props.match.params.id), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "player-count"
+      }, this.state.users.length, "/8 Players"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "row"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Lobby_PlayersLobby__WEBPACK_IMPORTED_MODULE_4__["default"], {
         users: this.state.users
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Lobby_ChatLobby__WEBPACK_IMPORTED_MODULE_3__["default"], {
@@ -85004,8 +85013,8 @@ function (_Component) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\joost\PhpstormProjects\SecretHitler\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\joost\PhpstormProjects\SecretHitler\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\Websites\The%20SS%20-%20SecretHitler\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\Websites\The%20SS%20-%20SecretHitler\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
