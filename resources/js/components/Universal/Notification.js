@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import PNotify from 'pnotify/dist/es/PNotify';
+import PNotifyButtons from 'pnotify/dist/es/PNotifyButtons'; // Must import this in order to see the close and pause buttons (Even though it's not used in this file).
 
 export default class Home extends Component {
     // Set notification style
