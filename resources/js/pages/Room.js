@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import Game from "../components/Room/Game";
 import Lobby from "../components/Room/Lobby";
-import ChatLobby from "../components/Lobby/ChatLobby";
-import PlayersLobby from "../components/Lobby/PlayersLobby";
+import ChatLobby from "../components/Room/Lobby/ChatLobby";
+import PlayersLobby from "../components/Room/Lobby/PlayersLobby";
 
 export default class Room extends Component {
 
