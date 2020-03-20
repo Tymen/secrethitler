@@ -20,5 +20,9 @@ Route::namespace('Api')->prefix('v1')->middleware('auth:api')->group(function() 
     Route::prefix('rooms')->group(function() {
         Route::get('/', 'RoomsApiController@index');
         Route::post('/', 'RoomsApiController@store');
+
+        Route::get('{id}/active', 'RoomsApiController@getActive');
+        Route::post('{id}/inactive', 'RoomsApiController@setInactive');
+        Route::post('{id}/active', 'RoomsApiController@setActive');
     });
 });

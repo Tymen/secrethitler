@@ -10,7 +10,7 @@ export default class Rooms extends Component {
         rooms: [],
         getMsg: messagesConfig.components.rooms,
     };
-x;
+
     constructor(props) {
         super(props);
         this.child = React.createRef();
@@ -52,9 +52,10 @@ x;
                         </Link>
                     </div>
                 </div>
-            )
-        })
-    };
+
+                <Link className="" to={"/room/"+room.id} key={room.id}>
+                    <li className="room-name-li">{room.name}</li>
+                </Link>
 
     render() {
         return (

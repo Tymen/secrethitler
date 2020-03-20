@@ -23,16 +23,21 @@ Route::get('/about', function (){
     return view('about');
 });
 
-Route::post('/room/{id}', "MessageController@sendMessage");
-
 Route::get('/room/{id}', function (){
     return view('room');
+<<<<<<< HEAD
 });
 
+=======
+
+});
+
+Route::post('/room/{id}', "MessageController@sendMessage");
+
+>>>>>>> 5554a84c3177d39c9c8c278f18c672f7e1a335ac
 Route::middleware('guest')->group(function() {
 
-
-    Route::get('auth/login', function() {
+    Route::get('/auth/login', function() {
         return view('auth');
     });
 

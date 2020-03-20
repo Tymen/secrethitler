@@ -7,7 +7,7 @@ export default class PlayersLobby extends Component {
 
         return this.props.users.map(user => {
             return (
-                <p key={user.id}>
+                <p className="player-name" key={user.id}>
                     {user.username}
                 </p>
             )

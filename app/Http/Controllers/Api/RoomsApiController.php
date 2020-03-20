@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Events\CreatedRoomEvent;
-use App\Http\Resources\RoomsCollection;
 use App\Room;
 use App\RoomState;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use App\Events\CreatedRoomEvent;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\RoomsCollection;
 use Illuminate\Support\Facades\Validator;
 
 class RoomsApiController extends Controller
@@ -40,19 +40,25 @@ class RoomsApiController extends Controller
             return Response::create($validator->errors(), 400);
         }
 
+        if (Auth::user()->hostsRoom || Auth::user()->inRoom) {
+            return Response::create('You already have a room or in a room', 400);
+        }
+
         $room = new Room();
         $room->name = $request->name;
         $room->user_id = Auth::user()->id;
-        $room->password = $request->password || null;
+//        $room->password = $request->password;
         $room->save();
 
         $roomState = new RoomState();
         $roomState->room_id = $room->id;
         $roomState->save();
 
+        Auth::user()->assignRole('Host');
+
         event(new CreatedRoomEvent());
 
-        return Response::create(['completed' => true]);
+        return Response::create('completed');
     }
 
     /**
@@ -76,6 +82,34 @@ class RoomsApiController extends Controller
     public function update(Request $request, Room $room)
     {
         //
+    }
+
+    public function setActive($id)
+    {
+        if (Auth::user()->hasRole('Host')) {
+            $room = Room::find($id);
+            $room->active = true;
+            $room->save();
+            return Response::create('completed');
+        }
+        return Response::create('Nice try, you are not the host!', 400);
+    }
+
+    public function setInactive($id)
+    {
+        if (Auth::user()->hasRole('Host')) {
+            $room = Room::find($id);
+            $room->active = false;
+            $room->save();
+            return Response::create('completed');
+        }
+        return Response::create('Nice try, you are not the host!', 400);
+    }
+
+    public function getActive($id)
+    {
+        $room = Room::find($id);
+        return Response::create($room->active);
     }
 
     /**
