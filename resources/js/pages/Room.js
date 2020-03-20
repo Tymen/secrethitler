@@ -69,7 +69,7 @@ export default class Room extends Component {
         return (
             <div className="container">
                 <div className="row">
-                    {/*<img className="home-logo" src="/images/Secrethitler-no-bg.png"/>*/}
+                    <img className="home-logo" src="/images/Secrethitler-no-bg.png"/>
                 </div>
                 <div className="row">
                     <div className="room-info">
