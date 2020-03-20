@@ -29,7 +29,6 @@ export default class Index extends Component {
         );
     }
 }
-
 if (document.getElementById('index')) {
     ReactDOM.render(<Index/>, document.getElementById('index'));
 }

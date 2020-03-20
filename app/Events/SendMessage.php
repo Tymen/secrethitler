@@ -16,14 +16,16 @@ class SendMessage implements ShouldBroadcast
 
     public $message;
     public $user;
+    public $id;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($message, $user)
+    public function __construct($message, $user, $id)
     {
         $this->message = $message;
+        $this->id = $id;
         $this->user = $user;
     }
 
@@ -35,7 +37,7 @@ class SendMessage implements ShouldBroadcast
 
     public function broadcastOn()
     {
-        return new Channel('room.1');
+        return ['room.'. $this->id];
     }
 
     public function broadcastAs()

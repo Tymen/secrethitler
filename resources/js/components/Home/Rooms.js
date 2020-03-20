@@ -48,14 +48,11 @@ export default class Rooms extends Component {
                     <div className="col-12 background-room  ">
                         <i className="fas fa-mug-hot"></i>
                         <Link key={room.id} to={"/room/"+room.id}>
-                        <p className="room-name-li">{room.name}</p>
+                            <p className="room-name-li">{room.name}</p>
                         </Link>
                     </div>
                 </div>
-
-                <Link className="" to={"/room/"+room.id} key={room.id}>
-                    <li className="room-name-li">{room.name}</li>
-                </Link>
+            )})}
 
     render() {
         return (

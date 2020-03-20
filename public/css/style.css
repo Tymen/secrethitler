@@ -2,9 +2,11 @@
     padding: 0;
     margin: 0;
 }
-body{
+
+body {
     background-color: #505050;
 }
+
 .btn {
     outline: none;
     display: inline-block;
@@ -36,26 +38,31 @@ body{
     color: white;
     text-decoration: none;
 }
+
 .collapse {
     padding: 0px 20px;
 }
+
 .navbar-logo img {
     width: 160px;
 }
+
 .nav-link {
     padding: 20px 0px;
 }
+
 .navbar-brand {
     padding: 0px;
 }
-.navbar{
+
+.navbar {
     padding: 0px;
-    box-shadow: 0 2px 8px -2px rgba(0,0,0,.2);
+    box-shadow: 0 2px 8px -2px rgba(0, 0, 0, .2);
 
 
 }
 
-.bg-custom{
+.bg-custom {
     background-color: #323232;
 }
 
@@ -67,11 +74,11 @@ body{
     color: white;
 }
 
-.nav-item:hover{
+.nav-item:hover {
     background-color: #707070;
 }
 
-.nav-item{
+.nav-item {
     color: white;
     display: inline-block;
     text-align: center;
@@ -81,20 +88,19 @@ body{
     white-space: nowrap;
 }
 
-.nav-item:hover{
+.nav-item:hover {
     text-decoration: none;
 }
 
-.nav-item:active{
+.nav-item:active {
     text-decoration: none;
 }
 
-.page-footer{
+.page-footer {
     color: white;
     background-color: #2B2929;
 
     left: 0;
-    bottom: 0;
     text-align: center;
 
     position: fixed; /* Set the navbar to fixed position */
@@ -102,7 +108,7 @@ body{
     width: 100%; /* Full width */
 }
 
-.card-login{
+.card-login {
     position: absolute;
     display: flex;
     flex-direction: column;
@@ -127,7 +133,7 @@ body{
     border-bottom: 1px solid rgba(0, 0, 0, 0.125);
 }
 
-.btn-custom{
+.btn-custom {
     color: #fff;
     background-color: #2B2929;
     text-decoration: none;
@@ -135,27 +141,27 @@ body{
     width: 100%;
 }
 
-.form-login{
+.form-login {
 
 }
 
-.checking-account{
+.checking-account {
 
 }
 
-.btn-custom:hover{
+.btn-custom:hover {
     color: white;
 }
 
-.btn-custom:focus{
+.btn-custom:focus {
 }
 
-.input-login::placeholder{
+.input-login::placeholder {
     color: white;
     opacity: 0.7;
 }
 
-.input-login{
+.input-login {
     outline: none;
     color: white;
     background-color: transparent;
@@ -164,7 +170,7 @@ body{
     width: 100%;
 }
 
-.input-room-name::placeholder{
+.input-room-name::placeholder {
     color: black;
 }
 
@@ -227,7 +233,7 @@ body{
     box-shadow: 0 0 0 0.2rem rgba(82, 88, 93, 0.5);
 }
 
-.rooms{
+.rooms {
     position: relative;
     display: flex;
     /*flex-direction: column;*/
@@ -237,13 +243,23 @@ body{
     max-height: 40px;
 }
 
-.join-text{
+.container-explanation {
+    margin-top: 10vw;
+}
+
+.join-text {
     font-size: 25px;
     color: white;
     background-color: transparent;
 }
 
-.room-name{
+.rooms-body {
+    background-color: #B8B8B8;
+
+
+}
+
+.room-name {
     margin: 10px;
     color: white;
     background: #615E5D;
@@ -258,27 +274,56 @@ body{
 .test {
     width: auto;
 }
-.home-logo{
+.home-logo {
     margin: 0 auto;
-    max-height: 300px;
+    max-height: 100px;
 }
 
-.show-rooms{
+.explanation-text {
+    line-height: 30px;
+    text-shadow: 0 3px 6px black;
+}
+
     /*overflow-y: scroll;*/
+.explanation-text-nospace{
+    line-height: normal;
+}
+
+.btn-explanation {
+    margin: 10px 10px 10px 0;
+    color: #fff;
+    background-color: #2B2929;
+    border-color: #2B2929;
+    padding: 5px 50px;
+    font-size: 17px;
+}
+
+.btn-explanation:hover {
+    color: #fff;
+    background-color: #000000;
+    border-color: #ffffff;
+}
+
+.btn-container-explanation {
+    margin-bottom: 10vw;
+}
+
+.show-rooms {
+    overflow-y: scroll;
     max-height: auto;
 }
 
-.room-block{
+.room-block {
 }
 
-.room-name-li{
+.room-name-li {
     font-size: 20px;
     text-align: center;
     color: white;
     list-style-type: none;
 }
 
-.chat{
+.chat {
     position: relative;
     min-height: 500px;
     max-height: 500px;
@@ -307,6 +352,7 @@ body{
     background: #414141;
     color: white;
 }
+
 .message:before, .message:after {
     content: "";
     position: absolute;
@@ -316,21 +362,21 @@ body{
 
 
 .message:before {
-    left:-7px;
-    border-left:20px solid #414141;
+    left: -7px;
+    border-left: 20px solid #414141;
     border-bottom-right-radius: 16px 14px;
-    transform:translate(0, -2px);
+    transform: translate(0, -2px);
 }
 
 .message:after {
-    left:4px;
-    width:26px;
+    left: 4px;
+    width: 26px;
     background: #727272;
     border-bottom-right-radius: 10px;
-    transform:translate(-30px, -2px);
+    transform: translate(-30px, -2px);
 }
 
-.send-message{
+.send-message {
     background-color: #606060;
     flex: 1 1 auto;
     min-height: 1px;
@@ -340,8 +386,7 @@ body{
 }
 
 
-
-.input-message{
+.input-message {
     color: white;
     border: none;
     outline: none;
@@ -349,8 +394,7 @@ body{
 }
 
 
-
-.btn-send-button{
+.btn-send-button {
     background-color: #323232;
     color: white;
     border-color: #323232;
@@ -363,7 +407,7 @@ body{
     border-radius: 0px;
 }
 
-.start-game{
+.start-game {
     width: 1141px;
     background-color: #2B2929;
     color: white;
@@ -372,7 +416,7 @@ body{
     position: absolute;
 }
 
-.show-players{
+.show-players {
     position: relative;
     min-height: 500px;
     max-height: 500px;
@@ -386,7 +430,7 @@ body{
     border-right: 1px solid white;
 }
 
-.players-in-lobby{
+.players-in-lobby {
     color: white;
     text-align: center;
     background-color: #606060;
@@ -398,7 +442,7 @@ body{
     border-right: 1px solid white;
 }
 
-.player-name{
+.player-name {
     margin-bottom: 0px;
     padding: 10px;
     font-size: 20px;
@@ -406,7 +450,8 @@ body{
     color: white;
     border-bottom: 1px solid white;
 }
-.room-info{
+
+.room-info {
     width: 1239px;
     max-width: 1239px;
     padding: 10px;
@@ -416,11 +461,11 @@ body{
     background-color: #606060;
 }
 
-.room-name{
+.room-name {
     display: inline;
 }
 
-.player-count{
+.player-count {
     float: right;
     display: inline;
     margin-bottom: 0px;
