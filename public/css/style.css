@@ -97,7 +97,7 @@ body{
     bottom: 0;
     text-align: center;
 
-    position: relative; /* Set the navbar to fixed position */
+    position: fixed; /* Set the navbar to fixed position */
     bottom: 0; /* Position the navbar at the top of the page */
     width: 100%; /* Full width */
 }
@@ -248,9 +248,17 @@ body{
     color: white;
     background: #615E5D;
 }
-
+.home-rooms {
+    display: inline-block;
+}
+.background-rooms {
+    max-height: 300px;
+    overflow: scroll;
+}
+.test {
+    width: auto;
+}
 .home-logo{
-    display: block;
     margin: 0 auto;
     max-height: 300px;
 }

@@ -44,12 +44,12 @@ x;
     showRooms = () => {
         return this.state.rooms.map(room => {
             return (
-                <div className="col-md-3">
+                <div className="home-rooms">
                     <div className="col-12 background-room  ">
-                    <i className="fas fa-mug-hot"></i>
-                    <Link key={room.id} to={"/room/"+room.id}>
-                    <p className="room-name-li">{room.name}</p>
-                </Link>
+                        <i className="fas fa-mug-hot"></i>
+                        <Link key={room.id} to={"/room/"+room.id}>
+                        <p className="room-name-li">{room.name}</p>
+                        </Link>
                     </div>
                 </div>
             )
@@ -59,7 +59,7 @@ x;
     render() {
         return (
             <div>
-                <div className="row">
+                <div className="test">
                     {this.showRooms()}
                     <Notification onRef={ref => (this.child = ref)} />
                 </div>

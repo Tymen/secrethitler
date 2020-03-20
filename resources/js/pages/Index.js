@@ -11,8 +11,6 @@ import Room from "./Room";
 
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
-
-
 export default class Index extends Component {
 
     render() {
