@@ -51,7 +51,7 @@ export default class Rooms extends Component {
             )
         })
     };
-
+    
     render() {
         return (
             <div>
