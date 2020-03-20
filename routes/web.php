@@ -25,7 +25,6 @@ Route::get('/about', function (){
 
 Route::get('/room/{id}', function (){
     return view('room');
-
 });
 
 Route::post('/room/{id}', "MessageController@sendMessage");
