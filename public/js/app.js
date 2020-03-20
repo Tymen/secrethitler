@@ -84948,7 +84948,7 @@ function (_Component) {
       var _this2 = this;
 
       this.getActive();
-      Echo.join('room.' + this.props.match.params.id).here(function (users) {
+      Echo.join("room.".concat(this.props.match.params.id)).here(function (users) {
         _this2.setState({
           users: users
         });

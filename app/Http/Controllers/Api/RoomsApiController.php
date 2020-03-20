@@ -112,6 +112,11 @@ class RoomsApiController extends Controller
         return Response::create($room->active);
     }
 
+    public function onUserJoin()
+    {
+        dd('test');
+    }
+
     /**
      * Remove the specified resource from storage.
      *

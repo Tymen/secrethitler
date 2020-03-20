@@ -14,9 +14,8 @@ export default class Room extends Component {
     componentDidMount() {
         this.getActive()
 
-        Echo.join('room.' + this.props.match.params.id)
+        Echo.join(`room.${this.props.match.params.id}`)
             .here((users) => {
-
                 this.setState({
                     users: users
                 })
