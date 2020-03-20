@@ -15,7 +15,7 @@ class MessageController extends Controller
         $message = $request->message;
 
         if($message !== null){
-            event(new SendMessage($message, $user));
+            event(new SendMessage($message, $user, $id));
         }
     }
 }

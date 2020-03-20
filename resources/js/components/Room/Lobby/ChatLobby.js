@@ -11,7 +11,7 @@ export default class ChatLobby extends Component {
     }
 
     componentDidMount() {
-        var channel = Echo.channel(`room.1`);
+        var channel = Echo.channel(`room.${this.props.id}`);
         channel.listen('.message-event', (data) => {
             console.log(data.message)
             this.setState({
@@ -40,7 +40,6 @@ export default class ChatLobby extends Component {
             axios.post('/room/'+ this.props.id , {
                 message: this.state.message,
             })
-
         }
 
         this.setState({

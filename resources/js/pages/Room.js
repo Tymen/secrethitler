@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import Game from "../components/Room/Game";
 import Lobby from "../components/Room/Lobby";
-import ChatLobby from "../components/Lobby/ChatLobby";
-import PlayersLobby from "../components/Lobby/PlayersLobby";
+import ChatLobby from "../components/Room/Lobby/ChatLobby";
+import PlayersLobby from "../components/Room/Lobby/PlayersLobby";
 
 export default class Room extends Component {
 
@@ -70,7 +70,7 @@ export default class Room extends Component {
         return (
             <div className="container">
                 <div className="row">
-                    {/*<img className="home-logo" src="/images/Secrethitler-no-bg.png"/>*/}
+                    <img className="home-logo" src="/images/Secrethitler-no-bg.png"/>
                 </div>
                 <div className="row">
                     <div className="room-info">
