@@ -7,6 +7,7 @@ export default class Rooms extends Component {
     _isMounted = false;
 
     state = {
+        loggedIn: false,
         rooms: [],
         getMsg: messagesConfig.components.rooms,
     };
@@ -16,6 +17,16 @@ export default class Rooms extends Component {
         this.child = React.createRef();
     };
     componentDidMount() {
+        axios.get('/api/v1/users/me')
+            .then(response =>{
+                this.setState({
+                    loggedIn: response.data,
+                })
+            })
+            .catch(error => {
+
+            })
+
         this._isMounted = true
         this.getRooms()
 
@@ -42,14 +53,26 @@ export default class Rooms extends Component {
     }
 
     showRooms = () => {
-        return this.state.rooms.map(room => {
-            return (
+        if(this.state.loggedIn){
+            return this.state.rooms.map(room => {
+                return (
 
-                <Link className="" to={"/room/"+room.id} key={room.id}>
-                    <li className="room-name-li">{room.name}</li>
-                </Link>
-            )
-        })
+                    <Link className="" to={"/room/"+room.id} key={room.id}>
+                        <li className="room-name-li">{room.name}</li>
+                    </Link>
+                )
+            })
+        }else{
+            return this.state.rooms.map(room => {
+                return (
+
+                    <Link className="" to="/auth/login" key={room.id}>
+                        <li className="room-name-li">{room.name}</li>
+                    </Link>
+                )
+            })
+        }
+
     };
 
     render() {

@@ -11,27 +11,27 @@
 |
 */
 
-Route::get('/', function (){
+Route::get('/', function () {
     return view('index');
 });
 
-Route::get('/profile', function (){
+Route::get('/profile', function () {
     return view('profile');
 });
 
-Route::get('/about', function (){
+Route::get('/about', function () {
     return view('about');
 });
 
-Route::get('/room/{id}', function (){
+Route::get('/room/{id}', function () {
     return view('room');
 });
 
 Route::post('/room/{id}', "MessageController@sendMessage");
 
-Route::middleware('guest')->group(function() {
+Route::middleware('guest')->group(function () {
 
-    Route::get('/auth/login', function() {
+    Route::get('/auth/login', function () {
         return view('auth');
     });
 
