@@ -2,16 +2,25 @@ import React, {Component} from 'react';
 import JoinRoom from "../components/Home/JoinRoom";
 import CreateRoom from "../components/Home/CreateRoom";
 import Rooms from "../components/Home/Rooms"
+import { messagesConfig } from "../appSettings";
+import Notification from "../components/Universal/Notification";
 import {Link} from "react-router-dom";
 
 export default class Home extends Component {
-
+    state = {
+        getMsg: messagesConfig.pages.home,
+    };
+    constructor(props) {
+        super(props);
+        this.child = React.createRef();
+    };
+    notify = () => {
+        this.child.getNotify(this.state.getMsg.auth.noLogin);
+    };
     render() {
         return (
             <div className="container">
-                <div className="row">
-                    <img className="home-logo" src="images/Secrethitler-no-bg.png"/>
-                </div>
+                <img className="home-logo" src="images/Secrethitler-no-bg.png"/>
                 <div className="row">
                     <div className="col-4 offset-2 text-center">
                         <JoinRoom/>
@@ -22,18 +31,17 @@ export default class Home extends Component {
 
                     </div>
                 </div>
-                <div className="row">
-                    <div className="rooms">
-                        <div className="join-text">
+                            <div className="col-12 join-text">
                             Join a game
                         </div>
+                    <div className="background-rooms">
+                        <Rooms/>
+                    </div>
                         <div className="rooms-body">
                             <div className="room-name">
                                 <Rooms/>
                             </div>
                         </div>
-                    </div>
-                </div>
                 <div className="row text-white container-explanation explanation-text">
                     <div className="col-12">
                         <h2 className="text-center text-bold">Game manual</h2>
@@ -74,7 +82,8 @@ export default class Home extends Component {
                         </Link>
                     </div>
                 </div>
-            </div>
+                    </div>
+
         );
     }
 }

@@ -44,21 +44,23 @@ export default class Rooms extends Component {
     showRooms = () => {
         return this.state.rooms.map(room => {
             return (
-
-                <Link className="" to={"/room/"+room.id} key={room.id}>
-                    <li className="room-name-li">{room.name}</li>
-                </Link>
-            )
-        })
-    };
+                <div className="home-rooms">
+                    <div className="col-12 background-room  ">
+                        <i className="fas fa-mug-hot"></i>
+                        <Link key={room.id} to={"/room/"+room.id}>
+                            <p className="room-name-li">{room.name}</p>
+                        </Link>
+                    </div>
+                </div>
+            )})}
 
     render() {
         return (
             <div>
-                <ul>
+                <div className="test">
                     {this.showRooms()}
                     <Notification onRef={ref => (this.child = ref)} />
-                </ul>
+                </div>
             </div>
         )
     }

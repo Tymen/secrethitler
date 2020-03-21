@@ -11,7 +11,6 @@ import Room from "./Room";
 
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
-
 export default class Index extends Component {
 
     render() {
@@ -30,7 +29,6 @@ export default class Index extends Component {
         );
     }
 }
-
 if (document.getElementById('index')) {
     ReactDOM.render(<Index/>, document.getElementById('index'));
 }

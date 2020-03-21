@@ -236,7 +236,7 @@ body {
 .rooms {
     position: relative;
     display: flex;
-    flex-direction: column;
+    /*flex-direction: column;*/
     min-width: 0;
     word-wrap: break-word;
     background-clip: border-box;
@@ -264,7 +264,16 @@ body {
     color: white;
     background: #615E5D;
 }
-
+.home-rooms {
+    display: inline-block;
+}
+.background-rooms {
+    max-height: 300px;
+    overflow: scroll;
+}
+.test {
+    width: auto;
+}
 .home-logo {
     margin: 0 auto;
     max-height: 100px;
@@ -275,6 +284,7 @@ body {
     text-shadow: 0 3px 6px black;
 }
 
+    /*overflow-y: scroll;*/
 .explanation-text-nospace{
     line-height: normal;
 }
