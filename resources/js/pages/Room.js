@@ -9,10 +9,14 @@ export default class Room extends Component {
     state = {
         users: [],
         active: 0,
-    }
+        refresh: false,
+    };
 
     componentDidMount() {
-        this.getActive()
+        this.getActive();
+
+        window.addEventListener("beforeunload", this.onRefresh());
+        console.log(window.performance.getEntriesByType('navigation'))
 
         Echo.join(`room.${this.props.match.params.id}`)
             .here((users) => {
@@ -21,17 +25,38 @@ export default class Room extends Component {
                 })
             })
             .joining((user) => {
-                this.setState({
-                    users: [...this.state.users, user]
-                })
+                if(!this.state.users.some(u => u.id === user.id)) {
+                    this.setState({
+                        users: [...this.state.users, user]
+                    })
+                }
             })
-            .leaving(user => {
-                this.setState({
-                    users: this.state.users.filter(u => u.id !== user.id)
-                });
+            .leaving((user) => {
+                // if () {
+                //     this.setState({
+                //         users: this.state.users.filter(u => user.id !== u.id)
+                //     })
+                // }
+                console.log(window.performance.getEntriesByType('navigation'))
             })
     }
 
+    componentWillUnmount() {
+        window.removeEventListener('beforeunload', this.onRefresh())
+    }
+
+    onRefresh = () => {
+        this.setState({
+            refresh: true,
+        })
+    };
+
+    leaveRoom = async () => {
+        Echo.leave(`room.${this.props.match.params.id}`);
+        await axios.post(`/api/v1/rooms/${this.props.match.params.id}/leave`);
+
+        window.location.href = '/'
+    };
 
     getActive = () => {
         axios.get(`/api/v1/rooms/${this.props.match.params.id}/active`).then(response => {
@@ -39,7 +64,7 @@ export default class Room extends Component {
                 active: response.data
             })
         })
-    }
+    };
 
     setActive = () => {
         axios.post(`/api/v1/rooms/${this.props.match.params.id}/active`).then(response => {
@@ -48,7 +73,7 @@ export default class Room extends Component {
                 })
             }
         )
-    }
+    };
 
     setInactive = () => {
         axios.post(`/api/v1/rooms/${this.props.match.params.id}/inactive`).then(response => {
@@ -57,7 +82,7 @@ export default class Room extends Component {
                 })
             }
         )
-    }
+    };
 
     render() {
         if (this.state.active) {

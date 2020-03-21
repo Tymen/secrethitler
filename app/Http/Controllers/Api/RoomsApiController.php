@@ -112,7 +112,7 @@ class RoomsApiController extends Controller
         return Response::create($room->active);
     }
 
-    public function onUserJoin()
+    public function onUserLeave()
     {
         dd('test');
     }

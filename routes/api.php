@@ -26,7 +26,7 @@ Route::namespace('Api')->prefix('v1')->middleware('auth:api')->group(function() 
             Route::post('inactive', 'RoomsApiController@setInactive');
             Route::post('active', 'RoomsApiController@setActive');
 
-            Route::post('join', 'RoomsApiController@onUserJoin');
+            Route::post('leave', 'RoomsApiController@onUserLeave');
         });
 
     });
