@@ -20458,6 +20458,7 @@ var Channel = function () {
   return Channel;
 }();
 
+
 /**
  * Event name formatter
  */
@@ -62589,7 +62590,7 @@ var currentlyProcessingQueue;
   didWarnUpdateInsideUpdate = false;
   currentlyProcessingQueue = null;
 
-  
+
 }
 
 function createUpdateQueue(baseState) {
@@ -66904,7 +66905,7 @@ function insertNonHydratedInstance(returnFiber, fiber) {
               break;
 
             case SuspenseComponent:
-              
+
               break;
           }
 
