@@ -9,15 +9,22 @@ export default class Rooms extends Component {
     state = {
         rooms: [],
         getMsg: messagesConfig.components.rooms,
+        loggedIn: false
     };
 
     constructor(props) {
         super(props);
         this.child = React.createRef();
     };
+
     componentDidMount() {
         this._isMounted = true
         this.getRooms()
+        axios.get('/api/v1/users/me').then(response => {
+            this.setState({
+                loggedIn: true
+            })
+        })
 
         var channel = Echo.channel('room-created')
         channel.listen('.created-room', () => {
@@ -41,24 +48,33 @@ export default class Rooms extends Component {
         this._isMounted = false
     }
 
+    checkAuth = (room) => {
+        if (this.state.loggedIn) {
+            return `/rooms/${room.id}`
+        }
+        return '/auth/login'
+    }
+
     showRooms = () => {
         return this.state.rooms.map(room => {
             return (
-
-                <Link className="" to={"/room/"+room.id} key={room.id}>
-                    <li className="room-name-li">{room.name}</li>
-                </Link>
-            )
-        })
-    };
+                <div key={room.id} className="home-rooms">
+                    <div className="col-12 background-room  ">
+                        <i className="fas fa-mug-hot"></i>
+                        <Link to={() => this.checkAuth(room)}>
+                            <p className="room-name-li">{room.name}</p>
+                        </Link>
+                    </div>
+                </div>
+            )})}
 
     render() {
         return (
             <div>
-                <ul>
+                <div className="test">
                     {this.showRooms()}
                     <Notification onRef={ref => (this.child = ref)} />
-                </ul>
+                </div>
             </div>
         )
     }

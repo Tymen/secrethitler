@@ -11,8 +11,15 @@ import Room from "./Room";
 
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
-
 export default class Index extends Component {
+    componentDidMount() {
+        window.leaveRoom = async (id) => {
+            await axios.post(`/api/v1/rooms/${id}/leave`);
+            await Echo.leave(`room.${id}`);
+
+            window.location.href = '/'
+        };
+    }
 
     render() {
         return (
@@ -20,7 +27,7 @@ export default class Index extends Component {
                 <Nav/>
                 <Switch>
                     <Route path="/" exact component={Home}/>
-                    <Route path="/room/:id" exact component={Room}/>
+                    <Route path="/rooms/:id" exact component={Room}/>
                     <Route path="/auth/:type" exact component={Auth}/>
                     <Route path="/gamerules" exact component={GameRule}/>
                     <Route path="/about" exact component={About}/>
@@ -30,7 +37,6 @@ export default class Index extends Component {
         );
     }
 }
-
 if (document.getElementById('index')) {
     ReactDOM.render(<Index/>, document.getElementById('index'));
 }

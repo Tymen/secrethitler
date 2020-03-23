@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Resources\UserCollection;
 use App\Room;
 use App\RoomState;
 use Illuminate\Http\Request;
@@ -9,8 +10,9 @@ use Illuminate\Http\Response;
 use App\Events\CreatedRoomEvent;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\RoomsCollection;
+use App\Http\Resources\RoomCollection;
 use Illuminate\Support\Facades\Validator;
+use Spatie\Permission\Models\Role;
 
 class RoomsApiController extends Controller
 {
@@ -21,7 +23,7 @@ class RoomsApiController extends Controller
      */
     public function index()
     {
-        return Response::create(new RoomsCollection(Room::with('user')->get()));
+        return Response::create(new RoomCollection(Room::with('user')->get()));
     }
 
     /**
@@ -33,7 +35,7 @@ class RoomsApiController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|unique:rooms|max:18|min:3',
+            'name' => 'required|unique:rooms|max:15|min:3',
         ]);
 
         if ($validator->fails()) {
@@ -84,10 +86,9 @@ class RoomsApiController extends Controller
         //
     }
 
-    public function setActive($id)
+    public function setActive(Room $room)
     {
         if (Auth::user()->hasRole('Host')) {
-            $room = Room::find($id);
             $room->active = true;
             $room->save();
             return Response::create('completed');
@@ -95,10 +96,9 @@ class RoomsApiController extends Controller
         return Response::create('Nice try, you are not the host!', 400);
     }
 
-    public function setInactive($id)
+    public function setInactive(Room $room)
     {
         if (Auth::user()->hasRole('Host')) {
-            $room = Room::find($id);
             $room->active = false;
             $room->save();
             return Response::create('completed');
@@ -106,15 +106,28 @@ class RoomsApiController extends Controller
         return Response::create('Nice try, you are not the host!', 400);
     }
 
-    public function getActive($id)
+    public function getActive(Room $room)
     {
-        $room = Room::find($id);
         return Response::create($room->active);
     }
 
     public function onUserLeave()
     {
-        dd('test');
+        $user = Auth::user();
+
+        foreach ($user->roles as $role) {
+            $role->name !== 'Admin' ? $user->removeRole($role->name) : false;
+        }
+
+        $user->room_id = NULL;
+        $user->save();
+
+        return Response::create('completed');
+    }
+
+    public function getUsers(Room $room)
+    {
+        return Response::create(new UserCollection($room->users));
     }
 
     /**

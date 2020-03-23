@@ -29,7 +29,7 @@ class RoomChannel
         if (auth()->check()) {
             $user->room_id = $id;
             $user->save();
-            return ['id' => auth()->user()->id, 'username' => auth()->user()->username];
+            return ['id' => $user->id, 'username' => $user->username];
         }
         return redirect('/auth/login');
     }

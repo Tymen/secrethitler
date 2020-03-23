@@ -15,9 +15,6 @@ export default class Room extends Component {
     componentDidMount() {
         this.getActive();
 
-        window.addEventListener("beforeunload", this.onRefresh());
-        console.log(window.performance.getEntriesByType('navigation'))
-
         Echo.join(`room.${this.props.match.params.id}`)
             .here((users) => {
                 this.setState({
@@ -25,38 +22,26 @@ export default class Room extends Component {
                 })
             })
             .joining((user) => {
-                if(!this.state.users.some(u => u.id === user.id)) {
+                if (!this.state.users.some(u => u.id === user.id)) {
                     this.setState({
                         users: [...this.state.users, user]
                     })
                 }
             })
             .leaving((user) => {
-                // if () {
-                //     this.setState({
-                //         users: this.state.users.filter(u => user.id !== u.id)
-                //     })
-                // }
-                console.log(window.performance.getEntriesByType('navigation'))
+
+                setTimeout(() => {
+                    if (this.state.users) {
+
+                    }
+                }, 10000)
+                axios.get(`/api/v1/rooms/${this.props.match.params.id}/users`).then(response => {
+                    this.setState({
+                        users: response.data
+                    })
+                })
             })
     }
-
-    componentWillUnmount() {
-        window.removeEventListener('beforeunload', this.onRefresh())
-    }
-
-    onRefresh = () => {
-        this.setState({
-            refresh: true,
-        })
-    };
-
-    leaveRoom = async () => {
-        Echo.leave(`room.${this.props.match.params.id}`);
-        await axios.post(`/api/v1/rooms/${this.props.match.params.id}/leave`);
-
-        window.location.href = '/'
-    };
 
     getActive = () => {
         axios.get(`/api/v1/rooms/${this.props.match.params.id}/active`).then(response => {
@@ -94,6 +79,7 @@ export default class Room extends Component {
         return (
             <div className="container">
                 <div className="row">
+                    <button className="btn btn-dark" onClick={() => leaveRoom(this.props.match.params.id)}>Leave</button>
                     <img className="home-logo" src="/images/Secrethitler-no-bg.png"/>
                 </div>
                 <div className="row">
