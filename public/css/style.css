@@ -145,6 +145,18 @@ body {
 
 }
 
+.block {
+    position: absolute;
+    width: 50vw;
+    height: 120%;
+    background-color: #363535;
+    right: -10vw;
+    top: -0;
+    z-index: 999;
+    transform: rotate(18deg);
+
+}
+
 .checking-account {
 
 }
