@@ -12,17 +12,24 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::namespace('Api')->prefix('v1')->middleware('auth:api')->group(function() {
-    Route::prefix('users')->group(function() {
-        Route::get('me', 'UsersApiController@me');
-    });
+Route::namespace('Api')->group(function (){
+    Route::prefix('v1')->group(function(){
+        Route::get('/rooms', 'RoomsApiController@index');
 
-    Route::prefix('rooms')->group(function() {
-        Route::get('/', 'RoomsApiController@index');
-        Route::post('/', 'RoomsApiController@store');
+        Route::middleware('auth:api')->group(function (){
+            Route::prefix('users')->group(function() {
+                Route::get('me', 'UsersApiController@me');
+            });
 
-        Route::get('{id}/active', 'RoomsApiController@getActive');
-        Route::post('{id}/inactive', 'RoomsApiController@setInactive');
-        Route::post('{id}/active', 'RoomsApiController@setActive');
+            Route::prefix('rooms')->group(function() {
+                Route::post('/', 'RoomsApiController@store');
+
+                Route::get('{id}/active', 'RoomsApiController@getActive');
+                Route::post('{id}/inactive', 'RoomsApiController@setInactive');
+                Route::post('{id}/active', 'RoomsApiController@setActive');
+            });
+        });
     });
 });
+
+
