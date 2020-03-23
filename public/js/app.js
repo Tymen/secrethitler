@@ -62589,7 +62589,7 @@ var currentlyProcessingQueue;
   didWarnUpdateInsideUpdate = false;
   currentlyProcessingQueue = null;
 
-  
+
 }
 
 function createUpdateQueue(baseState) {
@@ -66904,7 +66904,7 @@ function insertNonHydratedInstance(returnFiber, fiber) {
               break;
 
             case SuspenseComponent:
-              
+
               break;
           }
 
