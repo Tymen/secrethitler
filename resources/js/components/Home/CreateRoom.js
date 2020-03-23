@@ -39,7 +39,6 @@ export default class CreateRoom extends Component {
                 }else if(error.response.data){
                     this.state.getMsg.auth.noLogin.message = error.response.data
                 }
-
                 this.child.getNotify(this.state.getMsg.auth.noLogin);
             })
     }
