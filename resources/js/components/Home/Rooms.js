@@ -16,9 +16,10 @@ export default class Rooms extends Component {
         super(props);
         this.child = React.createRef();
     };
+
     componentDidMount() {
         axios.get('/api/v1/users/me')
-            .then(response =>{
+            .then(response => {
                 this.setState({
                     loggedIn: response.data,
                 })
@@ -44,8 +45,8 @@ export default class Rooms extends Component {
                 }
             })
             .catch(error => {
-            this.child.getNotify(this.state.getMsg.internalServer);
-        })
+                this.child.getNotify(this.state.getMsg.internalServer);
+            })
     };
 
     componentWillUnmount() {
@@ -53,35 +54,28 @@ export default class Rooms extends Component {
     }
 
     showRooms = () => {
-        if(this.state.loggedIn){
-            return this.state.rooms.map(room => {
-                return (
 
-                    <Link className="" to={"/room/"+room.id} key={room.id}>
-                        <li className="room-name-li">{room.name}</li>
-                    </Link>
-                )
-            })
-        }else{
-            return this.state.rooms.map(room => {
-                return (
-
-                    <Link to="/auth/login" key={room.id}>
-                        <li className="room-name-li">{room.name}</li>
-                    </Link>
-                )
-            })
-        }
-
-    };
+        return this.state.rooms.map(room => {
+            return (
+                <div className="home-rooms">
+                    <div className="col-12 background-room  ">
+                        <i className="fas fa-mug-hot"></i>
+                        <Link key={room.id} to={"/room/" + room.id}>
+                            <p className="room-name-li">{room.name}</p>
+                        </Link>
+                    </div>
+                </div>
+            )
+        })
+    }
 
     render() {
         return (
             <div>
-                <ul>
+                <div className="test">
                     {this.showRooms()}
-                    <Notification onRef={ref => (this.child = ref)} />
-                </ul>
+                    <Notification onRef={ref => (this.child = ref)}/>
+                </div>
             </div>
         )
     }

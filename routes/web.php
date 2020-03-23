@@ -19,7 +19,11 @@ Route::get('/profile', function () {
     return view('profile');
 });
 
-Route::get('/about', function () {
+Route::get('/gamerules', function (){
+    return view('gamerules');
+});
+
+Route::get('/about', function (){
     return view('about');
 });
 
