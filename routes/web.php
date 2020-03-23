@@ -19,15 +19,33 @@ Route::get('/profile', function (){
     return view('profile');
 });
 
+Route::get('/gamerules', function (){
+    return view('gamerules');
+});
+
 Route::get('/about', function (){
     return view('about');
 });
 
-Route::get('/game', function (){
-    return view('game');
+Route::get('/room/{id}', function (){
+    return view('room');
+});
+
+Route::post('/room/{id}', "MessageController@sendMessage");
+
+Route::middleware('guest')->group(function() {
+
+    Route::get('/auth/login', function() {
+        return view('auth');
+    });
+
+    Route::get('/auth/register', function () {
+        return view('auth');
+    });
+
+    Route::post('/register', 'Auth\RegisterController@register');
+    Route::post('/login', 'Auth\LoginController@login');
 
 });
 
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
+Route::post('logout', 'Auth\LoginController@logout');

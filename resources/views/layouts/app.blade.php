@@ -15,11 +15,15 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css') }}" integrity="sha256-zmfNZmXoNWBMemUOo1XUGFfc0ihGGLYdgtJS3KCr/l0=" crossorigin="anonymous" />
+    <script src="{{ url('https://kit.fontawesome.com/184d4f342c.js') }}" crossorigin="anonymous"></script>
 
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{asset('css/style.css')}}">
+
 </head>
 <body>
 
@@ -29,6 +33,4 @@
 
 </body>
 
-    <!-- Javascript -->
-    <script src="js/app.js"></script>
 </html>

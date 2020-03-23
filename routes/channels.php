@@ -11,6 +11,13 @@
 |
 */
 
-Broadcast::channel('App.User.{id}', function ($user, $id) {
-    return (int) $user->id === (int) $id;
+Broadcast::channel('room-created', function () {
+    return true;
 });
+
+Broadcast::channel('room.{id}', function ($id) {
+    if (auth()->check()) {
+        return new \App\Http\Resources\User(auth()->user());
+    }
+});
+

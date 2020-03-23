@@ -1,12 +1,68 @@
-body{
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body {
     background-color: #505050;
 }
 
-.navbar{
-    box-shadow: 0 2px 8px -2px rgba(0,0,0,.2);
+.btn {
+    outline: none;
+    display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-color: transparent;
+    border: 1px solid transparent;
+    padding: 0.375rem 0.75rem;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    border-radius: 0.25rem;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
-.bg-custom{
+.btn:focus,
+.btn.focus {
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(52, 144, 220, 0.25);
+}
+
+.btn:hover {
+    outline: none;
+    color: white;
+    text-decoration: none;
+}
+
+.collapse {
+    padding: 0px 20px;
+}
+
+.navbar-logo img {
+    width: 160px;
+}
+
+.nav-link {
+    padding: 20px 0px;
+}
+
+.navbar-brand {
+    padding: 0px;
+}
+
+.navbar {
+    padding: 0px;
+    box-shadow: 0 2px 8px -2px rgba(0, 0, 0, .2);
+
+
+}
+
+.bg-custom {
     background-color: #323232;
 }
 
@@ -18,11 +74,11 @@ body{
     color: white;
 }
 
-.nav-item:hover{
+.nav-item:hover {
     background-color: #707070;
 }
 
-.nav-item{
+.nav-item {
     color: white;
     display: inline-block;
     text-align: center;
@@ -32,24 +88,27 @@ body{
     white-space: nowrap;
 }
 
-.nav-item:hover{
+.nav-item:hover {
     text-decoration: none;
 }
 
-.nav-item:active{
+.nav-item:active {
     text-decoration: none;
 }
 
-.page-footer{
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-
+.page-footer {
     color: white;
     background-color: #2B2929;
+
+    left: 0;
+    text-align: center;
+
+    position: fixed; /* Set the navbar to fixed position */
+    bottom: 0; /* Position the navbar at the top of the page */
+    width: 100%; /* Full width */
 }
 
-.card-login{
+.card-login {
     position: absolute;
     display: flex;
     flex-direction: column;
@@ -74,19 +133,7 @@ body{
     border-bottom: 1px solid rgba(0, 0, 0, 0.125);
 }
 
-/*.block{*/
-/*    position: absolute;*/
-/*    left: 50%;*/
-/*    top: 30%;*/
-/*    background-color: #363535;*/
-/*    width: 3000px;*/
-/*    height: 2000px;*/
-/*    padding: 50px;*/
-/*    transform: rotate(20deg);*/
-/*    z-index: -1;*/
-/*}*/
-
-.btn-custom{
+.btn-custom {
     color: #fff;
     background-color: #2B2929;
     text-decoration: none;
@@ -94,31 +141,332 @@ body{
     width: 100%;
 }
 
-.form-login{
+.form-login {
 
 }
 
-.checking-account{
+.checking-account {
 
 }
 
-.btn-custom:hover{
+.btn-custom:hover {
     color: white;
 }
 
-.btn-custom:focus{
+.btn-custom:focus {
 }
 
-.input-login::placeholder{
+.input-login::placeholder {
     color: white;
     opacity: 0.7;
 }
 
-.input-login{
+.input-login {
     outline: none;
     color: white;
     background-color: transparent;
     border: transparent;
     border-bottom: 2px solid black;
     width: 100%;
+}
+
+.input-room-name::placeholder {
+    color: black;
+}
+
+.input-room-name {
+    font-size: 25px;
+    font-weight: 500;
+    padding: 10px;
+    outline: none;
+    color: black;
+    background-color: #B2B2B2;
+    border-color: #323232;
+    border-radius: 0.25rem;
+}
+
+
+.create-room {
+    margin: 10px;
+    color: #fff;
+    background-color: #2B2929;
+    border-color: #2B2929;
+    padding: 10px 86px;
+    font-size: 25px;
+}
+
+.create-room:hover {
+    color: #fff;
+    background-color: #2B2929;
+    border-color: #2B2929;
+}
+
+.create-room:focus,
+.create-room.focus {
+    color: #fff;
+    background-color: #2B2929;
+    border-color: #2B2929;
+    box-shadow: 0 0 0 0.2rem rgba(82, 88, 93, 0.5);
+}
+
+
+.join-room {
+    margin: 10px;
+    color: #fff;
+    background-color: #2B2929;
+    border-color: #2B2929;
+    padding: 10px 102px;
+    font-size: 25px;
+}
+
+.join-room:hover {
+    color: #fff;
+    background-color: #2B2929;
+    border-color: #2B2929;
+}
+
+.join-room:focus,
+.join-room.focus {
+    color: #fff;
+    background-color: #2B2929;
+    border-color: #2B2929;
+    box-shadow: 0 0 0 0.2rem rgba(82, 88, 93, 0.5);
+}
+
+.rooms {
+    position: relative;
+    display: flex;
+    /*flex-direction: column;*/
+    min-width: 0;
+    word-wrap: break-word;
+    background-clip: border-box;
+    max-height: 40px;
+}
+
+.container-explanation {
+    margin-top: 10vw;
+}
+
+.join-text {
+    font-size: 25px;
+    color: white;
+    background-color: transparent;
+}
+
+.rooms-body {
+    background-color: #B8B8B8;
+
+
+}
+
+.room-name {
+    margin: 10px;
+    color: white;
+    background: #615E5D;
+}
+.home-rooms {
+    display: inline-block;
+}
+.background-rooms {
+    max-height: 300px;
+    overflow: scroll;
+}
+.test {
+    width: auto;
+}
+.home-logo {
+    margin: 0 auto;
+    max-height: 100px;
+}
+
+.explanation-text {
+    line-height: 30px;
+    text-shadow: 0 3px 6px black;
+}
+
+    /*overflow-y: scroll;*/
+.explanation-text-nospace{
+    line-height: normal;
+}
+
+.btn-explanation {
+    margin: 10px 10px 10px 0;
+    color: #fff;
+    background-color: #2B2929;
+    border-color: #2B2929;
+    padding: 5px 50px;
+    font-size: 17px;
+}
+
+.btn-explanation:hover {
+    color: #fff;
+    background-color: #000000;
+    border-color: #ffffff;
+}
+
+.btn-container-explanation {
+    margin-bottom: 10vw;
+}
+
+.show-rooms {
+    overflow-y: scroll;
+    max-height: auto;
+}
+
+.room-block {
+}
+
+.room-name-li {
+    font-size: 20px;
+    text-align: center;
+    color: white;
+    list-style-type: none;
+}
+
+.chat {
+    position: relative;
+    min-height: 500px;
+    max-height: 500px;
+    overflow: scroll;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    word-wrap: break-word;
+    background-clip: border-box;
+    background-color: #727272;
+    width: 842px;
+    max-width: 842px;
+}
+
+.message {
+    left: 15px;
+    width: fit-content;
+    max-width: 80%;
+    word-wrap: break-word;
+    margin-bottom: 12px;
+    line-height: 24px;
+    position: relative;
+    padding: 10px 20px;
+    border-radius: 25px;
+
+    background: #414141;
+    color: white;
+}
+
+.message:before, .message:after {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    height: 20px;
+}
+
+
+.message:before {
+    left: -7px;
+    border-left: 20px solid #414141;
+    border-bottom-right-radius: 16px 14px;
+    transform: translate(0, -2px);
+}
+
+.message:after {
+    left: 4px;
+    width: 26px;
+    background: #727272;
+    border-bottom-right-radius: 10px;
+    transform: translate(-30px, -2px);
+}
+
+.send-message {
+    background-color: #606060;
+    flex: 1 1 auto;
+    min-height: 1px;
+    padding: 1.25rem 0px 22px 0px;
+    width: 904px;
+    max-width: 842px;
+}
+
+
+.input-message {
+    color: white;
+    border: none;
+    outline: none;
+    background: transparent;
+}
+
+
+.btn-send-button {
+    background-color: #323232;
+    color: white;
+    border-color: #323232;
+    outline: none;
+    position: inherit;
+    float: right;
+
+    padding: 25px 41px;
+    margin-top: -22px;
+    border-radius: 0px;
+}
+
+.start-game {
+    width: 1141px;
+    background-color: #2B2929;
+    color: white;
+    border-color: #2B2929;
+    outline: none;
+    position: absolute;
+}
+
+.show-players {
+    position: relative;
+    min-height: 500px;
+    max-height: 500px;
+    display: flex;
+    flex-direction: column;
+    word-wrap: break-word;
+    background-clip: border-box;
+    background-color: #727272;
+    width: 298px;
+    max-width: 298px;
+    border-right: 1px solid white;
+}
+
+.players-in-lobby {
+    color: white;
+    text-align: center;
+    background-color: #606060;
+    flex: 1 1 auto;
+    min-height: 1px;
+    padding: 1.25rem 0px;
+    width: 298px;
+    max-width: 298px;
+    border-right: 1px solid white;
+}
+
+.player-name {
+    margin-bottom: 0px;
+    padding: 10px;
+    font-size: 20px;
+    background-color: #929292;
+    color: white;
+    border-bottom: 1px solid white;
+}
+
+.room-info {
+    width: 1239px;
+    max-width: 1239px;
+    padding: 10px;
+    font-size: 20px;
+    margin-bottom: 0px;
+    color: white;
+    background-color: #606060;
+}
+
+.room-name {
+    display: inline;
+}
+
+.player-count {
+    float: right;
+    display: inline;
+    margin-bottom: 0px;
 }

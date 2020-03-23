@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
-
+import { messagesConfig } from "../../appSettings";
+import Notification from "../Universal/Notification";
 export default class Register extends Component {
+
+    // Place in the render section
 
     constructor(props) {
         super(props);
@@ -8,9 +11,12 @@ export default class Register extends Component {
             username: '',
             email: '',
             password: '',
-            confirmPassword: '',
-            errors: ''
+            password_confirmation: '',
+            errors: '',
+            getMsg: messagesConfig.components.register,
         };
+
+        this.child = React.createRef();
 
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
@@ -23,26 +29,31 @@ export default class Register extends Component {
     }
 
     onSubmit(e) {
+        console.log("test")
         e.preventDefault();
         axios.post('/register', {
             username: this.state.username,
             email: this.state.email,
             password: this.state.password,
+            password_confirmation: this.state.password_confirmation,
         })
             .then(response => {
                 window.location.href = '/'
             })
             .catch(error => {
+                console.log(this.state.getMsg)
+                this.state.getMsg.auth.registerError.message = error.response.data.errors;
                 this.setState({
                     errors: [...this.state.errors, error]
                 })
+                this.child.getNotify(this.state.getMsg.auth.registerError);
             })
     }
-
 
     render() {
         return (
             <div className="container">
+                <Notification onRef={ref => (this.child = ref)} />
                 <div className="block">
                 </div>
                 <div className="card-login rounded-bottom-left">
@@ -63,8 +74,8 @@ export default class Register extends Component {
                                        value={this.state.password} onChange={(e) => this.onChange(e)}/>
                             </div>
                             <div className="form-group">
-                                <input type="password" name="confirmPassword" placeholder="Confirm Password..."
-                                       className="input-login"/>
+                                <input type="password" name="password_confirmation" placeholder="Confirm Password..."
+                                       className="input-login"  value={this.state.password_confirmation} onChange={(e) => this.onChange(e)}/>
                             </div>
                             <button className="btn btn-custom">Register</button>
                             <div className="text-center">
