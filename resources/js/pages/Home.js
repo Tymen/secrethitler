@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import JoinRoom from "../components/Home/JoinRoom";
 import CreateRoom from "../components/Home/CreateRoom";
 import Rooms from "../components/Home/Rooms"
-import { messagesConfig } from "../appSettings";
+import {messagesConfig} from "../appSettings";
 import Notification from "../components/Universal/Notification";
 import {Link} from "react-router-dom";
 
@@ -10,13 +10,16 @@ export default class Home extends Component {
     state = {
         getMsg: messagesConfig.pages.home,
     };
+
     constructor(props) {
         super(props);
         this.child = React.createRef();
     };
+
     notify = () => {
         this.child.getNotify(this.state.getMsg.auth.noLogin);
     };
+
     render() {
         return (
             <div className="container">
@@ -31,17 +34,17 @@ export default class Home extends Component {
 
                     </div>
                 </div>
-                            <div className="col-12 join-text">
-                            Join a game
-                        </div>
-                    <div className="background-rooms">
+                <div className="col-12 join-text">
+                    Join a game
+                </div>
+                <div className="background-rooms">
+                    <Rooms/>
+                </div>
+                <div className="rooms-body">
+                    <div className="room-name">
                         <Rooms/>
                     </div>
-                        <div className="rooms-body">
-                            <div className="room-name">
-                                <Rooms/>
-                            </div>
-                        </div>
+                </div>
                 <div className="row text-white container-explanation explanation-text">
                     <div className="col-12">
                         <h2 className="text-center text-bold">Game manual</h2>
@@ -72,7 +75,8 @@ export default class Home extends Component {
                         </p>
                         <p> -&nbsp;&nbsp;&nbsp;&nbsp;The blue side is filled with blue policy cards(liberals win)</p>
                         <p>
-                            -&nbsp;&nbsp;&nbsp;&nbsp;If Hitler becomes the chancellor by four or more red policy cards on
+                            -&nbsp;&nbsp;&nbsp;&nbsp;If Hitler becomes the chancellor by four or more red policy cards
+                            on
                             the board
                         </p>
                     </div>
@@ -82,7 +86,7 @@ export default class Home extends Component {
                         </Link>
                     </div>
                 </div>
-                    </div>
+            </div>
 
         );
     }

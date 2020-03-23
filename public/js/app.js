@@ -83046,8 +83046,8 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.Pusher = __webpack_require__(/*! pusher-js */ "./node_modules/pusher-js/dist/web/pusher.js");
 window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   broadcaster: 'pusher',
-  key: "907c0cc5fd80d95efe06",
-  cluster: "eu",
+  key: "",
+  cluster: "mt1",
   encrypted: true
 });
 
@@ -83309,8 +83309,6 @@ function (_Component) {
           return _this3.child = ref;
         }
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "block"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "card-login rounded-bottom-left"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", {
         className: "card-header-login"
@@ -83369,7 +83367,9 @@ function (_Component) {
         className: "text-center"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         className: "checking-account"
-      }, "Already have an account? Sign in"))))));
+      }, "Already have an account? Sign in"))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "block"
+      }));
     }
   }]);
 
@@ -85076,8 +85076,8 @@ function (_Component) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\PhpstormProjects\The%20SS%20-%20SecretHitler\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\PhpstormProjects\The%20SS%20-%20SecretHitler\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! E:\Users\krist\Documents\websites\The%20SS%20-%20SecretHitler\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! E:\Users\krist\Documents\websites\The%20SS%20-%20SecretHitler\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
