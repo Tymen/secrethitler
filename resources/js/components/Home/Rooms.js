@@ -66,7 +66,7 @@ export default class Rooms extends Component {
             return this.state.rooms.map(room => {
                 return (
 
-                    <Link className="" to="/auth/login" key={room.id}>
+                    <Link to="/auth/login" key={room.id}>
                         <li className="room-name-li">{room.name}</li>
                     </Link>
                 )
