@@ -44,6 +44,7 @@ export default class Home extends Component {
                     <div className="room-name">
                         <Rooms/>
                     </div>
+
                 </div>
                 <div className="row text-white container-explanation explanation-text">
                     <div className="col-12">
