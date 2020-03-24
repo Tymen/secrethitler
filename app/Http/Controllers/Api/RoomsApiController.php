@@ -112,6 +112,11 @@ class RoomsApiController extends Controller
         return Response::create($room->active);
     }
 
+    public function getMaxPlayers($id)
+    {
+        $room = Room::find($id);
+        return Response::create($room->max_players);
+    }
     /**
      * Remove the specified resource from storage.
      *

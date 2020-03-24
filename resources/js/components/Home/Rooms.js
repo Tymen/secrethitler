@@ -2,11 +2,13 @@ import React, {Component} from 'react';
 import {Link} from "react-router-dom";
 import Notification from "../Universal/Notification";
 import {messagesConfig} from "../../appSettings";
+import Room from "../../pages/Room";
 
 export default class Rooms extends Component {
     _isMounted = false;
 
     state = {
+        loggedIn: false,
         rooms: [],
         getMsg: messagesConfig.components.rooms,
     };
@@ -15,7 +17,18 @@ export default class Rooms extends Component {
         super(props);
         this.child = React.createRef();
     };
+
     componentDidMount() {
+        axios.get('/api/v1/users/me')
+            .then(response => {
+                this.setState({
+                    loggedIn: response.data,
+                })
+            })
+            .catch(error => {
+
+            })
+
         this._isMounted = true
         this.getRooms()
 
@@ -33,8 +46,8 @@ export default class Rooms extends Component {
                 }
             })
             .catch(error => {
-            this.child.getNotify(this.state.getMsg.internalServer);
-        })
+                this.child.getNotify(this.state.getMsg.internalServer);
+            })
     };
 
     componentWillUnmount() {
@@ -42,24 +55,26 @@ export default class Rooms extends Component {
     }
 
     showRooms = () => {
-        return this.state.rooms.map(room => {
-            return (
-                <div className="home-rooms">
-                    <div className="col-12 background-room  ">
-                        <i className="fas fa-mug-hot"></i>
-                        <Link key={room.id} to={"/room/"+room.id}>
-                            <p className="room-name-li">{room.name}</p>
-                        </Link>
+            return this.state.rooms.map(room => {
+                return (
+                    <div className="home-rooms">
+                        <div className="col-12 background-room  ">
+                            <i className="fas fa-mug-hot"></i>
+                            <Link key={room.id} to={"/room/" + room.id}>
+                                <p className="room-name-li">{room.name}</p>
+                            </Link>
+                        </div>
                     </div>
-                </div>
-            )})}
+                )
+            })
+    }
 
     render() {
         return (
             <div>
                 <div className="test">
                     {this.showRooms()}
-                    <Notification onRef={ref => (this.child = ref)} />
+                    <Notification onRef={ref => (this.child = ref)}/>
                 </div>
             </div>
         )
