@@ -57,6 +57,7 @@ body {
 
 .navbar {
     padding: 0px;
+    z-index: 9999;
     box-shadow: 0 2px 8px -2px rgba(0, 0, 0, .2);
 
 
@@ -145,18 +146,65 @@ body {
 
 }
 
-.block {
-    position: absolute;
-    width: 50vw;
-    height: 120%;
-    background-color: #363535;
-    right: -10vw;
-    top: -0;
-    z-index: 999;
-    transform: rotate(18deg);
+.degImage {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+  }
 
+.degImage img {
+    position: relative;
+    z-index: 1;
+    width: 100%;
 }
 
+.degImage:after {
+    position: absolute;
+    content: '';
+    display: inline-block;
+    width: 100%;
+    height: 100px;
+    bottom: 4px;
+}
+.container_register{
+    overflow: hidden;
+}
+.box {
+    position: relative;
+}
+
+.box div {
+    width: 29vw;
+    height: 42.8vw;
+    /* display: block; */
+    /* background-color: #363535; */
+    right: 0;
+    top: 36px;
+    left: 73vw;
+    transform: rotate(0deg);
+    overflow: visible;
+    z-index: 100;
+}
+
+.box:before {
+    content: "";
+    position: absolute;
+    top: 40px;
+    margin-top: 191px;
+    bottom: -50px;
+    left: 0;
+    right: -380px;
+    /* overflow: hidden; */
+    z-index: 999;
+    transform: rotate(-56deg);
+    background: linear-gradient(to bottom right, transparent 50%, rgb(51, 51, 51) 50.5%);
+}
+.box_2 {
+    position: absolute;
+    width: 10vw;
+    z-index: 999;
+    background: rgb(51, 51, 51);
+}
 .checking-account {
 
 }

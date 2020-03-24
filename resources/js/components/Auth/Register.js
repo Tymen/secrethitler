@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import { messagesConfig } from "../../appSettings";
+import {messagesConfig} from "../../appSettings";
 import Notification from "../Universal/Notification";
+
 export default class Register extends Component {
 
     // Place in the render section
@@ -52,8 +53,8 @@ export default class Register extends Component {
 
     render() {
         return (
-            <div className="container">
-                <Notification onRef={ref => (this.child = ref)} />
+            <div className="container_register">
+                <Notification onRef={ref => (this.child = ref)}/>
                 <div className="card-login rounded-bottom-left">
                     <h5 className="card-header-login">Register</h5>
                     <div className="card-body">
@@ -73,7 +74,8 @@ export default class Register extends Component {
                             </div>
                             <div className="form-group">
                                 <input type="password" name="password_confirmation" placeholder="Confirm Password..."
-                                       className="input-login"  value={this.state.password_confirmation} onChange={(e) => this.onChange(e)}/>
+                                       className="input-login" value={this.state.password_confirmation}
+                                       onChange={(e) => this.onChange(e)}/>
                             </div>
                             <button className="btn btn-custom">Register</button>
                             <div className="text-center">
@@ -82,8 +84,12 @@ export default class Register extends Component {
                         </form>
                     </div>
                 </div>
-                <div className="block">
+                <div className="box">
+                    <div> </div>
+                    <div className="box_2"> </div>
+
                 </div>
+
             </div>
         );
     }
