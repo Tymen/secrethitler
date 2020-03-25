@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Link} from "react-router-dom";
 
 export default class Login extends Component {
 
@@ -27,7 +28,7 @@ export default class Login extends Component {
             password: this.state.password,
         })
             .then(response => {
-                   window.location.href = '/'
+                window.location.href = '/'
             })
             .catch(error => {
                 this.setState({
@@ -37,31 +38,60 @@ export default class Login extends Component {
     }
 
 
-
     render() {
         return (
-            <div className="container ">
+            <div className="container_login ">
                 <div className="block">
                 </div>
 
                 <div className="card-login rounded-bottom-left">
                     <h5 className="card-header-login">Login</h5>
                     <div className="card-body">
+                        <div className="row">
+                            <div className="col">
+                                <form className="form-login" onSubmit={this.onSubmit}>
+                                    <div className="form-group">
+                                        <input type="text" name="email" placeholder="E-mail Address"
+                                               value={this.state.email} onChange={(e) => this.onChange(e)}
+                                               className="input-login"/>
+                                    </div>
+                                    <div className="form-group">
+                                        <input type="password" name="password" placeholder="Password..."
+                                               value={this.state.password} onChange={(e) => this.onChange(e)}
+                                               className="input-login"/>
+                                    </div>
+                                    <div className="btn-container">
+                                        <button className="btn btn-custom">Login</button>
+                                        <div className="text-center text-adjustment">
+                                            <p className="checking-account">Dont have an account? Signup <Link
+                                                className="btn-link" to="/auth/register">
+                                                here
+                                            </Link>
+                                            </p>
 
-                        <form className="form-login" onSubmit={this.onSubmit}>
-                            <div className="form-group">
-                                <input type="text" name="email" placeholder="E-mail Address" value={this.state.email} onChange={ (e) => this.onChange(e)}
-                                       className="input-login"/>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
-                            <div className="form-group">
-                                <input type="password" name="password" placeholder="Password..." value={this.state.password} onChange={ (e) => this.onChange(e)}
-                                       className="input-login"/>
+                            <div className="col">
+
                             </div>
-                            <button className="btn btn-custom">Login</button>
-                            <div className="text-center">
-                                <a className="checking-account">Dont have an account? Signup here</a>
+                        </div>
+
+                        <div className="row">
+                            <div className="col">
+
                             </div>
-                        </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="box box-container">
+                    <div className="row">
+                        <div className="col">
+                            <div></div>
+                        </div>
+                        <div className="box_2"></div>
                     </div>
                 </div>
             </div>
