@@ -20,7 +20,6 @@ Route::namespace('Api')->group(function () {
         Route::middleware('auth:api')->group(function() {
             Route::prefix('users')->group(function () {
                 Route::get('me', 'UsersApiController@me');
-                Route::post('{user}/{room}/leave', 'UsersApiController@onUserLeave');
             });
 
             Route::prefix('rooms')->group(function () {

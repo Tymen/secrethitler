@@ -2,11 +2,10 @@
 
 namespace App\Providers;
 
-use App\Policies\RoomsPolicy;
 use App\Room;
-use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Gate;
+use App\Policies\RoomsPolicy;
 use Laravel\Passport\Passport;
+use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
 {
