@@ -3,7 +3,6 @@
 namespace App\Broadcasting;
 
 use App\User;
-use Illuminate\Support\Facades\Auth;
 
 class RoomChannel
 {

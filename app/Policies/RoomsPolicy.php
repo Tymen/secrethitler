@@ -29,6 +29,13 @@ class RoomsPolicy
             : Response::deny('You are not the host');
     }
 
+    public function store(User $user)
+    {
+        return $user->hostsRoom || $user->inRoom
+            ? Response::deny('You already have or are in a room')
+            : Response::allow();
+    }
+
     public function setActive(User $user, Room $room)
     {
         return $this->isHost($user, $room);

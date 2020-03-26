@@ -84987,7 +84987,12 @@ function (_Component) {
       if (this.state.loggedIn) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
           className: "nav-item",
-          to: "/"
+          to: "/",
+          onClick: function onClick() {
+            return axios.post('/logout').then(function (response) {
+              window.location.href = '/';
+            });
+          }
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
           className: "nav-link"
         }, "Logout")));

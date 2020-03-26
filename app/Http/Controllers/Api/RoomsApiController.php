@@ -35,16 +35,14 @@ class RoomsApiController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('store', Room::class);
+
         $validator = Validator::make($request->all(), [
             'name' => 'required|unique:rooms|max:15|min:3',
         ]);
 
         if ($validator->fails()) {
             return response()->json($validator->errors(), 400);
-        }
-
-        if (Auth::user()->hostsRoom || Auth::user()->inRoom) {
-            return response()->json(['message' => 'You already have or are in a room'], 400);
         }
 
         $room = new Room();
