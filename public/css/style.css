@@ -57,6 +57,7 @@ body {
 
 .navbar {
     padding: 0px;
+    z-index: 9999;
     box-shadow: 0 2px 8px -2px rgba(0, 0, 0, .2);
 
 
@@ -117,12 +118,13 @@ body {
     background-color: #6A6969;
     background-clip: border-box;
     color: white;
-    border-bottom-left-radius: 25px;
+    border-radius: 25px 0 0 25px;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 50%;
-    z-index: -2;
+    z-index: 9999;
+    box-shadow: -6px 3px 6px rgba(0, 0, 0, 0.39);
 }
 
 .card-header-login {
@@ -131,6 +133,7 @@ body {
     color: white;
     background-color: #363535;
     border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 25px 0 0 0;
 }
 
 .btn-custom {
@@ -141,24 +144,81 @@ body {
     width: 100%;
 }
 
-.form-login {
-
+.degImage {
+    display: inline-block;
+    position: relative;
+    width: 100%;
 }
 
-.block {
+.degImage img {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+}
+
+.degImage:after {
     position: absolute;
-    width: 50vw;
-    height: 120%;
-    background-color: #363535;
-    right: -10vw;
-    top: -0;
-    z-index: 999;
-    transform: rotate(18deg);
-
+    content: '';
+    display: inline-block;
+    width: 100%;
+    height: 100px;
+    bottom: 4px;
 }
 
-.checking-account {
+.container_register {
+    overflow: hidden;
+}
 
+.container_login {
+    overflow: hidden;
+}
+
+.box {
+    position: relative;
+    z-index: 11111111;
+    width: 50%;
+    float: right;
+}
+
+
+.box div {
+    background-size: cover;
+    width: 28vw;
+    height: 42.8vw;
+    /* display: block; */
+    /* background-color: #363535; */
+    right: 0;
+    top: 0px;
+    left: 26vw;
+    transform: rotate(0deg);
+    /* overflow: hidden; */
+}
+
+.box:before {
+    content: "";
+    position: absolute;
+    top: -85px;
+    bottom: -50px;
+    left: -21px;
+    right: 225px;
+    overflow: hidden;
+    z-index: 999;
+    transform: rotate(-16deg);
+    background: linear-gradient(to bottom right, transparent 50%, rgb(51, 51, 51) 50.1%);
+}
+
+.login-bolletjes {
+    width: 25%;
+    margin: 1vw 0;
+}
+
+.box_2 {
+    position: absolute;
+    background: rgb(51, 51, 51);
+}
+
+.text-adjustment {
+    letter-spacing: 0.09vw;
 }
 
 .btn-custom:hover {
@@ -276,19 +336,29 @@ body {
     color: white;
     background: #615E5D;
 }
+
 .home-rooms {
     display: inline-block;
 }
+
 .background-rooms {
     max-height: 300px;
     overflow: scroll;
 }
+
 .test {
     width: auto;
 }
+
 .home-logo {
     margin: 0 auto;
-    max-height: 100px;
+    max-height: 250px;
+    display: block;
+}
+
+.home-bolletjes {
+    position: absolute;
+    margin-top: -6rem;
 }
 
 .explanation-text {
@@ -296,8 +366,8 @@ body {
     text-shadow: 0 3px 6px black;
 }
 
-    /*overflow-y: scroll;*/
-.explanation-text-nospace{
+/*overflow-y: scroll;*/
+.explanation-text-nospace {
     line-height: normal;
 }
 
@@ -481,4 +551,192 @@ body {
     float: right;
     display: inline;
     margin-bottom: 0px;
+}
+
+/*Large devices (desktops, less than 1200px)*/
+@media (max-width: 1199.98px) {
+    .box div {
+        height: 40.9vw;
+        left: 27vw;
+
+    }
+
+    .box:before {
+        left: 47px;
+        right: 207px;
+        transform: rotate(-8deg);
+    }
+
+    .checking-account {
+        font-size: 0.85vw;
+    }
+
+    .login-bolletjes {
+        width: 22%;
+    }
+}
+
+/*// Medium devices (tablets, less than 992px)*/
+@media (max-width: 991.98px) {
+    .box div {
+        display: none;
+    }
+    .box:before {
+     display: none;
+    }
+
+    .card-login {
+        z-index: -2;
+        border-radius: 25px;
+    }
+
+    .card-header-login {
+        border-radius: 25px 25px 0 0;
+    }
+
+    .input-login {
+        width: 215%;
+    }
+
+    .btn-custom {
+        width: 46%;
+        height: 2.5vw;
+        padding: 0.005rem;
+        font-weight: 100;
+        float: right;
+        font-size: 1.3vw;
+    }
+
+    .btn-container {
+        width: 215%;
+    }
+
+    .text-adjustment {
+        width: 42%;
+        height: 2.5vw;
+        padding: 0.29rem 0.29rem 0.29rem 0;
+        font-size: 0.9vw;
+        text-align: left !important;
+
+    }
+    .login-bolletjes {
+        width: 23%;
+    }
+}
+
+/*// Small devices (landscape phones, less than 768px)*/
+@media (max-width: 767.98px) {
+    .card-login {
+        height: 57%;
+    }
+
+    .card-header-login {
+        font-size: 1.4vw;
+    }
+
+    .text-adjustment {
+        font-size: 0.86vw;
+    }
+    .login-bolletjes {
+        width: 20%;
+    }
+}
+
+/*// Extra small devices (portrait phones, less than 576px)*/
+@media (max-width: 575.98px) {
+    .form-group {
+        margin-bottom: 0.3rem;
+    }
+
+    .card-login {
+        height: 50%;
+    }
+
+    .card-body {
+        padding: 0.55rem;
+    }
+
+    .input-login {
+        height: 20px;
+    }
+
+    .login-bolletjes {
+        width: 18%;
+    }
+}
+
+@media (min-width: 1620px) and (max-width: 2051px) {
+    .box div {
+        height: 43.9vw;
+    }
+
+    .box:before {
+        left: -20px;
+        right: 274px;
+    }
+    .login-bolletjes {
+        width: 26%;
+    }
+}
+
+@media (min-width: 2052px) and (max-width: 2732px) {
+    .box div {
+        height: 44.3vw;
+    }
+
+    .box:before {
+        left: -25px;
+        right: 424px;
+    }
+    .login-bolletjes {
+        width: 26%;
+    }
+}
+
+@media (min-width: 2733px) and (max-width: 4102px) {
+    .box div {
+        height: 45vw;
+    }
+
+    .box:before {
+        left: -25px;
+        right: 462px;
+    }
+    .login-bolletjes {
+        width: 27%;
+    }
+}
+
+@media (min-width: 4103px) and (max-width: 5464px) {
+    .box div {
+        height: 45.7vw;
+    }
+
+    .box:before {
+        left: -30px;
+        right: 741px;
+    }
+
+    .login-bolletjes {
+        width: 28%;
+    }
+}
+
+
+@media (min-width: 5465px) and (max-width: 6825px) {
+    .box div {
+        height: 45.8vw;
+    }
+
+    .box:before {
+        bottom: -189px;
+        left: -965px;
+        right: 235px;
+        transform: rotate(-32deg);
+    }
+
+    .login-bolletjes {
+        width: 28%;
+        margin: 1vw 0;
+    }
 }

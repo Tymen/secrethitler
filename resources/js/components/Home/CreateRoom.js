@@ -46,6 +46,7 @@ export default class CreateRoom extends Component {
     render() {
         return (
             <div>
+
                 <Notification onRef={ref => (this.child = ref)} />
                 <form onSubmit={this.createRoom}>
                     <div>
