@@ -2,16 +2,15 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Resources\UserCollection;
 use App\Room;
-use App\RoomState;
 use App\User;
-use Illuminate\Auth\Access\AuthorizationException;
+use App\RoomState;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Events\CreatedRoomEvent;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UserCollection;
 use App\Http\Resources\RoomCollection;
 use Illuminate\Support\Facades\Validator;
 
