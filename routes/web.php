@@ -11,11 +11,11 @@
 |
 */
 
-Route::get('/', function (){
+Route::get('/', function () {
     return view('index');
 });
 
-Route::get('/profile', function (){
+Route::get('/profile', function () {
     return view('profile');
 });
 
@@ -33,9 +33,9 @@ Route::get('/rooms/{id}', function (){
 
 Route::post('/rooms/{id}', "MessageController@sendMessage");
 
-Route::middleware('guest')->group(function() {
+Route::middleware('guest')->group(function () {
 
-    Route::get('/auth/login', function() {
+    Route::get('/auth/login', function () {
         return view('auth');
     });
 

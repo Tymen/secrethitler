@@ -20,6 +20,7 @@ Route::namespace('Api')->group(function () {
         Route::middleware('auth:api')->group(function() {
             Route::prefix('users')->group(function () {
                 Route::get('me', 'UsersApiController@me');
+                Route::post('{user}/{room}/leave', 'UsersApiController@onUserLeave');
             });
 
             Route::prefix('rooms')->group(function () {
@@ -27,15 +28,15 @@ Route::namespace('Api')->group(function () {
 
                 Route::prefix('{room}')->group(function () {
                     Route::get('active', 'RoomsApiController@getActive');
-                    Route::post('inactive', 'RoomsApiController@setInactive');
                     Route::post('active', 'RoomsApiController@setActive');
+                    Route::post('inactive', 'RoomsApiController@setInactive');
 
                     Route::get('users', 'RoomsApiController@getUsers');
-
                     Route::post('leave', 'RoomsApiController@onUserLeave');
                 });
-
             });
         });
     });
 });
+
+

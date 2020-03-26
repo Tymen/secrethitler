@@ -7,9 +7,9 @@ export default class Rooms extends Component {
     _isMounted = false;
 
     state = {
+        loggedIn: false,
         rooms: [],
         getMsg: messagesConfig.components.rooms,
-        loggedIn: false
     };
 
     constructor(props) {
@@ -18,13 +18,15 @@ export default class Rooms extends Component {
     };
 
     componentDidMount() {
+        axios.get('/api/v1/users/me')
+            .then(response => {
+                this.setState({
+                    loggedIn: response.data,
+                })
+            })
+
         this._isMounted = true
         this.getRooms()
-        axios.get('/api/v1/users/me').then(response => {
-            this.setState({
-                loggedIn: true
-            })
-        })
 
         var channel = Echo.channel('room-created')
         channel.listen('.created-room', () => {
@@ -40,40 +42,36 @@ export default class Rooms extends Component {
                 }
             })
             .catch(error => {
-            this.child.getNotify(this.state.getMsg.internalServer);
-        })
+                this.child.getNotify(this.state.getMsg.internalServer);
+            })
     };
 
     componentWillUnmount() {
         this._isMounted = false
     }
 
-    checkAuth = (room) => {
-        if (this.state.loggedIn) {
-            return `/rooms/${room.id}`
-        }
-        return '/auth/login'
-    }
-
     showRooms = () => {
+
         return this.state.rooms.map(room => {
             return (
                 <div key={room.id} className="home-rooms">
                     <div className="col-12 background-room  ">
                         <i className="fas fa-mug-hot"></i>
-                        <Link to={() => this.checkAuth(room)}>
+                        <Link key={room.id} to={`/rooms/${room.id}`}>
                             <p className="room-name-li">{room.name}</p>
                         </Link>
                     </div>
                 </div>
-            )})}
+            )
+        })
+    }
 
     render() {
         return (
             <div>
                 <div className="test">
                     {this.showRooms()}
-                    <Notification onRef={ref => (this.child = ref)} />
+                    <Notification onRef={ref => (this.child = ref)}/>
                 </div>
             </div>
         )

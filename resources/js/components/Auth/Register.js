@@ -54,8 +54,6 @@ export default class Register extends Component {
         return (
             <div className="container">
                 <Notification onRef={ref => (this.child = ref)} />
-                <div className="block">
-                </div>
                 <div className="card-login rounded-bottom-left">
                     <h5 className="card-header-login">Register</h5>
                     <div className="card-body">
@@ -83,6 +81,8 @@ export default class Register extends Component {
                             </div>
                         </form>
                     </div>
+                </div>
+                <div className="block">
                 </div>
             </div>
         );

@@ -84058,8 +84058,6 @@ function (_Component) {
           return _this3.child = ref;
         }
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "block"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "card-login rounded-bottom-left"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", {
         className: "card-header-login"
@@ -84118,7 +84116,9 @@ function (_Component) {
         className: "text-center"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         className: "checking-account"
-      }, "Already have an account? Sign in"))))));
+      }, "Already have an account? Sign in"))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "block"
+      }));
     }
   }]);
 
@@ -84363,9 +84363,9 @@ function (_Component) {
     _defineProperty(_assertThisInitialized(_this), "_isMounted", false);
 
     _defineProperty(_assertThisInitialized(_this), "state", {
+      loggedIn: false,
       rooms: [],
-      getMsg: _appSettings__WEBPACK_IMPORTED_MODULE_3__["messagesConfig"].components.rooms,
-      loggedIn: false
+      getMsg: _appSettings__WEBPACK_IMPORTED_MODULE_3__["messagesConfig"].components.rooms
     });
 
     _defineProperty(_assertThisInitialized(_this), "getRooms", function () {
@@ -84380,14 +84380,6 @@ function (_Component) {
       });
     });
 
-    _defineProperty(_assertThisInitialized(_this), "checkAuth", function (room) {
-      if (_this.state.loggedIn) {
-        return "/rooms/".concat(room.id);
-      }
-
-      return '/auth/login';
-    });
-
     _defineProperty(_assertThisInitialized(_this), "showRooms", function () {
       return _this.state.rooms.map(function (room) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -84398,9 +84390,8 @@ function (_Component) {
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "fas fa-mug-hot"
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-          to: function to() {
-            return _this.checkAuth(room);
-          }
+          key: room.id,
+          to: "/rooms/".concat(room.id)
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
           className: "room-name-li"
         }, room.name))));
@@ -84416,13 +84407,13 @@ function (_Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
-      this._isMounted = true;
-      this.getRooms();
       axios.get('/api/v1/users/me').then(function (response) {
         _this2.setState({
-          loggedIn: true
+          loggedIn: response.data
         });
       });
+      this._isMounted = true;
+      this.getRooms();
       var channel = Echo.channel('room-created');
       channel.listen('.created-room', function () {
         _this2.getRooms();
@@ -84945,28 +84936,6 @@ function (_Component) {
       loaded: false
     });
 
-    _defineProperty(_assertThisInitialized(_this), "goto", function (url) {
-      var _this$props$match, _this$props$match$par;
-
-      if ((_this$props$match = _this.props.match) === null || _this$props$match === void 0 ? void 0 : (_this$props$match$par = _this$props$match.params) === null || _this$props$match$par === void 0 ? void 0 : _this$props$match$par.id) {
-        leaveRoom(_this.props.match.params.id);
-      }
-
-      return url;
-    });
-
-    _defineProperty(_assertThisInitialized(_this), "logout", function () {
-      var _this$props$match2, _this$props$match2$pa;
-
-      if ((_this$props$match2 = _this.props.match) === null || _this$props$match2 === void 0 ? void 0 : (_this$props$match2$pa = _this$props$match2.params) === null || _this$props$match2$pa === void 0 ? void 0 : _this$props$match2$pa.id) {
-        leaveRoom(_this.props.match.params.id);
-      }
-
-      axios.post('/logout').then(function () {
-        window.location.href = '/';
-      });
-    });
-
     return _this;
   }
 
@@ -84999,17 +84968,12 @@ function (_Component) {
   }, {
     key: "authCheck",
     value: function authCheck() {
-      var _this3 = this;
-
       if (this.state.loggedIn) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
           className: "nav-item",
           to: "/"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-          className: "nav-link",
-          onClick: function onClick() {
-            return _this3.logout();
-          }
+          className: "nav-link"
         }, "Logout")));
       }
 
@@ -85028,8 +84992,6 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this4 = this;
-
       if (this.state.loaded) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
           className: "navbar navbar-expand-lg navbar-dark bg-custom"
@@ -85050,9 +85012,7 @@ function (_Component) {
           className: "navbar-nav mr-auto"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
           className: "navbar-brand",
-          to: function to() {
-            return _this4["goto"]('/');
-          }
+          to: "/"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
           className: "navbar-logo"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
@@ -85061,23 +85021,17 @@ function (_Component) {
           className: "navbar-nav ml-auto"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
           className: "nav-item",
-          to: function to() {
-            return _this4["goto"]('/gamerules');
-          }
+          to: "/gamerules"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
           className: "nav-link"
         }, "Gamerules")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
           className: "nav-item",
-          to: function to() {
-            return _this4["goto"]('/profile');
-          }
+          to: "/profile"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
           className: "nav-link"
         }, "Profile")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
           className: "nav-item",
-          to: function to() {
-            return _this4["goto"]('/about');
-          }
+          to: "/about"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
           className: "nav-link"
         }, "About")), this.authCheck())));
@@ -85732,13 +85686,22 @@ if (document.getElementById('index')) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Room; });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _components_Room_Game__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/Room/Game */ "./resources/js/components/Room/Game.js");
-/* harmony import */ var _components_Room_Lobby__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/Room/Lobby */ "./resources/js/components/Room/Lobby.js");
-/* harmony import */ var _components_Room_Lobby_ChatLobby__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/Room/Lobby/ChatLobby */ "./resources/js/components/Room/Lobby/ChatLobby.js");
-/* harmony import */ var _components_Room_Lobby_PlayersLobby__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/Room/Lobby/PlayersLobby */ "./resources/js/components/Room/Lobby/PlayersLobby.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _components_Room_Game__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/Room/Game */ "./resources/js/components/Room/Game.js");
+/* harmony import */ var _components_Room_Lobby__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/Room/Lobby */ "./resources/js/components/Room/Lobby.js");
+/* harmony import */ var _components_Room_Lobby_ChatLobby__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/Room/Lobby/ChatLobby */ "./resources/js/components/Room/Lobby/ChatLobby.js");
+/* harmony import */ var _components_Room_Lobby_PlayersLobby__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/Room/Lobby/PlayersLobby */ "./resources/js/components/Room/Lobby/PlayersLobby.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+
+
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
@@ -85772,6 +85735,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
+
 var Room =
 /*#__PURE__*/
 function (_Component) {
@@ -85792,8 +85756,95 @@ function (_Component) {
 
     _defineProperty(_assertThisInitialized(_this), "state", {
       users: [],
+      leftUsers: false,
       active: 0,
-      refresh: false
+      loggedIn: false,
+      loaded: false,
+      timer: false,
+      done: false
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "onUserJoin", function (user) {
+      if (!_this.state.users.some(function (u) {
+        return u.id === user.id;
+      })) {
+        _this.setState({
+          users: [].concat(_toConsumableArray(_this.state.users), [user])
+        });
+      }
+
+      if (Array.isArray(_this.state.leftUsers) && _this.state.leftUsers.some(function (id) {
+        return id === user.id;
+      })) {
+        _this.setState({
+          leftUsers: _this.state.leftUsers.filter(function (id) {
+            return id !== user.id;
+          })
+        });
+      }
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "onUserLeave", function (user) {
+      var leftUsers;
+      var running = _this.state.timer;
+      !_this.state.leftUsers ? leftUsers = [user.id] : leftUsers = [].concat(_toConsumableArray(_this.state.leftUsers), [user.id]);
+
+      _this.setState({
+        leftUsers: leftUsers,
+        timer: true,
+        done: false
+      });
+
+      var finished = function finished() {
+        _this.getUsers();
+
+        _this.setState({
+          timer: false,
+          leftUsers: false,
+          done: true
+        });
+      };
+
+      var timer = setTimeout(
+      /*#__PURE__*/
+      _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                if (!(Array.isArray(_this.state.leftUsers) && _this.state.leftUsers.some(function (id) {
+                  return id === user.id;
+                }))) {
+                  _context.next = 6;
+                  break;
+                }
+
+                _context.next = 3;
+                return axios.post("/api/v1/rooms/".concat(_this.props.match.params.id, "/leave"), {
+                  ids: _this.state.leftUsers
+                })["catch"](function (err) {});
+
+              case 3:
+                finished();
+                _context.next = 7;
+                break;
+
+              case 6:
+                _this.setState({
+                  timer: false,
+                  done: true
+                });
+
+              case 7:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      })), 7000);
+      running || _this.state.done ? clearTimeout(timer) : false;
     });
 
     _defineProperty(_assertThisInitialized(_this), "getActive", function () {
@@ -85829,80 +85880,96 @@ function (_Component) {
       var _this2 = this;
 
       this.getActive();
+      axios.get('/api/v1/users/me').then(function (response) {
+        _this2.setState({
+          loggedIn: response.data,
+          loaded: true
+        });
+      })["catch"](function (error) {
+        _this2.setState({
+          loaded: true
+        });
+      });
       Echo.join("room.".concat(this.props.match.params.id)).here(function (users) {
         _this2.setState({
           users: users
         });
       }).joining(function (user) {
-        if (!_this2.state.users.some(function (u) {
-          return u.id === user.id;
-        })) {
-          _this2.setState({
-            users: [].concat(_toConsumableArray(_this2.state.users), [user])
-          });
-        }
+        _this2.onUserJoin(user);
       }).leaving(function (user) {
-        setTimeout(function () {
-          if (_this2.state.users) {}
-        }, 10000);
-        axios.get("/api/v1/rooms/".concat(_this2.props.match.params.id, "/users")).then(function (response) {
-          _this2.setState({
-            users: response.data
-          });
+        _this2.onUserLeave(user);
+      });
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      Echo.leave("room.".concat(this.props.match.params.id));
+    }
+  }, {
+    key: "getUsers",
+    value: function getUsers() {
+      var _this3 = this;
+
+      axios.get("/api/v1/rooms/".concat(this.props.match.params.id, "/users")).then(function (response) {
+        _this3.setState({
+          users: response.data
         });
       });
     }
   }, {
     key: "render",
     value: function render() {
-      var _this3 = this;
+      var _this4 = this;
 
-      if (this.state.active) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Room_Game__WEBPACK_IMPORTED_MODULE_1__["default"], {
-          setInactive: function setInactive() {
-            return _this3.setInactive();
-          }
+      if (this.state.loaded) {
+        if (this.state.active) {
+          return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_components_Room_Game__WEBPACK_IMPORTED_MODULE_2__["default"], {
+            setInactive: function setInactive() {
+              return _this4.setInactive();
+            }
+          });
+        } else if (this.state.loggedIn) {
+          return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+            className: "container"
+          }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+            className: "row"
+          }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("img", {
+            className: "home-logo",
+            src: "/images/Secrethitler-no-bg.png"
+          })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+            className: "row"
+          }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+            className: "room-info"
+          }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("p", {
+            className: "room-name"
+          }, "Room: ", this.props.match.params.id), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("p", {
+            className: "player-count"
+          }, this.state.users.length, "/8 Players"))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+            className: "row"
+          }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_components_Room_Lobby_PlayersLobby__WEBPACK_IMPORTED_MODULE_5__["default"], {
+            users: this.state.users
+          }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_components_Room_Lobby_ChatLobby__WEBPACK_IMPORTED_MODULE_4__["default"], {
+            id: this.props.match.params.id
+          })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+            className: "row"
+          }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_components_Room_Lobby__WEBPACK_IMPORTED_MODULE_3__["default"], {
+            setActive: function setActive() {
+              return _this4.setActive();
+            }
+          })));
+        }
+
+        return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_6__["Redirect"], {
+          to: "/auth/login"
         });
+      } else {
+        return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", null);
       }
-
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "container"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "row"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "btn btn-dark",
-        onClick: function onClick() {
-          return leaveRoom(_this3.props.match.params.id);
-        }
-      }, "Leave"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        className: "home-logo",
-        src: "/images/Secrethitler-no-bg.png"
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "row"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "room-info"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-        className: "room-name"
-      }, "Room: ", this.props.match.params.id), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-        className: "player-count"
-      }, this.state.users.length, "/8 Players"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "row"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Room_Lobby_PlayersLobby__WEBPACK_IMPORTED_MODULE_4__["default"], {
-        users: this.state.users
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Room_Lobby_ChatLobby__WEBPACK_IMPORTED_MODULE_3__["default"], {
-        id: this.props.match.params.id
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "row"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Room_Lobby__WEBPACK_IMPORTED_MODULE_2__["default"], {
-        setActive: function setActive() {
-          return _this3.setActive();
-        }
-      })));
     }
   }]);
 
   return Room;
-}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+}(react__WEBPACK_IMPORTED_MODULE_1__["Component"]);
 
 
 
