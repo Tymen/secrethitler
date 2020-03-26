@@ -62601,7 +62601,7 @@ var currentlyProcessingQueue;
   didWarnUpdateInsideUpdate = false;
   currentlyProcessingQueue = null;
 
-
+  
 }
 
 function createUpdateQueue(baseState) {
@@ -66916,7 +66916,7 @@ function insertNonHydratedInstance(returnFiber, fiber) {
               break;
 
             case SuspenseComponent:
-
+              
               break;
           }
 
@@ -84037,7 +84037,16 @@ function (_Component) {
         window.location.href = '/';
       })["catch"](function (error) {
         console.log(_this2.state.getMsg);
-        _this2.state.getMsg.auth.registerError.message = error.response.data.errors;
+
+        if (error.response.data.errors.username) {
+          _this2.state.getMsg.auth.registerError.message = error.response.data.errors.username[0];
+        } else if (error.response.data.errors.email) {
+          _this2.state.getMsg.auth.registerError.message = error.response.data.errors.email[0];
+        } else if (error.response.data.errors.password) {
+          _this2.state.getMsg.auth.registerError.message = error.response.data.errors.password[0];
+        } else {
+          _this2.state.getMsg.auth.registerError.message = "Something went wrong try again later!";
+        }
 
         _this2.setState({
           errors: [].concat(_toConsumableArray(_this2.state.errors), [error])
@@ -84207,6 +84216,13 @@ function (_Component) {
       axios.post('/api/v1/rooms', {
         name: this.state.name
       }).then(function (response) {})["catch"](function (error) {
+        if (error.response.data.name) {
+          _this2.state.getMsg.auth.noLogin.title = "Invalid";
+          _this2.state.getMsg.auth.noLogin.message = error.response.data.name;
+        } else if (error.response.data) {
+          _this2.state.getMsg.auth.noLogin.message = error.response.data;
+        }
+
         _this2.child.getNotify(_this2.state.getMsg.auth.noLogin);
       });
     }
