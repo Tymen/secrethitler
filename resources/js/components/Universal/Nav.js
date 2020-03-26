@@ -39,27 +39,26 @@ export default class Nav extends Component {
         if (this.state.loggedIn) {
             return (
                 <div>
-                    <Link className="nav-item" to="/">
-                        <li className="nav-link"
-                            onClick={() => axios.post('/logout').then(response => {
-                                window.location.href = '/'
-                            })}>Logout
-                        </li>
-                    </Link>
-                </div>
-            )
-        } else {
-            return (
-                <div>
-                    <Link className="nav-item" to="/auth/login">
-                        <li className="nav-link">Login</li>
-                    </Link>
-                    <Link className="nav-item" to="/auth/register">
-                        <li className="nav-link">Register</li>
+                    <Link className="nav-item" to="/"
+                          onClick={() => axios.post('/logout').then(response => {
+                              window.location.href = '/'
+                          })}>
+                        <li className="nav-link">Logout</li>
                     </Link>
                 </div>
             )
         }
+        return (
+            <div>
+                <Link className="nav-item" to="/auth/login">
+                    <li className="nav-link">Login</li>
+                </Link>
+                <Link className="nav-item" to="/auth/register">
+                    <li className="nav-link">Register</li>
+                </Link>
+            </div>
+        )
+
     }
 
     render() {

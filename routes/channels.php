@@ -10,14 +10,11 @@
 | used to check if an authenticated user can listen to the channel.
 |
 */
+use App\Broadcasting\RoomChannel;
 
 Broadcast::channel('room-created', function () {
     return true;
 });
 
-Broadcast::channel('room.{id}', function ($id) {
-    if (auth()->check()) {
-        return new \App\Http\Resources\User(auth()->user());
-    }
-});
+Broadcast::channel('room.{room}', RoomChannel::class);
 

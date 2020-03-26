@@ -27,11 +27,11 @@ Route::get('/about', function (){
     return view('about');
 });
 
-Route::get('/room/{id}', function () {
+Route::get('/rooms/{id}', function (){
     return view('room');
 });
 
-Route::post('/room/{id}', "MessageController@sendMessage");
+Route::post('/rooms/{id}', "MessageController@sendMessage");
 
 Route::middleware('guest')->group(function () {
 

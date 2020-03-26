@@ -26,9 +26,6 @@ export default class Rooms extends Component {
                     loggedIn: response.data,
                 })
             })
-            .catch(error => {
-
-            })
 
         this._isMounted = true
         this.getRooms()
@@ -55,7 +52,7 @@ export default class Rooms extends Component {
         this._isMounted = false
     }
 
-    test = () =>{
+    test = () => {
         axios.get(`/api/v1/rooms/${room.id}/joinRoom`)
             .then(response => {
                 this.setState({
@@ -68,7 +65,7 @@ export default class Rooms extends Component {
                 })
             })
     }
-    
+
     showRooms = () => {
         return this.state.rooms.map(room => {
 
@@ -76,7 +73,7 @@ export default class Rooms extends Component {
                 <div className="home-rooms" key={room.id}>
                     <div className="col-12 background-room">
                         <i className="fas fa-mug-hot"></i>
-                        <Link activeonlywhenexact={this.state.canJoin.toString()} to={"/room/" + room.id}>
+                        <Link activeonlywhenexact={this.state.canJoin.toString()} to={"/rooms/" + room.id}>
                             <p className="room-name-li">{room.name}</p>
                         </Link>
                     </div>

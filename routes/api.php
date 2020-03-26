@@ -12,24 +12,31 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::namespace('Api')->group(function (){
-    Route::prefix('v1')->group(function(){
+Route::namespace('Api')->group(function () {
+    Route::prefix('v1')->group(function () {
         Route::get('/rooms', 'RoomsApiController@index');
 
-        Route::middleware('auth:api')->group(function (){
-            Route::prefix('users')->group(function() {
+
+        Route::middleware('auth:api')->group(function() {
+            Route::prefix('users')->group(function () {
                 Route::get('me', 'UsersApiController@me');
             });
 
-            Route::prefix('rooms')->group(function() {
+            Route::prefix('rooms')->group(function () {
                 Route::post('/', 'RoomsApiController@store');
 
-                Route::get('{id}/getMaxPlayers', 'RoomsApiController@getMaxPlayers');
-                Route::get('{id}/joinRoom', 'RoomsApiController@joinRoom');
 
-                Route::get('{id}/active', 'RoomsApiController@getActive');
-                Route::post('{id}/inactive', 'RoomsApiController@setInactive');
-                Route::post('{id}/active', 'RoomsApiController@setActive');
+
+                Route::prefix('{room}')->group(function () {
+                    Route::get('active', 'RoomsApiController@getActive');
+                    Route::post('active', 'RoomsApiController@setActive');
+                    Route::post('inactive', 'RoomsApiController@setInactive');
+
+                    Route::get('getMaxPlayers', 'RoomsApiController@getMaxPlayers');
+
+                    Route::get('users', 'RoomsApiController@getUsers');
+                    Route::post('leave', 'RoomsApiController@onUserLeave');
+                });
             });
         });
     });
