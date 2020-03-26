@@ -84802,8 +84802,11 @@ function (_Component) {
   _createClass(Home, [{
     key: "render",
     value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "container"
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        className: "home-bolletjes",
+        src: "images/home-bolletjes.svg"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "container mt-5"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         className: "home-logo",
         src: "images/Secrethitler-no-bg.png"
@@ -84840,7 +84843,7 @@ function (_Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_6__["Link"], {
         className: "btn btn-explanation",
         to: "/gamerules"
-      }, "More info"))));
+      }, "More info")))));
     }
   }]);
 

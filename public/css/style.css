@@ -352,7 +352,13 @@ body {
 
 .home-logo {
     margin: 0 auto;
-    max-height: 100px;
+    max-height: 250px;
+    display: block;
+}
+
+.home-bolletjes {
+    position: absolute;
+    margin-top: -6rem;
 }
 
 .explanation-text {
