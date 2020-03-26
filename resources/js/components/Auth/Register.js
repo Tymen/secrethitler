@@ -64,6 +64,7 @@ export default class Register extends Component {
         return (
             <div className="container_register">
                 <Notification onRef={ref => (this.child = ref)}/>
+                <img className="login-bolletjes" src="/images/login-bolletjes.svg"/>
                 <div className="card-login rounded-bottom-left">
                     <h5 className="card-header-login">Register</h5>
                     <div className="card-body">

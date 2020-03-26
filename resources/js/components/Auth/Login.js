@@ -41,9 +41,7 @@ export default class Login extends Component {
     render() {
         return (
             <div className="container_login ">
-                <div className="block">
-                </div>
-
+                <img className="login-bolletjes" src="/images/login-bolletjes.svg"/>
                 <div className="card-login rounded-bottom-left">
                     <h5 className="card-header-login">Login</h5>
                     <div className="card-body">
@@ -85,13 +83,12 @@ export default class Login extends Component {
                         </div>
                     </div>
                 </div>
-
                 <div className="box box-container">
                     <div className="row">
                         <div className="col">
                             <div></div>
                         </div>
-                        <div className="box_2"></div>
+                        <div className="box_2"> </div>
                     </div>
                 </div>
             </div>

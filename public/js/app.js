@@ -83147,8 +83147,9 @@ function (_Component) {
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "container_login "
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "block"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        className: "login-bolletjes",
+        src: "/images/login-bolletjes.svg"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "card-login rounded-bottom-left"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", {
@@ -83209,7 +83210,7 @@ function (_Component) {
         className: "col"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "box_2"
-      }))));
+      }, " "))));
     }
   }]);
 
@@ -83344,6 +83345,9 @@ function (_Component) {
         onRef: function onRef(ref) {
           return _this3.child = ref;
         }
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        className: "login-bolletjes",
+        src: "/images/login-bolletjes.svg"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "card-login rounded-bottom-left"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", {
