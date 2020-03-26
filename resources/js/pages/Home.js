@@ -40,12 +40,6 @@ export default class Home extends Component {
                 <div className="background-rooms">
                     <Rooms/>
                 </div>
-                <div className="rooms-body">
-                    <div className="room-name">
-                        <Rooms/>
-                    </div>
-
-                </div>
                 <div className="row text-white container-explanation explanation-text">
                     <div className="col-12">
                         <h2 className="text-center text-bold">Game manual</h2>

@@ -24,9 +24,6 @@ export default class Rooms extends Component {
                     loggedIn: response.data,
                 })
             })
-            .catch(error => {
-
-            })
 
         this._isMounted = true
         this.getRooms()
@@ -57,10 +54,10 @@ export default class Rooms extends Component {
 
         return this.state.rooms.map(room => {
             return (
-                <div className="home-rooms">
+                <div key={room.id} className="home-rooms">
                     <div className="col-12 background-room  ">
                         <i className="fas fa-mug-hot"></i>
-                        <Link key={room.id} to={"/room/" + room.id}>
+                        <Link key={room.id} to={`/rooms/${room.id}`}>
                             <p className="room-name-li">{room.name}</p>
                         </Link>
                     </div>

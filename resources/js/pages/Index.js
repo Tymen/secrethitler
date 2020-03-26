@@ -19,7 +19,7 @@ export default class Index extends Component {
                 <Nav/>
                 <Switch>
                     <Route path="/" exact component={Home}/>
-                    <Route path="/room/:id" exact component={Room}/>
+                    <Route path="/rooms/:id" exact component={Room}/>
                     <Route path="/auth/:type" exact component={Auth}/>
                     <Route path="/gamerules" exact component={GameRule}/>
                     <Route path="/about" exact component={About}/>

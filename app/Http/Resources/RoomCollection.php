@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use App\Http\Resources\Room as RoomResource;
 
-class RoomsCollection extends ResourceCollection
+class RoomCollection extends ResourceCollection
 {
     /**
      * Transform the resource collection into an array.
