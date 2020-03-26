@@ -329,6 +329,7 @@ body {
 }
 
 .room-name-li {
+    margin-right: -15px;
     font-size: 20px;
     text-align: center;
     color: white;

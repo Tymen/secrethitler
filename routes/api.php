@@ -25,6 +25,7 @@ Route::namespace('Api')->group(function (){
                 Route::post('/', 'RoomsApiController@store');
 
                 Route::get('{id}/getMaxPlayers', 'RoomsApiController@getMaxPlayers');
+                Route::get('{id}/joinRoom', 'RoomsApiController@joinRoom');
 
                 Route::get('{id}/active', 'RoomsApiController@getActive');
                 Route::post('{id}/inactive', 'RoomsApiController@setInactive');

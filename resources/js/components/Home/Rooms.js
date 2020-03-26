@@ -11,6 +11,7 @@ export default class Rooms extends Component {
         loggedIn: false,
         rooms: [],
         getMsg: messagesConfig.components.rooms,
+        canJoin: false,
     };
 
     constructor(props) {
@@ -54,19 +55,34 @@ export default class Rooms extends Component {
         this._isMounted = false
     }
 
-    showRooms = () => {
-            return this.state.rooms.map(room => {
-                return (
-                    <div className="home-rooms">
-                        <div className="col-12 background-room  ">
-                            <i className="fas fa-mug-hot"></i>
-                            <Link key={room.id} to={"/room/" + room.id}>
-                                <p className="room-name-li">{room.name}</p>
-                            </Link>
-                        </div>
-                    </div>
-                )
+    test = () =>{
+        axios.get(`/api/v1/rooms/${room.id}/joinRoom`)
+            .then(response => {
+                this.setState({
+                    canJoin: true
+                })
             })
+            .catch(error => {
+                this.setState({
+                    canJoin: false
+                })
+            })
+    }
+    
+    showRooms = () => {
+        return this.state.rooms.map(room => {
+
+            return (
+                <div className="home-rooms" key={room.id}>
+                    <div className="col-12 background-room">
+                        <i className="fas fa-mug-hot"></i>
+                        <Link activeonlywhenexact={this.state.canJoin.toString()} to={"/room/" + room.id}>
+                            <p className="room-name-li">{room.name}</p>
+                        </Link>
+                    </div>
+                </div>
+            )
+        })
     }
 
     render() {

@@ -42,7 +42,15 @@ export default class Register extends Component {
             })
             .catch(error => {
                 console.log(this.state.getMsg)
-                this.state.getMsg.auth.registerError.message = error.response.data.errors;
+                if (error.response.data.errors.username){
+                    this.state.getMsg.auth.registerError.message = error.response.data.errors.username[0];
+                }else if(error.response.data.errors.email){
+                    this.state.getMsg.auth.registerError.message = error.response.data.errors.email[0];
+                }else if(error.response.data.errors.password) {
+                    this.state.getMsg.auth.registerError.message = error.response.data.errors.password[0];
+                }else {
+                    this.state.getMsg.auth.registerError.message = "Something went wrong try again later!";
+                }
                 this.setState({
                     errors: [...this.state.errors, error]
                 })

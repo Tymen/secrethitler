@@ -32,27 +32,34 @@ export default class Room extends Component {
                 })
             })
 
+        axios.get('/api/v1/users/me')
+            .then(response => {
+                this.setState({
+                    loggedIn: response.data,
+                    loaded: true
+                })
+            })
+            .catch(error => {
+                this.setState({
+                    loaded: true
+                })
+            })
+
         Echo.join('room.' + this.props.match.params.id)
             .here((users) => {
-
                 this.setState({
                     users: users
                 })
-
             })
             .joining((user) => {
                 this.setState({
                     users: [...this.state.users, user]
                 })
-                axios.post(`/api/v1/rooms/${this.props.match.params.id}/join`)
-                console.log("joined")
             })
             .leaving(user => {
                 this.setState({
                     users: this.state.users.filter(u => u.id !== user.id)
                 });
-                axios.post(`/api/v1/rooms/${this.props.match.params.id}/leave`)
-                console.log("leaved")
             })
     }
 
@@ -90,7 +97,7 @@ export default class Room extends Component {
                 })
             })
     }
-    
+
     render() {
         if (this.state.active) {
             return (
@@ -119,7 +126,6 @@ export default class Room extends Component {
                         </div>
                     </div>
                 )
-
             }
             return (<Redirect to="/auth/login"/>)
         } else {
