@@ -11,6 +11,12 @@ export default class Home extends Component {
         getMsg: messagesConfig.pages.home,
     };
 
+    componentDidMount(){
+        if(this.props.message !== null) {
+            this.child.getNotify(this.state.getMsg.room.roomFull);
+        }
+    }
+
     constructor(props) {
         super(props);
         this.child = React.createRef();
@@ -34,6 +40,7 @@ export default class Home extends Component {
 
                     </div>
                 </div>
+
                 <div className="col-12 join-text">
                     Join a game
                 </div>
@@ -81,8 +88,8 @@ export default class Home extends Component {
                         </Link>
                     </div>
                 </div>
+                <Notification onRef={ref => (this.child = ref)} />
             </div>
-
         );
     }
 }

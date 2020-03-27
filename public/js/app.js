@@ -83740,6 +83740,13 @@ var messagesConfig = {
           title: "Authentication Error",
           message: "You're not logged in"
         }
+      },
+      room: {
+        roomFull: {
+          type: msgTypes.Three,
+          title: "Room is full",
+          message: "Chosen room is full!"
+        }
       }
     },
     about: {},
@@ -84383,8 +84390,7 @@ function (_Component) {
     _defineProperty(_assertThisInitialized(_this), "state", {
       loggedIn: false,
       rooms: [],
-      getMsg: _appSettings__WEBPACK_IMPORTED_MODULE_3__["messagesConfig"].components.rooms,
-      canJoin: false
+      getMsg: _appSettings__WEBPACK_IMPORTED_MODULE_3__["messagesConfig"].components.rooms
     });
 
     _defineProperty(_assertThisInitialized(_this), "getRooms", function () {
@@ -84399,18 +84405,6 @@ function (_Component) {
       });
     });
 
-    _defineProperty(_assertThisInitialized(_this), "test", function () {
-      axios.get("/api/v1/rooms/".concat(room.id, "/joinRoom")).then(function (response) {
-        _this.setState({
-          canJoin: true
-        });
-      })["catch"](function (error) {
-        _this.setState({
-          canJoin: false
-        });
-      });
-    });
-
     _defineProperty(_assertThisInitialized(_this), "showRooms", function () {
       return _this.state.rooms.map(function (room) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -84421,8 +84415,11 @@ function (_Component) {
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "fas fa-mug-hot"
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-          activeonlywhenexact: _this.state.canJoin.toString(),
-          to: "/rooms/" + room.id
+          key: room.id,
+          to: "/",
+          onClick: function onClick() {
+            window.location.href = "/rooms/".concat(room.id);
+          }
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
           className: "room-name-li"
         }, room.name))));
@@ -85472,15 +85469,15 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
@@ -85500,6 +85497,15 @@ var Home =
 /*#__PURE__*/
 function (_Component) {
   _inherits(Home, _Component);
+
+  _createClass(Home, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      if (this.props.message !== null) {
+        this.child.getNotify(this.state.getMsg.room.roomFull);
+      }
+    }
+  }]);
 
   function Home(props) {
     var _this;
@@ -85523,6 +85529,8 @@ function (_Component) {
   _createClass(Home, [{
     key: "render",
     value: function render() {
+      var _this2 = this;
+
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
@@ -85557,7 +85565,11 @@ function (_Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_6__["Link"], {
         className: "btn btn-explanation",
         to: "/gamerules"
-      }, "More info"))));
+      }, "More info"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Universal_Notification__WEBPACK_IMPORTED_MODULE_5__["default"], {
+        onRef: function onRef(ref) {
+          return _this2.child = ref;
+        }
+      }));
     }
   }]);
 
@@ -85635,9 +85647,10 @@ function (_Component) {
     value: function render() {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_9__["BrowserRouter"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Universal_Nav__WEBPACK_IMPORTED_MODULE_2__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_9__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_9__["Route"], {
         path: "/",
-        exact: true,
-        component: _Home__WEBPACK_IMPORTED_MODULE_5__["default"]
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_9__["Route"], {
+        exact: true
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Home__WEBPACK_IMPORTED_MODULE_5__["default"], {
+        message: this.props.message
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_9__["Route"], {
         path: "/rooms/:id",
         exact: true,
         component: _Room__WEBPACK_IMPORTED_MODULE_8__["default"]
@@ -85663,7 +85676,9 @@ function (_Component) {
 
 
 if (document.getElementById('index')) {
-  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Index, null), document.getElementById('index'));
+  var element = document.getElementById('index');
+  var props = Object.assign({}, element.dataset);
+  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Index, props), element);
 }
 
 /***/ }),
@@ -85752,8 +85767,7 @@ function (_Component) {
       active: 0,
       loggedIn: false,
       loaded: false,
-      maxPlayers: '',
-      canJoin: true
+      maxPlayers: ''
     });
 
     _defineProperty(_assertThisInitialized(_this), "onUserJoin", function (user) {
@@ -85774,8 +85788,6 @@ function (_Component) {
           })
         });
       }
-
-      _this.canJoin();
     });
 
     _defineProperty(_assertThisInitialized(_this), "onUserLeave", function (user) {
@@ -85873,26 +85885,6 @@ function (_Component) {
       });
     });
 
-    _defineProperty(_assertThisInitialized(_this), "canJoin", function () {
-      var _this$state$users$;
-
-      console.log(_this.state.users);
-
-      if (((_this$state$users$ = _this.state.users[0]) === null || _this$state$users$ === void 0 ? void 0 : _this$state$users$.message) === "False") {
-        console.log("false");
-
-        _this.setState({
-          canJoin: false
-        });
-      } else {
-        console.log("true");
-
-        _this.setState({
-          canJoin: false
-        });
-      }
-    });
-
     return _this;
   }
 
@@ -85962,40 +85954,34 @@ function (_Component) {
             }
           });
         } else if (this.state.loggedIn) {
-          if (this.state.canJoin) {
-            return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
-              className: "container"
-            }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
-              className: "row"
-            }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("img", {
-              className: "home-logo",
-              src: "/images/Secrethitler-no-bg.png"
-            })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
-              className: "row"
-            }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
-              className: "room-info"
-            }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("p", {
-              className: "room-name"
-            }, "Room: ", this.props.match.params.id), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("p", {
-              className: "player-count"
-            }, this.state.users.length, "/", this.state.maxPlayers, " Players"))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
-              className: "row"
-            }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_components_Room_Lobby_PlayersLobby__WEBPACK_IMPORTED_MODULE_5__["default"], {
-              users: this.state.users
-            }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_components_Room_Lobby_ChatLobby__WEBPACK_IMPORTED_MODULE_4__["default"], {
-              id: this.props.match.params.id
-            })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
-              className: "row"
-            }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_components_Room_Lobby__WEBPACK_IMPORTED_MODULE_3__["default"], {
-              setActive: function setActive() {
-                return _this4.setActive();
-              }
-            })));
-          } else {
-            return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_6__["Redirect"], {
-              to: "/"
-            });
-          }
+          return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+            className: "container"
+          }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+            className: "row"
+          }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("img", {
+            className: "home-logo",
+            src: "/images/Secrethitler-no-bg.png"
+          })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+            className: "row"
+          }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+            className: "room-info"
+          }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("p", {
+            className: "room-name"
+          }, "Room: ", this.props.match.params.id), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("p", {
+            className: "player-count"
+          }, this.state.users.length, "/", this.state.maxPlayers, " Players"))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+            className: "row"
+          }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_components_Room_Lobby_PlayersLobby__WEBPACK_IMPORTED_MODULE_5__["default"], {
+            users: this.state.users
+          }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_components_Room_Lobby_ChatLobby__WEBPACK_IMPORTED_MODULE_4__["default"], {
+            id: this.props.match.params.id
+          })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+            className: "row"
+          }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_components_Room_Lobby__WEBPACK_IMPORTED_MODULE_3__["default"], {
+            setActive: function setActive() {
+              return _this4.setActive();
+            }
+          })));
         } else {
           return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_6__["Redirect"], {
             to: "/auth/login"

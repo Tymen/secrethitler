@@ -14,7 +14,6 @@ export default class Room extends Component {
         loggedIn: false,
         loaded: false,
         maxPlayers: '',
-        canJoin: true,
     }
 
     componentDidMount() {
@@ -79,7 +78,6 @@ export default class Room extends Component {
                 leftUsers: this.state.leftUsers.filter(id => id !== user.id)
             })
         }
-        this.canJoin()
     }
 
     onUserLeave = (user) => {
@@ -166,22 +164,6 @@ export default class Room extends Component {
             })
     }
 
-    canJoin = () => {
-        console.log(this.state.users)
-        
-        if (this.state.users[0]?.message === "False") {
-            console.log("false")
-            this.setState({
-                canJoin: false
-            })
-        } else {
-            console.log("true")
-            this.setState({
-                canJoin: false
-            })
-        }
-    }
-
     render() {
         if (this.state.loaded) {
             if (this.state.active) {
@@ -189,7 +171,6 @@ export default class Room extends Component {
                     <Game setInactive={() => this.setInactive()}/>
                 )
             } else if (this.state.loggedIn) {
-                if (this.state.canJoin) {
                     return (
                         <div className="container">
                             <div className="row">
@@ -210,9 +191,6 @@ export default class Room extends Component {
                             </div>
                         </div>
                     )
-                } else {
-                    return <Redirect to="/"/>
-                }
             } else {
                 return <Redirect to="/auth/login"/>
             }
