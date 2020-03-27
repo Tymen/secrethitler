@@ -10917,3 +10917,57 @@ a.text-dark:focus {
   font-size: 80px;
 }
 
+.page-title h1 {
+  font-size: 60px;
+  color: #F5E1C4;
+}
+
+.school-img {
+  padding-top: 125px;
+  margin: 0 auto;
+  display: block;
+}
+
+.text-about-us {
+  font-size: 20px;
+  color: #DFD3C2;
+}
+
+.person-about-img {
+  display: inline-block;
+  background-color: #B7B7B7;
+  width: 300px;
+  text-align: center;
+  height: 330px;
+}
+
+.person-about-img img {
+  padding-top: 20px;
+  display: block;
+  margin: 0px auto;
+}
+
+.person-about-img b {
+  line-height: 1;
+  display: block;
+  font-size: 23px;
+}
+
+.person-about-img p {
+  margin-bottom: 5px;
+  padding: 0px 60px;
+}
+
+.person-about-img .vl {
+  border-top: 1px solid;
+  margin: 10px 40px;
+}
+
+.person-about-img .round-skills {
+  background-color: aliceblue;
+  padding: 20px;
+  margin: 0 5px;
+  display: inline-block;
+  border-radius: 45px;
+}
+
