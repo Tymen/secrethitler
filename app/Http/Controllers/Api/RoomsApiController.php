@@ -65,11 +65,11 @@ class RoomsApiController extends Controller
      * Display the specified resource.
      *
      * @param \App\Room $room
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function show(Room $room)
     {
-        //
+        return response()->json(['room' => $room]);
     }
 
     /**
@@ -99,6 +99,7 @@ class RoomsApiController extends Controller
 
         $room->active = false;
         $room->save();
+
         return response()->json(['message' => 'completed']);
     }
 
@@ -116,11 +117,21 @@ class RoomsApiController extends Controller
      * Remove the specified resource from storage.
      *
      * @param \App\Room $room
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
      */
     public function destroy(Room $room)
     {
-        //
+        $this->authorize();
+
+        foreach ($room->users as $user) {
+            $user->room_id = NULL;
+            $user->save();
+        }
+
+        $room->delete();
+
+        return response()->json(['message' => 'completed']);
     }
 
     public function onUserLeave(Room $room)
@@ -138,6 +149,8 @@ class RoomsApiController extends Controller
             $user->save();
 
         }
+
+        $room->users->isEmpty() ? $this->destroy($room) : false;
 
         return response()->json(['message' => 'completed']);
     }

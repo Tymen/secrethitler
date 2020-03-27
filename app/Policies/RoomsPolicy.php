@@ -6,7 +6,6 @@ use App\Room;
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Auth\Access\Response;
-use Illuminate\Support\Facades\Auth;
 
 class RoomsPolicy
 {
