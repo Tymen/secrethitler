@@ -39,27 +39,26 @@ export default class Nav extends Component {
         if (this.state.loggedIn) {
             return (
                 <div>
-                    <Link className="nav-item" to="/">
-                        <li className="nav-link"
-                            onClick={() => axios.post('/logout').then(response => {
-                                window.location.href = '/'
-                            })}>Logout
-                        </li>
-                    </Link>
-                </div>
-            )
-        } else {
-            return (
-                <div>
-                    <Link className="nav-item" to="/auth/login">
-                        <li className="nav-link">Login</li>
-                    </Link>
-                    <Link className="nav-item" to="/auth/register">
-                        <li className="nav-link">Register</li>
+                    <Link className="nav-item" to="/"
+                          onClick={() => axios.post('/logout').then(response => {
+                              window.location.href = '/'
+                          })}>
+                        <li className="nav-link">Logout</li>
                     </Link>
                 </div>
             )
         }
+        return (
+            <div>
+                <Link className="nav-item" to="/auth/login">
+                    <li className="nav-link">Login</li>
+                </Link>
+                <Link className="nav-item" to="/auth/register">
+                    <li className="nav-link">Register</li>
+                </Link>
+            </div>
+        )
+
     }
 
     render() {
@@ -74,7 +73,7 @@ export default class Nav extends Component {
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav mr-auto">
                             <Link className="navbar-brand" to="/">
-                                <li className="navbar-logo"><img src="images/Secrethitler-no-bg.png"></img></li>
+                                <li className="navbar-logo"><img src="/images/Secrethitler-no-bg.png"></img></li>
                             </Link>
                         </ul>
                         <ul className="navbar-nav ml-auto">
