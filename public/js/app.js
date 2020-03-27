@@ -85603,32 +85603,7 @@ function (_Component) {
         className: "col-12 my-2"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Secret Hitler is a card game, in the game you have liberals and fascists. before the game starts the roles will be randomly distributed among the players in the game."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "explanation-text-nospace"
-      }, "The goal for the liberals is to find out who the fascist are and Hitler and then to kill them. When Hitler is killed the liberals will win the game, liberals can also win by filling in all policy spots on the the blue side of the board (total of five blue policy cards)."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "As a fascist, you have to thwart the liberals and try to make the liberals think you are not a fascist. Fascists can win by getting six red policy cards on the red side of board."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", {
-        className: "my-3 mt-5"
-      }, "The game ends when:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-12 join-text"
-      }, "Join a game"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "background-rooms"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Home_Rooms__WEBPACK_IMPORTED_MODULE_3__["default"], null)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "row text-white container-explanation explanation-text"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-12"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
-        className: "text-center text-bold"
-      }, "Game manual")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-12 my-2"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Secret Hitler is a card game, in the game you have liberals and fascists. before the game starts the roles will be randomly distributed among the players in the game."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-        className: "explanation-text-nospace"
-      }, "The goal for the liberals is to find out who the fascist are and Hitler and then to kill them. When Hitler is killed the liberals will win the game, liberals can also win by filling in all policy spots on the the blue side of the board (total of five blue policy cards)."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "As a fascist, you have to thwart the liberals and try to make the liberals think you are not a fascist. Fascists can win by getting six red policy cards on the red side of board."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", {
-        className: "my-3 mt-5"
-      }, "The game ends when:")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-12 explanation-text-nospace"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, " -\xA0\xA0\xA0\xA0Hitler is killed (liberals win)"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "-\xA0\xA0\xA0\xA0The red side of the board is filled with red policy cards(fascists win)"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, " -\xA0\xA0\xA0\xA0The blue side is filled with blue policy cards(liberals win)"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "-\xA0\xA0\xA0\xA0If Hitler becomes the chancellor by four or more red policy cards on the board")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-12 btn-container-explanation"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_6__["Link"], {
-        className: "btn btn-explanation",
-        to: "/gamerules"
-      }, "More info")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Universal_Notification__WEBPACK_IMPORTED_MODULE_5__["default"], {
+      }, "The goal for the liberals is to find out who the fascist are and Hitler and then to kill them. When Hitler is killed the liberals will win the game, liberals can also win by filling in all policy spots on the the blue side of the board (total of five blue policy cards)."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "As a fascist, you have to thwart the liberals and try to make the liberals think you are not a fascist. Fascists can win by getting six red policy cards on the red side of board.")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Universal_Notification__WEBPACK_IMPORTED_MODULE_5__["default"], {
         onRef: function onRef(ref) {
           return _this2.child = ref;
         }
