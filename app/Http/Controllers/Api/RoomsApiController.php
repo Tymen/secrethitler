@@ -117,12 +117,6 @@ class RoomsApiController extends Controller
         $room = Room::find($id);
         return Response::create($room->max_players);
     }
-    public function joinRoom($id)
-    {
-        $room = Room::find($id);
-
-        return Response::create('Room is Full!', 400);
-    }
     /**
      * Remove the specified resource from storage.
      *

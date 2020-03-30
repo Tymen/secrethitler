@@ -84858,10 +84858,22 @@ function (_Component) {
 
     _defineProperty(_assertThisInitialized(_this), "showPlayers", function () {
       return _this.props.users.map(function (user) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-          className: "player-name",
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           key: user.id
-        }, user.username);
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+          className: "player-name dropdown-toggle",
+          type: "button",
+          id: "dropdownMenuButton",
+          "data-toggle": "dropdown",
+          "aria-haspopup": "true",
+          "aria-expanded": "false"
+        }, user.username), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "dropdown-menu",
+          "aria-labelledby": "dropdownMenuButton"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+          className: "dropdown-item",
+          onClick: _this.kickUser
+        }, "Kick ", user.username)));
       });
     });
 
@@ -85513,15 +85525,15 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
@@ -85541,15 +85553,6 @@ var Home =
 /*#__PURE__*/
 function (_Component) {
   _inherits(Home, _Component);
-
-  _createClass(Home, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      if (this.props.message !== null) {
-        this.child.getNotify(this.state.getMsg.room.roomFull);
-      }
-    }
-  }]);
 
   function Home(props) {
     var _this;
@@ -85573,8 +85576,6 @@ function (_Component) {
   _createClass(Home, [{
     key: "render",
     value: function render() {
-      var _this2 = this;
-
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         className: "home-bolletjes",
         src: "images/home-bolletjes.svg"
@@ -85589,7 +85590,7 @@ function (_Component) {
         className: "col-4 offset-2 text-center"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Home_JoinRoom__WEBPACK_IMPORTED_MODULE_1__["default"], null)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-4 text-center"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Home_CreateRoom__WEBPACK_IMPORTED_MODULE_2__["default"], null)))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Home_CreateRoom__WEBPACK_IMPORTED_MODULE_2__["default"], null))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-12 join-text"
       }, "Join a game"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "background-rooms"
@@ -85603,11 +85604,16 @@ function (_Component) {
         className: "col-12 my-2"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Secret Hitler is a card game, in the game you have liberals and fascists. before the game starts the roles will be randomly distributed among the players in the game."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "explanation-text-nospace"
-      }, "The goal for the liberals is to find out who the fascist are and Hitler and then to kill them. When Hitler is killed the liberals will win the game, liberals can also win by filling in all policy spots on the the blue side of the board (total of five blue policy cards)."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "As a fascist, you have to thwart the liberals and try to make the liberals think you are not a fascist. Fascists can win by getting six red policy cards on the red side of board.")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Universal_Notification__WEBPACK_IMPORTED_MODULE_5__["default"], {
-        onRef: function onRef(ref) {
-          return _this2.child = ref;
-        }
-      })));
+      }, "The goal for the liberals is to find out who the fascist are and Hitler and then to kill them. When Hitler is killed the liberals will win the game, liberals can also win by filling in all policy spots on the the blue side of the board (total of five blue policy cards)."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "As a fascist, you have to thwart the liberals and try to make the liberals think you are not a fascist. Fascists can win by getting six red policy cards on the red side of board."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", {
+        className: "my-3 mt-5"
+      }, "The game ends when:")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-12 explanation-text-nospace"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, " -\xA0\xA0\xA0\xA0Hitler is killed (liberals win)"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "-\xA0\xA0\xA0\xA0The red side of the board is filled with red policy cards(fascists win)"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, " -\xA0\xA0\xA0\xA0The blue side is filled with blue policy cards(liberals win)"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "-\xA0\xA0\xA0\xA0If Hitler becomes the chancellor by four or more red policy cards on the board")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-12 btn-container-explanation"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_6__["Link"], {
+        className: "btn btn-explanation",
+        to: "/gamerules"
+      }, "More info")))));
     }
   }]);
 
