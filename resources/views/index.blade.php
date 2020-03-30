@@ -2,7 +2,12 @@
 
 @section('content')
 
-    <div id="index">
-
+    <div id="index"
+         @if(session('message'))
+            data-message="{{ session('message') }}"
+         @else
+            data-message="{{ false }}"
+         @endif>
     </div>
+
 @endsection
