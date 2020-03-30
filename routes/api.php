@@ -25,10 +25,14 @@ Route::namespace('Api')->group(function () {
             Route::prefix('rooms')->group(function () {
                 Route::post('/', 'RoomsApiController@store');
 
+
+
                 Route::prefix('{room}')->group(function () {
                     Route::get('active', 'RoomsApiController@getActive');
                     Route::post('active', 'RoomsApiController@setActive');
                     Route::post('inactive', 'RoomsApiController@setInactive');
+
+                    Route::get('getMaxPlayers', 'RoomsApiController@getMaxPlayers');
 
                     Route::get('users', 'RoomsApiController@getUsers');
                     Route::post('leave', 'RoomsApiController@onUserLeave');

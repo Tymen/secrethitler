@@ -16,5 +16,5 @@ Broadcast::channel('room-created', function () {
     return true;
 });
 
-Broadcast::channel('room.{id}', RoomChannel::class);
+Broadcast::channel('room.{room}', RoomChannel::class);
 

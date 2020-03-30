@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Link} from "react-router-dom";
 import Notification from "../Universal/Notification";
 import {messagesConfig} from "../../appSettings";
+import Room from "../../pages/Room";
 
 export default class Rooms extends Component {
     _isMounted = false;
@@ -50,14 +51,17 @@ export default class Rooms extends Component {
         this._isMounted = false
     }
 
-    showRooms = () => {
 
+    showRooms = () => {
         return this.state.rooms.map(room => {
+
             return (
-                <div key={room.id} className="home-rooms">
-                    <div className="col-12 background-room  ">
+                <div className="home-rooms" key={room.id}>
+                    <div className="col-12 background-room">
                         <i className="fas fa-mug-hot"></i>
-                        <Link key={room.id} to={`/rooms/${room.id}`}>
+                        <Link key={room.id} to="/" onClick={() => {
+                            window.location.href = `/rooms/${room.id}`
+                        }}>
                             <p className="room-name-li">{room.name}</p>
                         </Link>
                     </div>

@@ -7,9 +7,15 @@ export default class PlayersLobby extends Component {
 
         return this.props.users.map(user => {
             return (
-                <p className="player-name" key={user.id}>
-                    {user.username}
-                </p>
+                <div key={user.id}>
+                    <p className="player-name dropdown-toggle" type="button" id="dropdownMenuButton"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {user.username}
+                    </p>
+                    <div className="dropdown-menu" aria-labelledby="dropdownMenuButton" >
+                        <a className="dropdown-item" onClick={this.kickUser}>Kick {user.username}</a>
+                    </div>
+                </div>
             )
         })
     }
