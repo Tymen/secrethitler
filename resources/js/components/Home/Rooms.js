@@ -29,8 +29,8 @@ export default class Rooms extends Component {
         this._isMounted = true
         this.getRooms()
 
-        var channel = Echo.channel('room-created')
-        channel.listen('.created-room', () => {
+        const channel = Echo.channel('rooms-updated')
+        channel.listen('.updated-rooms', () => {
             this.getRooms()
         })
     }

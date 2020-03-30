@@ -72,6 +72,8 @@ export default class Room extends Component {
         })
         setTimeout(() => {
             if (this.state.leftUsers.some(id => id === user.id)) {
+                this.state.room.owner.id === user.id ? this.getRoom() : false;
+
                 this.setState({
                     users: this.state.users.filter(u => u.id !== user.id),
                     leftUsers: this.state.leftUsers.filter(u => u.id !== user.id),
@@ -92,7 +94,7 @@ export default class Room extends Component {
     setActive = () => {
         axios.post(`/api/v1/rooms/${this.props.match.params.id}/active`).then(response => {
                 this.setState({
-                    active: 1
+                    room: {...this.state.room, active: 1}
                 })
             }
         )
@@ -101,7 +103,7 @@ export default class Room extends Component {
     setInactive = () => {
         axios.post(`/api/v1/rooms/${this.props.match.params.id}/inactive`).then(response => {
                 this.setState({
-                    active: 0
+                    room: {...this.state.room, active: 0}
                 })
             }
         )
@@ -113,32 +115,30 @@ export default class Room extends Component {
                 return (
                     <Game setInactive={() => this.setInactive()}/>
                 )
-            } else if (this.state.loggedIn) {
-                    return (
-                        <div className="container">
-                            <div className="row">
-                                <img className="home-logo" src="/images/Secrethitler-no-bg.png"/>
-                            </div>
-                            <div className="row">
-                                <div className="room-info">
-                                    <p className="room-name">Room: {this.state.room.id}</p>
-                                    <p className="player-count">{this.state.users.length}/{this.state.room.max_players} Players</p>
-                                </div>
-                            </div>
-                            <div className="row">
-                                <PlayersLobby users={this.state.users}/>
-                                <ChatLobby id={this.props.match.params.id}/>
-                            </div>
-                            <div className="row">
-                                <Lobby setActive={() => this.setActive()}/>
-                            </div>
-                        </div>
-                    )
-            } else {
-                return <Redirect to="/auth/login"/>
             }
-        } else {
-            return <div></div>
+
+            return (
+                <div className="container">
+                    <div className="row">
+                        <img className="home-logo" src="/images/Secrethitler-no-bg.png"/>
+                    </div>
+                    <div className="row">
+                        <div className="room-info">
+                            <p className="room-name">Room: {this.state.room.id}</p>
+                            <p className="player-count">{this.state.users.length}/{this.state.room.max_players} Players</p>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <PlayersLobby users={this.state.users}/>
+                        <ChatLobby id={this.props.match.params.id}/>
+                    </div>
+                    <div className="row">
+                        <Lobby setActive={() => this.setActive()}/>
+                    </div>
+                    <div className="height-for-start-button"/>
+                </div>
+            )
         }
+        return <div></div>
     }
 }

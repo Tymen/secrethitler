@@ -6,8 +6,7 @@ use App\Room;
 use App\User;
 use App\RoomState;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use App\Events\CreatedRoomEvent;
+use App\Events\RoomsUpdatedEvent;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\RoomCollection;
@@ -54,7 +53,7 @@ class RoomsApiController extends Controller
         $roomState->room_id = $room->id;
         $roomState->save();
 
-        event(new CreatedRoomEvent());
+        event(new RoomsUpdatedEvent());
 
         return response()->json(['message' => 'completed', 'id' => $room->id]);
     }
@@ -119,6 +118,8 @@ class RoomsApiController extends Controller
         RoomState::destroy($room->roomState->id);
 
         $room->delete();
+
+        event(new RoomsUpdatedEvent());
 
         return response()->json(['message' => 'completed']);
     }
