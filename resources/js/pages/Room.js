@@ -10,18 +10,18 @@ export default class Room extends Component {
     state = {
         users: [],
         leftUsers: [],
-        active: 0,
         loggedIn: false,
         loaded: false,
+        room: {},
     }
 
     componentDidMount() {
-        this.getActive();
+        this.getRoom()
 
         axios.get('/api/v1/users/me')
             .then(response => {
                 this.setState({
-                    loggedIn: response.data,
+                    loggedIn: response.data.isAuthenticated,
                     loaded: true
                 })
             })
@@ -43,6 +43,7 @@ export default class Room extends Component {
             .leaving((user) => {
                 this.onUserLeave(user)
             })
+
     }
 
     componentWillUnmount() {
@@ -69,7 +70,6 @@ export default class Room extends Component {
         this.setState({
             leftUsers: [...this.state.leftUsers, user.id],
         })
-
         setTimeout(() => {
             if (this.state.leftUsers.some(id => id === user.id)) {
                 this.setState({
@@ -81,18 +81,10 @@ export default class Room extends Component {
         }, 7000)
     }
 
-    getUsers() {
-        axios.get(`/api/v1/rooms/${this.props.match.params.id}/users`).then(response => {
+    getRoom = () => {
+        axios.get(`/api/v1/rooms/${this.props.match.params.id}`).then(response => {
             this.setState({
-                users: response.data,
-            })
-        })
-    }
-
-    getActive = () => {
-        axios.get(`/api/v1/rooms/${this.props.match.params.id}/active`).then(response => {
-            this.setState({
-                active: response.data
+                room: response.data.data
             })
         })
     };
@@ -117,34 +109,34 @@ export default class Room extends Component {
 
     render() {
         if (this.state.loaded) {
-            if (this.state.active) {
+            if (this.state.room.active) {
                 return (
                     <Game setInactive={() => this.setInactive()}/>
                 )
             } else if (this.state.loggedIn) {
-                return (
-                    <div className="container">
-                        <div className="row">
-                            <img className="home-logo" src="/images/Secrethitler-no-bg.png"/>
-                        </div>
-                        <div className="row">
-                            <div className="room-info">
-                                <p className="room-name">Room: {this.props.match.params.id}</p>
-                                <p className="player-count">{this.state.users.length}/8 Players</p>
+                    return (
+                        <div className="container">
+                            <div className="row">
+                                <img className="home-logo" src="/images/Secrethitler-no-bg.png"/>
+                            </div>
+                            <div className="row">
+                                <div className="room-info">
+                                    <p className="room-name">Room: {this.state.room.id}</p>
+                                    <p className="player-count">{this.state.users.length}/{this.state.room.max_players} Players</p>
+                                </div>
+                            </div>
+                            <div className="row">
+                                <PlayersLobby users={this.state.users}/>
+                                <ChatLobby id={this.props.match.params.id}/>
+                            </div>
+                            <div className="row">
+                                <Lobby setActive={() => this.setActive()}/>
                             </div>
                         </div>
-                        <div className="row">
-                            <PlayersLobby users={this.state.users}/>
-                            <ChatLobby id={this.props.match.params.id}/>
-                        </div>
-                        <div className="row">
-                            <Lobby setActive={() => this.setActive()}/>
-                        </div>
-                    </div>
-                )
+                    )
+            } else {
+                return <Redirect to="/auth/login"/>
             }
-
-            return <Redirect to="/auth/login"/>
         } else {
             return <div></div>
         }

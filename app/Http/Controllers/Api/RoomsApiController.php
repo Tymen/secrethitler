@@ -10,20 +10,20 @@ use Illuminate\Http\Response;
 use App\Events\CreatedRoomEvent;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\UserCollection;
 use App\Http\Resources\RoomCollection;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Resources\Room as RoomResource;
 
 class RoomsApiController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return RoomCollection
      */
     public function index()
     {
-        return Response::create(new RoomCollection(Room::with('user')->get()));
+        return new RoomCollection(Room::with(['user'])->get());
     }
 
     /**
@@ -56,18 +56,18 @@ class RoomsApiController extends Controller
 
         event(new CreatedRoomEvent());
 
-        return response()->json(['message' => 'completed']);
+        return response()->json(['message' => 'completed', 'id' => $room->id]);
     }
 
     /**
      * Display the specified resource.
      *
      * @param \App\Room $room
-     * @return \Illuminate\Http\JsonResponse
+     * @return RoomResource
      */
     public function show(Room $room)
     {
-        return response()->json(['room' => $room]);
+        return new RoomResource($room);
     }
 
     /**
@@ -100,17 +100,6 @@ class RoomsApiController extends Controller
 
         return response()->json(['message' => 'completed']);
     }
-
-    public function getActive(Room $room)
-    {
-        return response()->json($room->active);
-    }
-
-    public function getUsers(Room $room)
-    {
-        return response()->json(new UserCollection($room->users));
-    }
-
     /**
      * Remove the specified resource from storage.
      *

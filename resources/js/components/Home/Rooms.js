@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Link} from "react-router-dom";
 import Notification from "../Universal/Notification";
 import {messagesConfig} from "../../appSettings";
+import Room from "../../pages/Room";
 
 export default class Rooms extends Component {
     _isMounted = false;
@@ -21,7 +22,7 @@ export default class Rooms extends Component {
         axios.get('/api/v1/users/me')
             .then(response => {
                 this.setState({
-                    loggedIn: response.data,
+                    loggedIn: response.data.isAuthenticated,
                 })
             })
 
@@ -38,7 +39,7 @@ export default class Rooms extends Component {
         axios.get('/api/v1/rooms')
             .then(response => {
                 if (this._isMounted) {
-                    this.setState({rooms: response.data})
+                    this.setState({rooms: response.data.data})
                 }
             })
             .catch(error => {
@@ -50,14 +51,17 @@ export default class Rooms extends Component {
         this._isMounted = false
     }
 
-    showRooms = () => {
 
+    showRooms = () => {
         return this.state.rooms.map(room => {
+
             return (
-                <div key={room.id} className="home-rooms">
-                    <div className="col-12 background-room  ">
+                <div className="home-rooms" key={room.id}>
+                    <div className="col-12 background-room">
                         <i className="fas fa-mug-hot"></i>
-                        <Link key={room.id} to={`/rooms/${room.id}`}>
+                        <Link key={room.id} to="/" onClick={() => {
+                            window.location.href = `/rooms/${room.id}`
+                        }}>
                             <p className="room-name-li">{room.name}</p>
                         </Link>
                     </div>

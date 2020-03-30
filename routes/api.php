@@ -25,13 +25,12 @@ Route::namespace('Api')->group(function () {
                 Route::post('/', 'RoomsApiController@store');
 
                 Route::prefix('{room}')->group(function () {
-                    Route::get('active', 'RoomsApiController@getActive');
-                    Route::get('users', 'RoomsApiController@getUsers');
+                    Route::get('/', 'RoomsApiController@show');
 
                     Route::post('active', 'RoomsApiController@setActive');
                     Route::post('inactive', 'RoomsApiController@setInactive');
                     Route::post('leave', 'RoomsApiController@onUserLeave');
-                    Route::post('destroy', 'RoomsApiController@destroy');
+                    Route::delete('destroy', 'RoomsApiController@destroy');
                 });
             });
         });

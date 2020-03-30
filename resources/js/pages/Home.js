@@ -32,6 +32,7 @@ export default class Home extends Component {
                             <JoinRoom/>
 
                         </div>
+
                         <div className="col-4 text-center">
                             <CreateRoom/>
 

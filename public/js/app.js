@@ -82991,6 +82991,13 @@ var messagesConfig = {
           title: "Authentication Error",
           message: "You're not logged in"
         }
+      },
+      room: {
+        roomFull: {
+          type: msgTypes.Three,
+          title: "Room is full",
+          message: "Chosen room is full!"
+        }
       }
     },
     about: {},
@@ -83510,7 +83517,9 @@ function (_Component) {
       e.preventDefault();
       axios.post('/api/v1/rooms', {
         name: this.state.name
-      }).then(function (response) {})["catch"](function (error) {
+      }).then(function (response) {
+        window.location.href = "/rooms/".concat(response.data.id);
+      })["catch"](function (error) {
         if (error.response.data.name) {
           _this2.state.getMsg.auth.noLogin.title = "Invalid";
           _this2.state.getMsg.auth.noLogin.message = error.response.data.name;
@@ -83634,6 +83643,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 /* harmony import */ var _Universal_Notification__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Universal/Notification */ "./resources/js/components/Universal/Notification.js");
 /* harmony import */ var _appSettings__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../appSettings */ "./resources/js/appSettings.js");
+/* harmony import */ var _pages_Room__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../pages/Room */ "./resources/js/pages/Room.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -83653,6 +83663,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -83683,7 +83694,7 @@ function (_Component) {
       axios.get('/api/v1/rooms').then(function (response) {
         if (_this._isMounted) {
           _this.setState({
-            rooms: response.data
+            rooms: response.data.data
           });
         }
       })["catch"](function (error) {
@@ -83694,15 +83705,18 @@ function (_Component) {
     _defineProperty(_assertThisInitialized(_this), "showRooms", function () {
       return _this.state.rooms.map(function (room) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          key: room.id,
-          className: "home-rooms"
+          className: "home-rooms",
+          key: room.id
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "col-12 background-room  "
+          className: "col-12 background-room"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "fas fa-mug-hot"
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
           key: room.id,
-          to: "/rooms/".concat(room.id)
+          to: "/",
+          onClick: function onClick() {
+            window.location.href = "/rooms/".concat(room.id);
+          }
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
           className: "room-name-li"
         }, room.name))));
@@ -83720,7 +83734,7 @@ function (_Component) {
 
       axios.get('/api/v1/users/me').then(function (response) {
         _this2.setState({
-          loggedIn: response.data
+          loggedIn: response.data.isAuthenticated
         });
       });
       this._isMounted = true;
@@ -84097,10 +84111,22 @@ function (_Component) {
 
     _defineProperty(_assertThisInitialized(_this), "showPlayers", function () {
       return _this.props.users.map(function (user) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-          className: "player-name",
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           key: user.id
-        }, user.username);
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+          className: "player-name dropdown-toggle",
+          type: "button",
+          id: "dropdownMenuButton",
+          "data-toggle": "dropdown",
+          "aria-haspopup": "true",
+          "aria-expanded": "false"
+        }, user.username), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "dropdown-menu",
+          "aria-labelledby": "dropdownMenuButton"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+          className: "dropdown-item",
+          onClick: _this.kickUser
+        }, "Kick ", user.username)));
       });
     });
 
@@ -84918,9 +84944,10 @@ function (_Component) {
     value: function render() {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_9__["BrowserRouter"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Universal_Nav__WEBPACK_IMPORTED_MODULE_2__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_9__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_9__["Route"], {
         path: "/",
-        exact: true,
-        component: _Home__WEBPACK_IMPORTED_MODULE_5__["default"]
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_9__["Route"], {
+        exact: true
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Home__WEBPACK_IMPORTED_MODULE_5__["default"], {
+        message: this.props.message
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_9__["Route"], {
         path: "/rooms/:id",
         exact: true,
         component: _Room__WEBPACK_IMPORTED_MODULE_8__["default"]
@@ -84946,7 +84973,9 @@ function (_Component) {
 
 
 if (document.getElementById('index')) {
-  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Index, null), document.getElementById('index'));
+  var element = document.getElementById('index');
+  var props = Object.assign({}, element.dataset);
+  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Index, props), element);
 }
 
 /***/ }),
@@ -85024,9 +85053,9 @@ function (_Component) {
     _defineProperty(_assertThisInitialized(_this), "state", {
       users: [],
       leftUsers: [],
-      active: 0,
       loggedIn: false,
-      loaded: false
+      loaded: false,
+      room: {}
     });
 
     _defineProperty(_assertThisInitialized(_this), "onUserJoin", function (user) {
@@ -85070,10 +85099,10 @@ function (_Component) {
       }, 7000);
     });
 
-    _defineProperty(_assertThisInitialized(_this), "getActive", function () {
-      axios.get("/api/v1/rooms/".concat(_this.props.match.params.id, "/active")).then(function (response) {
+    _defineProperty(_assertThisInitialized(_this), "getRoom", function () {
+      axios.get("/api/v1/rooms/".concat(_this.props.match.params.id)).then(function (response) {
         _this.setState({
-          active: response.data
+          room: response.data.data
         });
       });
     });
@@ -85102,10 +85131,10 @@ function (_Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
-      this.getActive();
+      this.getRoom();
       axios.get('/api/v1/users/me').then(function (response) {
         _this2.setState({
-          loggedIn: response.data,
+          loggedIn: response.data.isAuthenticated,
           loaded: true
         });
       })["catch"](function (error) {
@@ -85129,26 +85158,15 @@ function (_Component) {
       axios.post("/api/v1/rooms/".concat(this.props.match.params.id, "/leave")).then(Echo.leave("room.".concat(this.props.match.params.id)));
     }
   }, {
-    key: "getUsers",
-    value: function getUsers() {
-      var _this3 = this;
-
-      axios.get("/api/v1/rooms/".concat(this.props.match.params.id, "/users")).then(function (response) {
-        _this3.setState({
-          users: response.data
-        });
-      });
-    }
-  }, {
     key: "render",
     value: function render() {
-      var _this4 = this;
+      var _this3 = this;
 
       if (this.state.loaded) {
-        if (this.state.active) {
+        if (this.state.room.active) {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Room_Game__WEBPACK_IMPORTED_MODULE_1__["default"], {
             setInactive: function setInactive() {
-              return _this4.setInactive();
+              return _this3.setInactive();
             }
           });
         } else if (this.state.loggedIn) {
@@ -85165,9 +85183,9 @@ function (_Component) {
             className: "room-info"
           }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
             className: "room-name"
-          }, "Room: ", this.props.match.params.id), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+          }, "Room: ", this.state.room.id), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
             className: "player-count"
-          }, this.state.users.length, "/8 Players"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          }, this.state.users.length, "/", this.state.room.max_players, " Players"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
             className: "row"
           }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Room_Lobby_PlayersLobby__WEBPACK_IMPORTED_MODULE_4__["default"], {
             users: this.state.users
@@ -85177,14 +85195,14 @@ function (_Component) {
             className: "row"
           }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Room_Lobby__WEBPACK_IMPORTED_MODULE_2__["default"], {
             setActive: function setActive() {
-              return _this4.setActive();
+              return _this3.setActive();
             }
           })));
+        } else {
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__["Redirect"], {
+            to: "/auth/login"
+          });
         }
-
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__["Redirect"], {
-          to: "/auth/login"
-        });
       } else {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null);
       }
