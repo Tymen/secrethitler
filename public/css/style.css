@@ -555,7 +555,7 @@ body {
 }
 
 .height-for-start-button{
-    height: 11vw;
+    margin-top: 10vw;
 }
 
 /*Large devices (desktops, less than 1200px)*/
