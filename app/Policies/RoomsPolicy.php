@@ -21,7 +21,7 @@ class RoomsPolicy
         //
     }
 
-    private function isHost($user, $room)
+    public function isHost(User $user, Room $room)
     {
         return $user->id === $room->user_id
             ? Response::allow()
@@ -33,21 +33,6 @@ class RoomsPolicy
         return $user->hostsRoom || $user->inRoom
             ? Response::deny('You already have or are in a room')
             : Response::allow();
-    }
-
-    public function setActive(User $user, Room $room)
-    {
-        return $this->isHost($user, $room);
-    }
-
-    public function setInactive(User $user, Room $room)
-    {
-        return $this->isHost($user, $room);
-    }
-
-    public function kickUser(User $user, Room $room)
-    {
-        return $this->isHost($user, $room);
     }
 
 }

@@ -9,12 +9,10 @@ export default class Room extends Component {
 
     state = {
         users: [],
-        leftUsers: false,
+        leftUsers: [],
         active: 0,
         loggedIn: false,
         loaded: false,
-        timer: false,
-        done: false,
     }
 
     componentDidMount() {
@@ -48,7 +46,9 @@ export default class Room extends Component {
     }
 
     componentWillUnmount() {
-        Echo.leave(`room.${this.props.match.params.id}`)
+        axios.post(`/api/v1/rooms/${this.props.match.params.id}/leave`).then(
+            Echo.leave(`room.${this.props.match.params.id}`)
+        )
     }
 
     onUserJoin = (user) => {
@@ -58,7 +58,7 @@ export default class Room extends Component {
             })
         }
 
-        if (Array.isArray(this.state.leftUsers) && this.state.leftUsers.some(id => id === user.id)) {
+        if (this.state.leftUsers.some(id => id === user.id)) {
             this.setState({
                 leftUsers: this.state.leftUsers.filter(id => id !== user.id)
             })
@@ -66,42 +66,19 @@ export default class Room extends Component {
     }
 
     onUserLeave = (user) => {
-        let leftUsers
-        const running = this.state.timer;
-
-        !this.state.leftUsers
-            ? leftUsers = [user.id]
-            : leftUsers = [...this.state.leftUsers, user.id]
-
         this.setState({
-            leftUsers: leftUsers,
-            timer: true,
-            done: false,
+            leftUsers: [...this.state.leftUsers, user.id],
         })
 
-        const finished = () => {
-            this.getUsers()
-            this.setState({
-                timer: false,
-                leftUsers: false,
-                done: true,
-            })
-        }
-
-        const timer = setTimeout(async () => {
-            if (Array.isArray(this.state.leftUsers) && this.state.leftUsers.some(id => id === user.id)) {
-                await axios.post(`/api/v1/rooms/${this.props.match.params.id}/leave`, {ids: this.state.leftUsers}).catch(err => {})
-                finished()
-            } else {
+        setTimeout(() => {
+            if (this.state.leftUsers.some(id => id === user.id)) {
                 this.setState({
-                    timer: false,
-                    done: true,
+                    users: this.state.users.filter(u => u.id !== user.id),
+                    leftUsers: this.state.leftUsers.filter(u => u.id !== user.id),
                 })
             }
 
         }, 7000)
-
-        running || this.state.done ? clearTimeout(timer) : false;
     }
 
     getUsers() {

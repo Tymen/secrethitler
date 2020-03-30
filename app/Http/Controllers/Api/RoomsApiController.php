@@ -54,8 +54,6 @@ class RoomsApiController extends Controller
         $roomState->room_id = $room->id;
         $roomState->save();
 
-        Auth::user()->assignRole('Host');
-
         event(new CreatedRoomEvent());
 
         return response()->json(['message' => 'completed']);
@@ -86,7 +84,7 @@ class RoomsApiController extends Controller
 
     public function setActive(Room $room)
     {
-        $this->authorize('setActive', $room);
+        $this->authorize('isHost', $room);
 
         $room->active = true;
         $room->save();
@@ -95,7 +93,7 @@ class RoomsApiController extends Controller
 
     public function setInactive(Room $room)
     {
-        $this->authorize('setInactive', $room);
+        $this->authorize('isHost', $room);
 
         $room->active = false;
         $room->save();
@@ -122,35 +120,46 @@ class RoomsApiController extends Controller
      */
     public function destroy(Room $room)
     {
-        $this->authorize();
+        $this->authorize('isHost', $room);
 
         foreach ($room->users as $user) {
             $user->room_id = NULL;
             $user->save();
         }
 
+        RoomState::destroy($room->roomState->id);
+
         $room->delete();
 
         return response()->json(['message' => 'completed']);
     }
 
+    public function kickUser(User $user, Room $room)
+    {
+        $this->authorize('isHost', $room);
+
+        //
+    }
+
     public function onUserLeave(Room $room)
     {
-        $this->authorize('kickUser', $room);
+        $user = Auth::user();
 
-        foreach (request()->ids as $id) {
-            $user = User::find($id);
-
-            foreach ($user->roles as $role) {
-                $role->name !== 'Admin' ? $user->removeRole($role->name) : false;
-            }
-
-            $user->room_id = NULL;
-            $user->save();
-
+        foreach ($user->roles as $role) {
+            $role->name !== 'Admin' ? $user->removeRole($role->name) : false;
         }
 
-        $room->users->isEmpty() ? $this->destroy($room) : false;
+        $user->room_id = NULL;
+        $user->save();
+
+        if ($room->users->isEmpty()) {
+            $this->callAction('destroy', ['room' => $room]);
+        }
+        else if ($room->user_id === $user->id) {
+            $newHost = $room->users->first();
+            $room->user_id = $newHost->id;
+            $room->save();
+        }
 
         return response()->json(['message' => 'completed']);
     }
