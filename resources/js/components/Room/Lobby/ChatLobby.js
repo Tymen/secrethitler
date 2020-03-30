@@ -37,7 +37,7 @@ export default class ChatLobby extends Component {
         e.preventDefault();
 
         if (this.state.message) {
-            axios.post('/room/'+ this.props.id , {
+            axios.post('/rooms/'+ this.props.id , {
                 message: this.state.message,
             })
         }

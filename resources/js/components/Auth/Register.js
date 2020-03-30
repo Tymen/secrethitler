@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
-import { messagesConfig } from "../../appSettings";
+import {messagesConfig} from "../../appSettings";
 import Notification from "../Universal/Notification";
+import {Link} from "react-router-dom";
+
 export default class Register extends Component {
 
     // Place in the render section
@@ -42,7 +44,15 @@ export default class Register extends Component {
             })
             .catch(error => {
                 console.log(this.state.getMsg)
-                this.state.getMsg.auth.registerError.message = error.response.data.errors;
+                if (error.response.data.errors.username) {
+                    this.state.getMsg.auth.registerError.message = error.response.data.errors.username[0];
+                } else if (error.response.data.errors.email) {
+                    this.state.getMsg.auth.registerError.message = error.response.data.errors.email[0];
+                } else if (error.response.data.errors.password) {
+                    this.state.getMsg.auth.registerError.message = error.response.data.errors.password[0];
+                } else {
+                    this.state.getMsg.auth.registerError.message = "Something went wrong try again later!";
+                }
                 this.setState({
                     errors: [...this.state.errors, error]
                 })
@@ -52,38 +62,60 @@ export default class Register extends Component {
 
     render() {
         return (
-            <div className="container">
-                <Notification onRef={ref => (this.child = ref)} />
-                <div className="block">
-                </div>
+            <div className="container_register">
+                <Notification onRef={ref => (this.child = ref)}/>
+                <img className="login-bolletjes" src="/images/login-bolletjes.svg"/>
                 <div className="card-login rounded-bottom-left">
                     <h5 className="card-header-login">Register</h5>
                     <div className="card-body">
+                        <div className="row">
+                            <div className="col">
+                                <form className="form-login" onSubmit={this.onSubmit}>
+                                    <div className="form-group">
+                                        <input type="text" name="username" placeholder="username"
+                                               className="input-login"
+                                               value={this.state.username} onChange={(e) => this.onChange(e)}/>
+                                    </div>
+                                    <div className="form-group">
+                                        <input type="text" name="email" placeholder="E-mail Address"
+                                               className="input-login"
+                                               value={this.state.email} onChange={(e) => this.onChange(e)}/>
+                                    </div>
+                                    <div className="form-group">
+                                        <input type="password" name="password" placeholder="Password..."
+                                               className="input-login"
+                                               value={this.state.password} onChange={(e) => this.onChange(e)}/>
+                                    </div>
+                                    <div className="form-group">
+                                        <input type="password" name="password_confirmation"
+                                               placeholder="Confirm Password..."
+                                               className="input-login" value={this.state.password_confirmation}
+                                               onChange={(e) => this.onChange(e)}/>
+                                    </div>
+                                    <div className="btn-container">
+                                        <button className="btn btn-custom">Register</button>
+                                        <div className="text-center text-adjustment">
+                                            <p className="checking-account">Already have an account? Sign in <Link
+                                                className="btn-link" to="/auth/login">
+                                                here
+                                            </Link>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div className="col">
 
-                        <form className="form-login" onSubmit={this.onSubmit}>
-                            <div className="form-group">
-                                <input type="text" name="username" placeholder="username" className="input-login"
-                                       value={this.state.username} onChange={(e) => this.onChange(e)}/>
                             </div>
-                            <div className="form-group">
-                                <input type="text" name="email" placeholder="E-mail Address" className="input-login"
-                                       value={this.state.email} onChange={(e) => this.onChange(e)}/>
-                            </div>
-                            <div className="form-group">
-                                <input type="password" name="password" placeholder="Password..." className="input-login"
-                                       value={this.state.password} onChange={(e) => this.onChange(e)}/>
-                            </div>
-                            <div className="form-group">
-                                <input type="password" name="password_confirmation" placeholder="Confirm Password..."
-                                       className="input-login"  value={this.state.password_confirmation} onChange={(e) => this.onChange(e)}/>
-                            </div>
-                            <button className="btn btn-custom">Register</button>
-                            <div className="text-center">
-                                <a className="checking-account">Already have an account? Sign in</a>
-                            </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
+                <div className="box">
+                    <div></div>
+                    <div className="box_2"></div>
+
+                </div>
+
             </div>
         );
     }

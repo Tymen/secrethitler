@@ -33,6 +33,12 @@ export default class CreateRoom extends Component {
 
             })
             .catch(error => {
+                if (error.response.data.name) {
+                    this.state.getMsg.auth.noLogin.title = "Invalid"
+                    this.state.getMsg.auth.noLogin.message = error.response.data.name
+                }else if(error.response.data){
+                    this.state.getMsg.auth.noLogin.message = error.response.data
+                }
                 this.child.getNotify(this.state.getMsg.auth.noLogin);
             })
     }
@@ -40,6 +46,7 @@ export default class CreateRoom extends Component {
     render() {
         return (
             <div>
+
                 <Notification onRef={ref => (this.child = ref)} />
                 <form onSubmit={this.createRoom}>
                     <div>

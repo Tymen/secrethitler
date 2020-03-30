@@ -17,7 +17,7 @@ class UserCollection extends ResourceCollection
         return $this->map(function($user) {
             return [
                 'id' => $user->id,
-                'name' => $user->name,
+                'username' => $user->username,
                 'email' => $user->email,
                 'room' => $user->room,
                 'created_at' => $user->created_at

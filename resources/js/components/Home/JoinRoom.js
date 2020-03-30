@@ -12,7 +12,7 @@ export default class JoinRoom extends Component {
                             <input type="text" placeholder="Join Room" name="joinRoom" className="input-room-name"/>
                         </div>
                         <div>
-                            <Link className="btn join-room" to="/room/1">Join room</Link>
+                            <Link className="btn join-room" to="/rooms/1">Join room</Link>
                         </div>
                     </div>
                 </form>
