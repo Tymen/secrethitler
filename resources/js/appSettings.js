@@ -72,6 +72,13 @@ const messagesConfig = {
                     title: "Authentication Error",
                     message: "You're not logged in",
                 }
+            },
+            room: {
+                roomFull: {
+                    type: msgTypes.Three,
+                    title: "Room is full",
+                    message: "Chosen room is full!",
+                }
             }
         },
         about: {
