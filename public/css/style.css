@@ -5,6 +5,7 @@
 
 body {
     background-color: #505050;
+    /*padding-bottom: 120px;*/
 }
 
 .btn {
@@ -551,6 +552,10 @@ body {
     float: right;
     display: inline;
     margin-bottom: 0px;
+}
+
+.height-for-start-button{
+    height: 11vw;
 }
 
 /*Large devices (desktops, less than 1200px)*/

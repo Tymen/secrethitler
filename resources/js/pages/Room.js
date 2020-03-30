@@ -163,6 +163,9 @@ export default class Room extends Component {
                         <div className="row">
                             <Lobby setActive={() => this.setActive()}/>
                         </div>
+                        <div className="height-for-start-button">
+
+                        </div>
                     </div>
                 )
             }

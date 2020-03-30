@@ -85980,7 +85980,9 @@ function (_Component) {
             setActive: function setActive() {
               return _this4.setActive();
             }
-          })));
+          })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+            className: "height-for-start-button"
+          }));
         }
 
         return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_6__["Redirect"], {
