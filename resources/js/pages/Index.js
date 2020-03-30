@@ -18,7 +18,7 @@ export default class Index extends Component {
             <Router>
                 <Nav/>
                 <Switch>
-                    <Route path="/" exact component={Home}/>
+                    <Route path="/" exact ><Home message={this.props.message}/></Route>
                     <Route path="/rooms/:id" exact component={Room}/>
                     <Route path="/auth/:type" exact component={Auth}/>
                     <Route path="/gamerules" exact component={GameRule}/>
@@ -30,5 +30,7 @@ export default class Index extends Component {
     }
 }
 if (document.getElementById('index')) {
-    ReactDOM.render(<Index/>, document.getElementById('index'));
+    const element = document.getElementById('index');
+    const props = Object.assign({}, element.dataset);
+    ReactDOM.render(<Index {...props}/>, element);
 }

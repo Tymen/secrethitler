@@ -112,6 +112,11 @@ class RoomsApiController extends Controller
         return response()->json(new UserCollection($room->users));
     }
 
+    public function getMaxPlayers($id)
+    {
+        $room = Room::find($id);
+        return Response::create($room->max_players);
+    }
     /**
      * Remove the specified resource from storage.
      *

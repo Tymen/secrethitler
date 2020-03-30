@@ -352,7 +352,7 @@ body {
 
 .home-logo {
     margin: 0 auto;
-    max-height: 250px;
+    max-height: 100px;
     display: block;
 }
 
@@ -399,6 +399,7 @@ body {
 }
 
 .room-name-li {
+    margin-right: -15px;
     font-size: 20px;
     text-align: center;
     color: white;
@@ -551,6 +552,10 @@ body {
     float: right;
     display: inline;
     margin-bottom: 0px;
+}
+
+.height-for-start-button{
+    margin-top: 10vw;
 }
 
 /*Large devices (desktops, less than 1200px)*/
