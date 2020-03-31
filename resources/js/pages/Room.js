@@ -163,7 +163,7 @@ export default class Room extends Component {
                 })
             })
     }
-
+    
     render() {
         if (this.state.loaded) {
             if (this.state.active) {
