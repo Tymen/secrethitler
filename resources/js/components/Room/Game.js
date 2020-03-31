@@ -8,13 +8,17 @@ export default class Game extends Component {
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-2 bg-dark">
-                        <PlayersLobby users={this.props.users}/>
+                        <div className="test">
+                            <PlayersLobby users={this.props.users}/>
+                        </div>
                     </div>
-                    <div className="col-7 bg-danger">
+                    <div className="col-7 bg-board">
                         2
                     </div>
                     <div className="col-3 bg-info">
-                        <ChatLobby id={this.props.id}/>
+                        <div className="test">
+                            <ChatLobby id={this.props.id}/>
+                        </div>
                     </div>
                 </div>
             </div>

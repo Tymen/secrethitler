@@ -12,14 +12,23 @@ import Room from "./Room";
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
 export default class Index extends Component {
+    state = {
+        visibility: true,
+    }
+    showNav = () => {
+        return this.state.visibility ? <Nav/> : false;
+    }
+
 
     render() {
         return (
             <Router>
-                <Nav/>
+                {this.showNav()}
                 <Switch>
-                    <Route path="/" exact ><Home message={this.props.message}/></Route>
-                    <Route path="/rooms/:id" exact component={Room}/>
+                    <Route path="/" exact><Home message={this.props.message}/></Route>
+                    <Route path="/rooms/:id" exact component={() =>
+                        <Room setVisibility={() => this.setState({visibility: false})}/>}
+                    />
                     <Route path="/auth/:type" exact component={Auth}/>
                     <Route path="/gamerules" exact component={GameRule}/>
                     <Route path="/about" exact component={About}/>

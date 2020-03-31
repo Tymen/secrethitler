@@ -525,6 +525,40 @@ body {
     border-right: 1px solid white;
 }
 
+.navbar .game-no-nav-footer{
+    display: none;
+}
+
+.bg-board{
+  background-color: #454545;
+}
+.test{
+    width: 100%;
+    margin-left: -15px;
+}
+.test .players-in-lobby {
+    max-width: none;
+    width: 115%;
+    max-height: none;
+}
+.test .show-players {
+    max-width: none;
+    width: 115%;
+    min-height: 351px;
+    max-height: 351px;
+}
+.test .send-message {
+    max-width: none;
+    width: 115%;
+    max-height: none;
+}
+.test .chat {
+    max-width: none;
+    width: 108.2%;
+    min-height: 352px;
+    max-height: 352px;
+}
+
 .player-name {
     margin-bottom: 0px;
     padding: 10px;
