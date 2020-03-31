@@ -54,10 +54,12 @@ export default class Rooms extends Component {
 
         return this.state.rooms.map(room => {
             return (
-                <div key={room.id} className="home-rooms">
-                    <div className="col-12 background-room  ">
+                <div className="home-rooms" key={room.id}>
+                    <div className="col-12 background-room">
                         <i className="fas fa-mug-hot"></i>
-                        <Link key={room.id} to={`/rooms/${room.id}`}>
+                        <Link key={room.id} to="/" onClick={() => {
+                            window.location.href = `/rooms/${room.id}`
+                        }}>
                             <p className="room-name-li">{room.name}</p>
                         </Link>
                     </div>
