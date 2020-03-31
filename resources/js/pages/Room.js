@@ -168,7 +168,7 @@ export default class Room extends Component {
         if (this.state.loaded) {
             if (this.state.active) {
                 return (
-                    <Game setInactive={() => this.setInactive()}/>
+                    <Game setInactive={() => this.setInactive()} users={this.state.users} id={this.props.match.params.id}/>
                 )
             } else if (this.state.loggedIn) {
                     return (

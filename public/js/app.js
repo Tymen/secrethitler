@@ -84530,6 +84530,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Game; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Lobby_PlayersLobby__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Lobby/PlayersLobby */ "./resources/js/components/Room/Lobby/PlayersLobby.js");
+/* harmony import */ var _Lobby_ChatLobby__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Lobby/ChatLobby */ "./resources/js/components/Room/Lobby/ChatLobby.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -84550,6 +84552,8 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
+
 var Game =
 /*#__PURE__*/
 function (_Component) {
@@ -84564,13 +84568,21 @@ function (_Component) {
   _createClass(Game, [{
     key: "render",
     value: function render() {
-      var _this = this;
-
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Game has started"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        onClick: function onClick() {
-          return _this.props.setInactive();
-        }
-      }, "Inactive"));
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "container-fluid"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "row"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-2 bg-dark"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Lobby_PlayersLobby__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        users: this.props.users
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-7 bg-danger"
+      }, "2"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-3 bg-info"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Lobby_ChatLobby__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        id: this.props.id
+      }))));
     }
   }]);
 
@@ -85995,7 +86007,9 @@ function (_Component) {
           return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_components_Room_Game__WEBPACK_IMPORTED_MODULE_2__["default"], {
             setInactive: function setInactive() {
               return _this4.setInactive();
-            }
+            },
+            users: this.state.users,
+            id: this.props.match.params.id
           });
         } else if (this.state.loggedIn) {
           return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
