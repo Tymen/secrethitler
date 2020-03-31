@@ -17,14 +17,13 @@ export default class Rooms extends Component {
         super(props);
         this.child = React.createRef();
     };
-
     componentDidMount() {
         axios.get('/api/v1/users/me')
             .then(response => {
                 this.setState({
                     loggedIn: response.data.isAuthenticated,
                 })
-            })
+            });
 
         this._isMounted = true
         this.getRooms()
