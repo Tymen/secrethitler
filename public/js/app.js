@@ -85995,9 +85995,7 @@ function (_Component) {
           return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_components_Room_Game__WEBPACK_IMPORTED_MODULE_2__["default"], {
             setInactive: function setInactive() {
               return _this4.setInactive();
-            },
-            users: this.state.users,
-            id: this.props.match.params.id
+            }
           });
         } else if (this.state.loggedIn) {
           return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
