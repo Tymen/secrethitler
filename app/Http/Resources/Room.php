@@ -20,7 +20,8 @@ class Room extends JsonResource
             'name' => $this->name,
             'created_at' => $this->created_at,
             'owner' => $this->user,
-            'users' => $this->users
+            'max_players' => $this->max_players,
+            'active' => $this->active,
         ];
     }
 }

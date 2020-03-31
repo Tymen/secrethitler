@@ -30,7 +30,7 @@ export default class CreateRoom extends Component {
             name: this.state.name
         })
             .then(response => {
-
+                window.location.href = `/rooms/${response.data.id}`
             })
             .catch(error => {
                 if (error.response.data.name) {
