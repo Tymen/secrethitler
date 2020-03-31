@@ -3,6 +3,7 @@ import {Link} from "react-router-dom";
 import Notification from "../Universal/Notification";
 import {messagesConfig} from "../../appSettings";
 import Room from "../../pages/Room";
+import {get} from "../Universal/apiHandler";
 
 export default class Rooms extends Component {
     _isMounted = false;
@@ -15,18 +16,15 @@ export default class Rooms extends Component {
 
     constructor(props) {
         super(props);
+        this.request = React.createRef();
         this.child = React.createRef();
     };
     componentDidMount() {
-        axios.get('/api/v1/users/me')
-            .then(response => {
-                this.setState({
-                    loggedIn: response.data.isAuthenticated,
-                })
-            });
-
-        this._isMounted = true
-        this.getRooms()
+        this._isMounted = true;
+        get('api/v1/users/me').then(response => {
+            return (response.data) ? this.setState({loggedIn: true}) : this.setState({loggedIn: false})
+        });
+        this.getRooms();
 
         const channel = Echo.channel('rooms-updated')
         channel.listen('.updated-rooms', () => {
@@ -35,22 +33,18 @@ export default class Rooms extends Component {
     }
 
     getRooms = () => {
-        axios.get('/api/v1/rooms')
+        get('/api/v1/rooms')
             .then(response => {
-                if (this._isMounted) {
-                    this.setState({rooms: response.data.data})
+                if(response.error){
+                    this.child.getNotify(this.state.getMsg.internalServer);
+                }else {
+                    this.setState({rooms: response.data});
                 }
             })
-            .catch(error => {
-                this.child.getNotify(this.state.getMsg.internalServer);
-            })
     };
-
     componentWillUnmount() {
         this._isMounted = false
     }
-
-
     showRooms = () => {
         return this.state.rooms.map(room => {
 
