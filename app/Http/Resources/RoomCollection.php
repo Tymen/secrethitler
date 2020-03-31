@@ -21,6 +21,9 @@ class RoomCollection extends ResourceCollection
                 'name' => $room->name,
                 'created_at' => $room->created_at,
                 'owner' => $room->user,
+                'max_players' => $room->max_players,
+                'active' => $room->active,
+                'user_count' => $room->users->count(),
             ];
         });
     }

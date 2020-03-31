@@ -12,9 +12,9 @@
 */
 use App\Broadcasting\RoomChannel;
 
-Broadcast::channel('room-created', function () {
+Broadcast::channel('rooms-updated', function () {
     return true;
 });
 
-Broadcast::channel('room.{id}', RoomChannel::class);
+Broadcast::channel('room.{room}', RoomChannel::class);
 

@@ -353,6 +353,8 @@ body {
 .home-logo {
     margin: 145px auto 0px auto;
     max-height: 250px;
+    margin: 0 auto;
+    max-height: 100px;
     display: block;
 }
 
@@ -399,6 +401,7 @@ body {
 }
 
 .room-name-li {
+    margin-right: -15px;
     font-size: 20px;
     text-align: center;
     color: white;
@@ -552,6 +555,11 @@ body {
     display: inline;
     margin-bottom: 0px;
 }
+
+.height-for-start-button{
+    margin-top: 10vw;
+}
+
 /*Large devices (desktops, less than 1200px)*/
 @media (max-width: 1199.98px) {
     .box div {
@@ -581,7 +589,7 @@ body {
         display: none;
     }
     .box:before {
-     display: none;
+        display: none;
     }
 
     .card-login {

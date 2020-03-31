@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Link} from "react-router-dom";
 import Notification from "../Universal/Notification";
 import {messagesConfig} from "../../appSettings";
+import Room from "../../pages/Room";
 
 export default class Rooms extends Component {
     _isMounted = false;
@@ -21,15 +22,15 @@ export default class Rooms extends Component {
         axios.get('/api/v1/users/me')
             .then(response => {
                 this.setState({
-                    loggedIn: response.data,
+                    loggedIn: response.data.isAuthenticated,
                 })
             })
 
         this._isMounted = true
         this.getRooms()
 
-        var channel = Echo.channel('room-created')
-        channel.listen('.created-room', () => {
+        const channel = Echo.channel('rooms-updated')
+        channel.listen('.updated-rooms', () => {
             this.getRooms()
         })
     }
@@ -38,7 +39,7 @@ export default class Rooms extends Component {
         axios.get('/api/v1/rooms')
             .then(response => {
                 if (this._isMounted) {
-                    this.setState({rooms: response.data})
+                    this.setState({rooms: response.data.data})
                 }
             })
             .catch(error => {
@@ -50,9 +51,10 @@ export default class Rooms extends Component {
         this._isMounted = false
     }
 
-    showRooms = () => {
 
+    showRooms = () => {
         return this.state.rooms.map(room => {
+
             return (
                 <div className="home-rooms" key={room.id}>
                     <div className="col-12 background-room">
