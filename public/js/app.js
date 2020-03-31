@@ -62589,7 +62589,7 @@ var currentlyProcessingQueue;
   didWarnUpdateInsideUpdate = false;
   currentlyProcessingQueue = null;
 
-  
+
 }
 
 function createUpdateQueue(baseState) {
@@ -66904,7 +66904,7 @@ function insertNonHydratedInstance(returnFiber, fiber) {
               break;
 
             case SuspenseComponent:
-              
+
               break;
           }
 
@@ -83151,7 +83151,6 @@ function (_Component) {
     key: "onSubmit",
     value: function onSubmit(e) {
       var _this2 = this;
-
       e.preventDefault();
       axios.post('/login', {
         email: this.state.email,
