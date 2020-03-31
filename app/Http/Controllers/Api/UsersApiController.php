@@ -67,6 +67,6 @@ class UsersApiController extends Controller
 
     public function me()
     {
-        return response()->json(Auth::check());
+        return response()->json(['isAuthenticated' => Auth::check()]);
     }
 }
