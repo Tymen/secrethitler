@@ -351,6 +351,8 @@ body {
 }
 
 .home-logo {
+    margin: 145px auto 0px auto;
+    max-height: 250px;
     margin: 0 auto;
     max-height: 100px;
     display: block;
@@ -587,7 +589,7 @@ body {
         display: none;
     }
     .box:before {
-     display: none;
+        display: none;
     }
 
     .card-login {
