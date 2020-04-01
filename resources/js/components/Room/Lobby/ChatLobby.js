@@ -7,7 +7,7 @@ export default class ChatLobby extends Component {
     };
 
     scrollToBottom = () => {
-        this.messagesEnd.scrollIntoView({ behavior: "smooth" });
+        this.messagesEnd.scrollIntoView({behavior: "smooth"});
     }
 
     componentDidMount() {
@@ -15,7 +15,7 @@ export default class ChatLobby extends Component {
         channel.listen('.message-event', (data) => {
             console.log(data.message)
             this.setState({
-                messages: [...this.state.messages, data.user.username + " : " + data.message ],
+                messages: [...this.state.messages, data.user.username + " : " + data.message],
             });
             this.scrollToBottom()
         });
@@ -37,7 +37,7 @@ export default class ChatLobby extends Component {
         e.preventDefault();
 
         if (this.state.message) {
-            axios.post('/rooms/'+ this.props.id , {
+            axios.post('/rooms/' + this.props.id, {
                 message: this.state.message,
             })
         }
@@ -58,14 +58,16 @@ export default class ChatLobby extends Component {
                             <p className="message">{message}</p>
                         ))}
                     </div>
-                    <div style={{ float:"left", clear: "both" }}
-                         ref={(el) => { this.messagesEnd = el; }}>
+                    <div style={{float: "left", clear: "both"}}
+                         ref={(el) => {
+                             this.messagesEnd = el;
+                         }}>
                     </div>
                 </div>
 
                 <div className="send-message">
                     <form onSubmit={this.handleSubmit}>
-                        <label>
+                        <label className="text-white">
                             <input type="text" className="input-message" placeholder="Message..."
                                    onChange={this.handleChange} ref={(ref) => this.mainInput= ref}/>
                         </label>

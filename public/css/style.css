@@ -476,6 +476,11 @@ body {
     background: transparent;
 }
 
+.input-message::placeholder{
+    color: white;
+    margin-left: 10px;
+}
+
 
 .btn-send-button {
     background-color: #323232;
@@ -549,7 +554,7 @@ body {
 }
 .test .send-message {
     max-width: none;
-    width: 115%;
+    width: 108.5%;
     max-height: none;
 }
 .test .chat {
@@ -621,7 +626,7 @@ body {
         display: none;
     }
     .box:before {
-     display: none;
+        display: none;
     }
 
     .card-login {

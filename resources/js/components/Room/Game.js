@@ -9,7 +9,7 @@ export default class Game extends Component {
                 <div className="row">
                     <div className="col-2 bg-dark">
                         <div className="test">
-                            <PlayersLobby users={this.props.users}/>
+                            <PlayersLobby users={this.props.users} room={this.props.room} page='Game'/>
                         </div>
                     </div>
                     <div className="col-7 bg-board">
@@ -20,6 +20,7 @@ export default class Game extends Component {
                             <ChatLobby id={this.props.id}/>
                         </div>
                     </div>
+                    <button onClick={() => this.props.setInactive()}>Inactive</button>
                 </div>
             </div>
         );
