@@ -10,7 +10,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class CreatedRoomEvent implements ShouldBroadcast
+class RoomsUpdatedEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -31,11 +31,11 @@ class CreatedRoomEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return ['room-created'];
+        return ['rooms-updated'];
     }
 
     public function broadcastAs()
     {
-        return 'created-room';
+        return 'updated-rooms';
     }
 }

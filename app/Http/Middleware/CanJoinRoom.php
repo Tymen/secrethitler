@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use App\Room;
+use Illuminate\Support\Facades\Auth;
 
 class CanJoinRoom
 {
@@ -18,8 +19,16 @@ class CanJoinRoom
     {
         $room = Room::find($request->id);
 
-        if (!auth()->check()) {
+        if (!$room) {
+            return redirect('/')->with(['message' => 'Room does not exist']);
+        }
+
+        if (!Auth::check()) {
             return redirect('/auth/login');
+        }
+
+        if (Auth::user()->room_id === $room->id) {
+            return $next($request);
         }
 
         if ($room->users->count() >= $room->max_players) {

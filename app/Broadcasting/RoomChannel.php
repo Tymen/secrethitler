@@ -27,13 +27,9 @@ class RoomChannel
      */
     public function join(User $user, Room $room)
     {
-        if (auth()->check()) {
-            if ($room->users->count() < $room->max_players) {
-                $user->room_id = $room->id;
-                $user->save();
-                return ['id' => $user->id, 'username' => $user->username];
-            }
-            return ["message" => "False"];
-        }
+        $user->room_id = $room->id;
+        $user->save();
+
+        return ['id' => $user->id, 'username' => $user->username];
     }
 }

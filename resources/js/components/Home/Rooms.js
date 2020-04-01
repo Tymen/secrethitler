@@ -22,15 +22,15 @@ export default class Rooms extends Component {
         axios.get('/api/v1/users/me')
             .then(response => {
                 this.setState({
-                    loggedIn: response.data,
+                    loggedIn: response.data.isAuthenticated,
                 })
             })
 
         this._isMounted = true
         this.getRooms()
 
-        var channel = Echo.channel('room-created')
-        channel.listen('.created-room', () => {
+        const channel = Echo.channel('rooms-updated')
+        channel.listen('.updated-rooms', () => {
             this.getRooms()
         })
     }
@@ -39,7 +39,7 @@ export default class Rooms extends Component {
         axios.get('/api/v1/rooms')
             .then(response => {
                 if (this._isMounted) {
-                    this.setState({rooms: response.data})
+                    this.setState({rooms: response.data.data})
                 }
             })
             .catch(error => {
