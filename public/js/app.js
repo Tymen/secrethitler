@@ -83751,18 +83751,12 @@ function (_Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
-<<<<<<< HEAD
-      axios.get('/api/v1/users/me').then(function (response) {
-        _this2.setState({
-          loggedIn: response.data.isAuthenticated
-=======
       this._isMounted = true;
       Object(_Universal_apiHandler__WEBPACK_IMPORTED_MODULE_5__["get"])('api/v1/users/me').then(function (response) {
         return response.data ? _this2.setState({
           loggedIn: true
         }) : _this2.setState({
           loggedIn: false
->>>>>>> added apiHandler
         });
       });
       this.getRooms();
@@ -85467,18 +85461,8 @@ function (_Component) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 __webpack_require__(/*! E:\Programma's\Documents\Coderen\Coderen\The%20SS%20-%20SecretHitler\resources\js\app.js */"./resources/js/app.js");
 module.exports = __webpack_require__(/*! E:\Programma's\Documents\Coderen\Coderen\The%20SS%20-%20SecretHitler\resources\sass\app.scss */"./resources/sass/app.scss");
-=======
-__webpack_require__(/*! D:\PhpstormProjects\The%20SS%20-%20SecretHitler\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\PhpstormProjects\The%20SS%20-%20SecretHitler\resources\sass\app.scss */"./resources/sass/app.scss");
->>>>>>> 2b7320d1473c836e557fd362d660069399843e68
-=======
-__webpack_require__(/*! E:\Programma's\Documents\Coderen\Coderen\The%20SS%20-%20SecretHitler\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! E:\Programma's\Documents\Coderen\Coderen\The%20SS%20-%20SecretHitler\resources\sass\app.scss */"./resources/sass/app.scss");
->>>>>>> added apiHandler
 
 
 /***/ })
