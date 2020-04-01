@@ -6,10 +6,6 @@ export default class ChatLobby extends Component {
         message: '',
     };
 
-    scrollToBottom = () => {
-        this.messagesEnd.scrollIntoView({ behavior: "smooth" });
-    }
-
     componentDidMount() {
         var channel = Echo.channel(`room.${this.props.id}`);
         channel.listen('.message-event', (data) => {
@@ -21,11 +17,8 @@ export default class ChatLobby extends Component {
         });
     }
 
-    constructor(props) {
-        super(props);
-
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleChange = this.handleChange.bind(this);
+    scrollToBottom = () => {
+        this.messagesEnd.scrollIntoView({ behavior: "smooth" });
     }
 
     handleChange(e) {
@@ -64,10 +57,10 @@ export default class ChatLobby extends Component {
                 </div>
 
                 <div className="send-message">
-                    <form onSubmit={this.handleSubmit}>
+                    <form onSubmit={(e) => this.handleSubmit(e)}>
                         <label>
                             <input type="text" className="input-message" placeholder="Message..."
-                                   onChange={this.handleChange} ref={(ref) => this.mainInput= ref}/>
+                                   onChange={(e) => this.handleChange(e)} ref={(ref) => this.mainInput= ref}/>
                         </label>
                         <input type="submit" value="Send" className="btn btn-send-button"/>
                     </form>

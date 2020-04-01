@@ -13,7 +13,7 @@ export default class Nav extends Component {
 
     componentDidMount() {
         this._isMounted = true
-        axios.get('/api/v1/users/me')
+        axios.get('/api/v1/users/check')
             .then(response => {
                 if (this._isMounted) {
                     this.setState({
