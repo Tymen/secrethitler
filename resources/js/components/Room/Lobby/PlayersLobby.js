@@ -3,6 +3,11 @@ import {Link} from "react-router-dom";
 
 export default class PlayersLobby extends Component {
 
+    kickUser = (e, id) => {
+        e.preventDefault()
+        axios.post(`/api/v1/rooms/${this.props.roomId}/kick/${id}`)
+    }
+
     showPlayers = () => {
 
         return this.props.users.map(user => {
@@ -13,7 +18,7 @@ export default class PlayersLobby extends Component {
                         {user.username}
                     </p>
                     <div className="dropdown-menu" aria-labelledby="dropdownMenuButton" >
-                        <a className="dropdown-item" onClick={this.kickUser}>Kick {user.username}</a>
+                        <a className="dropdown-item" onClick={(e) => this.kickUser(e, user.id)}>Kick {user.username}</a>
                     </div>
                 </div>
             )

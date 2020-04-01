@@ -62601,7 +62601,7 @@ var currentlyProcessingQueue;
   didWarnUpdateInsideUpdate = false;
   currentlyProcessingQueue = null;
 
-
+  
 }
 
 function createUpdateQueue(baseState) {
@@ -66916,7 +66916,7 @@ function insertNonHydratedInstance(returnFiber, fiber) {
               break;
 
             case SuspenseComponent:
-
+              
               break;
           }
 
@@ -83900,6 +83900,7 @@ function (_Component) {
     key: "onSubmit",
     value: function onSubmit(e) {
       var _this2 = this;
+
       e.preventDefault();
       axios.post('/login', {
         email: this.state.email,
@@ -84692,15 +84693,15 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
@@ -84715,30 +84716,18 @@ var ChatLobby =
 function (_Component) {
   _inherits(ChatLobby, _Component);
 
-  _createClass(ChatLobby, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      var _this2 = this;
+  function ChatLobby() {
+    var _getPrototypeOf2;
 
-      var channel = Echo.channel("room.".concat(this.props.id));
-      channel.listen('.message-event', function (data) {
-        console.log(data.message);
-
-        _this2.setState({
-          messages: [].concat(_toConsumableArray(_this2.state.messages), [data.user.username + " : " + data.message])
-        });
-
-        _this2.scrollToBottom();
-      });
-    }
-  }]);
-
-  function ChatLobby(props) {
     var _this;
 
     _classCallCheck(this, ChatLobby);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(ChatLobby).call(this, props));
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(ChatLobby)).call.apply(_getPrototypeOf2, [this].concat(args)));
 
     _defineProperty(_assertThisInitialized(_this), "state", {
       messages: [],
@@ -84751,12 +84740,24 @@ function (_Component) {
       });
     });
 
-    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
-    _this.handleChange = _this.handleChange.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(ChatLobby, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      var channel = Echo.channel("room.".concat(this.props.id));
+      channel.listen('.message-event', function (data) {
+        _this2.setState({
+          messages: [].concat(_toConsumableArray(_this2.state.messages), [data.user.username + " : " + data.message])
+        });
+
+        _this2.scrollToBottom();
+      });
+    }
+  }, {
     key: "handleChange",
     value: function handleChange(e) {
       this.setState({
@@ -84788,6 +84789,7 @@ function (_Component) {
         className: "chat"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.state.messages.map(function (message) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+          key: Math.floor(Math.random() * 99999),
           className: "message"
         }, message);
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -84801,12 +84803,16 @@ function (_Component) {
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "send-message"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-        onSubmit: this.handleSubmit
+        onSubmit: function onSubmit(e) {
+          return _this3.handleSubmit(e);
+        }
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         className: "input-message",
         placeholder: "Message...",
-        onChange: this.handleChange,
+        onChange: function onChange(e) {
+          return _this3.handleChange(e);
+        },
         ref: function ref(_ref) {
           return _this3.mainInput = _ref;
         }
@@ -84879,6 +84885,11 @@ function (_Component) {
 
     _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(PlayersLobby)).call.apply(_getPrototypeOf2, [this].concat(args)));
 
+    _defineProperty(_assertThisInitialized(_this), "kickUser", function (e, id) {
+      e.preventDefault();
+      axios.post("/api/v1/rooms/".concat(_this.props.roomId, "/kick/").concat(id));
+    });
+
     _defineProperty(_assertThisInitialized(_this), "showPlayers", function () {
       return _this.props.users.map(function (user) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -84895,7 +84906,9 @@ function (_Component) {
           "aria-labelledby": "dropdownMenuButton"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
           className: "dropdown-item",
-          onClick: _this.kickUser
+          onClick: function onClick(e) {
+            return _this.kickUser(e, user.id);
+          }
         }, "Kick ", user.username)));
       });
     });
@@ -85052,7 +85065,7 @@ function (_Component) {
       var _this2 = this;
 
       this._isMounted = true;
-      axios.get('/api/v1/users/me').then(function (response) {
+      axios.get('/api/v1/users/check').then(function (response) {
         if (_this2._isMounted) {
           _this2.setState({
             loggedIn: response.data,
@@ -86024,6 +86037,7 @@ function (_Component) {
 
     _defineProperty(_assertThisInitialized(_this), "state", {
       users: [],
+      user: {},
       leftUsers: [],
       loggedIn: false,
       loaded: false,
@@ -86110,9 +86124,14 @@ function (_Component) {
       var _this2 = this;
 
       this.getRoom();
+      axios.get('/api/v1/users/check').then(function (response) {
+        _this2.setState({
+          loggedIn: response.data.isAuthenticated
+        });
+      })["catch"](function (error) {});
       axios.get('/api/v1/users/me').then(function (response) {
         _this2.setState({
-          loggedIn: response.data.isAuthenticated,
+          user: response.data.data,
           loaded: true
         });
       })["catch"](function (error) {
@@ -86128,6 +86147,11 @@ function (_Component) {
         _this2.onUserJoin(user);
       }).leaving(function (user) {
         _this2.onUserLeave(user);
+      }).listen('.user-kicked', function (e) {
+        if (_this2.state.user.id === e.userId) {
+          Echo.leave("room.".concat(_this2.props.match.params.id));
+          window.location.href = '/';
+        }
       });
     }
   }, {
@@ -86167,7 +86191,8 @@ function (_Component) {
         }, this.state.users.length, "/", this.state.room.max_players, " Players"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "row"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Room_Lobby_PlayersLobby__WEBPACK_IMPORTED_MODULE_4__["default"], {
-          users: this.state.users
+          users: this.state.users,
+          roomId: this.props.match.params.id
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Room_Lobby_ChatLobby__WEBPACK_IMPORTED_MODULE_3__["default"], {
           id: this.props.match.params.id
         })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -86210,8 +86235,8 @@ function (_Component) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! E:\Programma's\Documents\Coderen\Coderen\The%20SS%20-%20SecretHitler\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! E:\Programma's\Documents\Coderen\Coderen\The%20SS%20-%20SecretHitler\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\joost\Desktop\The%20SS%20-%20SecretHitler\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\joost\Desktop\The%20SS%20-%20SecretHitler\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
