@@ -83979,8 +83979,6 @@ function (_Component) {
 
       var channel = Echo.channel("room.".concat(this.props.id));
       channel.listen('.message-event', function (data) {
-        console.log(data.message);
-
         _this2.setState({
           messages: [].concat(_toConsumableArray(_this2.state.messages), [data.user.username + " : " + data.message])
         });
@@ -84020,6 +84018,7 @@ function (_Component) {
         className: "chat"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.state.messages.map(function (message) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+          key: Math.floor(Math.random() * 99999),
           className: "message"
         }, message);
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {

@@ -9,7 +9,6 @@ export default class ChatLobby extends Component {
     componentDidMount() {
         var channel = Echo.channel(`room.${this.props.id}`);
         channel.listen('.message-event', (data) => {
-            console.log(data.message)
             this.setState({
                 messages: [...this.state.messages, data.user.username + " : " + data.message ],
             });
@@ -48,7 +47,7 @@ export default class ChatLobby extends Component {
                 <div className="chat">
                     <div>
                         {this.state.messages.map(message => (
-                            <p className="message">{message}</p>
+                            <p key={Math.floor(Math.random() * 99999)} className="message">{message}</p>
                         ))}
                     </div>
                     <div style={{ float:"left", clear: "both" }}
