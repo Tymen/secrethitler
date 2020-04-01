@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Events\KickUserEvent;
 use App\Room;
 use App\User;
 use App\RoomState;
@@ -124,11 +125,16 @@ class RoomsApiController extends Controller
         return response()->json(['message' => 'completed']);
     }
 
-    public function kickUser(User $user, Room $room)
+    public function kickUser(Room $room, User $user)
     {
         $this->authorize('isHost', $room);
 
-        //
+        $user->room_id = NULL;
+        $user->save();
+
+        event(new KickUserEvent($room->id, $user->id));
+
+        return response()->json(['message' => 'completed']);
     }
 
     public function onUserLeave(Room $room)

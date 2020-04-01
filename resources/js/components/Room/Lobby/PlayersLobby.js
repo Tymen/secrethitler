@@ -7,19 +7,15 @@ export default class PlayersLobby extends Component {
         authUser: '',
     }
 
-    componentDidMount() {
-        axios.get('/api/v1/users/auth')
-            .then(response => {
-                this.setState({
-                    authUser: response.data.username
-                })
-            })
+    kickUser = (e, id) => {
+        e.preventDefault()
+        axios.post(`/api/v1/rooms/${this.props.roomId}/kick/${id}`)
     }
 
     showPlayers = () => {
         return this.props.users.map(user => {
-            if(this.state.authUser === this.props.owner.username) {
-                if (this.props.owner.username === user.username) {
+            if(this.props.authUser.id === this.props.ownerId) {
+                if (this.props.ownerId === user.id) {
                     return (
                         <div key={user.id}>
                             <p className="player-name">
@@ -36,13 +32,13 @@ export default class PlayersLobby extends Component {
                                 {user.username}
                             </p>
                             <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a className="dropdown-item" onClick={this.kickUser}>Kick {user.username}</a>
+                                <a className="dropdown-item" onClick={(e) => this.kickUser(e, user.id)}>Kick {user.username}</a>
                             </div>
                         </div>
                     )
                 }
             }
-            if(this.props.owner.username === user.username){
+            if(this.props.ownerId === user.id){
                 return (
                     <div key={user.id}>
                         <p className="player-name">

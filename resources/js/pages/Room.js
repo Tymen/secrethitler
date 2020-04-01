@@ -9,6 +9,7 @@ export default class Room extends Component {
 
     state = {
         users: [],
+        user: {},
         leftUsers: [],
         loggedIn: false,
         loaded: false,
@@ -18,10 +19,18 @@ export default class Room extends Component {
     componentDidMount() {
         this.getRoom()
 
-        axios.get('/api/v1/users/me')
+        axios.get('/api/v1/users/check')
             .then(response => {
                 this.setState({
                     loggedIn: response.data.isAuthenticated,
+                })
+            })
+            .catch(error => {})
+
+        axios.get('/api/v1/users/me')
+            .then(response => {
+                this.setState({
+                    user: response.data.data,
                     loaded: true
                 })
             })
@@ -43,6 +52,12 @@ export default class Room extends Component {
             .leaving((user) => {
                 this.onUserLeave(user)
             })
+            .listen('.user-kicked', (e) => {
+                if (this.state.user.id === e.userId) {
+                    Echo.leave(`room.${this.props.match.params.id}`)
+                    window.location.href = '/'
+                }
+            })
 
     }
 
@@ -51,7 +66,7 @@ export default class Room extends Component {
             Echo.leave(`room.${this.props.match.params.id}`)
         )
     }
-    
+
     onUserJoin = (user) => {
         if (!this.state.users.some(u => u.id === user.id)) {
             this.setState({
@@ -78,8 +93,8 @@ export default class Room extends Component {
                     users: this.state.users.filter(u => u.id !== user.id),
                     leftUsers: this.state.leftUsers.filter(u => u.id !== user.id),
                 })
+                this.componentWillUnmount()
             }
-
         }, 7000)
     }
 
@@ -129,7 +144,8 @@ export default class Room extends Component {
                         </div>
                     </div>
                     <div className="row">
-                        <PlayersLobby users={this.state.users} owner={this.state.room.owner}/>
+                        <PlayersLobby users={this.state.users} roomId={this.props.match.params.id}
+                                      ownerId={this.state.room.owner.id} authUser={this.state.user}/>
                         <ChatLobby id={this.props.match.params.id}/>
                     </div>
                     <div className="row">
