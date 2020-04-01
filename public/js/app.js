@@ -84604,7 +84604,123 @@ function (_Component) {
   _createClass(About, [{
     key: "render",
     value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "About"));
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "warp-about-us"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "container"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        className: "home-logo",
+        src: "images/Secrethitler-no-bg.png"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "row"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-12 page-title"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        className: "about-us-bolletjes",
+        src: "images/uitleg-bolletjes.svg"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
+        className: "text-center"
+      }, "Over ons:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        className: "school-img",
+        src: "images/school-img.jpg"
+      })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "oblique-background"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "about-us"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "container"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "row"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-4 mt-5"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "person-about-img"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        className: "",
+        src: "images/person-img.png"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, "Tymen Vis"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, "WebDeveloper"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "vl"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Heeft corona maar weet niet dat hij het heeft"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "round-skills"
+      }), "  ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "round-skills"
+      }), "  ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "round-skills"
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-4 mt-5"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "person-about-img"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        className: "",
+        src: "images/person-img.png"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, "Tymen Vis"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, "WebDeveloper"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "vl"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Heeft corona maar weet niet dat hij het heeft"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "round-skills"
+      }), "  ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "round-skills"
+      }), "  ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "round-skills"
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-4 mt-5"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "person-about-img"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        className: "",
+        src: "images/person-img.png"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, "Tymen Vis"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, "WebDeveloper"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "vl"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Heeft corona maar weet niet dat hij het heeft"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "round-skills"
+      }), "  ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "round-skills"
+      }), "  ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "round-skills"
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-4 mt-5 offset-2 text-center"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "person-about-img"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        className: "",
+        src: "images/person-img.png"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, "Tymen Vis"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, "WebDeveloper"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "vl"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Heeft corona maar weet niet dat hij het heeft"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "round-skills"
+      }), "  ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "round-skills"
+      }), "  ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "round-skills"
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-4 mt-5 text-center"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "person-about-img"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        className: "",
+        src: "images/person-img.png"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, "Tymen Vis"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, "WebDeveloper"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "vl"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Heeft corona maar weet niet dat hij het heeft"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "round-skills"
+      }), "  ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "round-skills"
+      }), "  ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "round-skills"
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-4 mt-4"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
+        className: "title-about-us float-right"
+      }, "Wie zijn wij?"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "text-about-us"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, " Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et m agnis dis parturient montes, nasce tur ridiculus mus. Donec quam felis, u ltricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu , consequat vitae, eleifend ac, en im. Aliquam lorem ante, dapibus in, viverra quis, feugiat a , tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutru m. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. "))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-4 offset-4 mt-4"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
+        className: "title-about-us float-left"
+      }, "Waarom dit project?"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "text-about-us"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "float-right"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, " Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et m agnis dis parturient montes, nasce tur ridiculus mus. Donec quam felis, u ltricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu , consequat vitae, eleifend ac, en im. Aliquam lorem ante, dapibus in, viverra quis, feugiat a , tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutru m. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. "))))))));
     }
   }]);
 
@@ -85267,8 +85383,8 @@ function (_Component) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\joost\Desktop\The%20SS%20-%20SecretHitler\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\joost\Desktop\The%20SS%20-%20SecretHitler\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\PhpstormProjects\The%20SS%20-%20SecretHitler\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\PhpstormProjects\The%20SS%20-%20SecretHitler\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
