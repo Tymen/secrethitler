@@ -36,3 +36,77 @@ i {
     font-size:80px;
 }
 }
+.page-title {
+h1 {
+    font-size:60px;
+    color:#F5E1C4;
+}
+}
+.school-img {
+    padding-top: 125px;
+    margin:0 auto;
+    display:block;
+}
+.title-about-us {
+    font-size: 35px;
+    color: #DFD3C2;
+    display: block;
+}
+.text-about-us {
+    margin-bottom: 50px;
+    font-size: 20px;
+    color:#DFD3C2;
+    display: inline-block;
+}
+.person-about-img {
+    img {
+        padding-top:20px;
+        display: block;
+        margin: 0px auto;
+    }
+    b {
+        line-height: 1;
+        display: block;
+        font-size:23px;
+    }
+    p {
+        margin-bottom: 5px;
+        padding: 0px 60px;
+    }
+    .vl {
+        border-top: 1px solid;
+        margin:10px 40px;
+    }
+    .round-skills {
+        background-color: aliceblue;
+        padding: 20px;
+        margin:0 5px;
+        display: inline-block;
+        border-radius: 45px;
+    }
+    border-radius: 0px 50px 0px 50px;
+    display: inline-block;
+    background-color: #B7B7B7;
+    width: 300px;
+    text-align: center;
+    height: 330px;
+}
+.about-us-bolletjes {
+    position: absolute;
+    width: 166%;
+    left: -380px;
+    top: -405px;
+}
+.oblique-background {
+    position: absolute;
+    transform: skewY(-10deg);
+    width: 100%;
+    height: 100%;
+    background-color: #727272;
+    left: 0;
+    top: 540px;
+    z-index: -10;
+}
+.about-us {
+    background-color:#727272;
+}
