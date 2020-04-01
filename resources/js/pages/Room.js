@@ -51,7 +51,7 @@ export default class Room extends Component {
             Echo.leave(`room.${this.props.match.params.id}`)
         )
     }
-
+    
     onUserJoin = (user) => {
         if (!this.state.users.some(u => u.id === user.id)) {
             this.setState({
