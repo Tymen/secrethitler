@@ -18,6 +18,7 @@ Route::namespace('Api')->group(function () {
 
         Route::middleware('auth:api')->group(function() {
             Route::prefix('users')->group(function () {
+                Route::get('check', 'UsersApiController@checkAuth');
                 Route::get('me', 'UsersApiController@me');
             });
 
@@ -30,6 +31,7 @@ Route::namespace('Api')->group(function () {
                     Route::post('active', 'RoomsApiController@setActive');
                     Route::post('inactive', 'RoomsApiController@setInactive');
                     Route::post('leave', 'RoomsApiController@onUserLeave');
+                    Route::post('kick/{user}', 'RoomsApiController@kickUser');
                     Route::delete('destroy', 'RoomsApiController@destroy');
                 });
             });
