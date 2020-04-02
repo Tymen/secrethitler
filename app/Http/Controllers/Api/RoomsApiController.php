@@ -161,10 +161,10 @@ class RoomsApiController extends Controller
     }
     public function changeHost(Room $room, Request $request){
         if (Auth::user()->id != $room->user_id && Auth::user()->room_id != $room->id){
-            $changeHost = Room::find($request->roomId);
-            $changeHost->user_id = $request->newUserHost;
-            $changeHost->save();
-            return response()->json(['message' => $changeHost]);
+            $room = Room::find($request->roomId);
+            $room->user_id = $request->newUserHost;
+            $room->save();
+            return response()->json(['message' => $room]);
         }else {
             return response()->json(["message" => "You're not allowed to do this"], 401);
         }
