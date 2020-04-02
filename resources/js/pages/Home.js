@@ -5,7 +5,7 @@ import Rooms from "../components/Home/Rooms"
 import {messagesConfig} from "../appSettings";
 import Notification from "../components/Universal/Notification";
 import {Link} from "react-router-dom";
-import ApiHandler from "../components/Universal/apiHandler";
+import {post} from "../components/Universal/apiHandler";
 export default class Home extends Component {
     state = {
         getMsg: messagesConfig.pages.home,
@@ -19,7 +19,6 @@ export default class Home extends Component {
     notify = () => {
         this.child.getNotify(this.state.getMsg.auth.noLogin);
     };
-
     render() {
         return (
             <div>

@@ -84437,6 +84437,27 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
+/*
+    import {get, post} from "../Universal/apiHandler";
+
+    <button onClick={() => {this.changeHost(1, 1)}}>clickme</button>
+
+    changeHost = (userId, room) => {
+        let roomObj = {
+            newUserHost: userId,
+            roomId: room,
+        }
+        post('/api/v1/rooms/1/changehost', roomObj)
+            .then(response => {
+                if(response.error){
+                    console.log(response)
+                    this.child.getNotify({type: "error", title: "Authentication", message: response.data});
+                }else {
+                    console.log(response);
+                }
+            })
+    };
+ */
 
 var Rooms =
 /*#__PURE__*/
@@ -85332,12 +85353,13 @@ function (_Component) {
 /*!*********************************************************!*\
   !*** ./resources/js/components/Universal/apiHandler.js ***!
   \*********************************************************/
-/*! exports provided: get */
+/*! exports provided: get, post */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "get", function() { return get; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "post", function() { return post; });
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 
@@ -85379,7 +85401,7 @@ function () {
             _context.next = 3;
             return axios.get(link).then(function (response) {
               responseObj.statuscode = response.status;
-              responseObj.data = response.data;
+              responseObj.data = response.data.data;
             })["catch"](function (error) {
               if (error.response) {
                 responseObj.statuscode = error.response.status;
@@ -85401,6 +85423,50 @@ function () {
 
   return function get(_x) {
     return _ref.apply(this, arguments);
+  };
+}();
+
+var post =
+/*#__PURE__*/
+function () {
+  var _ref2 = _asyncToGenerator(
+  /*#__PURE__*/
+  _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(link, data) {
+    var responseObj;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            responseObj = {
+              "error": false,
+              "statuscode": '',
+              "data": ''
+            };
+            _context2.next = 3;
+            return axios.post(link, data).then(function (response) {
+              responseObj.statuscode = response.status;
+              responseObj.data = response.data;
+            })["catch"](function (error) {
+              if (error.response) {
+                responseObj.statuscode = error.response.status;
+                responseObj.error = true;
+                responseObj.data = error.response.data.message;
+              }
+            });
+
+          case 3:
+            return _context2.abrupt("return", responseObj);
+
+          case 4:
+          case "end":
+            return _context2.stop();
+        }
+      }
+    }, _callee2);
+  }));
+
+  return function post(_x2, _x3) {
+    return _ref2.apply(this, arguments);
   };
 }();
 
@@ -86235,8 +86301,8 @@ function (_Component) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\joost\Desktop\The%20SS%20-%20SecretHitler\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\joost\Desktop\The%20SS%20-%20SecretHitler\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! E:\Programma's\Documents\Coderen\Coderen\The%20SS%20-%20SecretHitler\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! E:\Programma's\Documents\Coderen\Coderen\The%20SS%20-%20SecretHitler\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
