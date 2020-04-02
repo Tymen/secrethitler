@@ -9,6 +9,7 @@ export default class ChatLobby extends Component {
     componentDidMount() {
         var channel = Echo.channel(`room.${this.props.id}`);
         channel.listen('.message-event', (data) => {
+            console.log(data)
             this.setState({
                 messages: [...this.state.messages, data.user.username + " : " + data.message ],
             });

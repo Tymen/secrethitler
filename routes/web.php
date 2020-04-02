@@ -31,6 +31,9 @@ Route::get('/rooms/{id}', function (){
     return view('room');
 })->middleware("can.join.room");
 
+Route::post('webhook', 'WebhookController@handle');
+
+// needs refactor
 Route::post('/rooms/{id}', "MessageController@sendMessage");
 
 Route::middleware('guest')->group(function () {

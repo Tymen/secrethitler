@@ -61,10 +61,8 @@ export default class Room extends Component {
 
     }
 
-    componentWillUnmount() {
-        axios.post(`/api/v1/rooms/${this.props.match.params.id}/leave`).then(
-            Echo.leave(`room.${this.props.match.params.id}`)
-        )
+    async componentWillUnmount() {
+        await Echo.leave(`room.${this.props.match.params.id}`)
     }
 
     onUserJoin = (user) => {
@@ -94,8 +92,7 @@ export default class Room extends Component {
                     leftUsers: this.state.leftUsers.filter(u => u.id !== user.id),
                 })
             }
-
-        }, 7000)
+        }, 3000)
     }
 
     getRoom = () => {

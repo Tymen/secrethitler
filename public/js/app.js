@@ -84464,7 +84464,7 @@ function (_Component) {
           _this.child.getNotify(_this.state.getMsg.internalServer);
         } else {
           _this.setState({
-            rooms: response.data
+            rooms: response.data.data
           });
         }
       });
@@ -84750,6 +84750,8 @@ function (_Component) {
 
       var channel = Echo.channel("room.".concat(this.props.id));
       channel.listen('.message-event', function (data) {
+        console.log(data);
+
         _this2.setState({
           messages: [].concat(_toConsumableArray(_this2.state.messages), [data.user.username + " : " + data.message])
         });
@@ -85971,14 +85973,22 @@ if (document.getElementById('index')) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Room; });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _components_Room_Game__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/Room/Game */ "./resources/js/components/Room/Game.js");
-/* harmony import */ var _components_Room_Lobby__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/Room/Lobby */ "./resources/js/components/Room/Lobby.js");
-/* harmony import */ var _components_Room_Lobby_ChatLobby__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/Room/Lobby/ChatLobby */ "./resources/js/components/Room/Lobby/ChatLobby.js");
-/* harmony import */ var _components_Room_Lobby_PlayersLobby__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/Room/Lobby/PlayersLobby */ "./resources/js/components/Room/Lobby/PlayersLobby.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _components_Room_Game__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/Room/Game */ "./resources/js/components/Room/Game.js");
+/* harmony import */ var _components_Room_Lobby__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/Room/Lobby */ "./resources/js/components/Room/Lobby.js");
+/* harmony import */ var _components_Room_Lobby_ChatLobby__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/Room/Lobby/ChatLobby */ "./resources/js/components/Room/Lobby/ChatLobby.js");
+/* harmony import */ var _components_Room_Lobby_PlayersLobby__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/Room/Lobby/PlayersLobby */ "./resources/js/components/Room/Lobby/PlayersLobby.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+
+
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
@@ -86084,7 +86094,7 @@ function (_Component) {
             })
           });
         }
-      }, 7000);
+      }, 3000);
     });
 
     _defineProperty(_assertThisInitialized(_this), "getRoom", function () {
@@ -86156,9 +86166,31 @@ function (_Component) {
     }
   }, {
     key: "componentWillUnmount",
-    value: function componentWillUnmount() {
-      axios.post("/api/v1/rooms/".concat(this.props.match.params.id, "/leave")).then(Echo.leave("room.".concat(this.props.match.params.id)));
-    }
+    value: function () {
+      var _componentWillUnmount = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return Echo.leave("room.".concat(this.props.match.params.id));
+
+              case 2:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function componentWillUnmount() {
+        return _componentWillUnmount.apply(this, arguments);
+      }
+
+      return componentWillUnmount;
+    }()
   }, {
     key: "render",
     value: function render() {
@@ -86166,52 +86198,52 @@ function (_Component) {
 
       if (this.state.loaded) {
         if (this.state.room.active) {
-          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Room_Game__WEBPACK_IMPORTED_MODULE_1__["default"], {
+          return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_components_Room_Game__WEBPACK_IMPORTED_MODULE_2__["default"], {
             setInactive: function setInactive() {
               return _this3.setInactive();
             }
           });
         }
 
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
           className: "container"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
           className: "row"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("img", {
           className: "home-logo",
           src: "/images/Secrethitler-no-bg.png"
-        })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
           className: "row"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
           className: "room-info"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("p", {
           className: "room-name"
-        }, "Room: ", this.state.room.id), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        }, "Room: ", this.state.room.id), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("p", {
           className: "player-count"
-        }, this.state.users.length, "/", this.state.room.max_players, " Players"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        }, this.state.users.length, "/", this.state.room.max_players, " Players"))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
           className: "row"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Room_Lobby_PlayersLobby__WEBPACK_IMPORTED_MODULE_4__["default"], {
+        }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_components_Room_Lobby_PlayersLobby__WEBPACK_IMPORTED_MODULE_5__["default"], {
           users: this.state.users,
           roomId: this.props.match.params.id
-        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Room_Lobby_ChatLobby__WEBPACK_IMPORTED_MODULE_3__["default"], {
+        }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_components_Room_Lobby_ChatLobby__WEBPACK_IMPORTED_MODULE_4__["default"], {
           id: this.props.match.params.id
-        })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
           className: "row"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Room_Lobby__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_components_Room_Lobby__WEBPACK_IMPORTED_MODULE_3__["default"], {
           setActive: function setActive() {
             return _this3.setActive();
           }
-        })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
           className: "height-for-start-button"
         }));
       }
 
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null);
+      return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", null);
     }
   }]);
 
   return Room;
-}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+}(react__WEBPACK_IMPORTED_MODULE_1__["Component"]);
 
 
 
