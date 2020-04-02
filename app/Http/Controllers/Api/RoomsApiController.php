@@ -160,12 +160,9 @@ class RoomsApiController extends Controller
         return response()->json(['message' => 'completed']);
     }
     public function changeHost(Room $room, Request $request){
-        if (Auth::user()->id === $room->user_id){
-            $room->user_id = $request->newUserHost;
-            $room->save();
-            return response()->json(['message' => $room]);
-        }else {
-            return response()->json(["message" => "You're not allowed to do this"], 401);
-        }
+        $this->authorize('isHost', $room);
+        $room->user_id = $request->newUserHost;
+        $room->save();
+        return response()->json(['message' => $room]);
     }
 }
