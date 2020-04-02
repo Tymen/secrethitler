@@ -161,7 +161,6 @@ class RoomsApiController extends Controller
     }
     public function changeHost(Room $room, Request $request){
         if (Auth::user()->id != $room->user_id && Auth::user()->room_id != $room->id){
-            $room = Room::find($request->roomId);
             $room->user_id = $request->newUserHost;
             $room->save();
             return response()->json(['message' => $room]);
