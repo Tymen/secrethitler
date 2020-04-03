@@ -84485,7 +84485,7 @@ function (_Component) {
           _this.child.getNotify(_this.state.getMsg.internalServer);
         } else {
           _this.setState({
-            rooms: response.data.data
+            rooms: response.data
           });
         }
       });
