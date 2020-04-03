@@ -114,7 +114,7 @@ export default class Room extends Component {
             }
         )
     };
-
+    
     setInactive = () => {
         axios.post(`/api/v1/rooms/${this.props.match.params.id}/inactive`).then(response => {
                 this.setState({
