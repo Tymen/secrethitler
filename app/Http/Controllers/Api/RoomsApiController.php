@@ -136,4 +136,11 @@ class RoomsApiController extends Controller
 
         return response()->json(['message' => 'completed']);
     }
+
+    public function changeHost(Room $room, Request $request){
+        $this->authorize('isHost', $room);
+        $room->user_id = $request->newUserHost;
+        $room->save();
+        return response()->json(['message' => $room]);
+    }
 }
