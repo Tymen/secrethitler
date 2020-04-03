@@ -84485,7 +84485,7 @@ function (_Component) {
           _this.child.getNotify(_this.state.getMsg.internalServer);
         } else {
           _this.setState({
-            rooms: response.data
+            rooms: response.data.data
           });
         }
       });
@@ -84695,9 +84695,160 @@ function (_Component) {
   !*** ./resources/js/components/Room/Lobby/ChatLobby.js ***!
   \*********************************************************/
 /*! exports provided: default */
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nError: ENOENT: no such file or directory, open 'E:\\Users\\krist\\Documents\\websites\\The%20SS%20-%20SecretHitler\\resources\\js\\components\\Room\\Lobby\\ChatLobby.js'");
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ChatLobby; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+var ChatLobby =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(ChatLobby, _Component);
+
+  function ChatLobby() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    _classCallCheck(this, ChatLobby);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(ChatLobby)).call.apply(_getPrototypeOf2, [this].concat(args)));
+
+    _defineProperty(_assertThisInitialized(_this), "state", {
+      messages: [],
+      message: ''
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "scrollToBottom", function () {
+      _this.messagesEnd.scrollIntoView({
+        behavior: "smooth"
+      });
+    });
+
+    return _this;
+  }
+
+  _createClass(ChatLobby, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      var channel = Echo.channel("room.".concat(this.props.id));
+      channel.listen('.message-event', function (data) {
+        _this2.setState({
+          messages: [].concat(_toConsumableArray(_this2.state.messages), [data.user.username + " : " + data.message])
+        });
+
+        _this2.scrollToBottom();
+      });
+    }
+  }, {
+    key: "handleChange",
+    value: function handleChange(e) {
+      this.setState({
+        message: e.target.value
+      });
+    }
+  }, {
+    key: "handleSubmit",
+    value: function handleSubmit(e) {
+      e.preventDefault();
+
+      if (this.state.message) {
+        axios.post('/rooms/' + this.props.id, {
+          message: this.state.message
+        });
+      }
+
+      this.setState({
+        message: ''
+      });
+      this.mainInput.value = "";
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this3 = this;
+
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "chat"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.state.messages.map(function (message) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+          key: Math.floor(Math.random() * 99999),
+          className: "message"
+        }, message);
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        style: {
+          "float": "left",
+          clear: "both"
+        },
+        ref: function ref(el) {
+          _this3.messagesEnd = el;
+        }
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "send-message"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        onSubmit: function onSubmit(e) {
+          return _this3.handleSubmit(e);
+        }
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        className: "input-message",
+        placeholder: "Message...",
+        onChange: function onChange(e) {
+          return _this3.handleChange(e);
+        },
+        ref: function ref(_ref) {
+          return _this3.mainInput = _ref;
+        }
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "submit",
+        value: "Send",
+        className: "btn btn-send-button"
+      }))));
+    }
+  }]);
+
+  return ChatLobby;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+
+
 
 /***/ }),
 
@@ -84706,9 +84857,133 @@ throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index
   !*** ./resources/js/components/Room/Lobby/PlayersLobby.js ***!
   \************************************************************/
 /*! exports provided: default */
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nError: ENOENT: no such file or directory, open 'E:\\Users\\krist\\Documents\\websites\\The%20SS%20-%20SecretHitler\\resources\\js\\components\\Room\\Lobby\\PlayersLobby.js'");
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return PlayersLobby; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+
+var PlayersLobby =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(PlayersLobby, _Component);
+
+  function PlayersLobby() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    _classCallCheck(this, PlayersLobby);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(PlayersLobby)).call.apply(_getPrototypeOf2, [this].concat(args)));
+
+    _defineProperty(_assertThisInitialized(_this), "state", {
+      authUser: ''
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "kickUser", function (e, id) {
+      e.preventDefault();
+      axios.post("/api/v1/rooms/".concat(_this.props.roomId, "/kick/").concat(id));
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "showPlayers", function () {
+      return _this.props.users.map(function (user) {
+        if (_this.props.authUser.id === _this.props.ownerId) {
+          if (_this.props.ownerId === user.id) {
+            return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+              key: user.id
+            }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+              className: "player-name"
+            }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+              className: "fas fa-crown"
+            }), "\xA0", user.username));
+          } else {
+            return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+              key: user.id
+            }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+              className: "player-name dropdown-toggle",
+              type: "button",
+              id: "dropdownMenuButton",
+              "data-toggle": "dropdown",
+              "aria-haspopup": "true",
+              "aria-expanded": "false"
+            }, user.username), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+              className: "dropdown-menu",
+              "aria-labelledby": "dropdownMenuButton"
+            }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+              className: "dropdown-item",
+              onClick: function onClick(e) {
+                return _this.kickUser(e, user.id);
+              }
+            }, "Kick ", user.username)));
+          }
+        }
+
+        if (_this.props.ownerId === user.id) {
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            key: user.id
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+            className: "player-name"
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+            className: "fas fa-crown"
+          }), "\xA0", user.username));
+        } else {
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            key: user.id
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+            className: "player-name"
+          }, user.username));
+        }
+      });
+    });
+
+    return _this;
+  }
+
+  _createClass(PlayersLobby, [{
+    key: "render",
+    value: function render() {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "show-players"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.showPlayers())), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "players-in-lobby"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, "Players in lobby")));
+    }
+  }]);
+
+  return PlayersLobby;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+
+
 
 /***/ }),
 
@@ -85906,6 +86181,8 @@ function (_Component) {
               return u.id !== user.id;
             })
           });
+
+          _this.componentWillUnmount();
         }
       }, 7000);
     });
@@ -86015,7 +86292,9 @@ function (_Component) {
           className: "row"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Room_Lobby_PlayersLobby__WEBPACK_IMPORTED_MODULE_4__["default"], {
           users: this.state.users,
-          roomId: this.props.match.params.id
+          roomId: this.props.match.params.id,
+          ownerId: this.state.room.owner.id,
+          authUser: this.state.user
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Room_Lobby_ChatLobby__WEBPACK_IMPORTED_MODULE_3__["default"], {
           id: this.props.match.params.id
         })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {

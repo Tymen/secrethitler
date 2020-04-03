@@ -20,6 +20,7 @@ Route::namespace('Api')->group(function () {
             Route::prefix('users')->group(function () {
                 Route::get('check', 'UsersApiController@checkAuth');
                 Route::get('me', 'UsersApiController@me');
+                Route::get('auth', 'UsersApiController@auth');
             });
 
             Route::prefix('rooms')->group(function () {
