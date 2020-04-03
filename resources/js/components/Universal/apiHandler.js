@@ -21,6 +21,26 @@ const get = async (link) => {
         await axios.get(link)
             .then(response => {
                 responseObj.statuscode = response.status;
+                responseObj.data = response.data.data;
+            })
+            .catch(error => {
+                if (error.response) {
+                    responseObj.statuscode = error.response.status;
+                    responseObj.error = true;
+                    responseObj.data = error.response.data.message;
+                }
+            });
+        return responseObj;
+};
+const post = async (link, data) => {
+        let responseObj = {
+            "error": false,
+            "statuscode": '',
+            "data": ''
+        };
+        await axios.post(link, data)
+            .then(response => {
+                responseObj.statuscode = response.status;
                 responseObj.data = response.data;
             })
             .catch(error => {
@@ -33,5 +53,5 @@ const get = async (link) => {
         return responseObj;
 };
 
-export {get};
+export {get, post};
 
