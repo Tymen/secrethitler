@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\RoomsUpdatedEvent;
-use App\Events\SendMessage;
 use App\Room;
-use App\RoomState;
 use App\User;
+use App\RoomState;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Events\RoomsUpdatedEvent;
 
 class WebhookController extends Controller
 {

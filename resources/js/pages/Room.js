@@ -61,8 +61,8 @@ export default class Room extends Component {
 
     }
 
-    async componentWillUnmount() {
-        await Echo.leave(`room.${this.props.match.params.id}`)
+    componentWillUnmount() {
+        Echo.leave(`room.${this.props.match.params.id}`)
     }
 
     onUserJoin = (user) => {
@@ -89,7 +89,7 @@ export default class Room extends Component {
 
                 this.setState({
                     users: this.state.users.filter(u => u.id !== user.id),
-                    leftUsers: this.state.leftUsers.filter(u => u.id !== user.id),
+                    leftUsers: this.state.leftUsers.filter(id => id !== user.id),
                 })
             }
         }, 3000)
