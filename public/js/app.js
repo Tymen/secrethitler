@@ -84644,7 +84644,8 @@ function (_Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "test"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Lobby_ChatLobby__WEBPACK_IMPORTED_MODULE_2__["default"], {
-        id: this.props.id
+        id: this.props.id,
+        page: "Game"
       })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "row row-under"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -84794,13 +84795,22 @@ function (_Component) {
 
     _defineProperty(_assertThisInitialized(_this), "state", {
       messages: [],
-      message: ''
+      message: '',
+      localTimes: [],
+      localTime: ''
     });
 
-    _defineProperty(_assertThisInitialized(_this), "scrollToBottom", function () {
-      _this.messagesEnd.scrollIntoView({
-        behavior: "smooth"
-      });
+    _defineProperty(_assertThisInitialized(_this), "getCurrentTime", function () {
+      var time = new Date();
+      var hour = time.getHours();
+      var minutes = time.getMinutes();
+
+      if (minutes < 10) {
+        minutes = "0".concat(minutes);
+      }
+
+      var liveTime = hour + ':' + minutes;
+      return liveTime;
     });
 
     _defineProperty(_assertThisInitialized(_this), "scrollToBottom", function () {
@@ -84820,7 +84830,10 @@ function (_Component) {
       var channel = Echo.channel("room.".concat(this.props.id));
       channel.listen('.message-event', function (data) {
         _this2.setState({
-          messages: [].concat(_toConsumableArray(_this2.state.messages), [data.user.username + " : " + data.message])
+          messages: [].concat(_toConsumableArray(_this2.state.messages), [{
+            time: _this2.getCurrentTime(),
+            message: data.user.username + " : " + data.message
+          }])
         });
 
         _this2.scrollToBottom();
@@ -84840,12 +84853,14 @@ function (_Component) {
 
       if (this.state.message) {
         axios.post('/rooms/' + this.props.id, {
-          message: this.state.message
+          message: this.state.message,
+          localTime: this.state.localTime
         });
       }
 
       this.setState({
-        message: ''
+        message: '',
+        localTime: ''
       });
       this.mainInput.value = "";
     }
@@ -84856,11 +84871,15 @@ function (_Component) {
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "chat"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.state.messages.map(function (message) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "side-border"
+      }, this.state.messages.map(function (message) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+          className: "time"
+        }, message.time), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
           key: Math.floor(Math.random() * 99999),
           className: "message"
-        }, message);
+        }, message.message));
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         style: {
           "float": "left",

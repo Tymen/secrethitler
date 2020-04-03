@@ -25,7 +25,8 @@ export default class Room extends Component {
                     loggedIn: response.data.isAuthenticated,
                 })
             })
-            .catch(error => {})
+            .catch(error => {
+            })
 
         axios.get('/api/v1/users/me')
             .then(response => {
@@ -128,7 +129,8 @@ export default class Room extends Component {
         if (this.state.loaded) {
             if (this.state.room.active) {
                 return (
-                    <Game setInactive={() => this.setInactive()} users={this.state.users} id={this.props.match.params.id} room={this.state.room} roomName={this.state.room.name}/>
+                    <Game setInactive={() => this.setInactive()} users={this.state.users}
+                          id={this.props.match.params.id} room={this.state.room} roomName={this.state.room.name}/>
                 )
             }
 

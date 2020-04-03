@@ -27,7 +27,7 @@ export default class Game extends Component {
                     </div>
                     <div className="col-3 col-wrap">
                         <div className="test">
-                            <ChatLobby id={this.props.id}/>
+                            <ChatLobby id={this.props.id} page='Game'/>
                         </div>
                     </div>
                 </div>

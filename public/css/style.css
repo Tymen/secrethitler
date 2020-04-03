@@ -604,17 +604,25 @@ body {
     max-height: 307px;
 }
 .test .side-border {
-    width: 1px;
-    background-color: #ffffff;
-    min-height: 271px;
+    border-left: 1px solid #ffffFf;
+    margin: 10px 0 10px 35px;
+    min-height: 289px;
+    display: table;
+}
+
+.test .time {
+    margin: 20px 0px 0px -32px;
+    font-size: 10px;
     float: left;
-    margin: 0px 0 0 -45px;
+    color: white;
+    border-bottom: 1px solid #fff;
 }
 
 .test .message {
     padding: 14px 17px;
     font-size: 14px;
     line-height: 15px;
+    left: 27px;
 }
 
 .test .send-message {

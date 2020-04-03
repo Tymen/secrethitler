@@ -4,7 +4,20 @@ export default class ChatLobby extends Component {
     state = {
         messages: [],
         message: '',
+        localTimes: [],
+        localTime: '',
     };
+
+    getCurrentTime = () => {
+        let time = new Date();
+        let hour = time.getHours();
+        let minutes = time.getMinutes();
+        if (minutes < 10) {
+            minutes = `0${minutes}`
+        }
+        let liveTime = hour + ':' + minutes
+        return liveTime
+    }
 
     scrollToBottom = () => {
         this.messagesEnd.scrollIntoView({behavior: "smooth"});
@@ -14,17 +27,17 @@ export default class ChatLobby extends Component {
         var channel = Echo.channel(`room.${this.props.id}`);
         channel.listen('.message-event', (data) => {
             this.setState({
-                messages: [...this.state.messages, data.user.username + " : " + data.message],
+                messages: [...this.state.messages, {
+                    time: this.getCurrentTime(),
+                    message: data.user.username + " : " + data.message
+                }],
             });
             this.scrollToBottom()
         });
     }
 
-    scrollToBottom = () => {
-        this.messagesEnd.scrollIntoView({behavior: "smooth"});
-    }
-
     handleChange(e) {
+
         this.setState({message: e.target.value});
     }
 
@@ -35,11 +48,13 @@ export default class ChatLobby extends Component {
         if (this.state.message) {
             axios.post('/rooms/' + this.props.id, {
                 message: this.state.message,
+                localTime: this.state.localTime
             })
         }
 
         this.setState({
-            message: ''
+            message: '',
+            localTime: ''
         });
 
         this.mainInput.value = "";
@@ -47,13 +62,16 @@ export default class ChatLobby extends Component {
 
     render() {
         return (
+
             <div>
                 <div className="chat">
 
-                    <div>
-                        {/*<div className="side-border" />*/}
+                    <div className="side-border">
                         {this.state.messages.map(message => (
-                            <p key={Math.floor(Math.random() * 99999)} className="message">{message}</p>
+                            <div>
+                                <p className="time">{message.time}</p>
+                                <p key={Math.floor(Math.random() * 99999)} className="message">{message.message}</p>
+                            </div>
                         ))}
                     </div>
                     <div style={{float: "left", clear: "both"}}
