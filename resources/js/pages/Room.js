@@ -9,6 +9,7 @@ export default class Room extends Component {
 
     state = {
         users: [],
+        user: {},
         leftUsers: [],
         loggedIn: false,
         loaded: false,
@@ -18,10 +19,18 @@ export default class Room extends Component {
     componentDidMount() {
         this.getRoom()
 
-        axios.get('/api/v1/users/me')
+        axios.get('/api/v1/users/check')
             .then(response => {
                 this.setState({
                     loggedIn: response.data.isAuthenticated,
+                })
+            })
+            .catch(error => {})
+
+        axios.get('/api/v1/users/me')
+            .then(response => {
+                this.setState({
+                    user: response.data.data,
                     loaded: true
                 })
             })
@@ -42,6 +51,12 @@ export default class Room extends Component {
             })
             .leaving((user) => {
                 this.onUserLeave(user)
+            })
+            .listen('.user-kicked', (e) => {
+                if (this.state.user.id === e.userId) {
+                    Echo.leave(`room.${this.props.match.params.id}`)
+                    window.location.href = '/'
+                }
             })
 
     }
@@ -129,7 +144,7 @@ export default class Room extends Component {
                         </div>
                     </div>
                     <div className="row">
-                        <PlayersLobby users={this.state.users}/>
+                        <PlayersLobby users={this.state.users} roomId={this.props.match.params.id}/>
                         <ChatLobby id={this.props.match.params.id}/>
                     </div>
                     <div className="row">
