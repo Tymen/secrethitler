@@ -84485,7 +84485,7 @@ function (_Component) {
           _this.child.getNotify(_this.state.getMsg.internalServer);
         } else {
           _this.setState({
-            rooms: response.data
+            rooms: response.data.data
           });
         }
       });
@@ -84906,6 +84906,10 @@ function (_Component) {
 
     _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(PlayersLobby)).call.apply(_getPrototypeOf2, [this].concat(args)));
 
+    _defineProperty(_assertThisInitialized(_this), "state", {
+      authUser: ''
+    });
+
     _defineProperty(_assertThisInitialized(_this), "kickUser", function (e, id) {
       e.preventDefault();
       axios.post("/api/v1/rooms/".concat(_this.props.roomId, "/kick/").concat(id));
@@ -84913,24 +84917,52 @@ function (_Component) {
 
     _defineProperty(_assertThisInitialized(_this), "showPlayers", function () {
       return _this.props.users.map(function (user) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          key: user.id
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-          className: "player-name dropdown-toggle",
-          type: "button",
-          id: "dropdownMenuButton",
-          "data-toggle": "dropdown",
-          "aria-haspopup": "true",
-          "aria-expanded": "false"
-        }, user.username), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "dropdown-menu",
-          "aria-labelledby": "dropdownMenuButton"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-          className: "dropdown-item",
-          onClick: function onClick(e) {
-            return _this.kickUser(e, user.id);
+        if (_this.props.authUser.id === _this.props.ownerId) {
+          if (_this.props.ownerId === user.id) {
+            return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+              key: user.id
+            }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+              className: "player-name"
+            }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+              className: "fas fa-crown"
+            }), "\xA0", user.username));
+          } else {
+            return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+              key: user.id
+            }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+              className: "player-name dropdown-toggle",
+              type: "button",
+              id: "dropdownMenuButton",
+              "data-toggle": "dropdown",
+              "aria-haspopup": "true",
+              "aria-expanded": "false"
+            }, user.username), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+              className: "dropdown-menu",
+              "aria-labelledby": "dropdownMenuButton"
+            }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+              className: "dropdown-item",
+              onClick: function onClick(e) {
+                return _this.kickUser(e, user.id);
+              }
+            }, "Kick ", user.username)));
           }
-        }, "Kick ", user.username)));
+        }
+
+        if (_this.props.ownerId === user.id) {
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            key: user.id
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+            className: "player-name"
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+            className: "fas fa-crown"
+          }), "\xA0", user.username));
+        } else {
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            key: user.id
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+            className: "player-name"
+          }, user.username));
+        }
       });
     });
 
@@ -86149,6 +86181,8 @@ function (_Component) {
               return id !== user.id;
             })
           });
+
+          _this.componentWillUnmount();
         }
       }, 3000);
     });
@@ -86258,7 +86292,9 @@ function (_Component) {
           className: "row"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Room_Lobby_PlayersLobby__WEBPACK_IMPORTED_MODULE_4__["default"], {
           users: this.state.users,
-          roomId: this.props.match.params.id
+          roomId: this.props.match.params.id,
+          ownerId: this.state.room.owner.id,
+          authUser: this.state.user
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Room_Lobby_ChatLobby__WEBPACK_IMPORTED_MODULE_3__["default"], {
           id: this.props.match.params.id
         })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {

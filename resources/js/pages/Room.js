@@ -91,6 +91,7 @@ export default class Room extends Component {
                     users: this.state.users.filter(u => u.id !== user.id),
                     leftUsers: this.state.leftUsers.filter(id => id !== user.id),
                 })
+                this.componentWillUnmount()
             }
         }, 3000)
     }
@@ -141,7 +142,8 @@ export default class Room extends Component {
                         </div>
                     </div>
                     <div className="row">
-                        <PlayersLobby users={this.state.users} roomId={this.props.match.params.id}/>
+                        <PlayersLobby users={this.state.users} roomId={this.props.match.params.id}
+                                      ownerId={this.state.room.owner.id} authUser={this.state.user}/>
                         <ChatLobby id={this.props.match.params.id}/>
                     </div>
                     <div className="row">
