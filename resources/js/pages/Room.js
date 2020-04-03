@@ -113,7 +113,7 @@ export default class Room extends Component {
         if (this.state.loaded) {
             if (this.state.room.active) {
                 return (
-                    <Game setInactive={() => this.setInactive()} users={this.state.users} id={this.props.match.params.id} room={this.state.room}/>
+                    <Game setInactive={() => this.setInactive()} users={this.state.users} id={this.props.match.params.id} room={this.state.room} roomName={this.state.room.name}/>
                 )
             }
 

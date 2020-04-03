@@ -327,8 +327,6 @@ body {
 
 .rooms-body {
     background-color: #B8B8B8;
-
-
 }
 
 .room-name {
@@ -348,6 +346,14 @@ body {
 
 .test {
     width: auto;
+}
+
+.player-name-block {
+    margin: 0 0 0 -16.3px;
+    width: 112%;
+    height: 45px;
+    background-color: #828282;
+    max-width: none;
 }
 
 .home-logo {
@@ -478,7 +484,7 @@ body {
     background: transparent;
 }
 
-.input-message::placeholder{
+.input-message::placeholder {
     color: white;
     margin-left: 10px;
 }
@@ -532,39 +538,137 @@ body {
     border-right: 1px solid white;
 }
 
-.navbar .game-no-nav-footer{
-    display: none;
+/*this is for the in game layout*/
+.bg-board {
+    background-color: #454545;
+    max-width: none;
+    border-left: 1.5px solid #ffffff;
 }
 
-.bg-board{
-  background-color: #454545;
-}
-.test{
+.test {
     width: 100%;
     margin-left: -15px;
 }
-.test .players-in-lobby {
-    max-width: none;
-    width: 115%;
-    max-height: none;
+
+.col-wrap {
+    padding-right: 0;
 }
+
 .test .show-players {
     max-width: none;
-    width: 115%;
-    min-height: 351px;
-    max-height: 351px;
+    width: 113%;
+    min-height: 307px;
+    max-height: 307px;
+    border: none;
 }
-.test .send-message {
+
+.test .players-in-lobby {
     max-width: none;
-    width: 108.5%;
+    height: 45px;
+    width: 113%;
     max-height: none;
+    border: none;
 }
+
+.test .players-in-lobby h4 {
+    font-size: 20px;
+    margin: -9px 7px 0 0;
+}
+
+.player-name-block {
+    margin: 0 0 0 -15px;
+    width: 135%;
+    height: 45px;
+    background-color: #828282;
+    max-width: none;
+}
+
+.test .show-players .player-name {
+    font-size: 18px;
+}
+
+.bg-board .board-section {
+    height: 307px;
+}
+
+.name-of-room {
+    padding-top: 7px;
+    color: #ffff;
+    font-size: 20px;
+}
+
 .test .chat {
     max-width: none;
-    width: 108.2%;
-    min-height: 352px;
-    max-height: 352px;
+    width: 103%;
+    min-height: 307px;
+    max-height: 307px;
 }
+.test .side-border {
+    width: 1px;
+    background-color: #ffffff;
+    min-height: 271px;
+    float: left;
+    margin: 0px 0 0 -45px;
+}
+
+.test .message {
+    padding: 14px 17px;
+    font-size: 14px;
+    line-height: 15px;
+}
+
+.test .send-message {
+    height: 45px;
+    max-width: none;
+    width: 103%;
+    max-height: none;
+}
+
+.test .send-message .btn-send-button {
+    margin: -7px 0 0 0;
+    font-size: 14px;
+    padding: 9.2px 35px;
+}
+
+.test .message:first-child {
+    margin-top: 10px;
+}
+
+.test .send-message .input-message::placeholder {
+    color: white;
+    margin-left: 10px;
+    margin-top: -10px;
+}
+
+.test .send-message form {
+    margin-top: -12px;
+    font-size: 12px;
+}
+
+.test .text-white {
+    margin: 0;
+    display: unset;
+}
+
+.test .input-message {
+    margin: 5px 0 0 10px;
+    width: 56%;
+}
+
+.row-under {
+    height: 307px;
+}
+
+.bg-grey {
+    background-color: #9A9A9A;
+}
+
+.bg-dark-grey {
+    background-color: #4b4b4b;
+    border-left: 2px solid #ffffff;
+}
+
+/*end of layout in game*/
 
 .player-name {
     margin-bottom: 0px;
@@ -595,7 +699,7 @@ body {
     margin-bottom: 0px;
 }
 
-.height-for-start-button{
+.height-for-start-button {
     margin-top: 10vw;
 }
 
@@ -620,6 +724,55 @@ body {
     .login-bolletjes {
         width: 22%;
     }
+
+    /*this is for the in game layout*/
+    .test .show-players {
+        width: 117.9%;
+    }
+
+    .test .players-in-lobby {
+        width: 117.9%;
+    }
+
+    .player-name-block {
+        margin: 0 0 0 -14.5px;
+    }
+
+    .name-of-room {
+        padding-top: 11px;
+        font-size: 16px;
+    }
+
+    .test .chat {
+        width: 105.2%;
+        max-width: 105.2%;
+    }
+
+    .test .message {
+        padding: 9px 13px;
+        font-size: 10px;
+        line-height: 19px;
+    }
+
+    .test .send-message {
+        width: 105.2%;
+    }
+
+    .test .send-message .btn-send-button {
+        margin: -12px 0 0 0;
+        font-size: 12px;
+        padding: 13px 20px;
+    }
+
+    .test .input-message {
+        margin: 4px 0 0 10px;
+    }
+
+    .test .send-message form {
+        margin-top: -10px;
+    }
+
+    /*end of layout in game*/
 }
 
 /*// Medium devices (tablets, less than 992px)*/
@@ -627,6 +780,7 @@ body {
     .box div {
         display: none;
     }
+
     .box:before {
         display: none;
     }
@@ -665,8 +819,40 @@ body {
         text-align: left !important;
 
     }
+
     .login-bolletjes {
         width: 23%;
+    }
+
+    /*this is for the in game layout*/
+    .test .show-players {
+        width: 122.6%;
+    }
+
+    .test .players-in-lobby {
+        width: 122.6%;
+    }
+
+    .test .players-in-lobby h4 {
+        font-size: 17px;
+        margin: -7px 10px 0 0;
+    }
+
+    .test .show-players .player-name {
+        font-size: 14px;
+    }
+
+    .test .chat {
+        width: 106.5%;
+        max-width: 106.5%;
+    }
+
+    .test .send-message {
+        width: 106.5%;
+    }
+
+    .test .send-message .btn-send-button {
+        padding: 12.2px 12px;
     }
 }
 
@@ -683,8 +869,40 @@ body {
     .text-adjustment {
         font-size: 0.86vw;
     }
+
     .login-bolletjes {
         width: 20%;
+    }
+
+    /*this is for the in game layout*/
+    .test .show-players {
+        width: 131%;
+    }
+
+    .test .players-in-lobby {
+        width: 131%;
+    }
+
+    .test .players-in-lobby h4 {
+        font-size: 13px;
+        margin-top: -5px;
+    }
+
+    .test .chat {
+        width: 108.2%;
+        max-width: 108.2%;
+    }
+
+    .test .send-message .btn-send-button {
+        padding: 12.2px 10px;
+    }
+
+    .test .send-message {
+        width: 108.2%;
+    }
+
+    .test .show-players .player-name {
+        font-size: 10px;
     }
 }
 
@@ -709,6 +927,28 @@ body {
     .login-bolletjes {
         width: 18%;
     }
+
+    /*this is for the in game layout*/
+    .test .send-message .btn-send-button {
+        padding: 12.2px 0px;
+    }
+
+    .test .show-players {
+        width: 146%;
+    }
+
+    .test .players-in-lobby {
+        width: 146%;
+    }
+
+    .test .chat {
+        width: 111.2%;
+        max-width: 111.2%;
+    }
+
+    .test .send-message {
+        width: 111.2%;
+    }
 }
 
 @media (min-width: 1620px) and (max-width: 2051px) {
@@ -720,6 +960,7 @@ body {
         left: -20px;
         right: 274px;
     }
+
     .login-bolletjes {
         width: 26%;
     }
@@ -734,6 +975,7 @@ body {
         left: -25px;
         right: 424px;
     }
+
     .login-bolletjes {
         width: 26%;
     }
@@ -748,6 +990,7 @@ body {
         left: -25px;
         right: 462px;
     }
+
     .login-bolletjes {
         width: 27%;
     }

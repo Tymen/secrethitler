@@ -53,9 +53,13 @@ export default class ChatLobby extends Component {
         return (
             <div>
                 <div className="chat">
+
                     <div>
+                        {/*<div className="side-border" />*/}
                         {this.state.messages.map(message => (
-                            <p className="message">{message}</p>
+                            <div>
+                                <p className="message">{message}</p>
+                            </div>
                         ))}
                     </div>
                     <div style={{float: "left", clear: "both"}}
@@ -69,7 +73,7 @@ export default class ChatLobby extends Component {
                     <form onSubmit={this.handleSubmit}>
                         <label className="text-white">
                             <input type="text" className="input-message" placeholder="Message..."
-                                   onChange={this.handleChange} ref={(ref) => this.mainInput= ref}/>
+                                   onChange={this.handleChange} ref={(ref) => this.mainInput = ref}/>
                         </label>
                         <input type="submit" value="Send" className="btn btn-send-button"/>
                     </form>
