@@ -93,8 +93,8 @@ export default class Room extends Component {
                     users: this.state.users.filter(u => u.id !== user.id),
                     leftUsers: this.state.leftUsers.filter(u => u.id !== user.id),
                 })
+                this.componentWillUnmount()
             }
-
         }, 7000)
     }
 
@@ -114,7 +114,7 @@ export default class Room extends Component {
             }
         )
     };
-
+    
     setInactive = () => {
         axios.post(`/api/v1/rooms/${this.props.match.params.id}/inactive`).then(response => {
                 this.setState({
@@ -144,7 +144,8 @@ export default class Room extends Component {
                         </div>
                     </div>
                     <div className="row">
-                        <PlayersLobby users={this.state.users} roomId={this.props.match.params.id}/>
+                        <PlayersLobby users={this.state.users} roomId={this.props.match.params.id}
+                                      ownerId={this.state.room.owner.id} authUser={this.state.user}/>
                         <ChatLobby id={this.props.match.params.id}/>
                     </div>
                     <div className="row">
