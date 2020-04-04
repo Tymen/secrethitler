@@ -86244,8 +86244,6 @@ function (_Component) {
       }).joining(function (user) {
         _this2.onUserJoin(user);
       }).leaving(function (user) {
-        console.log(user);
-
         _this2.onUserLeave(user);
       }).listen('.user-kicked', function (e) {
         if (_this2.state.user.id === e.userId) {

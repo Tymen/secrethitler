@@ -50,7 +50,6 @@ export default class Room extends Component {
                 this.onUserJoin(user)
             })
             .leaving((user) => {
-                console.log(user)
                 this.onUserLeave(user)
             })
             .listen('.user-kicked', (e) => {

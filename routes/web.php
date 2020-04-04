@@ -33,7 +33,6 @@ Route::get('/rooms/{id}', function (){
 
 Route::post('webhook', 'WebhookController@handle');
 
-// needs refactor
 Route::post('/rooms/{id}', "MessageController@sendMessage");
 
 Route::middleware('guest')->group(function () {
