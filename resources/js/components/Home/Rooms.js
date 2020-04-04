@@ -3,8 +3,28 @@ import {Link} from "react-router-dom";
 import Notification from "../Universal/Notification";
 import {messagesConfig} from "../../appSettings";
 import Room from "../../pages/Room";
-import {get} from "../Universal/apiHandler";
+import {get, post} from "../Universal/apiHandler";
+/*
+    import {get, post} from "../Universal/apiHandler";
 
+    <button onClick={() => {this.changeHost(1, 1)}}>clickme</button>
+
+    changeHost = (userId, room) => {
+        let roomObj = {
+            newUserHost: userId,
+            roomId: room,
+        }
+        post('/api/v1/rooms/1/changehost', roomObj)
+            .then(response => {
+                if(response.error){
+                    console.log(response)
+                    this.child.getNotify({type: "error", title: "Authentication", message: response.data});
+                }else {
+                    console.log(response);
+                }
+            })
+    };
+ */
 export default class Rooms extends Component {
     _isMounted = false;
 
@@ -39,7 +59,7 @@ export default class Rooms extends Component {
                 if(response.error){
                     this.child.getNotify(this.state.getMsg.internalServer);
                 }else {
-                    this.setState({rooms: response.data});
+                    this.setState({rooms: response.data.data});
                 }
             })
     };
