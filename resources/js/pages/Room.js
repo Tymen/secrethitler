@@ -50,6 +50,7 @@ export default class Room extends Component {
                 this.onUserJoin(user)
             })
             .leaving((user) => {
+                console.log(user)
                 this.onUserLeave(user)
             })
             .listen('.user-kicked', (e) => {
@@ -85,15 +86,14 @@ export default class Room extends Component {
         })
         setTimeout(() => {
             if (this.state.leftUsers.some(id => id === user.id)) {
-                this.state.room.owner.id === user.id ? this.getRoom() : false;
-
                 this.setState({
                     users: this.state.users.filter(u => u.id !== user.id),
                     leftUsers: this.state.leftUsers.filter(id => id !== user.id),
                 })
-                this.componentWillUnmount()
+
+                this.state.room.owner.id === user.id ? this.getRoom() : false;
             }
-        }, 3000)
+        }, 5000)
     }
 
     getRoom = () => {
@@ -137,14 +137,14 @@ export default class Room extends Component {
                     </div>
                     <div className="row">
                         <div className="room-info">
-                            <p className="room-name">Room: {this.state.room.id}</p>
+                            <p className="room-name">Room: {this.props.match?.params?.id}</p>
                             <p className="player-count">{this.state.users.length}/{this.state.room.max_players} Players</p>
                         </div>
                     </div>
                     <div className="row">
-                        <PlayersLobby users={this.state.users} roomId={this.props.match.params.id}
-                                      ownerId={this.state.room.owner.id} authUser={this.state.user}/>
-                        <ChatLobby id={this.props.match.params.id}/>
+                        <PlayersLobby users={this.state.users} roomId={this.props.match?.params?.id}
+                                      ownerId={this.state.room.owner?.id} authUser={this.state.user}/>
+                        <ChatLobby id={this.props.match?.params?.id}/>
                     </div>
                     <div className="row">
                         <Lobby setActive={() => this.setActive()}/>
