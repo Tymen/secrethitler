@@ -84485,7 +84485,7 @@ function (_Component) {
           _this.child.getNotify(_this.state.getMsg.internalServer);
         } else {
           _this.setState({
-            rooms: response.data.data
+            rooms: response.data
           });
         }
       });
@@ -84575,6 +84575,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Game; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Lobby_PlayersLobby__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Lobby/PlayersLobby */ "./resources/js/components/Room/Lobby/PlayersLobby.js");
+/* harmony import */ var _Lobby_ChatLobby__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Lobby/ChatLobby */ "./resources/js/components/Room/Lobby/ChatLobby.js");
+/* harmony import */ var _pages_Room__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../pages/Room */ "./resources/js/pages/Room.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -84595,6 +84598,9 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
+
+
 var Game =
 /*#__PURE__*/
 function (_Component) {
@@ -84611,11 +84617,48 @@ function (_Component) {
     value: function render() {
       var _this = this;
 
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Game has started"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "container-fluid"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "row"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-2 bg-dark col-wrap"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "in-game"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Lobby_PlayersLobby__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        users: this.props.users,
+        room: this.props.room,
+        page: "Game"
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-7 bg-board"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "board-section"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-12 board-section"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-12 player-name-block"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "name-of-room"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", null, "Room: "), this.props.roomName)))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-3 col-wrap"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "in-game"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Lobby_ChatLobby__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        id: this.props.id,
+        page: "Game"
+      })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "row row-under"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-2 bg-grey"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-7 bg-dark-grey"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-3 bg-grey"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: function onClick() {
           return _this.props.setInactive();
         }
-      }, "Inactive"));
+      }, "Inactive"))));
     }
   }]);
 
@@ -84755,8 +84798,17 @@ function (_Component) {
       message: ''
     });
 
+    _defineProperty(_assertThisInitialized(_this), "getCurrentTime", function () {
+      var time = new Date();
+      var hour = time.getHours();
+      var minutes = time.getMinutes();
+      minutes < 10 ? minutes = "0".concat(minutes) : false;
+      var liveTime = hour + ':' + minutes;
+      return liveTime;
+    });
+
     _defineProperty(_assertThisInitialized(_this), "scrollToBottom", function () {
-      _this.messagesEnd.scrollIntoView({
+      document.getElementById('messagesEnd').scrollIntoView({
         behavior: "smooth"
       });
     });
@@ -84772,7 +84824,10 @@ function (_Component) {
       var channel = Echo.channel("room.".concat(this.props.id));
       channel.listen('.message-event', function (data) {
         _this2.setState({
-          messages: [].concat(_toConsumableArray(_this2.state.messages), [data.user.username + " : " + data.message])
+          messages: [].concat(_toConsumableArray(_this2.state.messages), [{
+            time: _this2.getCurrentTime(),
+            message: data.user.username + " : " + data.message
+          }])
         });
 
         _this2.scrollToBottom();
@@ -84808,18 +84863,20 @@ function (_Component) {
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "chat"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.state.messages.map(function (message) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "side-border"
+      }, this.state.messages.map(function (message) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+          className: "time"
+        }, message.time), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
           key: Math.floor(Math.random() * 99999),
           className: "message"
-        }, message);
+        }, message.message));
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "messagesEnd",
         style: {
           "float": "left",
           clear: "both"
-        },
-        ref: function ref(el) {
-          _this3.messagesEnd = el;
         }
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "send-message"
@@ -84827,7 +84884,9 @@ function (_Component) {
         onSubmit: function onSubmit(e) {
           return _this3.handleSubmit(e);
         }
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        className: "text-white"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         className: "input-message",
         placeholder: "Message...",
@@ -84906,6 +84965,19 @@ function (_Component) {
 
     _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(PlayersLobby)).call.apply(_getPrototypeOf2, [this].concat(args)));
 
+    _defineProperty(_assertThisInitialized(_this), "checkPage", function () {
+      if (_this.props.page === "Game") {
+        return "".concat(_this.props.users.length, "/").concat(_this.props.room.max_players, " Players");
+      }
+
+      return 'Players in lobby';
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "kickUser", function (e, id) {
+      e.preventDefault();
+      axios.post("/api/v1/rooms/".concat(_this.props.roomId, "/kick/").concat(id));
+    });
+
     _defineProperty(_assertThisInitialized(_this), "state", {
       authUser: ''
     });
@@ -84917,7 +84989,9 @@ function (_Component) {
 
     _defineProperty(_assertThisInitialized(_this), "showPlayers", function () {
       return _this.props.users.map(function (user) {
-        if (_this.props.authUser.id === _this.props.ownerId) {
+        var _this$props$authUser;
+
+        if (((_this$props$authUser = _this.props.authUser) === null || _this$props$authUser === void 0 ? void 0 : _this$props$authUser.id) === _this.props.ownerId) {
           if (_this.props.ownerId === user.id) {
             return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
               key: user.id
@@ -84976,7 +85050,7 @@ function (_Component) {
         className: "show-players"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.showPlayers())), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "players-in-lobby"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, "Players in lobby")));
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, this.checkPage())));
     }
   }]);
 
@@ -86171,20 +86245,18 @@ function (_Component) {
         if (_this.state.leftUsers.some(function (id) {
           return id === user.id;
         })) {
-          _this.state.room.owner.id === user.id ? _this.getRoom() : false;
-
           _this.setState({
             users: _this.state.users.filter(function (u) {
               return u.id !== user.id;
             }),
-            leftUsers: _this.state.leftUsers.filter(function (u) {
-              return u.id !== user.id;
+            leftUsers: _this.state.leftUsers.filter(function (id) {
+              return id !== user.id;
             })
           });
 
-          _this.componentWillUnmount();
+          _this.state.room.owner.id === user.id ? _this.getRoom() : false;
         }
-      }, 7000);
+      }, 5000);
     });
 
     _defineProperty(_assertThisInitialized(_this), "getRoom", function () {
@@ -86257,7 +86329,7 @@ function (_Component) {
   }, {
     key: "componentWillUnmount",
     value: function componentWillUnmount() {
-      axios.post("/api/v1/rooms/".concat(this.props.match.params.id, "/leave")).then(Echo.leave("room.".concat(this.props.match.params.id)));
+      Echo.leave("room.".concat(this.props.match.params.id));
     }
   }, {
     key: "render",
@@ -86265,11 +86337,17 @@ function (_Component) {
       var _this3 = this;
 
       if (this.state.loaded) {
+        var _this$props$match, _this$props$match$par, _this$state$room$owne;
+
         if (this.state.room.active) {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Room_Game__WEBPACK_IMPORTED_MODULE_1__["default"], {
             setInactive: function setInactive() {
               return _this3.setInactive();
-            }
+            },
+            users: this.state.users,
+            id: this.props.match.params.id,
+            room: this.state.room,
+            roomName: this.state.room.name
           });
         }
 
@@ -86286,14 +86364,14 @@ function (_Component) {
           className: "room-info"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
           className: "room-name"
-        }, "Room: ", this.state.room.id), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        }, "Room: ", (_this$props$match = this.props.match) === null || _this$props$match === void 0 ? void 0 : (_this$props$match$par = _this$props$match.params) === null || _this$props$match$par === void 0 ? void 0 : _this$props$match$par.id), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
           className: "player-count"
         }, this.state.users.length, "/", this.state.room.max_players, " Players"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "row"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Room_Lobby_PlayersLobby__WEBPACK_IMPORTED_MODULE_4__["default"], {
           users: this.state.users,
           roomId: this.props.match.params.id,
-          ownerId: this.state.room.owner.id,
+          ownerId: (_this$state$room$owne = this.state.room.owner) === null || _this$state$room$owne === void 0 ? void 0 : _this$state$room$owne.id,
           authUser: this.state.user
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Room_Lobby_ChatLobby__WEBPACK_IMPORTED_MODULE_3__["default"], {
           id: this.props.match.params.id
