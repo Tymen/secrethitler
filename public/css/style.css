@@ -344,7 +344,7 @@ body {
     overflow: scroll;
 }
 
-.test {
+.in-game {
     width: auto;
 }
 
@@ -545,7 +545,7 @@ body {
     border-left: 1.5px solid #ffffff;
 }
 
-.test {
+.in-game {
     width: 100%;
     margin-left: -15px;
 }
@@ -554,9 +554,9 @@ body {
     padding-right: 0;
 }
 
-.test .show-players {
+.in-game .show-players {
     max-width: none;
-    width: 105%;
+    width: 107%;
     min-height: 307px;
     max-height: 307px;
     border: none;
@@ -564,7 +564,7 @@ body {
     overflow-x: hidden;
 }
 
-.test .players-in-lobby {
+.in-game .players-in-lobby {
     max-width: none;
     height: 45px;
     width: 113%;
@@ -572,7 +572,7 @@ body {
     border: none;
 }
 
-.test .players-in-lobby h4 {
+.in-game .players-in-lobby h4 {
     font-size: 20px;
     margin: -9px 7px 0 0;
 }
@@ -585,7 +585,7 @@ body {
     max-width: none;
 }
 
-.test .show-players .player-name {
+.in-game .show-players .player-name {
     font-size: 18px;
 }
 
@@ -599,20 +599,20 @@ body {
     font-size: 20px;
 }
 
-.test .chat {
+.in-game .chat {
     max-width: none;
     width: 103%;
     min-height: 307px;
     max-height: 307px;
 }
-.test .side-border {
+.in-game .side-border {
     border-left: 1px solid #ffffFf;
     margin: 10px 0 10px 35px;
     min-height: 289px;
     display: table;
 }
 
-.test .time {
+.in-game .time {
     margin: 20px 0px 0px -32px;
     font-size: 10px;
     float: left;
@@ -620,47 +620,47 @@ body {
     border-bottom: 1px solid #fff;
 }
 
-.test .message {
+.in-game .message {
     padding: 14px 17px;
     font-size: 14px;
     line-height: 8px;
     left: 27px;
 }
 
-.test .send-message {
+.in-game .send-message {
     height: 45px;
     max-width: none;
     width: 103%;
     max-height: none;
 }
 
-.test .send-message .btn-send-button {
+.in-game .send-message .btn-send-button {
     margin: -7px 0 0 0;
     font-size: 14px;
     padding: 9.2px 35px;
 }
 
-.test .message:first-child {
+.in-game .message:first-child {
     margin-top: 10px;
 }
 
-.test .send-message .input-message::placeholder {
+.in-game .send-message .input-message::placeholder {
     color: white;
     margin-left: 10px;
     margin-top: -10px;
 }
 
-.test .send-message form {
+.in-game .send-message form {
     margin-top: -12px;
     font-size: 12px;
 }
 
-.test .text-white {
+.in-game .text-white {
     margin: 0;
     display: unset;
 }
 
-.test .input-message {
+.in-game .input-message {
     margin: 5px 0 0 10px;
     width: 56%;
 }
@@ -736,11 +736,11 @@ body {
     }
 
     /*this is for the in game layout*/
-    .test .show-players {
+    .in-game .show-players {
         width: 108.9%;
     }
 
-    .test .players-in-lobby {
+    .in-game .players-in-lobby {
         width: 117.9%;
     }
 
@@ -753,32 +753,32 @@ body {
         font-size: 16px;
     }
 
-    .test .chat {
+    .in-game .chat {
         width: 105.2%;
         max-width: 105.2%;
     }
 
-    .test .message {
+    .in-game .message {
         padding: 9px 13px;
         font-size: 10px;
         line-height: 19px;
     }
 
-    .test .send-message {
+    .in-game .send-message {
         width: 105.2%;
     }
 
-    .test .send-message .btn-send-button {
+    .in-game .send-message .btn-send-button {
         margin: -12px 0 0 0;
         font-size: 12px;
         padding: 13px 20px;
     }
 
-    .test .input-message {
+    .in-game .input-message {
         margin: 4px 0 0 10px;
     }
 
-    .test .send-message form {
+    .in-game .send-message form {
         margin-top: -10px;
     }
 
@@ -835,33 +835,33 @@ body {
     }
 
     /*this is for the in game layout*/
-    .test .show-players {
+    .in-game .show-players {
         width: 112.6%;
     }
 
-    .test .players-in-lobby {
+    .in-game .players-in-lobby {
         width: 122.6%;
     }
 
-    .test .players-in-lobby h4 {
+    .in-game .players-in-lobby h4 {
         font-size: 17px;
         margin: -7px 10px 0 0;
     }
 
-    .test .show-players .player-name {
+    .in-game .show-players .player-name {
         font-size: 14px;
     }
 
-    .test .chat {
+    .in-game .chat {
         width: 106.5%;
         max-width: 106.5%;
     }
 
-    .test .send-message {
+    .in-game .send-message {
         width: 106.5%;
     }
 
-    .test .send-message .btn-send-button {
+    .in-game .send-message .btn-send-button {
         padding: 12.2px 12px;
     }
 }
@@ -885,33 +885,33 @@ body {
     }
 
     /*this is for the in game layout*/
-    .test .show-players {
+    .in-game .show-players {
         width: 119%;
     }
 
-    .test .players-in-lobby {
+    .in-game .players-in-lobby {
         width: 131%;
     }
 
-    .test .players-in-lobby h4 {
+    .in-game .players-in-lobby h4 {
         font-size: 13px;
         margin-top: -5px;
     }
 
-    .test .chat {
+    .in-game .chat {
         width: 108.2%;
         max-width: 108.2%;
     }
 
-    .test .send-message .btn-send-button {
+    .in-game .send-message .btn-send-button {
         padding: 12.2px 10px;
     }
 
-    .test .send-message {
+    .in-game .send-message {
         width: 108.2%;
     }
 
-    .test .show-players .player-name {
+    .in-game .show-players .player-name {
         font-size: 10px;
     }
 }
@@ -939,24 +939,24 @@ body {
     }
 
     /*this is for the in game layout*/
-    .test .send-message .btn-send-button {
+    .in-game .send-message .btn-send-button {
         padding: 12.2px 0px;
     }
 
-    .test .show-players {
+    .in-game .show-players {
         width: 123%;
     }
 
-    .test .players-in-lobby {
+    .in-game .players-in-lobby {
         width: 146%;
     }
 
-    .test .chat {
+    .in-game .chat {
         width: 111.2%;
         max-width: 111.2%;
     }
 
-    .test .send-message {
+    .in-game .send-message {
         width: 111.2%;
     }
 }

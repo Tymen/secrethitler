@@ -84624,7 +84624,7 @@ function (_Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-2 bg-dark col-wrap"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "test"
+        className: "in-game"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Lobby_PlayersLobby__WEBPACK_IMPORTED_MODULE_1__["default"], {
         users: this.props.users,
         room: this.props.room,
@@ -84642,7 +84642,7 @@ function (_Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", null, "Room: "), this.props.roomName)))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-3 col-wrap"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "test"
+        className: "in-game"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Lobby_ChatLobby__WEBPACK_IMPORTED_MODULE_2__["default"], {
         id: this.props.id,
         page: "Game"

@@ -9,7 +9,7 @@ export default class Game extends Component {
             <div className="container-fluid">
                 <div className="row">
                         <div className="col-2 bg-dark col-wrap">
-                            <div className="test">
+                            <div className="in-game">
                                 <PlayersLobby users={this.props.users} room={this.props.room} page='Game'/>
                             </div>
                         </div>
@@ -26,7 +26,7 @@ export default class Game extends Component {
                         </div>
                     </div>
                     <div className="col-3 col-wrap">
-                        <div className="test">
+                        <div className="in-game">
                             <ChatLobby id={this.props.id} page='Game'/>
                         </div>
                     </div>
