@@ -125,7 +125,8 @@ export default class Room extends Component {
         if (this.state.loaded) {
             if (this.state.room.active) {
                 return (
-                    <Game setInactive={() => this.setInactive()}/>
+                    <Game setInactive={() => this.setInactive()} users={this.state.users}
+                          id={this.props.match.params.id} room={this.state.room} roomName={this.state.room.name}/>
                 )
             }
 
@@ -141,9 +142,10 @@ export default class Room extends Component {
                         </div>
                     </div>
                     <div className="row">
-                        <PlayersLobby users={this.state.users} roomId={this.props.match?.params?.id}
+                        <PlayersLobby users={this.state.users} roomId={this.props.match.params.id}
                                       ownerId={this.state.room.owner?.id} authUser={this.state.user}/>
-                        <ChatLobby id={this.props.match?.params?.id}/>
+                        <ChatLobby id={this.props.match.params.id}/>
+
                     </div>
                     <div className="row">
                         <Lobby setActive={() => this.setActive()}/>

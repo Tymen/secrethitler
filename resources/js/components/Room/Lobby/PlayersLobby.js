@@ -2,6 +2,18 @@ import React, {Component} from 'react';
 import {Link} from "react-router-dom";
 
 export default class PlayersLobby extends Component {
+    checkPage = () => {
+        if (this.props.page === "Game") {
+            return `${this.props.users.length}/${this.props.room.max_players} Players`
+        }
+        return 'Players in lobby'
+    }
+
+    kickUser = (e, id) => {
+        e.preventDefault()
+        axios.post(`/api/v1/rooms/${this.props.roomId}/kick/${id}`)
+    }
+
 
     state = {
         authUser: '',
@@ -14,7 +26,8 @@ export default class PlayersLobby extends Component {
 
     showPlayers = () => {
         return this.props.users.map(user => {
-            if(this.props.authUser.id === this.props.ownerId) {
+
+            if(this.props.authUser?.id === this.props.ownerId) {
                 if (this.props.ownerId === user.id) {
                     return (
                         <div key={user.id}>
@@ -58,7 +71,6 @@ export default class PlayersLobby extends Component {
             }
         })
     }
-
     render() {
         return (
             <div>
@@ -68,10 +80,9 @@ export default class PlayersLobby extends Component {
                     </div>
                 </div>
                 <div className="players-in-lobby">
-                    <h4>Players in lobby</h4>
+                    <h4>{this.checkPage()}</h4>
                 </div>
             </div>
         )
-
     }
 }

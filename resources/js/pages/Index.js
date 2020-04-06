@@ -12,13 +12,12 @@ import Room from "./Room";
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
 export default class Index extends Component {
-
     render() {
         return (
             <Router>
                 <Nav/>
                 <Switch>
-                    <Route path="/" exact ><Home message={this.props.message}/></Route>
+                    <Route path="/" exact><Home message={this.props.message}/></Route>
                     <Route path="/rooms/:id" exact component={Room}/>
                     <Route path="/auth/:type" exact component={Auth}/>
                     <Route path="/gamerules" exact component={GameRule}/>
