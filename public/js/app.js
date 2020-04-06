@@ -86245,20 +86245,18 @@ function (_Component) {
         if (_this.state.leftUsers.some(function (id) {
           return id === user.id;
         })) {
-          _this.state.room.owner.id === user.id ? _this.getRoom() : false;
-
           _this.setState({
             users: _this.state.users.filter(function (u) {
               return u.id !== user.id;
             }),
-            leftUsers: _this.state.leftUsers.filter(function (u) {
-              return u.id !== user.id;
+            leftUsers: _this.state.leftUsers.filter(function (id) {
+              return id !== user.id;
             })
           });
 
-          _this.componentWillUnmount();
+          _this.state.room.owner.id === user.id ? _this.getRoom() : false;
         }
-      }, 7000);
+      }, 5000);
     });
 
     _defineProperty(_assertThisInitialized(_this), "getRoom", function () {
@@ -86331,7 +86329,7 @@ function (_Component) {
   }, {
     key: "componentWillUnmount",
     value: function componentWillUnmount() {
-      axios.post("/api/v1/rooms/".concat(this.props.match.params.id, "/leave")).then(Echo.leave("room.".concat(this.props.match.params.id)));
+      Echo.leave("room.".concat(this.props.match.params.id));
     }
   }, {
     key: "render",
@@ -86339,6 +86337,8 @@ function (_Component) {
       var _this3 = this;
 
       if (this.state.loaded) {
+        var _this$props$match, _this$props$match$par, _this$state$room$owne;
+
         if (this.state.room.active) {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Room_Game__WEBPACK_IMPORTED_MODULE_1__["default"], {
             setInactive: function setInactive() {
@@ -86364,14 +86364,14 @@ function (_Component) {
           className: "room-info"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
           className: "room-name"
-        }, "Room: ", this.state.room.id), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        }, "Room: ", (_this$props$match = this.props.match) === null || _this$props$match === void 0 ? void 0 : (_this$props$match$par = _this$props$match.params) === null || _this$props$match$par === void 0 ? void 0 : _this$props$match$par.id), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
           className: "player-count"
         }, this.state.users.length, "/", this.state.room.max_players, " Players"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "row"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Room_Lobby_PlayersLobby__WEBPACK_IMPORTED_MODULE_4__["default"], {
           users: this.state.users,
           roomId: this.props.match.params.id,
-          ownerId: this.state.room.owner.id,
+          ownerId: (_this$state$room$owne = this.state.room.owner) === null || _this$state$room$owne === void 0 ? void 0 : _this$state$room$owne.id,
           authUser: this.state.user
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Room_Lobby_ChatLobby__WEBPACK_IMPORTED_MODULE_3__["default"], {
           id: this.props.match.params.id

@@ -27,9 +27,6 @@ class RoomChannel
      */
     public function join(User $user, Room $room)
     {
-        $user->room_id = $room->id;
-        $user->save();
-
         return ['id' => $user->id, 'username' => $user->username];
     }
 }
