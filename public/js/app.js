@@ -84802,11 +84802,7 @@ function (_Component) {
       var time = new Date();
       var hour = time.getHours();
       var minutes = time.getMinutes();
-
-      if (minutes < 10) {
-        minutes = "0".concat(minutes);
-      }
-
+      minutes < 10 ? minutes = "0".concat(minutes) : false;
       var liveTime = hour + ':' + minutes;
       return liveTime;
     });

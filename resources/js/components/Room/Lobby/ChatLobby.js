@@ -7,7 +7,7 @@ export default class ChatLobby extends Component {
     };
 
     componentDidMount() {
-        var channel = Echo.channel(`room.${this.props.id}`);
+        let channel = Echo.channel(`room.${this.props.id}`);
         channel.listen('.message-event', (data) => {
             this.setState({
                 messages: [...this.state.messages, {
@@ -22,9 +22,7 @@ export default class ChatLobby extends Component {
         let time = new Date();
         let hour = time.getHours();
         let minutes = time.getMinutes();
-        if (minutes < 10) {
-            minutes = `0${minutes}`
-        }
+        minutes < 10 ? minutes = `0${minutes}`:false
         let liveTime = hour + ':' + minutes
         return liveTime
     }
