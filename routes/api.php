@@ -28,10 +28,9 @@ Route::namespace('Api')->group(function () {
 
                 Route::prefix('{room}')->group(function () {
                     Route::get('/', 'RoomsApiController@show');
-                    Route::post('/changehost', 'RoomsApiController@changeHost');
+                    Route::post('changehost', 'RoomsApiController@changeHost');
                     Route::post('active', 'RoomsApiController@setActive');
                     Route::post('inactive', 'RoomsApiController@setInactive');
-                    Route::post('leave', 'RoomsApiController@onUserLeave');
                     Route::post('kick/{user}', 'RoomsApiController@kickUser');
                     Route::delete('destroy', 'RoomsApiController@destroy');
                 });
