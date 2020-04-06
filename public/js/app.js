@@ -84795,9 +84795,7 @@ function (_Component) {
 
     _defineProperty(_assertThisInitialized(_this), "state", {
       messages: [],
-      message: '',
-      localTimes: [],
-      localTime: ''
+      message: ''
     });
 
     _defineProperty(_assertThisInitialized(_this), "getCurrentTime", function () {
@@ -84814,7 +84812,7 @@ function (_Component) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "scrollToBottom", function () {
-      _this.messagesEnd.scrollIntoView({
+      document.getElementById('messagesEnd').scrollIntoView({
         behavior: "smooth"
       });
     });
@@ -84853,14 +84851,12 @@ function (_Component) {
 
       if (this.state.message) {
         axios.post('/rooms/' + this.props.id, {
-          message: this.state.message,
-          localTime: this.state.localTime
+          message: this.state.message
         });
       }
 
       this.setState({
-        message: '',
-        localTime: ''
+        message: ''
       });
       this.mainInput.value = "";
     }
@@ -84881,12 +84877,10 @@ function (_Component) {
           className: "message"
         }, message.message));
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "messagesEnd",
         style: {
           "float": "left",
           clear: "both"
-        },
-        ref: function ref(el) {
-          _this3.messagesEnd = el;
         }
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "send-message"
@@ -84988,26 +84982,65 @@ function (_Component) {
       axios.post("/api/v1/rooms/".concat(_this.props.roomId, "/kick/").concat(id));
     });
 
+    _defineProperty(_assertThisInitialized(_this), "state", {
+      authUser: ''
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "kickUser", function (e, id) {
+      e.preventDefault();
+      axios.post("/api/v1/rooms/".concat(_this.props.roomId, "/kick/").concat(id));
+    });
+
     _defineProperty(_assertThisInitialized(_this), "showPlayers", function () {
       return _this.props.users.map(function (user) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          key: user.id
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-          className: "player-name dropdown-toggle",
-          type: "button",
-          id: "dropdownMenuButton",
-          "data-toggle": "dropdown",
-          "aria-haspopup": "true",
-          "aria-expanded": "false"
-        }, user.username), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "dropdown-menu",
-          "aria-labelledby": "dropdownMenuButton"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-          className: "dropdown-item",
-          onClick: function onClick(e) {
-            return _this.kickUser(e, user.id);
+        var _this$props$authUser;
+
+        if (((_this$props$authUser = _this.props.authUser) === null || _this$props$authUser === void 0 ? void 0 : _this$props$authUser.id) === _this.props.ownerId) {
+          if (_this.props.ownerId === user.id) {
+            return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+              key: user.id
+            }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+              className: "player-name"
+            }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+              className: "fas fa-crown"
+            }), "\xA0", user.username));
+          } else {
+            return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+              key: user.id
+            }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+              className: "player-name dropdown-toggle",
+              type: "button",
+              id: "dropdownMenuButton",
+              "data-toggle": "dropdown",
+              "aria-haspopup": "true",
+              "aria-expanded": "false"
+            }, user.username), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+              className: "dropdown-menu",
+              "aria-labelledby": "dropdownMenuButton"
+            }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+              className: "dropdown-item",
+              onClick: function onClick(e) {
+                return _this.kickUser(e, user.id);
+              }
+            }, "Kick ", user.username)));
           }
-        }, "Kick ", user.username)));
+        }
+
+        if (_this.props.ownerId === user.id) {
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            key: user.id
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+            className: "player-name"
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+            className: "fas fa-crown"
+          }), "\xA0", user.username));
+        } else {
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            key: user.id
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+            className: "player-name"
+          }, user.username));
+        }
       });
     });
 
@@ -86226,6 +86259,8 @@ function (_Component) {
               return u.id !== user.id;
             })
           });
+
+          _this.componentWillUnmount();
         }
       }, 7000);
     });
@@ -86339,7 +86374,9 @@ function (_Component) {
           className: "row"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Room_Lobby_PlayersLobby__WEBPACK_IMPORTED_MODULE_4__["default"], {
           users: this.state.users,
-          roomId: this.props.match.params.id
+          roomId: this.props.match.params.id,
+          ownerId: this.state.room.owner.id,
+          authUser: this.state.user
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Room_Lobby_ChatLobby__WEBPACK_IMPORTED_MODULE_3__["default"], {
           id: this.props.match.params.id
         })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
