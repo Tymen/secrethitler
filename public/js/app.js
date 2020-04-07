@@ -84863,16 +84863,16 @@ function (_Component) {
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "chat"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "side-border"
       }, this.state.messages.map(function (message) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-          className: "time"
-        }, message.time), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "message-container"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
           key: Math.floor(Math.random() * 99999),
           className: "message"
-        }, message.message));
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        }, message.message), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+          className: "time"
+        }, message.time));
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "messagesEnd",
         style: {
           "float": "left",
@@ -86352,6 +86352,8 @@ function (_Component) {
         }
 
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "in-lobby"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "container"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "row"
@@ -86374,7 +86376,8 @@ function (_Component) {
           ownerId: (_this$state$room$owne = this.state.room.owner) === null || _this$state$room$owne === void 0 ? void 0 : _this$state$room$owne.id,
           authUser: this.state.user
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Room_Lobby_ChatLobby__WEBPACK_IMPORTED_MODULE_3__["default"], {
-          id: this.props.match.params.id
+          id: this.props.match.params.id,
+          page: "Lobby"
         })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "row"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Room_Lobby__WEBPACK_IMPORTED_MODULE_2__["default"], {
@@ -86383,7 +86386,7 @@ function (_Component) {
           }
         })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "height-for-start-button"
-        }));
+        })));
       }
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null);

@@ -12,7 +12,7 @@ export default class ChatLobby extends Component {
             this.setState({
                 messages: [...this.state.messages, {
                     time: this.getCurrentTime(),
-                    message: data.user.username + " : " + data.message
+                    message: data.user.username + " : " + data.message,
                 }],
             });
             this.scrollToBottom()
@@ -54,15 +54,12 @@ export default class ChatLobby extends Component {
 
             <div>
                 <div className="chat">
-
-                    <div className="side-border">
                         {this.state.messages.map(message => (
-                            <div>
-                                <p className="time">{message.time}</p>
+                            <div className="message-container">
                                 <p key={Math.floor(Math.random() * 99999)} className="message">{message.message}</p>
+                                <p className="time">{message.time}</p>
                             </div>
                         ))}
-                    </div>
                     <div id="messagesEnd" style={{float: "left", clear: "both"}} />
                 </div>
 

@@ -25,7 +25,8 @@ export default class Room extends Component {
                     loggedIn: response.data.isAuthenticated,
                 })
             })
-            .catch(error => {})
+            .catch(error => {
+            })
 
         axios.get('/api/v1/users/me')
             .then(response => {
@@ -131,27 +132,30 @@ export default class Room extends Component {
             }
 
             return (
-                <div className="container">
-                    <div className="row">
-                        <img className="home-logo" src="/images/Secrethitler-no-bg.png"/>
-                    </div>
-                    <div className="row">
-                        <div className="room-info">
-                            <p className="room-name">Room: {this.props.match?.params?.id}</p>
-                            <p className="player-count">{this.state.users.length}/{this.state.room.max_players} Players</p>
+                <div className="in-lobby">
+                    <div className="container">
+                        <div className="row">
+                            <img className="home-logo" src="/images/Secrethitler-no-bg.png"/>
                         </div>
-                    </div>
-                    <div className="row">
-                        <PlayersLobby users={this.state.users} roomId={this.props.match.params.id}
-                                      ownerId={this.state.room.owner?.id} authUser={this.state.user}/>
-                        <ChatLobby id={this.props.match.params.id}/>
+                        <div className="row">
+                            <div className="room-info">
+                                <p className="room-name">Room: {this.props.match?.params?.id}</p>
+                                <p className="player-count">{this.state.users.length}/{this.state.room.max_players} Players</p>
+                            </div>
+                        </div>
+                        <div className="row">
 
+                            <PlayersLobby users={this.state.users} roomId={this.props.match.params.id}
+                                          ownerId={this.state.room.owner?.id} authUser={this.state.user}/>
+                            <ChatLobby id={this.props.match.params.id} page="Lobby"/>
+                        </div>
+                        <div className="row">
+                            <Lobby setActive={() => this.setActive()}/>
+                        </div>
+                        <div className="height-for-start-button"/>
                     </div>
-                    <div className="row">
-                        <Lobby setActive={() => this.setActive()}/>
-                    </div>
-                    <div className="height-for-start-button"/>
                 </div>
+
             )
         }
         return <div></div>
