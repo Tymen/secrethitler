@@ -557,8 +557,8 @@ body {
 .in-game .show-players {
     max-width: none;
     width: 107%;
-    min-height: 307px;
-    max-height: 307px;
+    min-height: 500px;
+    max-height: 500px;
     border: none;
     overflow: scroll;
     overflow-x: hidden;
@@ -590,7 +590,7 @@ body {
 }
 
 .bg-board .board-section {
-    height: 307px;
+    height: 500px;
 }
 
 .name-of-room {
@@ -602,13 +602,13 @@ body {
 .in-game .chat {
     max-width: none;
     width: 103%;
-    min-height: 307px;
-    max-height: 307px;
+    min-height: 500px;
+    max-height: 500px;
 }
 .in-game .side-border {
     border-left: 1px solid #ffffFf;
     margin: 10px 0 10px 35px;
-    min-height: 289px;
+    min-height: 480px;
     display: table;
 }
 
@@ -637,7 +637,7 @@ body {
 .in-game .send-message .btn-send-button {
     margin: -7px 0 0 0;
     font-size: 14px;
-    padding: 9.2px 35px;
+    padding: 9.8px 35px;
 }
 
 .in-game .message:first-child {
@@ -1038,4 +1038,16 @@ body {
         width: 28%;
         margin: 1vw 0;
     }
+}
+
+.facist-board{
+    margin: 0 auto;
+    max-height: 230px;
+    display: block;
+}
+
+.liberal-board{
+    margin: 0 auto;
+    max-height: 230px;
+    display: block;
 }

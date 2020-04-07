@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import PlayersLobby from "./Lobby/PlayersLobby";
 import ChatLobby from "./Lobby/ChatLobby";
 import Room from "../../pages/Room";
+import Board from "../../components/Room/Game/Board";
 
 export default class Game extends Component {
     render() {
@@ -17,7 +18,7 @@ export default class Game extends Component {
                     <div className="col-7 bg-board">
                         <div className="board-section">
                             <div className="col-12 board-section">
-
+                                <Board />
                             </div>
                             <div className="col-12 player-name-block"><p className="name-of-room">
                                 <strong>Room: </strong>{this.props.roomName}</p>
