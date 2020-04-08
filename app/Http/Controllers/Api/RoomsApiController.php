@@ -34,7 +34,7 @@ class RoomsApiController extends Controller
      */
     public function store(Request $request)
     {
-        $this->authorize('store', Room::class);
+        $this->authorize('redux', Room::class);
 
         $validator = Validator::make($request->all(), [
             'name' => 'required|unique:rooms|max:15|min:3',

@@ -24,7 +24,7 @@ Route::namespace('Api')->group(function () {
             });
 
             Route::prefix('rooms')->group(function () {
-                Route::post('/', 'RoomsApiController@store');
+                Route::post('/', 'RoomsApiController@redux');
 
                 Route::prefix('{room}')->group(function () {
                     Route::get('/', 'RoomsApiController@show');

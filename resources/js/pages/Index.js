@@ -1,34 +1,20 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
-import Nav from '../components/Universal/Nav';
-import Auth from "./Auth";
-import Footer from '../components/Universal/Footer';
 
-import Home from './Home';
-import About from './About';
-import GameRule from './GameRule';
-import Room from "./Room";
-
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import {Provider} from 'react-redux'
+import {store} from "../redux/store";
+import App from "./App";
 
 export default class Index extends Component {
-
     render() {
         return (
-            <Router>
-                <Nav/>
-                <Switch>
-                    <Route path="/" exact ><Home message={this.props.message}/></Route>
-                    <Route path="/rooms/:id" exact component={Room}/>
-                    <Route path="/auth/:type" exact component={Auth}/>
-                    <Route path="/gamerules" exact component={GameRule}/>
-                    <Route path="/about" exact component={About}/>
-                </Switch>
-                <Footer/>
-            </Router>
+            <Provider store={store}>
+                <App/>
+            </Provider>
         );
     }
 }
+
 if (document.getElementById('index')) {
     const element = document.getElementById('index');
     const props = Object.assign({}, element.dataset);
