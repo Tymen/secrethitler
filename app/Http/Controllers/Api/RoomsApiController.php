@@ -86,6 +86,7 @@ class RoomsApiController extends Controller
     {
         $this->authorize('isHost', $room);
 
+        $room->divideRoles($room->users);
         $room->active = true;
         $room->save();
         return response()->json(['message' => 'completed']);

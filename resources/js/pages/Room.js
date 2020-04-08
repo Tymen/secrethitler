@@ -107,7 +107,10 @@ export default class Room extends Component {
     setActive = () => {
         axios.post(`/api/v1/rooms/${this.props.match.params.id}/active`).then(response => {
                 this.setState({
-                    room: {...this.state.room, active: 1}
+                    room: {
+                        ...this.state.room,
+                        active: 1
+                    }
                 })
             }
         )
@@ -127,7 +130,9 @@ export default class Room extends Component {
             if (this.state.room.active) {
                 return (
                     <Game setInactive={() => this.setInactive()} users={this.state.users}
-                          id={this.props.match.params.id} room={this.state.room} roomName={this.state.room.name}/>
+                          ownerId={this.state.room.owner.id} roomId={this.props.match.params.id}
+                          id={this.props.match.params.id} room={this.state.room} roomName={this.state.room.name}
+                          user={this.state.user}/>
                 )
             }
 
@@ -144,10 +149,9 @@ export default class Room extends Component {
                             </div>
                         </div>
                         <div className="row">
-
                             <PlayersLobby users={this.state.users} roomId={this.props.match.params.id}
-                                          ownerId={this.state.room.owner?.id} authUser={this.state.user}/>
-                            <ChatLobby id={this.props.match.params.id} page="Lobby"/>
+                                          ownerId={this.state.room.owner.id} authUser={this.state.user}/>
+                            <ChatLobby id={this.props.match.params.id}/>
                         </div>
                         <div className="row">
                             <Lobby setActive={() => this.setActive()}/>

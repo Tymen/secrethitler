@@ -84628,6 +84628,9 @@ function (_Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Lobby_PlayersLobby__WEBPACK_IMPORTED_MODULE_1__["default"], {
         users: this.props.users,
         room: this.props.room,
+        authUser: this.props.user,
+        ownerId: this.props.ownerId,
+        roomId: this.props.roomId,
         page: "Game"
       }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-7 bg-board"
@@ -84965,6 +84968,10 @@ function (_Component) {
 
     _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(PlayersLobby)).call.apply(_getPrototypeOf2, [this].concat(args)));
 
+    _defineProperty(_assertThisInitialized(_this), "state", {
+      authUser: ''
+    });
+
     _defineProperty(_assertThisInitialized(_this), "checkPage", function () {
       if (_this.props.page === "Game") {
         return "".concat(_this.props.users.length, "/").concat(_this.props.room.max_players, " Players");
@@ -84978,20 +84985,9 @@ function (_Component) {
       axios.post("/api/v1/rooms/".concat(_this.props.roomId, "/kick/").concat(id));
     });
 
-    _defineProperty(_assertThisInitialized(_this), "state", {
-      authUser: ''
-    });
-
-    _defineProperty(_assertThisInitialized(_this), "kickUser", function (e, id) {
-      e.preventDefault();
-      axios.post("/api/v1/rooms/".concat(_this.props.roomId, "/kick/").concat(id));
-    });
-
     _defineProperty(_assertThisInitialized(_this), "showPlayers", function () {
       return _this.props.users.map(function (user) {
-        var _this$props$authUser;
-
-        if (((_this$props$authUser = _this.props.authUser) === null || _this$props$authUser === void 0 ? void 0 : _this$props$authUser.id) === _this.props.ownerId) {
+        if (_this.props.authUser.id === _this.props.ownerId) {
           if (_this.props.ownerId === user.id) {
             return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
               key: user.id
@@ -86337,7 +86333,7 @@ function (_Component) {
       var _this3 = this;
 
       if (this.state.loaded) {
-        var _this$props$match, _this$props$match$par, _this$state$room$owne;
+        var _this$props$match, _this$props$match$par;
 
         if (this.state.room.active) {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Room_Game__WEBPACK_IMPORTED_MODULE_1__["default"], {
@@ -86345,9 +86341,12 @@ function (_Component) {
               return _this3.setInactive();
             },
             users: this.state.users,
+            ownerId: this.state.room.owner.id,
+            roomId: this.props.match.params.id,
             id: this.props.match.params.id,
             room: this.state.room,
-            roomName: this.state.room.name
+            roomName: this.state.room.name,
+            user: this.state.user
           });
         }
 
@@ -86373,11 +86372,10 @@ function (_Component) {
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Room_Lobby_PlayersLobby__WEBPACK_IMPORTED_MODULE_4__["default"], {
           users: this.state.users,
           roomId: this.props.match.params.id,
-          ownerId: (_this$state$room$owne = this.state.room.owner) === null || _this$state$room$owne === void 0 ? void 0 : _this$state$room$owne.id,
+          ownerId: this.state.room.owner.id,
           authUser: this.state.user
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Room_Lobby_ChatLobby__WEBPACK_IMPORTED_MODULE_3__["default"], {
-          id: this.props.match.params.id,
-          page: "Lobby"
+          id: this.props.match.params.id
         })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "row"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Room_Lobby__WEBPACK_IMPORTED_MODULE_2__["default"], {

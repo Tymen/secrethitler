@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
 
 class Room extends Model
 {
@@ -19,5 +20,33 @@ class Room extends Model
     public function roomState()
     {
         return $this->hasOne(RoomState::class);
+    }
+
+    public function divideRoles($users)
+    {
+        $fascists = false;
+        switch ($users->count()) {
+            case 5 || 6:
+                $fascists = 2;
+                break;
+            case 7 || 8:
+                $fascists = 3;
+                break;
+            case 9 || 10:
+                $fascists = 4;
+                break;
+        }
+
+        if ($fascists) {
+            $chosenFascists = Arr::random($users, $fascists);
+            $hitler = Arr::random($chosenFascists, 1);
+
+            foreach($chosenFascists as $f) {
+                $f->assignRole('Fascist');
+            }
+
+            $hitler->assignRole('Hitler');
+        }
+
     }
 }
