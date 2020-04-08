@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
 
 class Room extends Model
 {
@@ -38,8 +39,9 @@ class Room extends Model
         }
 
         if ($fascists) {
-            $chosenFascists = Arr::random($users, $fascists);
-            $hitler = Arr::random($chosenFascists, 1);
+            $chosenFascists = Arr::random($users->all(), $fascists);
+
+            $hitler = Arr::random($chosenFascists);
 
             foreach($chosenFascists as $f) {
                 $f->assignRole('Fascist');

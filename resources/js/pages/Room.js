@@ -14,6 +14,7 @@ export default class Room extends Component {
         loggedIn: false,
         loaded: false,
         room: {},
+        fascist: [],
     }
 
     componentDidMount() {
@@ -110,7 +111,7 @@ export default class Room extends Component {
                     room: {
                         ...this.state.room,
                         active: 1
-                    }
+                    },
                 })
             }
         )

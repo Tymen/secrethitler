@@ -86209,7 +86209,8 @@ function (_Component) {
       leftUsers: [],
       loggedIn: false,
       loaded: false,
-      room: {}
+      room: {},
+      fascist: []
     });
 
     _defineProperty(_assertThisInitialized(_this), "onUserJoin", function (user) {
