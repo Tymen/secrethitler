@@ -25,7 +25,8 @@ export default class Room extends Component {
                     loggedIn: response.data.isAuthenticated,
                 })
             })
-            .catch(error => {})
+            .catch(error => {
+            })
 
         axios.get('/api/v1/users/me')
             .then(response => {
@@ -58,7 +59,11 @@ export default class Room extends Component {
                     window.location.href = '/'
                 }
             })
-
+            .listen('.game-started', (e) => {
+                this.setState({
+                    room: {...this.state.room, active: 1}
+                })
+            })
     }
 
     componentWillUnmount() {
@@ -104,12 +109,7 @@ export default class Room extends Component {
     };
 
     setActive = () => {
-        axios.post(`/api/v1/rooms/${this.props.match.params.id}/active`).then(response => {
-                this.setState({
-                    room: {...this.state.room, active: 1}
-                })
-            }
-        )
+        axios.post(`/api/v1/rooms/${this.props.match.params.id}/active`)
     };
 
     setInactive = () => {
@@ -125,11 +125,12 @@ export default class Room extends Component {
         if (this.state.loaded) {
             if (this.state.room.active) {
                 return (
-                    <Game setInactive={() => this.setInactive()} users={this.state.users} ownerId={this.state.room.owner.id} roomId={this.props.match.params.id}
-                          id={this.props.match.params.id} room={this.state.room} roomName={this.state.room.name} user={this.state.user}/>
+                    <Game setInactive={() => this.setInactive()} users={this.state.users}
+                          ownerId={this.state.room.owner.id} roomId={this.props.match.params.id}
+                          id={this.props.match.params.id} room={this.state.room} roomName={this.state.room.name}
+                          user={this.state.user}/>
                 )
             }
-
             return (
                 <div className="container">
                     <div className="row">
@@ -137,7 +138,7 @@ export default class Room extends Component {
                     </div>
                     <div className="row">
                         <div className="room-info">
-                            <p className="room-name">Room: {this.props.match?.params?.id}</p>
+                            <p className="room-name">Room: {this.state.room.name}</p>
                             <p className="player-count">{this.state.users.length}/{this.state.room.max_players} Players</p>
                         </div>
                     </div>
@@ -148,6 +149,7 @@ export default class Room extends Component {
 
                     </div>
                     <div className="row">
+
                         <Lobby setActive={() => this.setActive()}/>
                     </div>
                     <div className="height-for-start-button"/>
