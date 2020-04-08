@@ -86329,13 +86329,7 @@ function (_Component) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "setActive", function () {
-      axios.post("/api/v1/rooms/".concat(_this.props.match.params.id, "/active")).then(function (response) {
-        _this.setState({
-          room: _objectSpread({}, _this.state.room, {
-            active: 1
-          })
-        });
-      });
+      axios.post("/api/v1/rooms/".concat(_this.props.match.params.id, "/active"));
     });
 
     _defineProperty(_assertThisInitialized(_this), "setInactive", function () {
@@ -86385,6 +86379,12 @@ function (_Component) {
           Echo.leave("room.".concat(_this2.props.match.params.id));
           window.location.href = '/';
         }
+      }).listen('.game-started', function (e) {
+        _this2.setState({
+          room: _objectSpread({}, _this2.state.room, {
+            active: 1
+          })
+        });
       });
     }
   }, {
@@ -86398,8 +86398,6 @@ function (_Component) {
       var _this3 = this;
 
       if (this.state.loaded) {
-        var _this$props$match, _this$props$match$par;
-
         if (this.state.room.active) {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Room_Game__WEBPACK_IMPORTED_MODULE_1__["default"], {
             setInactive: function setInactive() {
@@ -86428,7 +86426,7 @@ function (_Component) {
           className: "room-info"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
           className: "room-name"
-        }, "Room: ", (_this$props$match = this.props.match) === null || _this$props$match === void 0 ? void 0 : (_this$props$match$par = _this$props$match.params) === null || _this$props$match$par === void 0 ? void 0 : _this$props$match$par.id), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        }, "Room: ", this.state.room.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
           className: "player-count"
         }, this.state.users.length, "/", this.state.room.max_players, " Players"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "row"
