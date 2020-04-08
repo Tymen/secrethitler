@@ -10,7 +10,7 @@ export default class Game extends Component {
                 <div className="row">
                         <div className="col-2 bg-dark col-wrap">
                             <div className="in-game">
-                                <PlayersLobby users={this.props.users} room={this.props.room} page='Game'/>
+                                <PlayersLobby users={this.props.users} room={this.props.room} authUser={this.props.user} ownerId={this.props.ownerId} roomId={this.props.roomId} page='Game'/>
                             </div>
                         </div>
 
