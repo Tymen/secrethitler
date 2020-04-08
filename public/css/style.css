@@ -6,49 +6,6 @@
 body {
     background-color: #505050;
 }
-body::-webkit-scrollbar {
-    width: 0.75em;
-    background-color: transparent;
-}
-
-body::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-}
-
-body::-webkit-scrollbar-thumb {
-    background-color: #232323;
-    outline: 1px solid slategrey;
-    border-radius: 38px;
-}
-.chat::-webkit-scrollbar {
-     width: 0.75em;
-     background-color: transparent;
- }
-
-.chat::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-}
-
-.chat::-webkit-scrollbar-thumb {
-    background-color: #2b2929;
-    outline: 1px solid slategrey;
-    border-radius: 38px;
-}
-
-.show-players::-webkit-scrollbar {
-    width: 0.75em;
-    background-color: transparent;
-}
-
-.show-players::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-}
-
-.show-players::-webkit-scrollbar-thumb {
-    background-color: #2b2929;
-    outline: 1px solid slategrey;
-    border-radius: 38px;
-}
 
 .btn {
     outline: none;
