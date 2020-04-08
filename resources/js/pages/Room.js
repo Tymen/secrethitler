@@ -8,7 +8,9 @@ import {Redirect} from 'react-router-dom'
 export default class Room extends Component {
 
     state = {
-        users: [],
+        users: [{id:12, username: 'henk'},{id:12, username: 'henk'},{id:12, username: 'henk'},{id:12, username: 'henk'},
+            {id:12, username: 'henk'},{id:12, username: 'henk'},{id:12, username: 'henk'},{id:12, username: 'henk'},{id:12, username: 'henk'},
+            {id:12, username: 'henk'},{id:12, username: 'henk'},{id:12, username: 'henk'},{id:12, username: 'henk'},],
         user: {},
         leftUsers: [],
         loggedIn: false,

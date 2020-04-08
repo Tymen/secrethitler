@@ -86208,7 +86208,46 @@ function (_Component) {
     _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(Room)).call.apply(_getPrototypeOf2, [this].concat(args)));
 
     _defineProperty(_assertThisInitialized(_this), "state", {
-      users: [],
+      users: [{
+        id: 12,
+        username: 'henk'
+      }, {
+        id: 12,
+        username: 'henk'
+      }, {
+        id: 12,
+        username: 'henk'
+      }, {
+        id: 12,
+        username: 'henk'
+      }, {
+        id: 12,
+        username: 'henk'
+      }, {
+        id: 12,
+        username: 'henk'
+      }, {
+        id: 12,
+        username: 'henk'
+      }, {
+        id: 12,
+        username: 'henk'
+      }, {
+        id: 12,
+        username: 'henk'
+      }, {
+        id: 12,
+        username: 'henk'
+      }, {
+        id: 12,
+        username: 'henk'
+      }, {
+        id: 12,
+        username: 'henk'
+      }, {
+        id: 12,
+        username: 'henk'
+      }],
       user: {},
       leftUsers: [],
       loggedIn: false,
