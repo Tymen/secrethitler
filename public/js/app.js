@@ -85074,7 +85074,7 @@ function (_Component) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "checkFascists", function (userId) {
-      if (_this.props.fascists && _this.props.fascists.some(function (id) {
+      if (Array.isArray(_this.props.fascists) && _this.props.fascists.some(function (id) {
         return _this.props.authUser.id === id;
       })) {
         if (_this.props.fascists.some(function (id) {

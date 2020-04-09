@@ -104,7 +104,7 @@ class RoomsApiController extends Controller
                 $fascists[] = $u->id;
             }
         }
-        $this->authorize('getFascists', $fascists);
+        $this->authorize('getFascists', [$room, $fascists]);
 
         return response()->json(['Fascists' => $fascists]);
     }

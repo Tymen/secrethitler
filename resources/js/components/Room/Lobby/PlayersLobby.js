@@ -15,7 +15,7 @@ export default class PlayersLobby extends Component {
     }
 
     checkFascists = (userId) => {
-        if (this.props.fascists && this.props.fascists.some(id => this.props.authUser.id === id)) {
+        if (Array.isArray(this.props.fascists) && this.props.fascists.some(id => this.props.authUser.id === id)) {
             if (this.props.fascists.some(id => userId === id)) {
                 return (
                     <p>fascist</p>
