@@ -83760,9 +83760,14 @@ var messagesConfig = {
       },
       room: {
         roomFull: {
-          type: msgTypes.Three,
+          type: msgTypes.One,
           title: "Room is full",
           message: "Chosen room is full!"
+        },
+        roomActive: {
+          type: msgTypes.One,
+          title: "Game started",
+          message: "Game has already started"
         }
       }
     },
@@ -83839,6 +83844,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _appSettings__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../appSettings */ "./resources/js/appSettings.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
@@ -83866,6 +83872,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -86032,17 +86039,24 @@ function (_Component) {
       getMsg: _appSettings__WEBPACK_IMPORTED_MODULE_4__["messagesConfig"].pages.home
     });
 
-    _defineProperty(_assertThisInitialized(_this), "notify", function () {
-      _this.child.getNotify(_this.state.getMsg.auth.noLogin);
-    });
-
     _this.child = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
     return _this;
   }
 
   _createClass(Home, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      if (this.props.message === "Chosen room is full!") {
+        this.child.getNotify(this.state.getMsg.room.roomFull);
+      } else if (this.props.message === "Game has already started") {
+        this.child.getNotify(this.state.getMsg.room.roomActive);
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
+      var _this2 = this;
+
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         className: "home-bolletjes",
         src: "images/home-bolletjes.svg"
@@ -86080,7 +86094,11 @@ function (_Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_6__["Link"], {
         className: "btn btn-explanation",
         to: "/gamerules"
-      }, "More info")))));
+      }, "More info")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Universal_Notification__WEBPACK_IMPORTED_MODULE_5__["default"], {
+        onRef: function onRef(ref) {
+          return _this2.child = ref;
+        }
+      }));
     }
   }]);
 
