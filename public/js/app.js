@@ -84720,13 +84720,7 @@ function (_Component) {
   _createClass(Board, [{
     key: "render",
     value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        className: "facist-board",
-        src: "/images/facist-board.png"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        className: "liberal-board",
-        src: "/images/liberal-board.png"
-      }));
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null);
     }
   }]);
 
