@@ -16,9 +16,14 @@ export default class Home extends Component {
         this.child = React.createRef();
     };
 
-    notify = () => {
-        this.child.getNotify(this.state.getMsg.auth.noLogin);
-    };
+    componentDidMount() {
+        if(this.props.message === "Chosen room is full!"){
+            this.child.getNotify(this.state.getMsg.room.roomFull);
+        }else if(this.props.message === "Game has already started"){
+            this.child.getNotify(this.state.getMsg.room.roomActive);
+        }
+    }
+
     render() {
         return (
             <div>
@@ -91,6 +96,7 @@ export default class Home extends Component {
                         </div>
                     </div>
                 </div>
+                <Notification onRef={ref => (this.child = ref)} />
             </div>
 
         );
