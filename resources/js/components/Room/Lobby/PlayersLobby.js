@@ -15,12 +15,10 @@ export default class PlayersLobby extends Component {
     }
 
     checkFascists = (userId) => {
-        if (Array.isArray(this.props.fascists) && this.props.fascists.some(id => this.props.authUser.id === id)) {
-            if (this.props.fascists.some(id => userId === id)) {
-                return (
-                    <p>fascist</p>
-                )
-            }
+        if (Array.isArray(this.props.fascists) && this.props.fascists.some(id => userId === id)) {
+            return (
+                <img src="/images/fascist-role-card.svg"/>
+            )
         }
     }
 
@@ -32,10 +30,10 @@ export default class PlayersLobby extends Component {
     showPlayers = () => {
         return this.props.users.map(user => {
 
-            if(this.props.authUser.id === this.props.ownerId) {
+            if (this.props.authUser.id === this.props.ownerId) {
                 if (this.props.ownerId === user.id) {
                     return (
-                        <div key={user.id}>
+                        <div key={user.id} className="player-name-div">
                             <p className="player-name">
                                 <i className="fas fa-crown"></i>
                                 &nbsp;{user.username}
@@ -43,24 +41,25 @@ export default class PlayersLobby extends Component {
                             {this.checkFascists(user.id)}
                         </div>
                     )
-                }else{
+                } else {
                     return (
-                        <div key={user.id}>
+                        <div key={user.id} className="player-name-div">
                             <p className="player-name dropdown-toggle" type="button" id="dropdownMenuButton"
                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 {user.username}
                             </p>
                             <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a className="dropdown-item" onClick={(e) => this.kickUser(e, user.id)}>Kick {user.username}</a>
+                                <a className="dropdown-item"
+                                   onClick={(e) => this.kickUser(e, user.id)}>Kick {user.username}</a>
                             </div>
                             {this.checkFascists(user.id)}
                         </div>
                     )
                 }
             }
-            if(this.props.ownerId === user.id){
+            if (this.props.ownerId === user.id) {
                 return (
-                    <div key={user.id}>
+                    <div key={user.id} className="player-name-div">
                         <p className="player-name">
                             <i className="fas fa-crown"></i>
                             &nbsp;{user.username}
@@ -68,9 +67,9 @@ export default class PlayersLobby extends Component {
                         {this.checkFascists(user.id)}
                     </div>
                 )
-            }else{
+            } else {
                 return (
-                    <div key={user.id}>
+                    <div key={user.id} className="player-name-div">
                         <p className="player-name">
                             {user.username}
                         </p>
@@ -80,6 +79,7 @@ export default class PlayersLobby extends Component {
             }
         })
     }
+
     render() {
         return (
             <div>

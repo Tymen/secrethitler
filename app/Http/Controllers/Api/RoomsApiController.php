@@ -106,7 +106,7 @@ class RoomsApiController extends Controller
         }
         $this->authorize('getFascists', [$room, $fascists]);
 
-        return response()->json(['Fascists' => $fascists]);
+        return response()->json(['fascists' => $fascists]);
     }
 
     public function setInactive(Room $room)

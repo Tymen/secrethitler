@@ -12,7 +12,7 @@ export default class Game extends Component {
     componentDidMount() {
         axios.get(`/api/v1/rooms/${this.props.roomId}/fascists`).then(response => {
             this.setState({
-                fascists: response.data
+                fascists: response.data.fascists
             })
         })
     }

@@ -84637,7 +84637,7 @@ function (_Component) {
 
       axios.get("/api/v1/rooms/".concat(this.props.roomId, "/fascists")).then(function (response) {
         _this2.setState({
-          fascists: response.data
+          fascists: response.data.fascists
         });
       });
     }
@@ -84749,11 +84749,8 @@ function (_Component) {
     key: "render",
     value: function render() {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        className: "facist-board",
-        src: "/images/facist-board.png"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        className: "liberal-board",
-        src: "/images/liberal-board.png"
+        className: "both-sides",
+        src: "/images/both-sides-board.svg"
       }));
     }
   }]);
@@ -85075,13 +85072,11 @@ function (_Component) {
 
     _defineProperty(_assertThisInitialized(_this), "checkFascists", function (userId) {
       if (Array.isArray(_this.props.fascists) && _this.props.fascists.some(function (id) {
-        return _this.props.authUser.id === id;
+        return userId === id;
       })) {
-        if (_this.props.fascists.some(function (id) {
-          return userId === id;
-        })) {
-          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "fascist");
-        }
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+          src: "/images/fascist-role-card.svg"
+        });
       }
     });
 
@@ -85095,7 +85090,8 @@ function (_Component) {
         if (_this.props.authUser.id === _this.props.ownerId) {
           if (_this.props.ownerId === user.id) {
             return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-              key: user.id
+              key: user.id,
+              className: "player-name-div"
             }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
               className: "player-name"
             }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
@@ -85103,7 +85099,8 @@ function (_Component) {
             }), "\xA0", user.username), _this.checkFascists(user.id));
           } else {
             return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-              key: user.id
+              key: user.id,
+              className: "player-name-div"
             }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
               className: "player-name dropdown-toggle",
               type: "button",
@@ -85125,7 +85122,8 @@ function (_Component) {
 
         if (_this.props.ownerId === user.id) {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-            key: user.id
+            key: user.id,
+            className: "player-name-div"
           }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
             className: "player-name"
           }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
@@ -85133,7 +85131,8 @@ function (_Component) {
           }), "\xA0", user.username), _this.checkFascists(user.id));
         } else {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-            key: user.id
+            key: user.id,
+            className: "player-name-div"
           }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
             className: "player-name"
           }, user.username), _this.checkFascists(user.id));
