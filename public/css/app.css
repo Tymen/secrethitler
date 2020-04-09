@@ -11002,3 +11002,37 @@ a.text-dark:focus {
   background-color: #727272;
 }
 
+.gamerule-bolletjes {
+  position: absolute;
+  width: 150%;
+  left: -380px;
+  top: -105px;
+}
+
+.gamerule .title {
+  background-color: #2B2929;
+  border-radius: 0px 19px 0px 0px;
+}
+
+.gamerule .title h1 {
+  font-size: 30px;
+  font-weight: bold;
+  color: white;
+  padding: 10px 40px;
+  margin-bottom: 0px;
+}
+
+.gamerule .text {
+  background-color: #727272;
+  border-radius: 0px 0px 0px 52px;
+  height: 100%;
+  display: table-cell;
+}
+
+.gamerule .text p {
+  padding: 30px;
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+}
+
