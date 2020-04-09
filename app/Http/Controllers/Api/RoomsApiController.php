@@ -2,28 +2,29 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Events\KickUserEvent;
+use App\Events\StartGameEvent;
 use App\Room;
 use App\User;
 use App\RoomState;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use App\Events\CreatedRoomEvent;
+use App\Events\RoomsUpdatedEvent;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\UserCollection;
 use App\Http\Resources\RoomCollection;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Resources\Room as RoomResource;
 
 class RoomsApiController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return RoomCollection
      */
     public function index()
     {
-        return Response::create(new RoomCollection(Room::with('user')->get()));
+        return new RoomCollection(Room::with(['user'])->get());
     }
 
     /**
@@ -54,22 +55,20 @@ class RoomsApiController extends Controller
         $roomState->room_id = $room->id;
         $roomState->save();
 
-        Auth::user()->assignRole('Host');
+        event(new RoomsUpdatedEvent());
 
-        event(new CreatedRoomEvent());
-
-        return response()->json(['message' => 'completed']);
+        return response()->json(['message' => 'completed', 'id' => $room->id]);
     }
 
     /**
      * Display the specified resource.
      *
      * @param \App\Room $room
-     * @return \Illuminate\Http\Response
+     * @return RoomResource
      */
     public function show(Room $room)
     {
-        //
+        return new RoomResource($room);
     }
 
     /**
@@ -86,59 +85,67 @@ class RoomsApiController extends Controller
 
     public function setActive(Room $room)
     {
-        $this->authorize('setActive', $room);
+        $this->authorize('isHost', $room);
 
         $room->active = true;
         $room->save();
+
+        event(new StartGameEvent($room->id));
+
+
         return response()->json(['message' => 'completed']);
     }
 
     public function setInactive(Room $room)
     {
-        $this->authorize('setInactive', $room);
+        $this->authorize('isHost', $room);
 
         $room->active = false;
         $room->save();
+
         return response()->json(['message' => 'completed']);
     }
-
-    public function getActive(Room $room)
-    {
-        return response()->json($room->active);
-    }
-
-    public function getUsers(Room $room)
-    {
-        return response()->json(new UserCollection($room->users));
-    }
-
     /**
      * Remove the specified resource from storage.
      *
      * @param \App\Room $room
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
      */
     public function destroy(Room $room)
     {
-        //
-    }
+        $this->authorize('isHost', $room);
 
-    public function onUserLeave(Room $room)
-    {
-        $this->authorize('kickUser', $room);
-
-        foreach (request()->ids as $id) {
-            $user = User::find($id);
-
-            foreach ($user->roles as $role) {
-                $role->name !== 'Admin' ? $user->removeRole($role->name) : false;
-            }
-
+        foreach ($room->users as $user) {
             $user->room_id = NULL;
             $user->save();
-
         }
 
+        RoomState::destroy($room->roomState->id);
+
+        $room->delete();
+
+        event(new RoomsUpdatedEvent());
+
         return response()->json(['message' => 'completed']);
+    }
+
+    public function kickUser(Room $room, User $user)
+    {
+        $this->authorize('isHost', $room);
+
+        $user->room_id = NULL;
+        $user->save();
+
+        event(new KickUserEvent($room->id, $user->id));
+
+        return response()->json(['message' => 'completed']);
+    }
+
+    public function changeHost(Room $room, Request $request){
+        $this->authorize('isHost', $room);
+        $room->user_id = $request->newUserHost;
+        $room->save();
+        return response()->json(['message' => $room]);
     }
 }

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\User as UserResource;
 
 class UsersApiController extends Controller
 {
@@ -65,8 +66,13 @@ class UsersApiController extends Controller
         //
     }
 
+    public function checkAuth()
+    {
+        return response()->json(['isAuthenticated' => Auth::check()]);
+    }
+
     public function me()
     {
-        return response()->json(Auth::check());
+        return new UserResource(Auth::user());
     }
 }

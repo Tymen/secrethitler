@@ -2,7 +2,9 @@
 
 namespace App\Broadcasting;
 
+use App\Room;
 use App\User;
+use http\Env\Response;
 
 class RoomChannel
 {
@@ -20,16 +22,11 @@ class RoomChannel
      * Authenticate the user's access to the channel.
      *
      * @param \App\User $user
-     * @param $id
+     * @param Room $room
      * @return array|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function join(User $user, $id)
+    public function join(User $user, Room $room)
     {
-        if (auth()->check()) {
-            $user->room_id = $id;
-            $user->save();
-            return ['id' => $user->id, 'username' => $user->username];
-        }
-        return redirect('/auth/login');
+        return ['id' => $user->id, 'username' => $user->username];
     }
 }

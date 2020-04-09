@@ -2,7 +2,29 @@ import React, {Component} from 'react';
 import {Link} from "react-router-dom";
 import Notification from "../Universal/Notification";
 import {messagesConfig} from "../../appSettings";
+import Room from "../../pages/Room";
+import {get, post} from "../Universal/apiHandler";
+/*
+    import {get, post} from "../Universal/apiHandler";
 
+    <button onClick={() => {this.changeHost(1, 1)}}>clickme</button>
+
+    changeHost = (userId, room) => {
+        let roomObj = {
+            newUserHost: userId,
+            roomId: room,
+        }
+        post('/api/v1/rooms/1/changehost', roomObj)
+            .then(response => {
+                if(response.error){
+                    console.log(response)
+                    this.child.getNotify({type: "error", title: "Authentication", message: response.data});
+                }else {
+                    console.log(response);
+                }
+            })
+    };
+ */
 export default class Rooms extends Component {
     _isMounted = false;
 
@@ -14,50 +36,46 @@ export default class Rooms extends Component {
 
     constructor(props) {
         super(props);
+        this.request = React.createRef();
         this.child = React.createRef();
     };
-
     componentDidMount() {
-        axios.get('/api/v1/users/me')
-            .then(response => {
-                this.setState({
-                    loggedIn: response.data,
-                })
-            })
+        this._isMounted = true;
+        get('api/v1/users/me').then(response => {
+            return (response.data) ? this.setState({loggedIn: true}) : this.setState({loggedIn: false})
+        });
 
-        this._isMounted = true
-        this.getRooms()
+        this.getRooms();
 
-        var channel = Echo.channel('room-created')
-        channel.listen('.created-room', () => {
+        const channel = Echo.channel('rooms-updated')
+        channel.listen('.updated-rooms', () => {
             this.getRooms()
         })
     }
 
     getRooms = () => {
-        axios.get('/api/v1/rooms')
+        get('/api/v1/rooms')
             .then(response => {
-                if (this._isMounted) {
-                    this.setState({rooms: response.data})
+                if(response.error){
+                    this.child.getNotify(this.state.getMsg.internalServer);
+                }else {
+                    this.setState({rooms: response.data});
                 }
             })
-            .catch(error => {
-                this.child.getNotify(this.state.getMsg.internalServer);
-            })
     };
-
     componentWillUnmount() {
         this._isMounted = false
     }
-
     showRooms = () => {
-
         return this.state.rooms.map(room => {
+
             return (
-                <div key={room.id} className="home-rooms">
-                    <div className="col-12 background-room  ">
+                <div className="home-rooms" key={room.id}>
+                    <div className="col-12 background-room">
                         <i className="fas fa-mug-hot"></i>
-                        <Link key={room.id} to={`/rooms/${room.id}`}>
+                        <Link key={room.id} to="/" onClick={() => {
+                            window.location.href = `/rooms/${room.id}`
+                        }}>
                             <p className="room-name-li">{room.name}</p>
                         </Link>
                     </div>

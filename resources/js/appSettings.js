@@ -20,6 +20,23 @@
  <Notification onRef={ref => (this.child = ref)} />
  **/
 
+
+/**
+    getRooms = async() => {
+        await this.request.get('/api/v1/rooms');
+        this.getResponse();
+    };
+
+    //
+    getResponse = (data) => {
+        this.setState({data});
+    };
+
+    //
+    <ApiHandler handler={this.handler} onRef={ref => (this.request = ref)}/>
+
+
+ **/
 const msgTypes = {
     One: "error",
     Two: "success",
@@ -71,6 +88,13 @@ const messagesConfig = {
                     type: msgTypes.One,
                     title: "Authentication Error",
                     message: "You're not logged in",
+                }
+            },
+            room: {
+                roomFull: {
+                    type: msgTypes.Three,
+                    title: "Room is full",
+                    message: "Chosen room is full!",
                 }
             }
         },

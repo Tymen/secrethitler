@@ -29,7 +29,9 @@ Route::get('/about', function (){
 
 Route::get('/rooms/{id}', function (){
     return view('room');
-});
+})->middleware("can.join.room");
+
+Route::post('webhook', 'WebhookController@handle');
 
 Route::post('/rooms/{id}', "MessageController@sendMessage");
 

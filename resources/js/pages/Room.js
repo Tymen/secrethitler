@@ -9,21 +9,29 @@ export default class Room extends Component {
 
     state = {
         users: [],
-        leftUsers: false,
-        active: 0,
+        user: {},
+        leftUsers: [],
         loggedIn: false,
         loaded: false,
-        timer: false,
-        done: false,
+        room: {},
     }
 
     componentDidMount() {
-        this.getActive();
+        this.getRoom()
+
+        axios.get('/api/v1/users/check')
+            .then(response => {
+                this.setState({
+                    loggedIn: response.data.isAuthenticated,
+                })
+            })
+            .catch(error => {
+            })
 
         axios.get('/api/v1/users/me')
             .then(response => {
                 this.setState({
-                    loggedIn: response.data,
+                    user: response.data.data,
                     loaded: true
                 })
             })
@@ -45,6 +53,17 @@ export default class Room extends Component {
             .leaving((user) => {
                 this.onUserLeave(user)
             })
+            .listen('.user-kicked', (e) => {
+                if (this.state.user.id === e.userId) {
+                    Echo.leave(`room.${this.props.match.params.id}`)
+                    window.location.href = '/'
+                }
+            })
+            .listen('.game-started', (e) => {
+                this.setState({
+                    room: {...this.state.room, active: 1}
+                })
+            })
     }
 
     componentWillUnmount() {
@@ -58,7 +77,7 @@ export default class Room extends Component {
             })
         }
 
-        if (Array.isArray(this.state.leftUsers) && this.state.leftUsers.some(id => id === user.id)) {
+        if (this.state.leftUsers.some(id => id === user.id)) {
             this.setState({
                 leftUsers: this.state.leftUsers.filter(id => id !== user.id)
             })
@@ -66,73 +85,37 @@ export default class Room extends Component {
     }
 
     onUserLeave = (user) => {
-        let leftUsers
-        const running = this.state.timer;
-
-        !this.state.leftUsers
-            ? leftUsers = [user.id]
-            : leftUsers = [...this.state.leftUsers, user.id]
-
         this.setState({
-            leftUsers: leftUsers,
-            timer: true,
-            done: false,
+            leftUsers: [...this.state.leftUsers, user.id],
         })
-
-        const finished = () => {
-            this.getUsers()
-            this.setState({
-                timer: false,
-                leftUsers: false,
-                done: true,
-            })
-        }
-
-        const timer = setTimeout(async () => {
-            if (Array.isArray(this.state.leftUsers) && this.state.leftUsers.some(id => id === user.id)) {
-                await axios.post(`/api/v1/rooms/${this.props.match.params.id}/leave`, {ids: this.state.leftUsers}).catch(err => {})
-                finished()
-            } else {
+        setTimeout(() => {
+            if (this.state.leftUsers.some(id => id === user.id)) {
                 this.setState({
-                    timer: false,
-                    done: true,
+                    users: this.state.users.filter(u => u.id !== user.id),
+                    leftUsers: this.state.leftUsers.filter(id => id !== user.id),
                 })
+
+                this.state.room.owner.id === user.id ? this.getRoom() : false;
             }
-
-        }, 7000)
-
-        running || this.state.done ? clearTimeout(timer) : false;
+        }, 5000)
     }
 
-    getUsers() {
-        axios.get(`/api/v1/rooms/${this.props.match.params.id}/users`).then(response => {
+    getRoom = () => {
+        axios.get(`/api/v1/rooms/${this.props.match.params.id}`).then(response => {
             this.setState({
-                users: response.data,
-            })
-        })
-    }
-
-    getActive = () => {
-        axios.get(`/api/v1/rooms/${this.props.match.params.id}/active`).then(response => {
-            this.setState({
-                active: response.data
+                room: response.data.data
             })
         })
     };
 
     setActive = () => {
-        axios.post(`/api/v1/rooms/${this.props.match.params.id}/active`).then(response => {
-                this.setState({
-                    active: 1
-                })
-            }
-        )
+        axios.post(`/api/v1/rooms/${this.props.match.params.id}/active`)
     };
 
     setInactive = () => {
         axios.post(`/api/v1/rooms/${this.props.match.params.id}/inactive`).then(response => {
                 this.setState({
-                    active: 0
+                    room: {...this.state.room, active: 0}
                 })
             }
         )
@@ -140,36 +123,39 @@ export default class Room extends Component {
 
     render() {
         if (this.state.loaded) {
-            if (this.state.active) {
+            if (this.state.room.active) {
                 return (
-                    <Game setInactive={() => this.setInactive()}/>
-                )
-            } else if (this.state.loggedIn) {
-                return (
-                    <div className="container">
-                        <div className="row">
-                            <img className="home-logo" src="/images/Secrethitler-no-bg.png"/>
-                        </div>
-                        <div className="row">
-                            <div className="room-info">
-                                <p className="room-name">Room: {this.props.match.params.id}</p>
-                                <p className="player-count">{this.state.users.length}/8 Players</p>
-                            </div>
-                        </div>
-                        <div className="row">
-                            <PlayersLobby users={this.state.users}/>
-                            <ChatLobby id={this.props.match.params.id}/>
-                        </div>
-                        <div className="row">
-                            <Lobby setActive={() => this.setActive()}/>
-                        </div>
-                    </div>
+                    <Game setInactive={() => this.setInactive()} users={this.state.users}
+                          ownerId={this.state.room.owner.id} roomId={this.props.match.params.id}
+                          id={this.props.match.params.id} room={this.state.room} roomName={this.state.room.name}
+                          user={this.state.user}/>
                 )
             }
+            return (
+                <div className="container">
+                    <div className="row">
+                        <img className="home-logo" src="/images/Secrethitler-no-bg.png"/>
+                    </div>
+                    <div className="row">
+                        <div className="room-info">
+                            <p className="room-name">Room: {this.state.room.name}</p>
+                            <p className="player-count">{this.state.users.length}/{this.state.room.max_players} Players</p>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <PlayersLobby users={this.state.users} roomId={this.props.match.params.id}
+                                      ownerId={this.state.room.owner.id} authUser={this.state.user}/>
+                        <ChatLobby id={this.props.match.params.id}/>
 
-            return <Redirect to="/auth/login"/>
-        } else {
-            return <div></div>
+                    </div>
+                    <div className="row">
+
+                        <Lobby setActive={() => this.setActive()}/>
+                    </div>
+                    <div className="height-for-start-button"/>
+                </div>
+            )
         }
+        return <div></div>
     }
 }

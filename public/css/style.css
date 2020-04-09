@@ -7,6 +7,43 @@ body {
     background-color: #505050;
 }
 
+body::-webkit-scrollbar {
+    width: 0.75em;
+    background-color: transparent;
+}
+body::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+body::-webkit-scrollbar-thumb {
+    background-color: #232323;
+    outline: 1px solid slategrey;
+    border-radius: 38px;
+}
+.chat::-webkit-scrollbar {
+    width: 0.75em;
+    background-color: transparent;
+}
+.chat::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+.chat::-webkit-scrollbar-thumb {
+    background-color: #2b2929;
+    outline: 1px solid slategrey;
+    border-radius: 38px;
+}
+.show-players::-webkit-scrollbar {
+    width: 0.75em;
+    background-color: transparent;
+}
+.show-players::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+.show-players::-webkit-scrollbar-thumb {
+    background-color: #2b2929;
+    outline: 1px solid slategrey;
+    border-radius: 38px;
+}
+
 .btn {
     outline: none;
     display: inline-block;
@@ -327,8 +364,6 @@ body {
 
 .rooms-body {
     background-color: #B8B8B8;
-
-
 }
 
 .room-name {
@@ -346,13 +381,17 @@ body {
     overflow: scroll;
 }
 
-.test {
+.in-game {
     width: auto;
 }
 
+
+
 .home-logo {
-    margin: 0 auto;
+    margin: 145px auto 0px auto;
     max-height: 250px;
+    margin: 0 auto;
+    max-height: 100px;
     display: block;
 }
 
@@ -399,6 +438,7 @@ body {
 }
 
 .room-name-li {
+    margin-right: -15px;
     font-size: 20px;
     text-align: center;
     color: white;
@@ -475,6 +515,11 @@ body {
     background: transparent;
 }
 
+.input-message::placeholder {
+    color: white;
+    margin-left: 10px;
+}
+
 
 .btn-send-button {
     background-color: #323232;
@@ -524,6 +569,148 @@ body {
     border-right: 1px solid white;
 }
 
+/*this is for the in game layout*/
+.bg-board {
+    background-color: #454545;
+    max-width: none;
+    border-left: 1.5px solid #ffffff;
+}
+
+.in-game {
+    width: 100%;
+    margin-left: -15px;
+}
+
+.col-wrap {
+    padding-right: 0;
+}
+
+.in-game .show-players {
+    max-width: none;
+    width: 107%;
+    min-height: 500px;
+    max-height: 500px;
+    border: none;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+.in-game .players-in-lobby {
+    max-width: none;
+    height: 45px;
+    width: 113%;
+    max-height: none;
+    border: none;
+}
+
+.in-game .players-in-lobby h4 {
+    font-size: 20px;
+    margin: -9px 7px 0 0;
+}
+
+.player-name-block {
+    margin: 0 0 0 -16px;
+    width: 135%;
+    height: 45px;
+    background-color: #828282;
+    max-width: none;
+}
+
+.in-game .show-players .player-name {
+    font-size: 18px;
+}
+
+.bg-board .board-section {
+    height: 500px;
+}
+
+.name-of-room {
+    padding-top: 7px;
+    color: #ffff;
+    font-size: 20px;
+}
+
+.in-game .chat {
+    max-width: none;
+    width: 103%;
+    min-height: 500px;
+    max-height: 500px;
+}
+.in-game .side-border {
+    border-left: 1px solid #ffffFf;
+    margin: 10px 0 10px 35px;
+    min-height: 480px;
+    display: table;
+}
+
+.in-game .time {
+    margin: 20px 0px 0px -32px;
+    font-size: 10px;
+    float: left;
+    color: white;
+    border-bottom: 1px solid #fff;
+}
+
+.in-game .message {
+    padding: 14px 17px;
+    font-size: 14px;
+    line-height: 8px;
+    left: 27px;
+}
+
+.in-game .send-message {
+    height: 45px;
+    max-width: none;
+    width: 103%;
+    max-height: none;
+}
+
+.in-game .send-message .btn-send-button {
+    margin: -7px 0 0 0;
+    font-size: 14px;
+    padding: 9.8px 35px;
+}
+
+.in-game .message:first-child {
+    margin-top: 10px;
+}
+
+.in-game .send-message .input-message::placeholder {
+    color: white;
+    margin-left: 10px;
+    margin-top: -10px;
+}
+
+.in-game .send-message form {
+    margin-top: -12px;
+    font-size: 12px;
+}
+
+.in-game .text-white {
+    margin: 0;
+    display: unset;
+}
+
+.in-game .input-message {
+    margin: 5px 0 0 10px;
+    width: 56%;
+}
+
+.row-under {
+    height: 307px;
+}
+
+.bg-grey {
+    background-color: #9A9A9A;
+}
+
+.bg-dark-grey {
+    background-color: #4b4b4b;
+    border-left: 0px solid #ffffff;
+}
+
+/*end of layout in game*/
+
 .player-name {
     margin-bottom: 0px;
     padding: 10px;
@@ -553,6 +740,10 @@ body {
     margin-bottom: 0px;
 }
 
+.height-for-start-button {
+    margin-top: 10vw;
+}
+
 /*Large devices (desktops, less than 1200px)*/
 @media (max-width: 1199.98px) {
     .box div {
@@ -574,6 +765,55 @@ body {
     .login-bolletjes {
         width: 22%;
     }
+
+    /*this is for the in game layout*/
+    .in-game .show-players {
+        width: 108.9%;
+    }
+
+    .in-game .players-in-lobby {
+        width: 117.9%;
+    }
+
+    .player-name-block {
+        margin: 0 0 0 -14.5px;
+    }
+
+    .name-of-room {
+        padding-top: 11px;
+        font-size: 16px;
+    }
+
+    .in-game .chat {
+        width: 105.2%;
+        max-width: 105.2%;
+    }
+
+    .in-game .message {
+        padding: 9px 13px;
+        font-size: 10px;
+        line-height: 19px;
+    }
+
+    .in-game .send-message {
+        width: 105.2%;
+    }
+
+    .in-game .send-message .btn-send-button {
+        margin: -12px 0 0 0;
+        font-size: 12px;
+        padding: 13px 20px;
+    }
+
+    .in-game .input-message {
+        margin: 4px 0 0 10px;
+    }
+
+    .in-game .send-message form {
+        margin-top: -10px;
+    }
+
+    /*end of layout in game*/
 }
 
 /*// Medium devices (tablets, less than 992px)*/
@@ -581,8 +821,9 @@ body {
     .box div {
         display: none;
     }
+
     .box:before {
-     display: none;
+        display: none;
     }
 
     .card-login {
@@ -619,8 +860,40 @@ body {
         text-align: left !important;
 
     }
+
     .login-bolletjes {
         width: 23%;
+    }
+
+    /*this is for the in game layout*/
+    .in-game .show-players {
+        width: 112.6%;
+    }
+
+    .in-game .players-in-lobby {
+        width: 122.6%;
+    }
+
+    .in-game .players-in-lobby h4 {
+        font-size: 17px;
+        margin: -7px 10px 0 0;
+    }
+
+    .in-game .show-players .player-name {
+        font-size: 14px;
+    }
+
+    .in-game .chat {
+        width: 106.5%;
+        max-width: 106.5%;
+    }
+
+    .in-game .send-message {
+        width: 106.5%;
+    }
+
+    .in-game .send-message .btn-send-button {
+        padding: 12.2px 12px;
     }
 }
 
@@ -637,8 +910,40 @@ body {
     .text-adjustment {
         font-size: 0.86vw;
     }
+
     .login-bolletjes {
         width: 20%;
+    }
+
+    /*this is for the in game layout*/
+    .in-game .show-players {
+        width: 119%;
+    }
+
+    .in-game .players-in-lobby {
+        width: 131%;
+    }
+
+    .in-game .players-in-lobby h4 {
+        font-size: 13px;
+        margin-top: -5px;
+    }
+
+    .in-game .chat {
+        width: 108.2%;
+        max-width: 108.2%;
+    }
+
+    .in-game .send-message .btn-send-button {
+        padding: 12.2px 10px;
+    }
+
+    .in-game .send-message {
+        width: 108.2%;
+    }
+
+    .in-game .show-players .player-name {
+        font-size: 10px;
     }
 }
 
@@ -663,6 +968,28 @@ body {
     .login-bolletjes {
         width: 18%;
     }
+
+    /*this is for the in game layout*/
+    .in-game .send-message .btn-send-button {
+        padding: 12.2px 0px;
+    }
+
+    .in-game .show-players {
+        width: 123%;
+    }
+
+    .in-game .players-in-lobby {
+        width: 146%;
+    }
+
+    .in-game .chat {
+        width: 111.2%;
+        max-width: 111.2%;
+    }
+
+    .in-game .send-message {
+        width: 111.2%;
+    }
 }
 
 @media (min-width: 1620px) and (max-width: 2051px) {
@@ -674,6 +1001,7 @@ body {
         left: -20px;
         right: 274px;
     }
+
     .login-bolletjes {
         width: 26%;
     }
@@ -688,6 +1016,7 @@ body {
         left: -25px;
         right: 424px;
     }
+
     .login-bolletjes {
         width: 26%;
     }
@@ -702,6 +1031,7 @@ body {
         left: -25px;
         right: 462px;
     }
+
     .login-bolletjes {
         width: 27%;
     }
@@ -739,4 +1069,16 @@ body {
         width: 28%;
         margin: 1vw 0;
     }
+}
+
+.facist-board{
+    margin: 0 auto;
+    max-height: 230px;
+    display: block;
+}
+
+.liberal-board{
+    margin: 0 auto;
+    max-height: 230px;
+    display: block;
 }
