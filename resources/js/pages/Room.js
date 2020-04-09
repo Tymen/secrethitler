@@ -59,7 +59,11 @@ export default class Room extends Component {
                     window.location.href = '/'
                 }
             })
-
+            .listen('.game-started', (e) => {
+                this.setState({
+                    room: {...this.state.room, active: 1}
+                })
+            })
     }
 
     componentWillUnmount() {
@@ -105,12 +109,7 @@ export default class Room extends Component {
     };
 
     setActive = () => {
-        axios.post(`/api/v1/rooms/${this.props.match.params.id}/active`).then(response => {
-                this.setState({
-                    room: {...this.state.room, active: 1}
-                })
-            }
-        )
+        axios.post(`/api/v1/rooms/${this.props.match.params.id}/active`)
     };
 
     setInactive = () => {
@@ -132,7 +131,6 @@ export default class Room extends Component {
                           user={this.state.user}/>
                 )
             }
-
             return (
                 <div className="in-lobby">
                     <div className="container">
