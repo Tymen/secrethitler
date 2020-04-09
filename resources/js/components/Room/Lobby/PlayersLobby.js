@@ -14,6 +14,16 @@ export default class PlayersLobby extends Component {
         return 'Players in lobby'
     }
 
+    checkFascists = (userId) => {
+        if (this.props.fascists && this.props.fascists.some(id => this.props.authUser.id === id)) {
+            if (this.props.fascists.some(id => userId === id)) {
+                return (
+                    <p>fascist</p>
+                )
+            }
+        }
+    }
+
     kickUser = (e, id) => {
         e.preventDefault()
         axios.post(`/api/v1/rooms/${this.props.roomId}/kick/${id}`)
@@ -30,6 +40,7 @@ export default class PlayersLobby extends Component {
                                 <i className="fas fa-crown"></i>
                                 &nbsp;{user.username}
                             </p>
+                            {this.checkFascists(user.id)}
                         </div>
                     )
                 }else{
@@ -42,6 +53,7 @@ export default class PlayersLobby extends Component {
                             <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <a className="dropdown-item" onClick={(e) => this.kickUser(e, user.id)}>Kick {user.username}</a>
                             </div>
+                            {this.checkFascists(user.id)}
                         </div>
                     )
                 }
@@ -53,6 +65,7 @@ export default class PlayersLobby extends Component {
                             <i className="fas fa-crown"></i>
                             &nbsp;{user.username}
                         </p>
+                        {this.checkFascists(user.id)}
                     </div>
                 )
             }else{
@@ -61,6 +74,7 @@ export default class PlayersLobby extends Component {
                         <p className="player-name">
                             {user.username}
                         </p>
+                        {this.checkFascists(user.id)}
                     </div>
                 )
             }

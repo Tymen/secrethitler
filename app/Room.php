@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
+use phpDocumentor\Reflection\Types\Null_;
 
 class Room extends Model
 {
@@ -40,7 +41,6 @@ class Room extends Model
 
         if ($fascists) {
             $chosenFascists = Arr::random($users->all(), $fascists);
-
             $hitler = Arr::random($chosenFascists);
 
             foreach($chosenFascists as $f) {
@@ -49,6 +49,5 @@ class Room extends Model
 
             $hitler->assignRole('Hitler');
         }
-
     }
 }

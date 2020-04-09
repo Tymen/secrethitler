@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Events\KickUserEvent;
+use App\Events\StartGameEvent;
 use App\Room;
 use App\User;
 use App\RoomState;
@@ -89,7 +90,23 @@ class RoomsApiController extends Controller
         $room->divideRoles($room->users);
         $room->active = true;
         $room->save();
+
+        event(new StartGameEvent($room->id));
+
         return response()->json(['message' => 'completed']);
+    }
+
+    public function getFascists(Room $room)
+    {
+        $fascists = [];
+        foreach($room->users as $u) {
+            if ($u->hasRole('Fascist')) {
+                $fascists[] = $u->id;
+            }
+        }
+        $this->authorize('getFascists', $fascists);
+
+        return response()->json(['Fascists' => $fascists]);
     }
 
     public function setInactive(Room $room)

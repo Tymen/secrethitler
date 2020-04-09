@@ -7,6 +7,43 @@ body {
     background-color: #505050;
 }
 
+body::-webkit-scrollbar {
+    width: 0.75em;
+    background-color: transparent;
+}
+body::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+body::-webkit-scrollbar-thumb {
+    background-color: #232323;
+    outline: 1px solid slategrey;
+    border-radius: 38px;
+}
+.chat::-webkit-scrollbar {
+    width: 0.75em;
+    background-color: transparent;
+}
+.chat::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+.chat::-webkit-scrollbar-thumb {
+    background-color: #2b2929;
+    outline: 1px solid slategrey;
+    border-radius: 38px;
+}
+.show-players::-webkit-scrollbar {
+    width: 0.75em;
+    background-color: transparent;
+}
+.show-players::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+.show-players::-webkit-scrollbar-thumb {
+    background-color: #2b2929;
+    outline: 1px solid slategrey;
+    border-radius: 38px;
+}
+
 .btn {
     outline: none;
     display: inline-block;
@@ -348,13 +385,7 @@ body {
     width: auto;
 }
 
-.player-name-block {
-    margin: 0 0 0 -16.3px;
-    width: 112%;
-    height: 45px;
-    background-color: #828282;
-    max-width: none;
-}
+
 
 .home-logo {
     margin: 145px auto 0px auto;
@@ -574,8 +605,8 @@ body {
 .in-game .show-players {
     max-width: none;
     width: 107%;
-    min-height: 307px;
-    max-height: 307px;
+    min-height: 500px;
+    max-height: 500px;
     border: none;
     overflow: scroll;
     overflow-x: hidden;
@@ -595,7 +626,7 @@ body {
 }
 
 .player-name-block {
-    margin: 0 0 0 -15px;
+    margin: 0 0 0 -16px;
     width: 135%;
     height: 45px;
     background-color: #828282;
@@ -607,7 +638,7 @@ body {
 }
 
 .bg-board .board-section {
-    height: 307px;
+    height: 500px;
 }
 
 .name-of-room {
@@ -619,9 +650,24 @@ body {
 .in-game .chat {
     max-width: none;
     width: 103%;
-    min-height: 307px;
-    max-height: 307px;
+    min-height: 500px;
+    max-height: 500px;
 }
+.in-game .side-border {
+    border-left: 1px solid #ffffFf;
+    margin: 10px 0 10px 35px;
+    min-height: 480px;
+    display: table;
+}
+
+.in-game .time {
+    margin: 20px 0px 0px -32px;
+    font-size: 10px;
+    float: left;
+    color: white;
+    border-bottom: 1px solid #fff;
+}
+
 .in-game .message {
     padding: 14px 35px;
     font-size: 14px;
@@ -642,7 +688,7 @@ body {
 .in-game .send-message .btn-send-button {
     margin: -7px 0 0 0;
     font-size: 14px;
-    padding: 9.2px 35px;
+    padding: 9.8px 35px;
 }
 .in-game .send-message .input-message::placeholder {
     color: white;
@@ -675,7 +721,7 @@ body {
 
 .bg-dark-grey {
     background-color: #4b4b4b;
-    border-left: 2px solid #ffffff;
+    border-left: 0px solid #ffffff;
 }
 
 /*end of layout in game*/
@@ -1038,4 +1084,16 @@ body {
         width: 28%;
         margin: 1vw 0;
     }
+}
+
+.facist-board{
+    margin: 0 auto;
+    max-height: 230px;
+    display: block;
+}
+
+.liberal-board{
+    margin: 0 auto;
+    max-height: 230px;
+    display: block;
 }

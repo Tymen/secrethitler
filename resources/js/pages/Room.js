@@ -14,7 +14,6 @@ export default class Room extends Component {
         loggedIn: false,
         loaded: false,
         room: {},
-        fascist: [],
     }
 
     componentDidMount() {
@@ -60,7 +59,15 @@ export default class Room extends Component {
                     window.location.href = '/'
                 }
             })
-
+            .listen('.game-started', (e) => {
+                this.setState({
+                    room: {
+                        ...this.state.room,
+                        active: 1
+                    },
+                })
+                console.log(e)
+            })
     }
 
     componentWillUnmount() {
@@ -106,15 +113,7 @@ export default class Room extends Component {
     };
 
     setActive = () => {
-        axios.post(`/api/v1/rooms/${this.props.match.params.id}/active`).then(response => {
-                this.setState({
-                    room: {
-                        ...this.state.room,
-                        active: 1
-                    },
-                })
-            }
-        )
+        axios.post(`/api/v1/rooms/${this.props.match.params.id}/active`)
     };
 
     setInactive = () => {
@@ -136,7 +135,6 @@ export default class Room extends Component {
                           user={this.state.user}/>
                 )
             }
-
             return (
                 <div className="in-lobby">
                     <div className="container">
@@ -145,13 +143,13 @@ export default class Room extends Component {
                         </div>
                         <div className="row">
                             <div className="room-info">
-                                <p className="room-name">Room: {this.props.match?.params?.id}</p>
+                                <p className="room-name">Room: {this.state.room.name}</p>
                                 <p className="player-count">{this.state.users.length}/{this.state.room.max_players} Players</p>
                             </div>
                         </div>
                         <div className="row">
                             <PlayersLobby users={this.state.users} roomId={this.props.match.params.id}
-                                          ownerId={this.state.room.owner.id} authUser={this.state.user}/>
+                                          ownerId={this.state.room.owner?.id} authUser={this.state.user}/>
                             <ChatLobby id={this.props.match.params.id}/>
                         </div>
                         <div className="row">
@@ -160,7 +158,6 @@ export default class Room extends Component {
                         <div className="height-for-start-button"/>
                     </div>
                 </div>
-
             )
         }
         return <div></div>
