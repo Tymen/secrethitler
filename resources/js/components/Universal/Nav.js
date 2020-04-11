@@ -5,7 +5,7 @@ import {connect} from 'react-redux'
 
 class Nav extends Component {
     authCheck() {
-        if (store.getState().users.authUser) {
+        if (this.props.authUser) {
             return (
                 <div>
                     <Link className="nav-item" to="/"

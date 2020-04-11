@@ -34,7 +34,7 @@ class RoomsApiController extends Controller
      */
     public function store(Request $request)
     {
-        $this->authorize('redux', Room::class);
+        $this->authorize('store', Room::class);
 
         $validator = Validator::make($request->all(), [
             'name' => 'required|unique:rooms|max:15|min:3',
@@ -137,28 +137,6 @@ class RoomsApiController extends Controller
         return response()->json(['message' => 'completed']);
     }
 
-    public function onUserLeave(Room $room)
-    {
-        $user = Auth::user();
-
-        foreach ($user->roles as $role) {
-            $role->name !== 'Admin' ? $user->removeRole($role->name) : false;
-        }
-
-        $user->room_id = NULL;
-        $user->save();
-
-        if ($room->users->isEmpty()) {
-            $this->callAction('destroy', ['room' => $room]);
-        }
-        else if ($room->user_id === $user->id) {
-            $newHost = $room->users->first();
-            $room->user_id = $newHost->id;
-            $room->save();
-        }
-
-        return response()->json(['message' => 'completed']);
-    }
     public function changeHost(Room $room, Request $request){
         $this->authorize('isHost', $room);
         $room->user_id = $request->newUserHost;

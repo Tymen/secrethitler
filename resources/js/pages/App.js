@@ -30,7 +30,7 @@ class App extends Component {
             <Router>
                 <Nav/>
                 <Switch>
-                    <Route path="/" exact><Home message={this.props.message}/></Route>
+                    <Route path="/" exact><Home/></Route>
                     <Route path="/rooms/:id" exact component={Room}/>
                     <Route path="/auth/:type" exact component={Auth}/>
                     <Route path="/gamerules" exact component={GameRule}/>

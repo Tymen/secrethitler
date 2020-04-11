@@ -14,7 +14,7 @@ class AddMaxPlayersColumn extends Migration
     public function up()
     {
         Schema::table('rooms', function(Blueprint $table) {
-            $table->integer('max_players')->default(12);
+            $table->integer('max_players')->default(10);
         });
     }
 

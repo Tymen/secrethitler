@@ -7,17 +7,28 @@ export default class ChatLobby extends Component {
     };
 
     componentDidMount() {
-        var channel = Echo.channel(`room.${this.props.id}`);
+        let channel = Echo.channel(`room.${this.props.id}`);
         channel.listen('.message-event', (data) => {
             this.setState({
-                messages: [...this.state.messages, data.user.username + " : " + data.message ],
+                messages: [...this.state.messages, {
+                    time: this.getCurrentTime(),
+                    message: data.user.username + " : " + data.message
+                }],
             });
             this.scrollToBottom()
         });
     }
+    getCurrentTime = () => {
+        let time = new Date();
+        let hour = time.getHours();
+        let minutes = time.getMinutes();
+        minutes < 10 ? minutes = `0${minutes}`:false
+        let liveTime = hour + ':' + minutes
+        return liveTime
+    }
 
     scrollToBottom = () => {
-        this.messagesEnd.scrollIntoView({ behavior: "smooth" });
+        document.getElementById('messagesEnd').scrollIntoView({ behavior: "smooth" });
     }
 
     handleChange(e) {
@@ -25,39 +36,39 @@ export default class ChatLobby extends Component {
     }
 
     handleSubmit(e) {
-
         e.preventDefault();
 
         if (this.state.message) {
-            axios.post('/rooms/'+ this.props.id , {
+            axios.post('/rooms/' + this.props.id, {
                 message: this.state.message,
             })
         }
-
         this.setState({
-            message: ''
+            message: '',
         });
-
         this.mainInput.value = "";
     }
 
     render() {
         return (
+
             <div>
                 <div className="chat">
-                    <div>
+
+                    <div className="side-border">
                         {this.state.messages.map(message => (
-                            <p key={Math.floor(Math.random() * 99999)} className="message">{message}</p>
+                            <div>
+                                <p className="time">{message.time}</p>
+                                <p key={Math.floor(Math.random() * 99999)} className="message">{message.message}</p>
+                            </div>
                         ))}
                     </div>
-                    <div style={{ float:"left", clear: "both" }}
-                         ref={(el) => { this.messagesEnd = el; }}>
-                    </div>
+                    <div id="messagesEnd" style={{float: "left", clear: "both"}} />
                 </div>
 
                 <div className="send-message">
                     <form onSubmit={(e) => this.handleSubmit(e)}>
-                        <label>
+                        <label className="text-white">
                             <input type="text" className="input-message" placeholder="Message..."
                                    onChange={(e) => this.handleChange(e)} ref={(ref) => this.mainInput= ref}/>
                         </label>
