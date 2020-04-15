@@ -762,7 +762,10 @@ body::-webkit-scrollbar-thumb {
     height: 103px;
 }
 
-
+.both-sides {
+    height: 480px;
+    margin: 9px 0 0 26px;
+}
 
 
 /*end of layout in game*/
