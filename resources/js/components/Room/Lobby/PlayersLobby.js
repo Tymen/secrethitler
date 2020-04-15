@@ -1,11 +1,8 @@
 import React, {Component} from 'react';
 import {Link} from "react-router-dom";
+import {connect} from "react-redux";
 
-export default class PlayersLobby extends Component {
-
-    state = {
-        authUser: '',
-    }
+class PlayersLobby extends Component {
 
     checkPage = () => {
         if (this.props.page === "Game") {
@@ -16,14 +13,13 @@ export default class PlayersLobby extends Component {
 
     kickUser = (e, id) => {
         e.preventDefault()
-        axios.post(`/api/v1/rooms/${this.props.roomId}/kick/${id}`)
+        axios.post(`/api/v1/rooms/${this.props.room.owner.id}/kick/${id}`)
     }
 
     showPlayers = () => {
         return this.props.users.map(user => {
-
-            if(this.props.authUser.id === this.props.ownerId) {
-                if (this.props.ownerId === user.id) {
+            if(this.props.authUser?.id === this.props.room.owner?.id) {
+                if (this.props.room.owner?.id === user.id) {
                     return (
                         <div key={user.id}>
                             <p className="player-name">
@@ -46,7 +42,7 @@ export default class PlayersLobby extends Component {
                     )
                 }
             }
-            if(this.props.ownerId === user.id){
+            if(this.props.room.owner?.id === user.id){
                 return (
                     <div key={user.id}>
                         <p className="player-name">
@@ -81,3 +77,10 @@ export default class PlayersLobby extends Component {
         )
     }
 }
+
+const mapStateToProps = state => {
+    const { users, room } = state
+    return { authUser: users.authUser, room: room }
+}
+
+export default connect(mapStateToProps)(PlayersLobby)
