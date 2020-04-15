@@ -4,8 +4,6 @@ import Lobby from "../components/Room/Lobby";
 import ChatLobby from "../components/Room/Lobby/ChatLobby";
 import PlayersLobby from "../components/Room/Lobby/PlayersLobby";
 import {connect} from 'react-redux';
-import {store} from "../redux/store";
-import {setAuthUser} from "../redux/actions/users-actions";
 import {editActive, setRoom} from "../redux/actions/room-actions";
 
 class Room extends Component {
@@ -17,11 +15,11 @@ class Room extends Component {
         loaded: false,
     }
 
-    componentDidMount() {
+    async componentDidMount() {
 
-        this.getRoom()
+        await this.getRoom()
 
-        Echo.join(`room.${this.props.match.params.id}`)
+        Echo.join(`room.${this.props.room.id}`)
             .here((users) => {
                 this.setState({
                     users: users
@@ -35,15 +33,17 @@ class Room extends Component {
             })
             .listen('.user-kicked', (e) => {
                 if (this.props.authUser.id === e.userId) {
-                    Echo.leave(`room.${this.props.match.params.id}`)
+                    Echo.leave(`room.${this.props.room.id}`)
                     window.location.href = '/'
                 }
             })
-
+            .listen('.game-started', (e) => {
+                this.props.dispatch(editActive(1))
+            })
     }
 
     componentWillUnmount() {
-        Echo.leave(`room.${this.props.match.params.id}`)
+        Echo.leave(`room.${this.props.room.id}`)
     }
 
     onUserJoin = (user) => {
@@ -76,22 +76,19 @@ class Room extends Component {
         }, 5000)
     }
 
-    getRoom = () => {
-        axios.get(`/api/v1/rooms/${this.props.match.params.id}`).then(response => {
+    getRoom = async () => {
+        await axios.get(`/api/v1/rooms/${this.props.match.params.id}`).then(response => {
             this.props.dispatch(setRoom(response.data.data))
         })
     };
 
     setActive = () => {
-        axios.post(`/api/v1/rooms/${this.props.match.params.id}/active`).then(response => {
-                this.props.dispatch(editActive(1))
-            }
-        )
+        axios.post(`/api/v1/rooms/${this.props.match.params.id}/active`)
     };
 
     setInactive = () => {
         axios.post(`/api/v1/rooms/${this.props.match.params.id}/inactive`).then(response => {
-            this.props.dispatch(editActive(0))
+                this.props.dispatch(editActive(0))
             }
         )
     };
@@ -111,13 +108,13 @@ class Room extends Component {
                 </div>
                 <div className="row">
                     <div className="room-info">
-                        <p className="room-name">Room: {this.props.match?.params?.id}</p>
+                        <p className="room-name">Room: {this.props.room.name}</p>
                         <p className="player-count">{this.state.users.length}/{this.props.room.max_players} Players</p>
                     </div>
                 </div>
                 <div className="row">
                     <PlayersLobby users={this.state.users}/>
-                    <ChatLobby id={this.props.match.params.id}/>
+                    <ChatLobby/>
 
                 </div>
                 <div className="row">

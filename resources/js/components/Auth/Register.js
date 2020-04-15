@@ -31,7 +31,6 @@ export default class Register extends Component {
     }
 
     onSubmit(e) {
-        console.log("test")
         e.preventDefault();
         axios.post('/register', {
             username: this.state.username,

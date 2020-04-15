@@ -3,6 +3,7 @@ import {Link} from "react-router-dom";
 import {connect} from "react-redux";
 
 class PlayersLobby extends Component {
+
     checkPage = () => {
         if (this.props.page === "Game") {
             return `${this.props.users.length}/${this.props.room.max_players} Players`
@@ -17,7 +18,6 @@ class PlayersLobby extends Component {
 
     showPlayers = () => {
         return this.props.users.map(user => {
-
             if(this.props.authUser?.id === this.props.room.owner?.id) {
                 if (this.props.room.owner?.id === user.id) {
                     return (
@@ -77,6 +77,7 @@ class PlayersLobby extends Component {
         )
     }
 }
+
 const mapStateToProps = state => {
     const { users, room } = state
     return { authUser: users.authUser, room: room }

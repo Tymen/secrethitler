@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import PlayersLobby from "./Lobby/PlayersLobby";
 import ChatLobby from "./Lobby/ChatLobby";
-import Room from "../../pages/Room";
 import {connect} from 'react-redux';
+import Board from "../../components/Room/Game/Board";
 
 class Game extends Component {
     render() {
@@ -18,7 +18,7 @@ class Game extends Component {
                     <div className="col-7 bg-board">
                         <div className="board-section">
                             <div className="col-12 board-section">
-
+                                <Board />
                             </div>
                             <div className="col-12 player-name-block"><p className="name-of-room">
                                 <strong>Room: </strong>{this.props.room.name}</p>
@@ -28,7 +28,7 @@ class Game extends Component {
                     </div>
                     <div className="col-3 col-wrap">
                         <div className="in-game">
-                            <ChatLobby id={this.props.id} page='Game'/>
+                            <ChatLobby page='Game'/>
                         </div>
                     </div>
                 </div>
