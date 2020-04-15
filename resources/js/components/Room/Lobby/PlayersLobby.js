@@ -22,6 +22,14 @@ export default class PlayersLobby extends Component {
         }
     }
 
+    checkLiberals = () => {
+        if (Array.isArray(!this.props.fascists) && !this.props.fascists.some(id => userId === id)) {
+            return (
+                <img src="/images/liberal-role-card.svg"/>
+            )
+        }
+    }
+
     kickUser = (e, id) => {
         e.preventDefault()
         axios.post(`/api/v1/rooms/${this.props.roomId}/kick/${id}`)

@@ -85080,6 +85080,16 @@ function (_Component) {
       }
     });
 
+    _defineProperty(_assertThisInitialized(_this), "checkLiberals", function () {
+      if (Array.isArray(!_this.props.fascists) && !_this.props.fascists.some(function (id) {
+        return userId === id;
+      })) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+          src: "/images/liberal-role-card.svg"
+        });
+      }
+    });
+
     _defineProperty(_assertThisInitialized(_this), "kickUser", function (e, id) {
       e.preventDefault();
       axios.post("/api/v1/rooms/".concat(_this.props.roomId, "/kick/").concat(id));
