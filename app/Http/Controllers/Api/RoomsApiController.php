@@ -99,14 +99,25 @@ class RoomsApiController extends Controller
     public function getFascists(Room $room)
     {
         $fascists = [];
+        $hitler = 0;
+        $countUsers = $room->users->count();
+
         foreach($room->users as $u) {
-            if ($u->hasRole('Fascist')) {
-                $fascists[] = $u->id;
-            }
+
+            $u->hasRole('Fascist') ? $fascists[] = $u->id : false;
+            $u->hasRole('Hitler') ? $hitler = $u->id : false;
         }
+
         $this->authorize('getFascists', [$room, $fascists]);
 
-        return response()->json(['fascists' => $fascists]);
+        $data = ['fascists' => $fascists, 'hitler' => $hitler];
+        $user =  Auth::user()->id;
+
+        if ($countUsers > 6 && $user === $hitler) {
+             $data = ['hitler' => $hitler];
+        }
+
+        return response()->json($data);
     }
 
     public function setInactive(Room $room)
@@ -160,5 +171,27 @@ class RoomsApiController extends Controller
         $room->user_id = $request->newUserHost;
         $room->save();
         return response()->json(['message' => $room]);
+    }
+
+    public function getPolicies(Room $room){
+//        $randomInt = mt_rand(1, $total);
+//        $result = ($randomInt > $facist) ? "Liberal" : 1;
+        $this->authorize('isPresident', $room);
+        $fascist = $room->roomState->fascist_policies;
+        $liberal = $room->roomState->liberal_policies;
+
+        $result = [];
+        $total = $liberal + $fascist;
+        for($i = 0; $i < 3; $i++){
+            $chance = round($fascist / $total * 100);
+            $random = round(rand(0, 100));
+            $result[] = $random < $chance ? "Fascist" : "Liberal";
+        }
+
+        return response()->json([
+            'Fascist_cards' => $fascist,
+            'Liberal_cards' => $liberal,
+            'Card' => $result,
+        ]);
     }
 }

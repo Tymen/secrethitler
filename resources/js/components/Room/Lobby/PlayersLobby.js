@@ -12,10 +12,15 @@ class PlayersLobby extends Component {
     }
 
     checkFascists = (userId) => {
+        const hitler = <img src="/images/hitler-role-card-JPG.jpg"/>
+        const fascist = <img src="/images/fascist-role-cardJPG.jpg"/>
+        const liberal = <img src="/images/liberal-role-cardSmall-JPG.jpg"/>
+        const condition = this.props.hitler === userId
+
         if (Array.isArray(this.props.fascists) && this.props.fascists.some(id => userId === id)) {
-            return <img src="/images/fascist-role-card.svg"/>
+            return condition ? hitler : fascist
         } else if (this.props.page === "Game" && userId === this.props.authUser.id) {
-            return <img src="/images/liberal-role-card.svg"/>
+            return condition ? hitler : liberal
         }
     }
 
@@ -26,7 +31,7 @@ class PlayersLobby extends Component {
 
     showPlayers = () => {
         return this.props.users.map(user => {
-            if(this.props.authUser?.id === this.props.room.owner?.id) {
+            if (this.props.authUser?.id === this.props.room.owner?.id) {
                 if (this.props.room.owner?.id === user.id) {
                     return (
                         <div key={user.id} className="player-name-div">
@@ -53,7 +58,7 @@ class PlayersLobby extends Component {
                     )
                 }
             }
-            if(this.props.room.owner?.id === user.id){
+            if (this.props.room.owner?.id === user.id) {
                 return (
                     <div key={user.id} className="player-name-div">
                         <p className="player-name">
@@ -93,8 +98,8 @@ class PlayersLobby extends Component {
 }
 
 const mapStateToProps = state => {
-    const { users, room } = state
-    return { authUser: users.authUser, room: room }
+    const {users, room} = state
+    return {authUser: users.authUser, room: room}
 }
 
 export default connect(mapStateToProps)(PlayersLobby)

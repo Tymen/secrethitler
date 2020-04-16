@@ -760,14 +760,17 @@ body::-webkit-scrollbar-thumb {
 
 .player-name-div img {
     position: absolute;
-    right: -43px;
-    top: -22px;
-    height: 103px;
+    right: 0;
+    top: 0;
+    height: 49px;
+    width: 42px;
 }
 
 .both-sides {
-    height: 480px;
-    margin: 9px 0 0 26px;
+    top: 14px;
+    right: 50px;
+    left: 50px;
+    position: absolute;
 }
 
 
@@ -957,10 +960,7 @@ body::-webkit-scrollbar-thumb {
     }
 
     .player-name-div img {
-        position: absolute;
-        right: -30px;
-        top: -15px;
-        height: 74px;
+        height: 42px;
     }
 }
 
@@ -1014,10 +1014,8 @@ body::-webkit-scrollbar-thumb {
     }
 
     .player-name-div img {
-        position: absolute;
-        right: -30px;
-        top: -15px;
-        height: 74px;
+        height: 36px;
+        width: 37px;
     }
 }
 
@@ -1066,10 +1064,7 @@ body::-webkit-scrollbar-thumb {
     }
 
     .player-name-div img {
-        position: absolute;
-        right: -25px;
-        top: -13px;
-        height: 61px;
+        width: 28px;
     }
 }
 
@@ -1086,6 +1081,12 @@ body::-webkit-scrollbar-thumb {
     .login-bolletjes {
         width: 26%;
     }
+
+    .both-sides {
+        top: 20px;
+        right: 200px;
+        left: 200px;
+    }
 }
 
 @media (min-width: 2052px) and (max-width: 2732px) {
@@ -1100,6 +1101,13 @@ body::-webkit-scrollbar-thumb {
 
     .login-bolletjes {
         width: 26%;
+    }
+
+    .both-sides {
+        top: 12px;
+        right: 400px;
+        left: 400px;
+        position: absolute;
     }
 }
 
@@ -1116,6 +1124,12 @@ body::-webkit-scrollbar-thumb {
     .login-bolletjes {
         width: 27%;
     }
+    .both-sides {
+        top: 12px;
+        right: 800px;
+        left: 800px;
+        position: absolute;
+    }
 }
 
 @media (min-width: 4103px) and (max-width: 5464px) {
@@ -1130,6 +1144,12 @@ body::-webkit-scrollbar-thumb {
 
     .login-bolletjes {
         width: 28%;
+    }
+    .both-sides {
+        top: 12px;
+        right: 1200px;
+        left: 1200px;
+        position: absolute;
     }
 }
 
@@ -1150,16 +1170,4 @@ body::-webkit-scrollbar-thumb {
         width: 28%;
         margin: 1vw 0;
     }
-}
-
-.facist-board {
-    margin: 0 auto;
-    max-height: 230px;
-    display: block;
-}
-
-.liberal-board {
-    margin: 0 auto;
-    max-height: 230px;
-    display: block;
 }

@@ -16,6 +16,7 @@ class RoomsPolicy
      *
      * @return void
      */
+
     public function __construct()
     {
         //
@@ -26,6 +27,13 @@ class RoomsPolicy
         return $user->id === $room->user_id
             ? Response::allow()
             : Response::deny('You are not the host');
+    }
+
+    public function isPresident(User $user, Room $room)
+    {
+        return $room->users->contains($user) && $user->hasRole("President")
+            ? Response::allow()
+            : Response::deny('You are not the president');;
     }
 
     public function store(User $user)
@@ -41,5 +49,4 @@ class RoomsPolicy
             ? Response::allow()
             : Response::deny('You are not a fascist!');
     }
-
 }

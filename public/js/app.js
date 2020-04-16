@@ -87053,7 +87053,31 @@ function (_Component) {
     _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(Game)).call.apply(_getPrototypeOf2, [this].concat(args)));
 
     _defineProperty(_assertThisInitialized(_this), "state", {
-      fascists: []
+      fascists: [],
+      hitler: '',
+      loaded: false
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "getFascists", function () {
+      axios.get("/api/v1/rooms/".concat(_this.props.room.id, "/fascists")).then(function (response) {
+        console.log(response.data);
+
+        _this.setState(function () {
+          return {
+            fascists: response.data.fascists,
+            hitler: response.data.hitler,
+            loaded: true
+          };
+        });
+      })["catch"](function (err) {
+        _this.setState(function () {
+          return {
+            loaded: true
+          };
+        });
+
+        console.log(_this.state.loaded);
+      });
     });
 
     return _this;
@@ -87062,60 +87086,66 @@ function (_Component) {
   _createClass(Game, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      var _this2 = this;
-
-      axios.get("/api/v1/rooms/".concat(this.props.room.id, "/fascists")).then(function (response) {
-        _this2.setState({
-          fascists: response.data.fascists
-        });
-      });
+      setTimeout(this.getFascists, 1000);
     }
   }, {
     key: "render",
     value: function render() {
-      var _this3 = this;
+      var _this2 = this;
+
+      if (this.state.loaded) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "container-fluid"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "row"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "col-2 bg-dark col-wrap"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "in-game"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Lobby_PlayersLobby__WEBPACK_IMPORTED_MODULE_1__["default"], {
+          users: this.props.users,
+          page: "Game",
+          fascists: this.state.fascists,
+          hitler: this.state.hitler
+        }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "col-7 bg-board"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "board-section"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "col-12 board-section"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Room_Game_Board__WEBPACK_IMPORTED_MODULE_4__["default"], null)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "col-12 player-name-block"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+          className: "name-of-room"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", null, "Room: "), this.props.room.name)))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "col-3 col-wrap"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "in-game"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Lobby_ChatLobby__WEBPACK_IMPORTED_MODULE_2__["default"], {
+          page: "Game"
+        })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "row row-under"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "col-2 bg-grey"
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "col-7 bg-dark-grey"
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "col-3 bg-grey"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          onClick: function onClick() {
+            return _this2.props.setInactive();
+          }
+        }, "Inactive"))));
+      }
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "container-fluid"
+        className: "text-center"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "row"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-2 bg-dark col-wrap"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "in-game"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Lobby_PlayersLobby__WEBPACK_IMPORTED_MODULE_1__["default"], {
-        users: this.props.users,
-        page: "Game",
-        fascists: this.state.fascists
-      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-7 bg-board"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "board-section"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-12 board-section"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Room_Game_Board__WEBPACK_IMPORTED_MODULE_4__["default"], null)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-12 player-name-block"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-        className: "name-of-room"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", null, "Room: "), this.props.room.name)))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-3 col-wrap"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "in-game"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Lobby_ChatLobby__WEBPACK_IMPORTED_MODULE_2__["default"], {
-        page: "Game"
-      })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "row row-under"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-2 bg-grey"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-7 bg-dark-grey"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-3 bg-grey"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        onClick: function onClick() {
-          return _this3.props.setInactive();
-        }
-      }, "Inactive"))));
+        className: "spinner-border",
+        role: "status"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "sr-only"
+      }, "Loading...")));
     }
   }]);
 
@@ -87179,10 +87209,10 @@ function (_Component) {
   _createClass(Board, [{
     key: "render",
     value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         className: "both-sides",
         src: "/images/both-sides-board.svg"
-      }));
+      });
     }
   }]);
 
@@ -87521,16 +87551,23 @@ function (_Component) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "checkFascists", function (userId) {
+      var hitler = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        src: "/images/hitler-role-card-JPG.jpg"
+      });
+      var fascist = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        src: "/images/fascist-role-cardJPG.jpg"
+      });
+      var liberal = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        src: "/images/liberal-role-cardSmall-JPG.jpg"
+      });
+      var condition = _this.props.hitler === userId;
+
       if (Array.isArray(_this.props.fascists) && _this.props.fascists.some(function (id) {
         return userId === id;
       })) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-          src: "/images/fascist-role-card.svg"
-        });
+        return condition ? hitler : fascist;
       } else if (_this.props.page === "Game" && userId === _this.props.authUser.id) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-          src: "/images/liberal-role-card.svg"
-        });
+        return condition ? hitler : liberal;
       }
     });
 
