@@ -1,45 +1,64 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
 
-export default class ChatLobby extends Component {
+class ChatLobby extends Component {
     state = {
         messages: [],
         message: '',
     };
 
     componentDidMount() {
-        let channel = Echo.channel(`room.${this.props.id}`);
+        this._isMounted = true
+        setTimeout(this.listener, 1000)
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false
+    }
+
+    listener = () => {
+        let channel = Echo.channel(`room.${this.props.room.id}`)
         channel.listen('.message-event', (data) => {
-            this.setState({
-                messages: [...this.state.messages, {
-                    time: this.getCurrentTime(),
-                    message: data.user.username + " : " + data.message,
-                }],
-            });
-            this.scrollToBottom()
+            if (this._isMounted) {
+                this.setState(() => {
+                    return {
+                        messages: [...this.state.messages, {
+                            time: this.getCurrentTime(),
+                            message: data.user.username + " : " + data.message
+                        }],
+                    }
+                });
+                this.scrollToBottom()
+            }
         });
     }
+
     getCurrentTime = () => {
         let time = new Date();
         let hour = time.getHours();
         let minutes = time.getMinutes();
-        minutes < 10 ? minutes = `0${minutes}`:false
-        let liveTime = hour + ':' + minutes
-        return liveTime
+        minutes < 10 ? minutes = `0${minutes}` : false
+        return hour + ':' + minutes
     }
 
     scrollToBottom = () => {
-        document.getElementById('messagesEnd').scrollIntoView({ behavior: "smooth" });
+        document.getElementById('messagesEnd').scrollIntoView({behavior: "smooth"});
     }
 
     handleChange(e) {
-        this.setState({message: e.target.value});
+        e.persist()
+        this.setState(() => {
+            return {
+                message: e.target.value
+            }
+        });
     }
 
     handleSubmit(e) {
         e.preventDefault();
 
         if (this.state.message) {
-            axios.post('/rooms/' + this.props.id, {
+            axios.post(`/rooms/${this.props.room.id}/message`, {
                 message: this.state.message,
             })
         }
@@ -51,7 +70,6 @@ export default class ChatLobby extends Component {
 
     render() {
         return (
-
             <div>
                 <div className="chat">
                         {this.state.messages.map(message => (
@@ -67,7 +85,7 @@ export default class ChatLobby extends Component {
                     <form onSubmit={(e) => this.handleSubmit(e)}>
                         <label className="text-white">
                             <input type="text" className="input-message" placeholder="Message..."
-                                   onChange={(e) => this.handleChange(e)} ref={(ref) => this.mainInput= ref}/>
+                                   onChange={(e) => this.handleChange(e)} ref={(ref) => this.mainInput = ref}/>
                         </label>
                         <input type="submit" value="Send" className="btn btn-send-button"/>
                     </form>
@@ -76,3 +94,10 @@ export default class ChatLobby extends Component {
         );
     }
 }
+
+const mapStateToProps = state => {
+    const {room} = state
+    return {room: room}
+}
+
+export default connect(mapStateToProps)(ChatLobby)

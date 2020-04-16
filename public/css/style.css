@@ -572,7 +572,11 @@ body::-webkit-scrollbar-thumb {
 }
 /*this is for the in lobby layout*/
 .in-lobby .message {
-    left: 61px;
+    left: 62px;
+}
+
+.in-lobby .input-message {
+    width: 716px;
 }
 /*end of lobby layout*/
 /*for lobby and in game*/
@@ -659,8 +663,8 @@ body::-webkit-scrollbar-thumb {
 .in-game .message {
     padding: 14px 35px;
     font-size: 14px;
-    line-height: 11px;
-    left: 62px;
+    line-height: 20px;
+    left: 64px;
 }
 .message-container:first-child {
     margin-top: 10px;
