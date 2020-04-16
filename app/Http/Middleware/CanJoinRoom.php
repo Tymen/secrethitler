@@ -11,8 +11,8 @@ class CanJoinRoom
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
+     * @param \Illuminate\Http\Request $request
+     * @param \Closure $next
      * @return mixed
      */
     public function handle($request, Closure $next)
@@ -24,15 +24,17 @@ class CanJoinRoom
         }
 
         if (!Auth::check()) {
-            return redirect('/auth/login');
+            return redirect('/auth/login')->with(['message' => 'You are not logged in']);
         }
-
+    
         if (Auth::user()->room_id === $room->id) {
             return $next($request);
+        } else if ($room->active) {
+            return redirect('/')->with(['message' => 'Game has already started']);
         }
 
         if ($room->users->count() >= $room->max_players) {
-            return redirect('/')->with(['message' => 'Room is full']);
+            return redirect('/')->with(['message' => 'Chosen room is full!']);
         }
 
         return $next($request);

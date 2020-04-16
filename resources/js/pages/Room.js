@@ -100,34 +100,36 @@ class Room extends Component {
                       id={this.props.match.params.id}/>
             )
         }
-
         return (
-            <div className="container">
-                <div className="row">
-                    <img className="home-logo" src="/images/Secrethitler-no-bg.png"/>
-                </div>
-                <div className="row">
-                    <div className="room-info">
-                        <p className="room-name">Room: {this.props.room.name}</p>
-                        <p className="player-count">{this.state.users.length}/{this.props.room.max_players} Players</p>
+            <div className="in-lobby">
+                <div className="container">
+                    <div className="row">
+                        <img className="home-logo" src="/images/Secrethitler-no-bg.png"/>
                     </div>
+                    <div className="row">
+                        <div className="room-info">
+                            <p className="room-name">Room: {this.props.room.name}</p>
+                            <p className="player-count">{this.state.users.length}/{this.props.room.max_players} Players</p>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <PlayersLobby users={this.state.users}/>
+                        <ChatLobby/>
+
+                    </div>
+                    <div className="row">
+                        <Lobby setActive={() => this.setActive()}/>
+                    </div>
+                    <div className="height-for-start-button"/>
                 </div>
-                <div className="row">
-                    <PlayersLobby users={this.state.users}/>
-                    <ChatLobby/>
-                </div>
-                <div className="row">
-                    <Lobby setActive={() => this.setActive()}/>
-                </div>
-                <div className="height-for-start-button"/>
             </div>
         )
     }
 }
 
 const mapStateToProps = state => {
-    const { users, room } = state
-    return { authUser: users.authUser, room: room }
+    const {users, room} = state
+    return {authUser: users.authUser, room: room}
 }
 
 export default connect(mapStateToProps)(Room)

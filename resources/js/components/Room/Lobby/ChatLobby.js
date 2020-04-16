@@ -30,7 +30,6 @@ class ChatLobby extends Component {
                 });
                 this.scrollToBottom()
             }
-
         });
     }
 

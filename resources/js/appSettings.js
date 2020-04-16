@@ -92,9 +92,14 @@ const messagesConfig = {
             },
             room: {
                 roomFull: {
-                    type: msgTypes.Three,
+                    type: msgTypes.One,
                     title: "Room is full",
                     message: "Chosen room is full!",
+                },
+                roomActive: {
+                    type: msgTypes.One,
+                    title: "Game started",
+                    message: "Game has already started",
                 }
             }
         },

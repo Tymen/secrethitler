@@ -564,6 +564,8 @@ body::-webkit-scrollbar-thumb {
     width: 298px;
     max-width: 298px;
     border-right: 1px solid white;
+    overflow: scroll;
+    overflow-x: hidden;
 }
 
 .players-in-lobby {
@@ -580,7 +582,11 @@ body::-webkit-scrollbar-thumb {
 
 /*this is for the in lobby layout*/
 .in-lobby .message {
-    left: 61px;
+    left: 62px;
+}
+
+.in-lobby .input-message {
+    width: 716px;
 }
 
 /*end of lobby layout*/
@@ -672,26 +678,11 @@ body::-webkit-scrollbar-thumb {
     max-height: 500px;
 }
 
-.in-game .side-border {
-    border-left: 1px solid #ffffFf;
-    margin: 10px 0 10px 35px;
-    min-height: 480px;
-    display: table;
-}
-
-.in-game .time {
-    margin: 20px 0px 0px -32px;
-    font-size: 10px;
-    float: left;
-    color: white;
-    border-bottom: 1px solid #fff;
-}
-
 .in-game .message {
     padding: 14px 35px;
     font-size: 14px;
-    line-height: 11px;
-    left: 62px;
+    line-height: 20px;
+    left: 64px;
 }
 
 .message-container:first-child {
