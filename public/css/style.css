@@ -554,6 +554,8 @@ body::-webkit-scrollbar-thumb {
     position: relative;
     min-height: 500px;
     max-height: 500px;
+    overflow: hidden;
+    overflow-y: scroll;
     display: flex;
     flex-direction: column;
     word-wrap: break-word;
@@ -723,6 +725,7 @@ body::-webkit-scrollbar-thumb {
 .in-game .text-white {
     margin: 0;
     display: unset;
+    display: unset;
 }
 
 .in-game .input-message {
@@ -745,11 +748,11 @@ body::-webkit-scrollbar-thumb {
 
 .player-name-div {
     position: relative;
-    overflow: hidden;
     padding: 5px;
     background-color: #929292;
     color: white;
     border-bottom: 1px solid white;
+    /*overflow: hidden;*/
 }
 .player-name-div p {
     text-align: left;

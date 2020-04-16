@@ -27,23 +27,33 @@ class Room extends Model
     public function divideRoles($users)
     {
         $fascists = false;
+
         switch ($users->count()) {
-            case 5 || 6:
+            case 5 :
+            case 6 :
                 $fascists = 2;
                 break;
-            case 7 || 8:
+            case 7 :
+            case 8 :
                 $fascists = 3;
                 break;
-            case 9 || 10:
+            case 9 :
+            case 10 :
                 $fascists = 4;
                 break;
         }
 
         if ($fascists) {
+            $users->map(function ($user) {
+                foreach ($user->roles as $r) {
+                    $r->name !== 'Admin' ? $user->removeRole($r->name) : false;
+                }
+            });
+
             $chosenFascists = Arr::random($users->all(), $fascists);
             $hitler = Arr::random($chosenFascists);
 
-            foreach($chosenFascists as $f) {
+            foreach ($chosenFascists as $f) {
                 $f->assignRole('Fascist');
             }
 
