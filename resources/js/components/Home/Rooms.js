@@ -59,6 +59,7 @@ export default class Rooms extends Component {
                 if(response.error){
                     this.child.getNotify(this.state.getMsg.internalServer);
                 }else {
+
                     this.setState({rooms: response.data});
                 }
             })

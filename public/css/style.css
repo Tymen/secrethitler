@@ -555,6 +555,8 @@ body::-webkit-scrollbar-thumb {
     width: 298px;
     max-width: 298px;
     border-right: 1px solid white;
+    overflow: scroll;
+    overflow-x: hidden;
 }
 
 .players-in-lobby {
@@ -568,7 +570,28 @@ body::-webkit-scrollbar-thumb {
     max-width: 298px;
     border-right: 1px solid white;
 }
+/*this is for the in lobby layout*/
+.in-lobby .message {
+    left: 62px;
+}
 
+.in-lobby .input-message {
+    width: 716px;
+}
+/*end of lobby layout*/
+/*for lobby and in game*/
+.message-container:first-child {
+    margin-top: 10px;
+}
+.time {
+    margin: -23px 0px 0px 10px;
+    font-size: 10px;
+    float: left;
+    color: white;
+    border-bottom: 1px solid #fff;
+    bottom: 0;
+}
+/*end of for lobby and in game*/
 /*this is for the in game layout*/
 .bg-board {
     background-color: #454545;
@@ -636,26 +659,15 @@ body::-webkit-scrollbar-thumb {
     min-height: 500px;
     max-height: 500px;
 }
-.in-game .side-border {
-    border-left: 1px solid #ffffFf;
-    margin: 10px 0 10px 35px;
-    min-height: 480px;
-    display: table;
-}
-
-.in-game .time {
-    margin: 20px 0px 0px -32px;
-    font-size: 10px;
-    float: left;
-    color: white;
-    border-bottom: 1px solid #fff;
-}
 
 .in-game .message {
-    padding: 14px 17px;
+    padding: 14px 35px;
     font-size: 14px;
-    line-height: 8px;
-    left: 27px;
+    line-height: 20px;
+    left: 64px;
+}
+.message-container:first-child {
+    margin-top: 10px;
 }
 
 .in-game .send-message {
@@ -670,11 +682,6 @@ body::-webkit-scrollbar-thumb {
     font-size: 14px;
     padding: 9.8px 35px;
 }
-
-.in-game .message:first-child {
-    margin-top: 10px;
-}
-
 .in-game .send-message .input-message::placeholder {
     color: white;
     margin-left: 10px;

@@ -72,15 +72,13 @@ class ChatLobby extends Component {
         return (
             <div>
                 <div className="chat">
-                    <div className="side-border">
                         {this.state.messages.map(message => (
-                            <div key={Math.floor(Math.random() * 99999)}>
+                            <div className="message-container">
+                                <p key={Math.floor(Math.random() * 99999)} className="message">{message.message}</p>
                                 <p className="time">{message.time}</p>
-                                <p className="message">{message.message}</p>
                             </div>
                         ))}
-                    </div>
-                    <div id="messagesEnd" style={{float: "left", clear: "both"}}/>
+                    <div id="messagesEnd" style={{float: "left", clear: "both"}} />
                 </div>
 
                 <div className="send-message">
