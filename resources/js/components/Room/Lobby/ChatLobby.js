@@ -81,9 +81,11 @@ class ChatLobby extends Component {
                         {this.props.room?.messages?.map(message => (
                             <div key={Math.floor(Math.random() * 99999)}>
                                 <p className="time">{message.time}</p>
+                                <p className="message">{message.message}</p>
                             </div>
                         ))}
-                    <div id="messagesEnd" style={{float: "left", clear: "both"}} />
+                    </div>
+                    <div id="messagesEnd" style={{float: "left", clear: "both"}}/>
                 </div>
 
                 <div className="send-message">
