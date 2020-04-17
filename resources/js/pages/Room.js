@@ -107,7 +107,7 @@ export default class Room extends Component {
             })
         })
     };
-    
+
     setActive = () => {
         axios.post(`/api/v1/rooms/${this.props.match.params.id}/active`)
     };
