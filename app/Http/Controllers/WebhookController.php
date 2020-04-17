@@ -44,10 +44,6 @@ class WebhookController extends Controller
 
     public function onMemberLeave(User $user, Room $room)
     {
-        foreach ($user->roles as $role) {
-            $role->name !== 'Admin' ? $user->removeRole($role->name) : false;
-        }
-
         $user->room_id = NULL;
         $user->save();
 

@@ -43,4 +43,10 @@ class RoomsPolicy
             : Response::allow();
     }
 
+    public function getFascists(User $user, Room $room, $fascists)
+    {
+        return in_array($user->id, $fascists)
+            ? Response::allow()
+            : Response::deny('You are not a fascist!');
+    }
 }
