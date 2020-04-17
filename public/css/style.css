@@ -11,33 +11,41 @@ body::-webkit-scrollbar {
     width: 0.75em;
     background-color: transparent;
 }
+
 body::-webkit-scrollbar-track {
     box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 }
+
 body::-webkit-scrollbar-thumb {
     background-color: #232323;
     outline: 1px solid slategrey;
     border-radius: 38px;
 }
+
 .chat::-webkit-scrollbar {
     width: 0.75em;
     background-color: transparent;
 }
+
 .chat::-webkit-scrollbar-track {
     box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 }
+
 .chat::-webkit-scrollbar-thumb {
     background-color: #2b2929;
     outline: 1px solid slategrey;
     border-radius: 38px;
 }
+
 .show-players::-webkit-scrollbar {
     width: 0.75em;
     background-color: transparent;
 }
+
 .show-players::-webkit-scrollbar-track {
     box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 }
+
 .show-players::-webkit-scrollbar-thumb {
     background-color: #2b2929;
     outline: 1px solid slategrey;
@@ -386,7 +394,6 @@ body::-webkit-scrollbar-thumb {
 }
 
 
-
 .home-logo {
     margin: 145px auto 0px auto;
     max-height: 250px;
@@ -547,6 +554,8 @@ body::-webkit-scrollbar-thumb {
     position: relative;
     min-height: 500px;
     max-height: 500px;
+    overflow: hidden;
+    overflow-y: scroll;
     display: flex;
     flex-direction: column;
     word-wrap: break-word;
@@ -569,6 +578,31 @@ body::-webkit-scrollbar-thumb {
     border-right: 1px solid white;
 }
 
+/*this is for the in lobby layout*/
+.in-lobby .message {
+    left: 62px;
+}
+
+.in-lobby .input-message {
+    width: 716px;
+}
+
+/*end of lobby layout*/
+/*for lobby and in game*/
+.message-container:first-child {
+    margin-top: 10px;
+}
+
+.time {
+    margin: -23px 0px 0px 10px;
+    font-size: 10px;
+    float: left;
+    color: white;
+    border-bottom: 1px solid #fff;
+    bottom: 0;
+}
+
+/*end of for lobby and in game*/
 /*this is for the in game layout*/
 .bg-board {
     background-color: #454545;
@@ -614,10 +648,16 @@ body::-webkit-scrollbar-thumb {
     height: 45px;
     background-color: #828282;
     max-width: none;
+
 }
 
 .in-game .show-players .player-name {
     font-size: 18px;
+    height: 100%;
+    max-height: 100%;
+    left: 0;
+    margin-top: 10px;
+    padding: 0;
 }
 
 .bg-board .board-section {
@@ -636,26 +676,16 @@ body::-webkit-scrollbar-thumb {
     min-height: 500px;
     max-height: 500px;
 }
-.in-game .side-border {
-    border-left: 1px solid #ffffFf;
-    margin: 10px 0 10px 35px;
-    min-height: 480px;
-    display: table;
-}
-
-.in-game .time {
-    margin: 20px 0px 0px -32px;
-    font-size: 10px;
-    float: left;
-    color: white;
-    border-bottom: 1px solid #fff;
-}
 
 .in-game .message {
-    padding: 14px 17px;
+    padding: 14px 35px;
     font-size: 14px;
-    line-height: 8px;
-    left: 27px;
+    line-height: 20px;
+    left: 64px;
+}
+
+.message-container:first-child {
+    margin-top: 10px;
 }
 
 .in-game .send-message {
@@ -671,10 +701,6 @@ body::-webkit-scrollbar-thumb {
     padding: 9.8px 35px;
 }
 
-.in-game .message:first-child {
-    margin-top: 10px;
-}
-
 .in-game .send-message .input-message::placeholder {
     color: white;
     margin-left: 10px;
@@ -688,6 +714,7 @@ body::-webkit-scrollbar-thumb {
 
 .in-game .text-white {
     margin: 0;
+    display: unset;
     display: unset;
 }
 
@@ -709,15 +736,41 @@ body::-webkit-scrollbar-thumb {
     border-left: 0px solid #ffffff;
 }
 
+.player-name-div {
+    position: relative;
+    padding: 5px;
+    background-color: #929292;
+    color: white;
+    border-bottom: 1px solid white;
+    /*overflow: hidden;*/
+}
+.player-name-div p {
+    text-align: left;
+}
+
+.player-name-div img {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 49px;
+    width: 42px;
+}
+
+.both-sides {
+    top: 14px;
+    right: 50px;
+    left: 50px;
+    position: absolute;
+}
+
+
 /*end of layout in game*/
 
 .player-name {
     margin-bottom: 0px;
-    padding: 10px;
     font-size: 20px;
-    background-color: #929292;
     color: white;
-    border-bottom: 1px solid white;
+    padding: 0px;
 }
 
 .room-info {
@@ -895,6 +948,10 @@ body::-webkit-scrollbar-thumb {
     .in-game .send-message .btn-send-button {
         padding: 12.2px 12px;
     }
+
+    .player-name-div img {
+        height: 42px;
+    }
 }
 
 /*// Small devices (landscape phones, less than 768px)*/
@@ -945,6 +1002,11 @@ body::-webkit-scrollbar-thumb {
     .in-game .show-players .player-name {
         font-size: 10px;
     }
+
+    .player-name-div img {
+        height: 36px;
+        width: 37px;
+    }
 }
 
 /*// Extra small devices (portrait phones, less than 576px)*/
@@ -990,6 +1052,10 @@ body::-webkit-scrollbar-thumb {
     .in-game .send-message {
         width: 111.2%;
     }
+
+    .player-name-div img {
+        width: 28px;
+    }
 }
 
 @media (min-width: 1620px) and (max-width: 2051px) {
@@ -1004,6 +1070,12 @@ body::-webkit-scrollbar-thumb {
 
     .login-bolletjes {
         width: 26%;
+    }
+
+    .both-sides {
+        top: 20px;
+        right: 200px;
+        left: 200px;
     }
 }
 
@@ -1020,6 +1092,13 @@ body::-webkit-scrollbar-thumb {
     .login-bolletjes {
         width: 26%;
     }
+
+    .both-sides {
+        top: 12px;
+        right: 400px;
+        left: 400px;
+        position: absolute;
+    }
 }
 
 @media (min-width: 2733px) and (max-width: 4102px) {
@@ -1035,6 +1114,12 @@ body::-webkit-scrollbar-thumb {
     .login-bolletjes {
         width: 27%;
     }
+    .both-sides {
+        top: 12px;
+        right: 800px;
+        left: 800px;
+        position: absolute;
+    }
 }
 
 @media (min-width: 4103px) and (max-width: 5464px) {
@@ -1049,6 +1134,12 @@ body::-webkit-scrollbar-thumb {
 
     .login-bolletjes {
         width: 28%;
+    }
+    .both-sides {
+        top: 12px;
+        right: 1200px;
+        left: 1200px;
+        position: absolute;
     }
 }
 
@@ -1071,14 +1162,3 @@ body::-webkit-scrollbar-thumb {
     }
 }
 
-.facist-board{
-    margin: 0 auto;
-    max-height: 230px;
-    display: block;
-}
-
-.liberal-board{
-    margin: 0 auto;
-    max-height: 230px;
-    display: block;
-}
