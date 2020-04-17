@@ -12,6 +12,7 @@ use App\Events\RoomsUpdatedEvent;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\RoomCollection;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\Room as RoomResource;
 
@@ -173,10 +174,10 @@ class RoomsApiController extends Controller
         return response()->json(['message' => $room]);
     }
 
-    public function getPolicies(Room $room){
+    public function getPolicies(Room $room, Request $request){
 //        $randomInt = mt_rand(1, $total);
 //        $result = ($randomInt > $facist) ? "Liberal" : 1;
-        $this->authorize('isPresident', $room);
+//        $this->authorize('isPresident', $room);
         $fascist = $room->roomState->fascist_policies;
         $liberal = $room->roomState->liberal_policies;
 
@@ -187,11 +188,36 @@ class RoomsApiController extends Controller
             $random = round(rand(0, 100));
             $result[] = $random < $chance ? "Fascist" : "Liberal";
         }
-
-        return response()->json([
+        $response = [
             'Fascist_cards' => $fascist,
             'Liberal_cards' => $liberal,
             'Card' => $result,
-        ]);
+        ];
+        $changePolicies = $room->roomState;
+        foreach ($result as $policy){
+            $test[] = (strtolower($policy) === "fascist") ?
+                $changePolicies->fascist_policies = $changePolicies->fascist_policies - 1 :
+                $changePolicies->liberal_policies = $changePolicies->liberal_policies - 1;
+        }
+        $changePolicies->save();
+        Session::put("policies_president", $response);
+        Session::save();
+        return response()->json($response);
+    }
+    public function setPolicies(Room $room, Request $request)
+    {
+//        [
+//            'leftOver' => ["fascist", "liberal"],
+//            'removed' => ["fascist"]
+//        ]
+        $test = [];
+
+        $changePolicies = $room->roomState;
+        (strtolower($request->removed) === "fascist") ?
+            $changePolicies->chosen_fascist += 1 :
+            $changePolicies->chosen_liberal += 1;
+        $changePolicies->save();
+
+        return response()->json(['leftover' => $request->leftOver]);
     }
 }
