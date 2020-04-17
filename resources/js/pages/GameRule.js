@@ -19,11 +19,13 @@ export default class GameRule extends Component {
                     </div>
                     <div className="col-6 mb-5">
                     <div className="title"><h1>- Policy kaarten:</h1></div>
-                    <div className="text"><p>Blauwe “Policy kaarten”:
-                        Deze wil je als liberaal
+                    <div className="text"><p>Blauwe “Policy kaarten”:>
+                        Deze wil je als liberaal</p>
 
-                        Rode “Policy kaarten”:
+                        <p>Rode “Policy kaarten”:
                         Deze wil je als fascist juist graag op het bord krijgen. Zodra er zes rode policy kaarten op het bord liggen winnen de fascisten.
+                        <img className="liberal" width="170" src="images/gamerule/liberal-article.png"/>
+                        <img className="facist" width="280" src="images/gamerule/facist-article.png"/>
                     </p></div>
                 </div>
 
@@ -57,11 +59,13 @@ export default class GameRule extends Component {
                     </div>
                     <div className="col-6 mb-5">
                         <div className="title"><h1>- Voor 9 tot 10 spelers:</h1></div>
-                        <div className="text"><p>Geld er dat bij de eerste rode policykaart de huidige president iemand mag kiezen om zijn identiteit kaart te zien(hierover mogen beide spelers over liegen).
+                        <div className="text d-block"><p>Geld er dat bij de eerste rode policykaart de huidige president iemand mag kiezen om zijn identiteit kaart te zien(hierover mogen beide spelers over liegen).
                             Bij de tweede rode policykaart mag de huidige president wederom iemand kiezen om zijn identiteit kaart te zien(hierover mogen beide spelers over liegen).
-                            Bij de derde rode policykaart mag de huidige president de nieuwe president kiezen.
-
-                            De fascisten weten van elkaar dat ze fascisten zijn maar Hitler weet niet wie de fascisten zijn.
+                            Bij de derde rode policykaart mag de huidige president de nieuwe president kiezen.</p>
+                            <img className="" width="150" src="images/gamerule/6-8Players.png"/>
+                            <img className="" width="150" src="images/gamerule/5-6Players.png"/>
+                            <img className="" width="150" src="images/gamerule/Kat-pictogram.png"/>
+                            <p>De fascisten weten van elkaar dat ze fascisten zijn maar Hitler weet niet wie de fascisten zijn.
                         </p></div>
                     </div>
 

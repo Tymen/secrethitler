@@ -11029,6 +11029,10 @@ a.text-dark:focus {
   display: table-cell;
 }
 
+.gamerule .text .liberal {
+  margin-left: 30px;
+}
+
 .gamerule .text p {
   padding: 30px;
   font-size: 20px;

@@ -84887,7 +84887,15 @@ function (_Component) {
         className: "title"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "- Policy kaarten:")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "text"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Blauwe \u201CPolicy kaarten\u201D: Deze wil je als liberaal Rode \u201CPolicy kaarten\u201D: Deze wil je als fascist juist graag op het bord krijgen. Zodra er zes rode policy kaarten op het bord liggen winnen de fascisten."))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Blauwe \u201CPolicy kaarten\u201D:> Deze wil je als liberaal"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Rode \u201CPolicy kaarten\u201D: Deze wil je als fascist juist graag op het bord krijgen. Zodra er zes rode policy kaarten op het bord liggen winnen de fascisten.", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        className: "liberal",
+        width: "170",
+        src: "images/gamerule/liberal-article.png"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        className: "facist",
+        width: "280",
+        src: "images/gamerule/facist-article.png"
+      })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-6 mb-5"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "title"
@@ -84910,8 +84918,20 @@ function (_Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "title"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "- Voor 9 tot 10 spelers:")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "text"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Geld er dat bij de eerste rode policykaart de huidige president iemand mag kiezen om zijn identiteit kaart te zien(hierover mogen beide spelers over liegen). Bij de tweede rode policykaart mag de huidige president wederom iemand kiezen om zijn identiteit kaart te zien(hierover mogen beide spelers over liegen). Bij de derde rode policykaart mag de huidige president de nieuwe president kiezen. De fascisten weten van elkaar dat ze fascisten zijn maar Hitler weet niet wie de fascisten zijn."))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "text d-block"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Geld er dat bij de eerste rode policykaart de huidige president iemand mag kiezen om zijn identiteit kaart te zien(hierover mogen beide spelers over liegen). Bij de tweede rode policykaart mag de huidige president wederom iemand kiezen om zijn identiteit kaart te zien(hierover mogen beide spelers over liegen). Bij de derde rode policykaart mag de huidige president de nieuwe president kiezen."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        className: "",
+        width: "150",
+        src: "images/gamerule/6-8Players.png"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        className: "",
+        width: "150",
+        src: "images/gamerule/5-6Players.png"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        className: "",
+        width: "150",
+        src: "images/gamerule/Kat-pictogram.png"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "De fascisten weten van elkaar dat ze fascisten zijn maar Hitler weet niet wie de fascisten zijn."))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-6 mb-5"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "title"
