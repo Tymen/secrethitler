@@ -6,6 +6,7 @@ use App\Events\KickUserEvent;
 use App\Events\RotatePresidentEvent;
 use App\Events\StartGameEvent;
 use App\Room;
+use App\Rules\PolicyChecker;
 use App\User;
 use App\RoomState;
 use Illuminate\Http\Request;
@@ -218,25 +219,39 @@ class RoomsApiController extends Controller
             'Card' => $result,
         ];
         $changePolicies = $room->roomState;
+        $changePolicies->chosen_policies = implode(" ", $result);
         foreach ($result as $policy){
             $test[] = (strtolower($policy) === "fascist") ?
                 $changePolicies->fascist_policies = $changePolicies->fascist_policies - 1 :
                 $changePolicies->liberal_policies = $changePolicies->liberal_policies - 1;
         }
         $changePolicies->save();
-        Session::put("policies_president", $response);
-        Session::save();
         return response()->json($response);
     }
     public function setPolicies(Room $room, Request $request)
     {
 //        [
 //            'leftOver' => ["fascist", "liberal"],
-//            'removed' => ["fascist"]
+//            'removed' => "fascist"
 //        ]
-        $test = [];
 
         $changePolicies = $room->roomState;
+        $mergedRequest = $request->leftOver;
+        array_push($mergedRequest, $request->removed);
+        $getPolicyCheck = array_count_values(explode(" ",$changePolicies->chosen_policies));
+        $getMergedCheck = array_count_values($mergedRequest);
+        if ($getPolicyCheck["Liberal"] && $getPolicyCheck["Fascist"]){
+            $test = (($mergedRequest["Liberal"] === $getPolicyCheck["Liberal"]) &&
+                ($mergedRequest["Fascist"] === $getPolicyCheck["Fascist"])) ?
+                "Valid" : "Invalid";
+        }else if($getPolicyCheck["Liberal"]){
+            $test = ($getPolicyCheck["Liberal"] === $mergedRequest["Liberal"]) ?
+                "Valid" : "invalid";
+        }else {
+            $test = ($getPolicyCheck["Fascist"] === $mergedRequest["Fascist"]) ?
+                "Valid" : "invalid";
+        }
+
         (strtolower($request->removed) === "fascist") ?
             $changePolicies->chosen_fascist += 1 :
             $changePolicies->chosen_liberal += 1;
