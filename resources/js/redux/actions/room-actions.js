@@ -7,3 +7,13 @@ export const editActive = value => ({
     type: 'EDIT_ACTIVE',
     value
 })
+
+export const addMessage = value => ({
+    type: 'ADD_MESSAGE',
+    value
+})
+
+export const deleteAllMessages = () => ({
+    type: 'DELETE_ALL_MESSAGES',
+})
+

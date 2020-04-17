@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import {addMessage} from "../../../redux/actions/room-actions";
 
 class ChatLobby extends Component {
     state = {
@@ -20,14 +21,18 @@ class ChatLobby extends Component {
         let channel = Echo.channel(`room.${this.props.room.id}`)
         channel.listen('.message-event', (data) => {
             if (this._isMounted) {
-                this.setState(() => {
-                    return {
-                        messages: [...this.state.messages, {
-                            time: this.getCurrentTime(),
-                            message: data.user.username + " : " + data.message
-                        }],
-                    }
-                });
+                this.props.dispatch(addMessage({
+                    time: this.getCurrentTime(),
+                    message: data.user.username + " : " + data.message
+                }));
+                // this.setState(() => {
+                //     return {
+                //         messages: [...this.state.messages, {
+                //             time: this.getCurrentTime(),
+                //             message: data.user.username + " : " + data.message
+                //         }],
+                //     }
+                // });
                 this.scrollToBottom()
             }
         });
@@ -72,9 +77,9 @@ class ChatLobby extends Component {
         return (
             <div>
                 <div className="chat">
-                        {this.state.messages.map(message => (
-                            <div className="message-container">
-                                <p key={Math.floor(Math.random() * 99999)} className="message">{message.message}</p>
+                    <div className="side-border">
+                        {this.props.room?.messages?.map(message => (
+                            <div key={Math.floor(Math.random() * 99999)}>
                                 <p className="time">{message.time}</p>
                             </div>
                         ))}
