@@ -25,14 +25,6 @@ class ChatLobby extends Component {
                     time: this.getCurrentTime(),
                     message: data.user.username + " : " + data.message
                 }));
-                // this.setState(() => {
-                //     return {
-                //         messages: [...this.state.messages, {
-                //             time: this.getCurrentTime(),
-                //             message: data.user.username + " : " + data.message
-                //         }],
-                //     }
-                // });
                 this.scrollToBottom()
             }
         });
