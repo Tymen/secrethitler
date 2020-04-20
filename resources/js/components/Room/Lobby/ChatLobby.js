@@ -1,51 +1,70 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
 
-export default class ChatLobby extends Component {
+class ChatLobby extends Component {
     state = {
         messages: [],
         message: '',
     };
 
-    scrollToBottom = () => {
-        this.messagesEnd.scrollIntoView({ behavior: "smooth" });
+    componentDidMount() {
+        this._isMounted = true
+        setTimeout(this.listener, 1000)
     }
 
-    componentDidMount() {
-        var channel = Echo.channel(`room.${this.props.id}`);
+    componentWillUnmount() {
+        this._isMounted = false
+    }
+
+    listener = () => {
+        let channel = Echo.channel(`room.${this.props.room.id}`)
         channel.listen('.message-event', (data) => {
-            console.log(data.message)
-            this.setState({
-                messages: [...this.state.messages, data.user.username + " : " + data.message ],
-            });
-            this.scrollToBottom()
+            if (this._isMounted) {
+                this.setState(() => {
+                    return {
+                        messages: [...this.state.messages, {
+                            time: this.getCurrentTime(),
+                            message: data.user.username + " : " + data.message
+                        }],
+                    }
+                });
+                this.scrollToBottom()
+            }
         });
     }
 
-    constructor(props) {
-        super(props);
+    getCurrentTime = () => {
+        let time = new Date();
+        let hour = time.getHours();
+        let minutes = time.getMinutes();
+        minutes < 10 ? minutes = `0${minutes}` : false
+        return hour + ':' + minutes
+    }
 
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleChange = this.handleChange.bind(this);
+    scrollToBottom = () => {
+        document.getElementById('messagesEnd').scrollIntoView({behavior: "smooth"});
     }
 
     handleChange(e) {
-        this.setState({message: e.target.value});
+        e.persist()
+        this.setState(() => {
+            return {
+                message: e.target.value
+            }
+        });
     }
 
     handleSubmit(e) {
-
         e.preventDefault();
 
         if (this.state.message) {
-            axios.post('/rooms/'+ this.props.id , {
+            axios.post(`/rooms/${this.props.room.id}/message`, {
                 message: this.state.message,
             })
         }
-
         this.setState({
-            message: ''
+            message: '',
         });
-
         this.mainInput.value = "";
     }
 
@@ -53,21 +72,20 @@ export default class ChatLobby extends Component {
         return (
             <div>
                 <div className="chat">
-                    <div>
                         {this.state.messages.map(message => (
-                            <p className="message">{message}</p>
+                            <div className="message-container">
+                                <p key={Math.floor(Math.random() * 99999)} className="message">{message.message}</p>
+                                <p className="time">{message.time}</p>
+                            </div>
                         ))}
-                    </div>
-                    <div style={{ float:"left", clear: "both" }}
-                         ref={(el) => { this.messagesEnd = el; }}>
-                    </div>
+                    <div id="messagesEnd" style={{float: "left", clear: "both"}} />
                 </div>
 
                 <div className="send-message">
-                    <form onSubmit={this.handleSubmit}>
-                        <label>
+                    <form onSubmit={(e) => this.handleSubmit(e)}>
+                        <label className="text-white">
                             <input type="text" className="input-message" placeholder="Message..."
-                                   onChange={this.handleChange} ref={(ref) => this.mainInput= ref}/>
+                                   onChange={(e) => this.handleChange(e)} ref={(ref) => this.mainInput = ref}/>
                         </label>
                         <input type="submit" value="Send" className="btn btn-send-button"/>
                     </form>
@@ -76,3 +94,10 @@ export default class ChatLobby extends Component {
         );
     }
 }
+
+const mapStateToProps = state => {
+    const {room} = state
+    return {room: room}
+}
+
+export default connect(mapStateToProps)(ChatLobby)

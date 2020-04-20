@@ -20,6 +20,23 @@
  <Notification onRef={ref => (this.child = ref)} />
  **/
 
+
+/**
+    getRooms = async() => {
+        await this.request.get('/api/v1/rooms');
+        this.getResponse();
+    };
+
+    //
+    getResponse = (data) => {
+        this.setState({data});
+    };
+
+    //
+    <ApiHandler handler={this.handler} onRef={ref => (this.request = ref)}/>
+
+
+ **/
 const msgTypes = {
     One: "error",
     Two: "success",
@@ -75,9 +92,14 @@ const messagesConfig = {
             },
             room: {
                 roomFull: {
-                    type: msgTypes.Three,
+                    type: msgTypes.One,
                     title: "Room is full",
                     message: "Chosen room is full!",
+                },
+                roomActive: {
+                    type: msgTypes.One,
+                    title: "Game started",
+                    message: "Game has already started",
                 }
             }
         },

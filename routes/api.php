@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -18,7 +16,9 @@ Route::namespace('Api')->group(function () {
 
         Route::middleware('auth:api')->group(function() {
             Route::prefix('users')->group(function () {
+                Route::get('check', 'UsersApiController@checkAuth');
                 Route::get('me', 'UsersApiController@me');
+                Route::get('auth', 'UsersApiController@auth');
             });
 
             Route::prefix('rooms')->group(function () {
@@ -26,10 +26,12 @@ Route::namespace('Api')->group(function () {
 
                 Route::prefix('{room}')->group(function () {
                     Route::get('/', 'RoomsApiController@show');
-
+                    Route::get('/fascists', 'RoomsApiController@getFascists');
+                    Route::get('get_policies', 'RoomsApiController@getPolicies');
+                    Route::post('change_host', 'RoomsApiController@changeHost');
                     Route::post('active', 'RoomsApiController@setActive');
                     Route::post('inactive', 'RoomsApiController@setInactive');
-                    Route::post('leave', 'RoomsApiController@onUserLeave');
+                    Route::post('kick/{user}', 'RoomsApiController@kickUser');
                     Route::delete('destroy', 'RoomsApiController@destroy');
                 });
             });

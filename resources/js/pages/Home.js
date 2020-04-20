@@ -5,7 +5,7 @@ import Rooms from "../components/Home/Rooms"
 import {messagesConfig} from "../appSettings";
 import Notification from "../components/Universal/Notification";
 import {Link} from "react-router-dom";
-
+import {post} from "../components/Universal/apiHandler";
 export default class Home extends Component {
     state = {
         getMsg: messagesConfig.pages.home,
@@ -16,9 +16,13 @@ export default class Home extends Component {
         this.child = React.createRef();
     };
 
-    notify = () => {
-        this.child.getNotify(this.state.getMsg.auth.noLogin);
-    };
+    componentDidMount() {
+        if(this.props.message === "Chosen room is full!"){
+            this.child.getNotify(this.state.getMsg.room.roomFull);
+        }else if(this.props.message === "Game has already started"){
+            this.child.getNotify(this.state.getMsg.room.roomActive);
+        }
+    }
 
     render() {
         return (
@@ -92,6 +96,7 @@ export default class Home extends Component {
                         </div>
                     </div>
                 </div>
+                <Notification onRef={ref => (this.child = ref)} />
             </div>
 
         );

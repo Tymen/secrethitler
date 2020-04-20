@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Events\KickUserEvent;
+use App\Events\StartGameEvent;
 use App\Room;
 use App\User;
 use App\RoomState;
@@ -85,9 +87,37 @@ class RoomsApiController extends Controller
     {
         $this->authorize('isHost', $room);
 
+        $room->divideRoles($room->users);
         $room->active = true;
         $room->save();
+
+        event(new StartGameEvent($room->id));
+
         return response()->json(['message' => 'completed']);
+    }
+
+    public function getFascists(Room $room)
+    {
+        $fascists = [];
+        $hitler = 0;
+        $countUsers = $room->users->count();
+
+        foreach($room->users as $u) {
+
+            $u->hasRole('Fascist') ? $fascists[] = $u->id : false;
+            $u->hasRole('Hitler') ? $hitler = $u->id : false;
+        }
+
+        $this->authorize('getFascists', [$room, $fascists]);
+
+        $data = ['fascists' => $fascists, 'hitler' => $hitler];
+        $user =  Auth::user()->id;
+
+        if ($countUsers > 6 && $user === $hitler) {
+             $data = ['hitler' => $hitler];
+        }
+
+        return response()->json($data);
     }
 
     public function setInactive(Room $room)
@@ -124,33 +154,44 @@ class RoomsApiController extends Controller
         return response()->json(['message' => 'completed']);
     }
 
-    public function kickUser(User $user, Room $room)
+    public function kickUser(Room $room, User $user)
     {
         $this->authorize('isHost', $room);
-
-        //
-    }
-
-    public function onUserLeave(Room $room)
-    {
-        $user = Auth::user();
-
-        foreach ($user->roles as $role) {
-            $role->name !== 'Admin' ? $user->removeRole($role->name) : false;
-        }
 
         $user->room_id = NULL;
         $user->save();
 
-        if ($room->users->isEmpty()) {
-            $this->callAction('destroy', ['room' => $room]);
-        }
-        else if ($room->user_id === $user->id) {
-            $newHost = $room->users->first();
-            $room->user_id = $newHost->id;
-            $room->save();
-        }
+        event(new KickUserEvent($room->id, $user->id));
 
         return response()->json(['message' => 'completed']);
+    }
+
+    public function changeHost(Room $room, Request $request){
+        $this->authorize('isHost', $room);
+        $room->user_id = $request->newUserHost;
+        $room->save();
+        return response()->json(['message' => $room]);
+    }
+
+    public function getPolicies(Room $room){
+//        $randomInt = mt_rand(1, $total);
+//        $result = ($randomInt > $facist) ? "Liberal" : 1;
+        $this->authorize('isPresident', $room);
+        $fascist = $room->roomState->fascist_policies;
+        $liberal = $room->roomState->liberal_policies;
+
+        $result = [];
+        $total = $liberal + $fascist;
+        for($i = 0; $i < 3; $i++){
+            $chance = round($fascist / $total * 100);
+            $random = round(rand(0, 100));
+            $result[] = $random < $chance ? "Fascist" : "Liberal";
+        }
+
+        return response()->json([
+            'Fascist_cards' => $fascist,
+            'Liberal_cards' => $liberal,
+            'Card' => $result,
+        ]);
     }
 }
