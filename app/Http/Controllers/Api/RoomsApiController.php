@@ -206,6 +206,6 @@ class RoomsApiController extends Controller
         $user->voted = true;
         $user->save();
 
-        return response()->json(['message' => 'completed']);;
+        return response()->json(['message' => 'completed']);
     }
 }
