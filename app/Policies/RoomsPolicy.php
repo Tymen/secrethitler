@@ -49,4 +49,32 @@ class RoomsPolicy
             ? Response::allow()
             : Response::deny('You are not a fascist!');
     }
+
+//    public function policyValidation(User $user, Room $room, $request)
+//    {
+//        $changePolicies = $room->roomState;
+//        $mergedRequest = $request->leftOver;
+//        array_push($mergedRequest, $request->removed);
+//        $getPolicyCheck = array_count_values(explode(" ",$changePolicies->chosen_policies));
+//        $getMergedCheck = array_count_values($mergedRequest);
+//        if (count($getMergedCheck) < 2) {
+//            if ($getPolicyCheck["Liberal"] && $getPolicyCheck["Fascist"]){
+//                if (array_key_exists("Liberal", $getMergedCheck) && array_key_exists("Fascist", $getMergedCheck)) {
+//                    (($getMergedCheck["Liberal"] === $getPolicyCheck["Liberal"]) &&
+//                        ($getMergedCheck["Fascist"] === $getPolicyCheck["Fascist"])) ?
+//                        Response::allow() : Response::deny('Something went wrong try again');
+//                } else {
+//                    Response::deny('Something went wrong try again');
+//                }
+//            }else if($getPolicyCheck["Liberal"]){
+//                ($getPolicyCheck["Liberal"] === $getMergedCheck["Liberal"]) ?
+//                    Response::allow() : Response::deny('Something went wrong try again');;
+//            }else {
+//                ($getPolicyCheck["Fascist"] === $getMergedCheck["Fascist"]) ?
+//                    Response::allow() : Response::deny('Something went wrong try again');;
+//            }
+//        }else {
+//            Response::deny('Something went wrong try again');;
+//        }
+//    }
 }
