@@ -33,7 +33,7 @@ class RoomsPolicy
     {
         return $room->users->contains($user) && $user->hasRole("President")
             ? Response::allow()
-            : Response::deny('You are not the president');;
+            : Response::deny('You are not the president');
     }
 
     public function store(User $user)
@@ -48,5 +48,12 @@ class RoomsPolicy
         return in_array($user->id, $fascists)
             ? Response::allow()
             : Response::deny('You are not a fascist!');
+    }
+
+    public function canVote(User $user, Room $room)
+    {
+        return $room->id === $user->room_id && !$user->voted
+            ? Response::allow()
+            : Response::deny('You can not vote!');
     }
 }

@@ -103,7 +103,6 @@ class RoomsApiController extends Controller
         $countUsers = $room->users->count();
 
         foreach($room->users as $u) {
-
             $u->hasRole('Fascist') ? $fascists[] = $u->id : false;
             $u->hasRole('Hitler') ? $hitler = $u->id : false;
         }
@@ -173,7 +172,8 @@ class RoomsApiController extends Controller
         return response()->json(['message' => $room]);
     }
 
-    public function getPolicies(Room $room){
+    public function getPolicies(Room $room)
+    {
 //        $randomInt = mt_rand(1, $total);
 //        $result = ($randomInt > $facist) ? "Liberal" : 1;
         $this->authorize('isPresident', $room);
@@ -193,5 +193,19 @@ class RoomsApiController extends Controller
             'Liberal_cards' => $liberal,
             'Card' => $result,
         ]);
+    }
+
+    public function setVote(Room $room, Request $request)
+    {
+        $this->authorize('canVote', $room);
+
+        $request->nein ? $room->roomState->nein += 1 : $room->roomState->ja += 1;
+        $room->roomState->save();
+
+        $user = Auth::user();
+        $user->voted = true;
+        $user->save();
+
+        return response()->json(['message' => 'completed']);;
     }
 }

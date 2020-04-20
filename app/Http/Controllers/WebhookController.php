@@ -20,14 +20,12 @@ class WebhookController extends Controller
             $room = Room::find(explode('.', $event['channel'])[1]);
 
             if ($user && $room) {
-                $params = ['user' => $user, 'room' => $room];
-
                 switch ($event['name']) {
                     case 'member_added':
-                        $this->callAction('onMemberJoin', $params);
+                        $this->onMemberJoin($user, $room);
                         break;
                     case 'member_removed':
-                        $this->callAction('onMemberLeave', $params);
+                        $this->onMemberLeave($user, $room);
                         break;
                 }
                 return 1;
