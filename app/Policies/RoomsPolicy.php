@@ -49,7 +49,6 @@ class RoomsPolicy
             ? Response::allow()
             : Response::deny('You are not a fascist!');
     }
-
     public function inRoom(User $user, Room $room)
     {
         return $room->users->contains($user)

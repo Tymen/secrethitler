@@ -238,18 +238,27 @@ class RoomsApiController extends Controller
         $changePolicies = $room->roomState;
         $mergedRequest = $request->leftOver;
         array_push($mergedRequest, $request->removed);
-        $getPolicyCheck = array_count_values(explode(" ",$changePolicies->chosen_policies));
+        $getPolicyCheckDB = array_count_values(explode(" ",$changePolicies->chosen_policies));
         $getMergedCheck = array_count_values($mergedRequest);
-        if ($getPolicyCheck["Liberal"] && $getPolicyCheck["Fascist"]){
-            $test = (($mergedRequest["Liberal"] === $getPolicyCheck["Liberal"]) &&
-                ($mergedRequest["Fascist"] === $getPolicyCheck["Fascist"])) ?
-                "Valid" : "Invalid";
-        }else if($getPolicyCheck["Liberal"]){
-            $test = ($getPolicyCheck["Liberal"] === $mergedRequest["Liberal"]) ?
-                "Valid" : "invalid";
+
+        if (count($getMergedCheck) <= 2) {
+            if (array_key_exists("Liberal", $getPolicyCheckDB) && array_key_exists("Fascist", $getPolicyCheckDB)){
+                if (array_key_exists("Liberal", $getMergedCheck) && array_key_exists("Fascist", $getMergedCheck)) {
+                    $validation = (($getMergedCheck["Liberal"] === $getPolicyCheckDB["Liberal"]) &&
+                        ($getMergedCheck["Fascist"] === $getPolicyCheckDB["Fascist"])) ?
+                        "Valid" : "Invalid";
+                } else {
+                    $validation = "Invalid";
+                }
+            }else if(array_key_exists("Liberal", $getPolicyCheckDB)){
+                $validation = ($getPolicyCheckDB["Liberal"] === $getMergedCheck["Liberal"]) ?
+                    "Valid" : "invalid";
+            }else {
+                $validation = ($getPolicyCheckDB["Fascist"] === $getMergedCheck["Fascist"]) ?
+                    "Valid" : "invalid";
+            }
         }else {
-            $test = ($getPolicyCheck["Fascist"] === $mergedRequest["Fascist"]) ?
-                "Valid" : "invalid";
+            $validation = "Invalid";
         }
 
         (strtolower($request->removed) === "fascist") ?
@@ -257,6 +266,6 @@ class RoomsApiController extends Controller
             $changePolicies->chosen_liberal += 1;
         $changePolicies->save();
 
-        return response()->json(['leftover' => $request->leftOver]);
+        return response()->json(['leftover' => $validation]);
     }
 }
