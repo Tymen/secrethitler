@@ -87,13 +87,37 @@ class RoomsApiController extends Controller
     {
         $this->authorize('isHost', $room);
 
+        $room->divideRoles($room->users);
         $room->active = true;
         $room->save();
 
         event(new StartGameEvent($room->id));
 
-
         return response()->json(['message' => 'completed']);
+    }
+
+    public function getFascists(Room $room)
+    {
+        $fascists = [];
+        $hitler = 0;
+        $countUsers = $room->users->count();
+
+        foreach($room->users as $u) {
+
+            $u->hasRole('Fascist') ? $fascists[] = $u->id : false;
+            $u->hasRole('Hitler') ? $hitler = $u->id : false;
+        }
+
+        $this->authorize('getFascists', [$room, $fascists]);
+
+        $data = ['fascists' => $fascists, 'hitler' => $hitler];
+        $user =  Auth::user()->id;
+
+        if ($countUsers > 6 && $user === $hitler) {
+             $data = ['hitler' => $hitler];
+        }
+
+        return response()->json($data);
     }
 
     public function setInactive(Room $room)

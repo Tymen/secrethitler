@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import {addMessage} from "../../../redux/actions/room-actions";
 
 class ChatLobby extends Component {
     state = {
@@ -20,14 +21,10 @@ class ChatLobby extends Component {
         let channel = Echo.channel(`room.${this.props.room.id}`)
         channel.listen('.message-event', (data) => {
             if (this._isMounted) {
-                this.setState(() => {
-                    return {
-                        messages: [...this.state.messages, {
-                            time: this.getCurrentTime(),
-                            message: data.user.username + " : " + data.message
-                        }],
-                    }
-                });
+                this.props.dispatch(addMessage({
+                    time: this.getCurrentTime(),
+                    message: data.user.username + " : " + data.message
+                }));
                 this.scrollToBottom()
             }
         });
