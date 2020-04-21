@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Events\KickUserEvent;
+use App\Events\RotatePresidentEvent;
 use App\Events\StartGameEvent;
 use App\Room;
 use App\User;
@@ -94,7 +95,6 @@ class RoomsApiController extends Controller
         $room->save();
 
         event(new StartGameEvent($room->id));
-
         return response()->json(['message' => 'completed']);
     }
 
@@ -127,11 +127,19 @@ class RoomsApiController extends Controller
         $president = 0;
 
         foreach($room->users as $u) {
-
             $u->hasRole('President') ? $president = $u->id : false;
         }
 
-        return response()->json(['president' => $president]);
+        Event(new RotatePresidentEvent($room->id, $president));
+    }
+
+    public function rotatePresident(Room $room)
+    {
+        $room->rotatePresident($room->users);
+
+        $room->save();
+
+        return response()->json(['message' => 'rotated']);
     }
 
     public function setInactive(Room $room)

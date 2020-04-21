@@ -13,6 +13,7 @@ class Room extends Component {
         leftUsers: [],
         loggedIn: false,
         loaded: false,
+        president: '',
     }
 
     async componentDidMount() {
@@ -39,6 +40,11 @@ class Room extends Component {
             })
             .listen('.game-started', (e) => {
                 this.props.dispatch(editActive(1))
+            })
+            .listen('.president-rotated', (e) => {
+                this.setState({
+                    president: e.president
+                })
             })
     }
 
@@ -86,6 +92,10 @@ class Room extends Component {
         axios.post(`/api/v1/rooms/${this.props.match.params.id}/active`)
     };
 
+    rotatePresident = () =>{
+        axios.post(`/api/v1/rooms/${this.props.match.params.id}/president`)
+    }
+
     setInactive = () => {
         axios.post(`/api/v1/rooms/${this.props.match.params.id}/inactive`).then(response => {
                 this.props.dispatch(editActive(0))
@@ -96,8 +106,8 @@ class Room extends Component {
     render() {
         if (this.props.room.active) {
             return (
-                <Game setInactive={() => this.setInactive()} users={this.state.users}
-                      id={this.props.match.params.id}/>
+                <Game setInactive={() => this.setInactive()} rotatePresident={() => this.rotatePresident()} users={this.state.users}
+                      id={this.props.match.params.id} president={this.state.president}/>
             )
         }
         return (

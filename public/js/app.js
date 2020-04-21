@@ -87062,13 +87062,16 @@ function (_Component) {
     _defineProperty(_assertThisInitialized(_this), "state", {
       fascists: [],
       hitler: '',
+      president: _this.props.president,
       loaded: false
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "getPresident", function () {
+      axios.get("/api/v1/rooms/".concat(_this.props.room.id, "/get_president"));
     });
 
     _defineProperty(_assertThisInitialized(_this), "getFascists", function () {
       axios.get("/api/v1/rooms/".concat(_this.props.room.id, "/fascists")).then(function (response) {
-        console.log(response.data);
-
         _this.setState(function () {
           return {
             fascists: response.data.fascists,
@@ -87082,8 +87085,6 @@ function (_Component) {
             loaded: true
           };
         });
-
-        console.log(_this.state.loaded);
       });
     });
 
@@ -87094,6 +87095,7 @@ function (_Component) {
     key: "componentDidMount",
     value: function componentDidMount() {
       setTimeout(this.getFascists, 1000);
+      setTimeout(this.getPresident, 1000);
     }
   }, {
     key: "render",
@@ -87113,7 +87115,8 @@ function (_Component) {
           users: this.props.users,
           page: "Game",
           fascists: this.state.fascists,
-          hitler: this.state.hitler
+          hitler: this.state.hitler,
+          president: this.props.president
         }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "col-7 bg-board"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -87142,7 +87145,13 @@ function (_Component) {
           onClick: function onClick() {
             return _this2.props.setInactive();
           }
-        }, "Inactive"))));
+        }, "Inactive"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          onClick: function onClick() {
+            _this2.props.rotatePresident();
+
+            _this2.getPresident();
+          }
+        }, "Rotate president"))));
       }
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -87567,7 +87576,6 @@ function (_Component) {
       var liberal = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         src: "/images/liberal-role-cardSmall-JPG.jpg"
       });
-      var president = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "President");
       var condition = _this.props.hitler === userId;
 
       if (Array.isArray(_this.props.fascists) && _this.props.fascists.some(function (id) {
@@ -87576,6 +87584,14 @@ function (_Component) {
         return condition ? hitler : fascist;
       } else if (_this.props.page === "Game" && userId === _this.props.authUser.id) {
         return condition ? hitler : liberal;
+      }
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "checkPresident", function (userId) {
+      var president = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "President");
+
+      if (_this.props.president === userId) {
+        return president;
       }
     });
 
@@ -87602,7 +87618,7 @@ function (_Component) {
             }), "\xA0", user.username), _this.checkFascists(user.id), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
               className: "fa fa-2x fa-long-arrow-right arrow1",
               "aria-hidden": "true"
-            }));
+            }), _this.checkPresident(user.id));
           } else {
             return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
               key: user.id,
@@ -87625,7 +87641,7 @@ function (_Component) {
             }, "Kick ", user.username)), _this.checkFascists(user.id), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
               className: "fa fa-2x fa-long-arrow-right arrow1",
               "aria-hidden": "true"
-            }));
+            }), _this.checkPresident(user.id));
           }
         }
 
@@ -87640,7 +87656,7 @@ function (_Component) {
           }), "\xA0", user.username), _this.checkFascists(user.id), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
             className: "fa fa-2x fa-long-arrow-right arrow1",
             "aria-hidden": "true"
-          }));
+          }), _this.checkPresident(user.id));
         } else {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
             key: user.id,
@@ -87650,7 +87666,7 @@ function (_Component) {
           }, user.username), _this.checkFascists(user.id), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
             className: "fa fa-2x fa-long-arrow-right arrow1",
             "aria-hidden": "true"
-          }));
+          }), _this.checkPresident(user.id));
         }
       });
     });
@@ -88815,7 +88831,8 @@ function (_Component) {
       users: [],
       leftUsers: [],
       loggedIn: false,
-      loaded: false
+      loaded: false,
+      president: ''
     });
 
     _defineProperty(_assertThisInitialized(_this), "onUserJoin", function (user) {
@@ -88887,6 +88904,10 @@ function (_Component) {
       axios.post("/api/v1/rooms/".concat(_this.props.match.params.id, "/active"));
     });
 
+    _defineProperty(_assertThisInitialized(_this), "rotatePresident", function () {
+      axios.post("/api/v1/rooms/".concat(_this.props.match.params.id, "/president"));
+    });
+
     _defineProperty(_assertThisInitialized(_this), "setInactive", function () {
       axios.post("/api/v1/rooms/".concat(_this.props.match.params.id, "/inactive")).then(function (response) {
         _this.props.dispatch(Object(_redux_actions_room_actions__WEBPACK_IMPORTED_MODULE_7__["editActive"])(0));
@@ -88927,6 +88948,10 @@ function (_Component) {
                   }
                 }).listen('.game-started', function (e) {
                   _this2.props.dispatch(Object(_redux_actions_room_actions__WEBPACK_IMPORTED_MODULE_7__["editActive"])(1));
+                }).listen('.president-rotated', function (e) {
+                  _this2.setState({
+                    president: e.president
+                  });
                 });
 
               case 3:
@@ -88958,8 +88983,12 @@ function (_Component) {
           setInactive: function setInactive() {
             return _this3.setInactive();
           },
+          rotatePresident: function rotatePresident() {
+            return _this3.rotatePresident();
+          },
           users: this.state.users,
-          id: this.props.match.params.id
+          id: this.props.match.params.id,
+          president: this.state.president
         });
       }
 

@@ -15,13 +15,20 @@ class PlayersLobby extends Component {
         const hitler = <img src="/images/hitler-role-card-JPG.jpg"/>
         const fascist = <img src="/images/fascist-role-cardJPG.jpg"/>
         const liberal = <img src="/images/liberal-role-cardSmall-JPG.jpg"/>
-        const president = <p>President</p>
         const condition = this.props.hitler === userId
 
         if (Array.isArray(this.props.fascists) && this.props.fascists.some(id => userId === id)) {
             return condition ? hitler : fascist
         } else if (this.props.page === "Game" && userId === this.props.authUser.id) {
             return condition ? hitler : liberal
+        }
+    }
+
+    checkPresident = (userId) => {
+        const president = <p>President</p>
+
+        if(this.props.president === userId){
+            return president
         }
     }
 
@@ -40,10 +47,9 @@ class PlayersLobby extends Component {
                                 <i className="fas fa-crown"></i>
                                 &nbsp;{user.username}
                             </p>
-
                             {this.checkFascists(user.id)}
-
                             <i className="fa fa-2x fa-long-arrow-right arrow1" aria-hidden="true"></i>
+                            {this.checkPresident(user.id)}
                         </div>
                     )
                 } else {
@@ -59,6 +65,7 @@ class PlayersLobby extends Component {
                             </div>
                             {this.checkFascists(user.id)}
                             <i className="fa fa-2x fa-long-arrow-right arrow1" aria-hidden="true"></i>
+                            {this.checkPresident(user.id)}
                         </div>
                     )
                 }
@@ -72,6 +79,7 @@ class PlayersLobby extends Component {
                         </p>
                         {this.checkFascists(user.id)}
                         <i className="fa fa-2x fa-long-arrow-right arrow1" aria-hidden="true"></i>
+                        {this.checkPresident(user.id)}
                     </div>
                 )
             } else {
@@ -82,6 +90,7 @@ class PlayersLobby extends Component {
                         </p>
                         {this.checkFascists(user.id)}
                         <i className="fa fa-2x fa-long-arrow-right arrow1" aria-hidden="true"></i>
+                        {this.checkPresident(user.id)}
                     </div>
                 )
             }

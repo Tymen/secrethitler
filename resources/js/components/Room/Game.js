@@ -9,12 +9,16 @@ class Game extends Component {
     state = {
         fascists: [],
         hitler: '',
+        president: this.props.president,
         loaded: false
+    }
+
+    getPresident = () => {
+        axios.get(`/api/v1/rooms/${this.props.room.id}/get_president`)
     }
 
     getFascists = () => {
         axios.get(`/api/v1/rooms/${this.props.room.id}/fascists`).then(response => {
-            console.log( response.data);
             this.setState(() => {
                 return {
                     fascists: response.data.fascists,
@@ -28,12 +32,12 @@ class Game extends Component {
                     loaded: true
                 }
             })
-            console.log(this.state.loaded)
         })
     }
 
     componentDidMount() {
         setTimeout(this.getFascists, 1000)
+        setTimeout(this.getPresident, 1000)
     }
 
     render() {
@@ -43,7 +47,7 @@ class Game extends Component {
                     <div className="row">
                         <div className="col-2 bg-dark col-wrap">
                             <div className="in-game">
-                                <PlayersLobby users={this.props.users} page='Game' fascists={this.state.fascists} hitler={this.state.hitler}/>
+                                <PlayersLobby users={this.props.users} page='Game' fascists={this.state.fascists} hitler={this.state.hitler} president={this.props.president}/>
                             </div>
                         </div>
 
@@ -75,6 +79,11 @@ class Game extends Component {
                         </div>
                         <div className="col-3 bg-grey">
                             <button onClick={() => this.props.setInactive()}>Inactive</button>
+                            <button onClick={() => {
+                                this.props.rotatePresident();
+                                this.getPresident();
+
+                            }}>Rotate president</button>
                         </div>
                     </div>
 

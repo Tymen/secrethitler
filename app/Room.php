@@ -26,16 +26,31 @@ class Room extends Model
 
     public function rotatePresident($users)
     {
+        $allUsers = $users->all();
+
         $president = false;
+        $lastUser = end($allUsers);
 
-        if($users->count > 1 && !$president){
-            $president = Arr::random($users->all(), 1);
-            $president->assignRole('President');
+        foreach ($allUsers as $u) {
+            $u->hasRole('President') ? $president = $u->id : false;
         }
 
-        if($president){
+        if ($president) {
+            foreach ($allUsers as $u) {
+                $u->hasRole('President') ? $president = $u->id : false;
+                $u->removeRole('President');
+            }
 
+            if($allUsers[$president-1] === $lastUser){
+                $president = $allUsers[0];
+            }else{
+                $president = $allUsers[$president];
+            }
+        } else {
+            $president = Arr::random($allUsers);
         }
+        $president->assignRole('President');
+
     }
 
     public function divideRoles($users)
