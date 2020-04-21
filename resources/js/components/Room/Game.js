@@ -49,7 +49,6 @@ class Game extends Component {
         );
     }
 }
-
 const mapStateToProps = state => {
     const { room } = state
     return { room: room }

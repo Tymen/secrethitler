@@ -148,4 +148,26 @@ class RoomsApiController extends Controller
         $room->save();
         return response()->json(['message' => $room]);
     }
+
+    public function getPolicies(Room $room){
+//        $randomInt = mt_rand(1, $total);
+//        $result = ($randomInt > $facist) ? "Liberal" : 1;
+        $this->authorize('isPresident', $room);
+        $fascist = $room->roomState->fascist_policies;
+        $liberal = $room->roomState->liberal_policies;
+
+        $result = [];
+        $total = $liberal + $fascist;
+        for($i = 0; $i < 3; $i++){
+            $chance = round($fascist / $total * 100);
+            $random = round(rand(0, 100));
+            $result[] = $random < $chance ? "Fascist" : "Liberal";
+        }
+
+        return response()->json([
+            'Fascist_cards' => $fascist,
+            'Liberal_cards' => $liberal,
+            'Card' => $result,
+        ]);
+    }
 }
