@@ -19,20 +19,16 @@ Route::namespace('Api')->group(function () {
                     Route::get('me', 'UsersApiController@me');
                     Route::get('auth', 'UsersApiController@auth');
                 });
-
-                Route::prefix('rooms')->group(function () {
-                    Route::post('/', 'RoomsApiController@store');
-                    Route::prefix('{room}')->group(function () {
-                        Route::get('/', 'RoomsApiController@show');
-                        Route::get('/fascists', 'RoomsApiController@getFascists');
-                        Route::get('get_policies', 'RoomsApiController@getPolicies');
-                        Route::post('set_policies', 'RoomsApiController@setPolicies');
-                        Route::post('change_host', 'RoomsApiController@changeHost');
-                        Route::post('active', 'RoomsApiController@setActive');
-                        Route::post('inactive', 'RoomsApiController@setInactive');
-                        Route::post('kick/{user}', 'RoomsApiController@kickUser');
-                        Route::delete('destroy', 'RoomsApiController@destroy');
-                    });
+                Route::prefix('{room}')->group(function () {
+                    Route::get('/', 'RoomsApiController@show');
+                    Route::get('/fascists', 'RoomsApiController@getFascists');
+                    Route::get('get_policies', 'RoomsApiController@getPolicies');
+                    Route::post('set_policies', 'RoomsApiController@setPolicies');
+                    Route::post('change_host', 'RoomsApiController@changeHost');
+                    Route::post('active', 'RoomsApiController@setActive');
+                    Route::post('inactive', 'RoomsApiController@setInactive');
+                    Route::post('kick/{user}', 'RoomsApiController@kickUser');
+                    Route::delete('destroy', 'RoomsApiController@destroy');
                 });
             });
         });
