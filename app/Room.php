@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use phpDocumentor\Reflection\Types\Null_;
+use Pusher\Pusher;
 
 class Room extends Model
 {
@@ -29,23 +30,24 @@ class Room extends Model
         $allUsers = $users->all();
 
         $president = false;
+        $chancellor = false;
         $lastUser = end($allUsers);
 
         foreach ($allUsers as $u) {
-            $u->hasRole('President') ? $president = $u->id : false;
+            $u->hasRole('President') ? $president = $u : false;
+            $u->hasRole('Chancellor') ? $chancellor = $u : false;
         }
 
         if ($president) {
-            foreach ($allUsers as $u) {
-                $u->hasRole('President') ? $president = $u->id : false;
-                $u->removeRole('President');
-            }
 
-            if($allUsers[$president-1] === $lastUser){
-                $president = $allUsers[0];
-            }else{
-                $president = $allUsers[$president];
-            }
+            $president->removeRole('President');
+
+            $chancellor ? $chancellor->removeRole('Chancellor') : false;
+
+            $key = array_search($president, $allUsers);
+
+            $president = $allUsers[$key] === $lastUser ? $allUsers[0] : $allUsers[$key + 1];
+
         } else {
             $president = Arr::random($allUsers);
         }
