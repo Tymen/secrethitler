@@ -15,6 +15,7 @@ class AddVotedColumn extends Migration
     {
         Schema::table('users', function(Blueprint $table) {
             $table->boolean('voted')->default(false);
+            $table->string('vote_type')->nullable();
         });
     }
 

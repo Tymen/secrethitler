@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Events\KickUserEvent;
 use App\Events\StartGameEvent;
+use App\Events\VotesDoneEvent;
 use App\Room;
 use App\User;
 use App\RoomState;
@@ -197,14 +198,22 @@ class RoomsApiController extends Controller
 
     public function setVote(Room $room, Request $request)
     {
+        dd();
         $this->authorize('canVote', $room);
 
-        $request->nein ? $room->roomState->nein += 1 : $room->roomState->ja += 1;
+        $roomState = $room->roomState;
+
+        $request->nein ? $roomState->nein += 1 : $roomState->ja += 1;
         $room->roomState->save();
 
         $user = Auth::user();
         $user->voted = true;
+        $user->vote_type = $request->nein ? 'nein' : 'ja';
         $user->save();
+
+        if (!$room->users->pluck('voted')->contains(false)) {
+            $roomState->ja >= $roomState->nein ? event(new VotesDoneEvent()) : event(new VotesDoneEvent());
+        }
 
         return response()->json(['message' => 'completed']);
     }
