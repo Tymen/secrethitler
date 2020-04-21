@@ -205,7 +205,7 @@ class RoomsApiController extends Controller
     {
 //        $randomInt = mt_rand(1, $total);
 //        $result = ($randomInt > $facist) ? "Liberal" : 1;
-//        $this->authorize('isPresident', $room);
+        $this->authorize('isPresident', $room);
         $fascist = $room->roomState->fascist_policies;
         $liberal = $room->roomState->liberal_policies;
 
