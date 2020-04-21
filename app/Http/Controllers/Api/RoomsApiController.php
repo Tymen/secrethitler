@@ -15,7 +15,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\RoomCollection;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\Room as RoomResource;
-use Pusher\Pusher;
 
 class RoomsApiController extends Controller
 {
@@ -136,7 +135,7 @@ class RoomsApiController extends Controller
 
     public function rotatePresident(Room $room)
     {
-//        $this->authorize('inRoom', $room);
+        $this->authorize('inRoom', $room);
 
         $room->rotatePresident($room->users);
 
