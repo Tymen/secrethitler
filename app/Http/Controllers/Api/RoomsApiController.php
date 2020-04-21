@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Events\KickUserEvent;
+use App\Events\RotatePresidentEvent;
 use App\Events\StartGameEvent;
 use App\Room;
 use App\User;
@@ -87,12 +88,13 @@ class RoomsApiController extends Controller
     {
         $this->authorize('isHost', $room);
 
+        $room->rotatePresident($room->users);
+
         $room->divideRoles($room->users);
         $room->active = true;
         $room->save();
 
         event(new StartGameEvent($room->id));
-
         return response()->json(['message' => 'completed']);
     }
 
@@ -118,6 +120,28 @@ class RoomsApiController extends Controller
         }
 
         return response()->json($data);
+    }
+
+    public function getPresident(Room $room)
+    {
+        $president = 0;
+
+        foreach($room->users as $u) {
+            $u->hasRole('President') ? $president = $u->id : false;
+        }
+
+        Event(new RotatePresidentEvent($room->id, $president));
+    }
+
+    public function rotatePresident(Room $room)
+    {
+        $this->authorize('inRoom', $room);
+
+        $room->rotatePresident($room->users);
+
+        $room->save();
+
+        return response()->json(['message' => 'rotated']);
     }
 
     public function setInactive(Room $room)

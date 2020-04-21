@@ -27,6 +27,8 @@ Route::namespace('Api')->group(function () {
                 Route::prefix('{room}')->group(function () {
                     Route::get('/', 'RoomsApiController@show');
                     Route::get('/fascists', 'RoomsApiController@getFascists');
+                    Route::post('/president', 'RoomsApiController@rotatePresident');
+                    Route::get('/get_president', 'RoomsApiController@getPresident');
                     Route::get('get_policies', 'RoomsApiController@getPolicies');
                     Route::post('change_host', 'RoomsApiController@changeHost');
                     Route::post('active', 'RoomsApiController@setActive');
