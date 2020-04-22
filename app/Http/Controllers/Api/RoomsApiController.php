@@ -6,6 +6,7 @@ use App\Events\KickUserEvent;
 use App\Events\RotatePresidentEvent;
 use App\Events\StartGameEvent;
 use App\Room;
+use App\Rules\PolicyChecker;
 use App\User;
 use App\RoomState;
 use Illuminate\Http\Request;
@@ -13,6 +14,7 @@ use App\Events\RoomsUpdatedEvent;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\RoomCollection;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\Room as RoomResource;
 
@@ -104,7 +106,7 @@ class RoomsApiController extends Controller
         $hitler = 0;
         $countUsers = $room->users->count();
 
-        foreach($room->users as $u) {
+        foreach ($room->users as $u) {
 
             $u->hasRole('Fascist') ? $fascists[] = $u->id : false;
             $u->hasRole('Hitler') ? $hitler = $u->id : false;
@@ -113,10 +115,10 @@ class RoomsApiController extends Controller
         $this->authorize('getFascists', [$room, $fascists]);
 
         $data = ['fascists' => $fascists, 'hitler' => $hitler];
-        $user =  Auth::user()->id;
+        $user = Auth::user()->id;
 
         if ($countUsers > 6 && $user === $hitler) {
-             $data = ['hitler' => $hitler];
+            $data = ['hitler' => $hitler];
         }
 
         return response()->json($data);
@@ -126,7 +128,7 @@ class RoomsApiController extends Controller
     {
         $president = 0;
 
-        foreach($room->users as $u) {
+        foreach ($room->users as $u) {
             $u->hasRole('President') ? $president = $u->id : false;
         }
 
@@ -153,6 +155,7 @@ class RoomsApiController extends Controller
 
         return response()->json(['message' => 'completed']);
     }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -190,14 +193,16 @@ class RoomsApiController extends Controller
         return response()->json(['message' => 'completed']);
     }
 
-    public function changeHost(Room $room, Request $request){
+    public function changeHost(Room $room, Request $request)
+    {
         $this->authorize('isHost', $room);
         $room->user_id = $request->newUserHost;
         $room->save();
         return response()->json(['message' => $room]);
     }
 
-    public function getPolicies(Room $room){
+    public function getPolicies(Room $room, Request $request)
+    {
 //        $randomInt = mt_rand(1, $total);
 //        $result = ($randomInt > $facist) ? "Liberal" : 1;
         $this->authorize('isPresident', $room);
@@ -206,16 +211,72 @@ class RoomsApiController extends Controller
 
         $result = [];
         $total = $liberal + $fascist;
-        for($i = 0; $i < 3; $i++){
+        for ($i = 0; $i < 3; $i++) {
             $chance = round($fascist / $total * 100);
             $random = round(rand(0, 100));
             $result[] = $random < $chance ? "Fascist" : "Liberal";
         }
-
-        return response()->json([
+        $response = [
             'Fascist_cards' => $fascist,
             'Liberal_cards' => $liberal,
             'Card' => $result,
-        ]);
+        ];
+        $changePolicies = $room->roomState;
+        $changePolicies->chosen_policies = implode(" ", $result);
+        foreach ($result as $policy) {
+            $test[] = (strtolower($policy) === "fascist") ?
+                $changePolicies->fascist_policies = $changePolicies->fascist_policies - 1 :
+                $changePolicies->liberal_policies = $changePolicies->liberal_policies - 1;
+        }
+        $changePolicies->save();
+        return response()->json($response);
+    }
+
+    public function setPolicies(Room $room, Request $request)
+    {
+        $changePolicies = $room->roomState;
+        $validation = $this->policyValidation($room, $request);
+
+        if ($validation) {
+            (strtolower($request->removed) === "fascist") ?
+                $changePolicies->chosen_fascist += 1 :
+                $changePolicies->chosen_liberal += 1;
+            $changePolicies->save();
+        } else {
+            $request->leftOver = "Error";
+        }
+
+        return response()->json(['leftover' => $request->leftOver]);
+    }
+
+    private function policyValidation($room, $request)
+    {
+        $changePolicies = $room->roomState;
+        $mergedRequest = $request->leftOver;
+        array_push($mergedRequest, $request->removed);
+        $getPolicyCheckDB = array_count_values(explode(" ", $changePolicies->chosen_policies));
+        $getMergedCheck = array_count_values($mergedRequest);
+
+        if (count($getMergedCheck) <= 2) {
+            if (array_key_exists("Liberal", $getPolicyCheckDB) && array_key_exists("Fascist", $getPolicyCheckDB)) {
+                if (array_key_exists("Liberal", $getMergedCheck) && array_key_exists("Fascist", $getMergedCheck)) {
+                    $validation = (($getMergedCheck["Liberal"] === $getPolicyCheckDB["Liberal"]) &&
+                        ($getMergedCheck["Fascist"] === $getPolicyCheckDB["Fascist"])) ?
+                        true : false;
+                } else {
+                    $validation = false;
+                }
+            } else if (array_key_exists("Liberal", $getPolicyCheckDB)) {
+                $validation = ($getPolicyCheckDB["Liberal"] === $getMergedCheck["Liberal"]) ?
+                    true : false;
+            } else {
+                $validation = ($getPolicyCheckDB["Fascist"] === $getMergedCheck["Fascist"]) ?
+                    true : false;
+            }
+        } else {
+            $validation = false;
+        }
+
+        return $validation;
     }
 }
