@@ -1,10 +1,34 @@
 import React, {Component} from 'react';
 import {Link} from "react-router-dom";
 import {connect} from "react-redux";
+import {setPresident} from "../../../redux/actions/room-actions";
 
 class PlayersLobby extends Component {
 
+    state = {
+        president: 0,
+        chancellor: 0,
+    }
+
     componentDidMount() {
+        this._isMounted = true
+        // setTimeout(this.listener, 1000)
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false
+    }
+
+    listener = () => {
+        if (this.props.room.id) {
+            // let channel = Echo.channel(`room.${this.props.room.id}`)
+            //
+            // channel.listen('.president-rotated', (e) => {
+            //     if (this._isMounted) {
+            //         this.props.dispatch(setPresident(e.president))
+            //     }
+            // })
+        }
     }
 
     checkPage = () => {
@@ -27,6 +51,14 @@ class PlayersLobby extends Component {
         }
     }
 
+    checkPresident = (userId) => {
+        const president = <p>President</p>
+
+        if(this.props.room.president?.id === userId){
+            return president
+        }
+    }
+
     kickUser = (e, id) => {
         e.preventDefault()
         axios.post(`/api/v1/rooms/${this.props.room.id}/kick/${id}`)
@@ -43,6 +75,8 @@ class PlayersLobby extends Component {
                                 &nbsp;{user.username}
                             </p>
                             {this.checkFascists(user.id)}
+                            <i className="fa fa-2x fa-long-arrow-right arrow1" aria-hidden="true"></i>
+                            {this.checkPresident(user.id)}
                         </div>
                     )
                 } else {
@@ -57,6 +91,8 @@ class PlayersLobby extends Component {
                                    onClick={(e) => this.kickUser(e, user.id)}>Kick {user.username}</a>
                             </div>
                             {this.checkFascists(user.id)}
+                            <i className="fa fa-2x fa-long-arrow-right arrow1" aria-hidden="true"></i>
+                            {this.checkPresident(user.id)}
                         </div>
                     )
                 }
@@ -69,6 +105,8 @@ class PlayersLobby extends Component {
                             &nbsp;{user.username}
                         </p>
                         {this.checkFascists(user.id)}
+                        <i className="fa fa-2x fa-long-arrow-right arrow1" aria-hidden="true"></i>
+                        {this.checkPresident(user.id)}
                     </div>
                 )
             } else {
@@ -78,6 +116,8 @@ class PlayersLobby extends Component {
                             {user.username}
                         </p>
                         {this.checkFascists(user.id)}
+                        <i className="fa fa-2x fa-long-arrow-right arrow1" aria-hidden="true"></i>
+                        {this.checkPresident(user.id)}
                     </div>
                 )
             }

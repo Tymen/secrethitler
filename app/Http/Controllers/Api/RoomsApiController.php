@@ -2,20 +2,20 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Events\KickUserEvent;
-use App\Events\NewChancellorEvent;
-use App\Events\StartGameEvent;
 use App\Room;
 use App\User;
 use App\RoomState;
 use Illuminate\Http\Request;
+use App\Events\KickUserEvent;
+use App\Events\StartGameEvent;
 use App\Events\RoomsUpdatedEvent;
+use App\Events\NewChancellorEvent;
+use App\Events\RotatePresidentEvent;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\RoomCollection;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\Room as RoomResource;
-use Pusher\Pusher;
 
 class RoomsApiController extends Controller
 {
@@ -89,11 +89,13 @@ class RoomsApiController extends Controller
     {
         $this->authorize('isHost', $room);
 
+        event(new StartGameEvent($room->id));
+
+        $room->rotatePresident($room);
+
         $room->divideRoles($room->users);
         $room->active = true;
         $room->save();
-
-        event(new StartGameEvent($room->id));
 
         return response()->json(['message' => 'completed']);
     }
@@ -120,6 +122,15 @@ class RoomsApiController extends Controller
         }
 
         return response()->json($data);
+    }
+
+    public function rotatePresident(Room $room)
+    {
+        $this->authorize('inRoom', $room);
+
+        $room->rotatePresident($room);
+
+        return response()->json(['message' => 'completed']);
     }
 
     public function setInactive(Room $room)
@@ -201,10 +212,16 @@ class RoomsApiController extends Controller
     {
         $this->authorize('isPresident', $room);
 
-        $user = User::find($request->uid);
-        $user->assignRole('Chancellor');
+        $chancellor = User::role('Chancellor')->where('room_id', $room->id)->first();
 
-        event(new NewChancellorEvent($room->id, $user->id));
+        if ((Auth::id() !== $request->uid) && $chancellor && ($chancellor->id !== $request->uid)) {
+
+            $user = User::find($request->uid);
+            $user->assignRole('Chancellor');
+            $chancellor->removeRole('Chancellor');
+
+            event(new NewChancellorEvent($room->id, $user->id));
+        }
 
         return response()->json(['message' => 'completed']);
     }

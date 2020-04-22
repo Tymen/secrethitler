@@ -26,12 +26,15 @@ Route::namespace('Api')->group(function () {
 
                 Route::prefix('{room}')->group(function () {
                     Route::get('/', 'RoomsApiController@show');
-                    Route::get('/fascists', 'RoomsApiController@getFascists');
+                    Route::get('fascists', 'RoomsApiController@getFascists');
                     Route::get('get_policies', 'RoomsApiController@getPolicies');
+
+                    Route::post('president', 'RoomsApiController@rotatePresident');
                     Route::post('change_host', 'RoomsApiController@changeHost');
                     Route::post('active', 'RoomsApiController@setActive');
                     Route::post('inactive', 'RoomsApiController@setInactive');
                     Route::post('kick/{user}', 'RoomsApiController@kickUser');
+
                     Route::delete('destroy', 'RoomsApiController@destroy');
                 });
             });

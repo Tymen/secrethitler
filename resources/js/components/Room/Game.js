@@ -6,15 +6,20 @@ import Board from "../../components/Room/Game/Board";
 
 
 class Game extends Component {
+
     state = {
         fascists: [],
         hitler: '',
+        president: this.props.president,
         loaded: false
+    }
+
+    componentDidMount() {
+        setTimeout(this.getFascists, 1000)
     }
 
     getFascists = () => {
         axios.get(`/api/v1/rooms/${this.props.room.id}/fascists`).then(response => {
-            console.log( response.data);
             this.setState(() => {
                 return {
                     fascists: response.data.fascists,
@@ -28,12 +33,11 @@ class Game extends Component {
                     loaded: true
                 }
             })
-            console.log(this.state.loaded)
         })
     }
 
-    componentDidMount() {
-        setTimeout(this.getFascists, 1000)
+    rotatePresident = () =>{
+        axios.post(`/api/v1/rooms/${this.props.room.id}/president`)
     }
 
     render() {
@@ -75,6 +79,7 @@ class Game extends Component {
                         </div>
                         <div className="col-3 bg-grey">
                             <button onClick={() => this.props.setInactive()}>Inactive</button>
+                            <button onClick={() => this.rotatePresident()}>Rotate president</button>
                         </div>
                     </div>
 

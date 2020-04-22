@@ -4,7 +4,7 @@ import Lobby from "../components/Room/Lobby";
 import ChatLobby from "../components/Room/Lobby/ChatLobby";
 import PlayersLobby from "../components/Room/Lobby/PlayersLobby";
 import {connect} from 'react-redux';
-import {deleteAllMessages, editActive, setRoom} from "../redux/actions/room-actions";
+import {deleteAllMessages, editActive, setPresident, setRoom} from "../redux/actions/room-actions";
 
 class Room extends Component {
 
@@ -30,6 +30,9 @@ class Room extends Component {
             })
             .leaving((user) => {
                 this.onUserLeave(user)
+            })
+            .listen('.president-rotated', (e) => {
+                this.props.dispatch(setPresident(e.president))
             })
             .listen('.user-kicked', (e) => {
                 if (this.props.authUser.id === e.userId) {
@@ -98,7 +101,7 @@ class Room extends Component {
     render() {
         if (this.props.room.active) {
             return (
-                <Game setInactive={() => this.setInactive()} users={this.state.users}
+                <Game setInactive={() => this.setInactive()} rotatePresident={() => this.rotatePresident()} users={this.state.users}
                       id={this.props.match.params.id}/>
             )
         }
