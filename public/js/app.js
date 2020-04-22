@@ -87015,6 +87015,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Lobby_ChatLobby__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Lobby/ChatLobby */ "./resources/js/components/Room/Lobby/ChatLobby.js");
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _components_Room_Game_Board__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../components/Room/Game/Board */ "./resources/js/components/Room/Game/Board.js");
+/* harmony import */ var _Game_GameInteractionBlock__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Game/GameInteractionBlock */ "./resources/js/components/Room/Game/GameInteractionBlock.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -87025,13 +87026,16 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -87045,56 +87049,114 @@ function (_Component) {
   _inherits(Game, _Component);
 
   function Game() {
+    var _getPrototypeOf2;
+
+    var _this;
+
     _classCallCheck(this, Game);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(Game).apply(this, arguments));
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(Game)).call.apply(_getPrototypeOf2, [this].concat(args)));
+
+    _defineProperty(_assertThisInitialized(_this), "state", {
+      fascists: [],
+      hitler: '',
+      loaded: false
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "getFascists", function () {
+      axios.get("/api/v1/rooms/".concat(_this.props.room.id, "/fascists")).then(function (response) {
+        console.log(response.data);
+
+        _this.setState(function () {
+          return {
+            fascists: response.data.fascists,
+            hitler: response.data.hitler,
+            loaded: true
+          };
+        });
+      })["catch"](function (err) {
+        _this.setState(function () {
+          return {
+            loaded: true
+          };
+        });
+
+        console.log(_this.state.loaded);
+      });
+    });
+
+    return _this;
   }
 
   _createClass(Game, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      setTimeout(this.getFascists, 1000);
+    }
+  }, {
     key: "render",
     value: function render() {
-      var _this = this;
+      var _this2 = this;
+
+      if (this.state.loaded) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "container-fluid"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "row"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "col-2 bg-dark col-wrap"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "in-game"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Lobby_PlayersLobby__WEBPACK_IMPORTED_MODULE_1__["default"], {
+          users: this.props.users,
+          page: "Game",
+          fascists: this.state.fascists,
+          hitler: this.state.hitler
+        }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "col-7 bg-board"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "board-section"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "col-12 board-section"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Room_Game_Board__WEBPACK_IMPORTED_MODULE_4__["default"], null)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "col-12 player-name-block"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+          className: "name-of-room"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", null, "Room: "), this.props.room.name)))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "col-3 col-wrap"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "in-game"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Lobby_ChatLobby__WEBPACK_IMPORTED_MODULE_2__["default"], {
+          page: "Game"
+        })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "row row-under"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "col-2 bg-grey"
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "col-7 bg-dark-grey"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Game_GameInteractionBlock__WEBPACK_IMPORTED_MODULE_5__["default"], {
+          users: this.props.users
+        })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "col-3 bg-grey"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          onClick: function onClick() {
+            return _this2.props.setInactive();
+          }
+        }, "Inactive"))));
+      }
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "container-fluid"
+        className: "text-center"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "row"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-2 bg-dark col-wrap"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "in-game"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Lobby_PlayersLobby__WEBPACK_IMPORTED_MODULE_1__["default"], {
-        users: this.props.users,
-        page: "Game"
-      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-7 bg-board"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "board-section"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-12 board-section"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Room_Game_Board__WEBPACK_IMPORTED_MODULE_4__["default"], null)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-12 player-name-block"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-        className: "name-of-room"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", null, "Room: "), this.props.room.name)))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-3 col-wrap"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "in-game"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Lobby_ChatLobby__WEBPACK_IMPORTED_MODULE_2__["default"], {
-        page: "Game"
-      })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "row row-under"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-2 bg-grey"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-7 bg-dark-grey"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-3 bg-grey"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        onClick: function onClick() {
-          return _this.props.setInactive();
-        }
-      }, "Inactive"))));
+        className: "spinner-border",
+        role: "status"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "sr-only"
+      }, "Loading...")));
     }
   }]);
 
@@ -87158,7 +87220,10 @@ function (_Component) {
   _createClass(Board, [{
     key: "render",
     value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null);
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        className: "both-sides",
+        src: "/images/both-sides-board.svg"
+      });
     }
   }]);
 
@@ -87166,6 +87231,199 @@ function (_Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
 
+
+/***/ }),
+
+/***/ "./resources/js/components/Room/Game/ChooseChancellor.js":
+/*!***************************************************************!*\
+  !*** ./resources/js/components/Room/Game/ChooseChancellor.js ***!
+  \***************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+
+var ChooseChancellor =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(ChooseChancellor, _Component);
+
+  function ChooseChancellor() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    _classCallCheck(this, ChooseChancellor);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(ChooseChancellor)).call.apply(_getPrototypeOf2, [this].concat(args)));
+
+    _defineProperty(_assertThisInitialized(_this), "state", {
+      checkedUser: ''
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "isChecked", function (userId) {
+      _this.setState({
+        checkedUser: userId
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "showOptions", function () {
+      return _this.props.users.map(function (user) {
+        var _this$props$authUser;
+
+        if (user.id !== ((_this$props$authUser = _this.props.authUser) === null || _this$props$authUser === void 0 ? void 0 : _this$props$authUser.id)) {
+          if (user.id === _this.state.checkedUser) {
+            return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+              className: "options active",
+              key: user.id
+            }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+              className: "container-choose-chancellor"
+            }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+              type: "radio",
+              name: "radio",
+              onChange: function onChange() {
+                return _this.isChecked(user.id);
+              }
+            }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+              name: user.id,
+              className: "checkbox"
+            }), user.username));
+          } else {
+            return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+              className: "options",
+              key: user.id
+            }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+              className: "container-choose-chancellor"
+            }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+              type: "radio",
+              name: "radio",
+              onChange: function onChange() {
+                return _this.isChecked(user.id);
+              }
+            }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+              name: user.id,
+              className: "checkbox"
+            }), user.username));
+          }
+        }
+      });
+    });
+
+    return _this;
+  }
+
+  _createClass(ChooseChancellor, [{
+    key: "render",
+    value: function render() {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "header-choose-chancellor"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Choose one of the players to be the chancellor")), this.showOptions(), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        type: "submit"
+      }, "submit"));
+    }
+  }]);
+
+  return ChooseChancellor;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+
+var mapStateToProps = function mapStateToProps(state) {
+  var users = state.users;
+  return {
+    authUser: users.authUser
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps)(ChooseChancellor));
+
+/***/ }),
+
+/***/ "./resources/js/components/Room/Game/GameInteractionBlock.js":
+/*!*******************************************************************!*\
+  !*** ./resources/js/components/Room/Game/GameInteractionBlock.js ***!
+  \*******************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _ChooseChancellor__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ChooseChancellor */ "./resources/js/components/Room/Game/ChooseChancellor.js");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+var GameInteractionBlock =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(GameInteractionBlock, _Component);
+
+  function GameInteractionBlock() {
+    _classCallCheck(this, GameInteractionBlock);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(GameInteractionBlock).apply(this, arguments));
+  }
+
+  _createClass(GameInteractionBlock, [{
+    key: "render",
+    value: function render() {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ChooseChancellor__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        users: this.props.users
+      }));
+    }
+  }]);
+
+  return GameInteractionBlock;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+
+/* harmony default export */ __webpack_exports__["default"] = (GameInteractionBlock);
 
 /***/ }),
 
@@ -87245,15 +87503,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _redux_actions_room_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../redux/actions/room-actions */ "./resources/js/redux/actions/room-actions.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
-
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
-
-function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -87272,6 +87523,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -87303,14 +87555,10 @@ function (_Component) {
       var channel = Echo.channel("room.".concat(_this.props.room.id));
       channel.listen('.message-event', function (data) {
         if (_this._isMounted) {
-          _this.setState(function () {
-            return {
-              messages: [].concat(_toConsumableArray(_this.state.messages), [{
-                time: _this.getCurrentTime(),
-                message: data.user.username + " : " + data.message
-              }])
-            };
-          });
+          _this.props.dispatch(Object(_redux_actions_room_actions__WEBPACK_IMPORTED_MODULE_2__["addMessage"])({
+            time: _this.getCurrentTime(),
+            message: data.user.username + " : " + data.message
+          }));
 
           _this.scrollToBottom();
         }
@@ -87496,9 +87744,30 @@ function (_Component) {
       return 'Players in lobby';
     });
 
+    _defineProperty(_assertThisInitialized(_this), "checkFascists", function (userId) {
+      var hitler = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        src: "/images/hitler-role-card-JPG.jpg"
+      });
+      var fascist = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        src: "/images/fascist-role-cardJPG.jpg"
+      });
+      var liberal = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        src: "/images/liberal-role-cardSmall-JPG.jpg"
+      });
+      var condition = _this.props.hitler === userId;
+
+      if (Array.isArray(_this.props.fascists) && _this.props.fascists.some(function (id) {
+        return userId === id;
+      })) {
+        return condition ? hitler : fascist;
+      } else if (_this.props.page === "Game" && userId === _this.props.authUser.id) {
+        return condition ? hitler : liberal;
+      }
+    });
+
     _defineProperty(_assertThisInitialized(_this), "kickUser", function (e, id) {
       e.preventDefault();
-      axios.post("/api/v1/rooms/".concat(_this.props.room.owner.id, "/kick/").concat(id));
+      axios.post("/api/v1/rooms/".concat(_this.props.room.id, "/kick/").concat(id));
     });
 
     _defineProperty(_assertThisInitialized(_this), "showPlayers", function () {
@@ -87510,15 +87779,17 @@ function (_Component) {
 
           if (((_this$props$room$owne2 = _this.props.room.owner) === null || _this$props$room$owne2 === void 0 ? void 0 : _this$props$room$owne2.id) === user.id) {
             return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-              key: user.id
+              key: user.id,
+              className: "player-name-div"
             }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
               className: "player-name"
             }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
               className: "fas fa-crown"
-            }), "\xA0", user.username));
+            }), "\xA0", user.username), _this.checkFascists(user.id));
           } else {
             return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-              key: user.id
+              key: user.id,
+              className: "player-name-div"
             }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
               className: "player-name dropdown-toggle",
               type: "button",
@@ -87534,24 +87805,26 @@ function (_Component) {
               onClick: function onClick(e) {
                 return _this.kickUser(e, user.id);
               }
-            }, "Kick ", user.username)));
+            }, "Kick ", user.username)), _this.checkFascists(user.id));
           }
         }
 
         if (((_this$props$room$owne3 = _this.props.room.owner) === null || _this$props$room$owne3 === void 0 ? void 0 : _this$props$room$owne3.id) === user.id) {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-            key: user.id
+            key: user.id,
+            className: "player-name-div"
           }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
             className: "player-name"
           }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
             className: "fas fa-crown"
-          }), "\xA0", user.username));
+          }), "\xA0", user.username), _this.checkFascists(user.id));
         } else {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-            key: user.id
+            key: user.id,
+            className: "player-name-div"
           }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
             className: "player-name"
-          }, user.username));
+          }, user.username), _this.checkFascists(user.id));
         }
       });
     });
@@ -88755,7 +89028,8 @@ function (_Component) {
             leftUsers: _this.state.leftUsers.filter(function (id) {
               return id !== user.id;
             })
-          });
+          }); // To Remove all messages when player leaves game
+
 
           _this.props.room.owner.id === user.id ? _this.getRoom() : false;
         }
@@ -88991,13 +89265,15 @@ if (document.getElementById('index')) {
 /*!****************************************************!*\
   !*** ./resources/js/redux/actions/room-actions.js ***!
   \****************************************************/
-/*! exports provided: setRoom, editActive */
+/*! exports provided: setRoom, editActive, addMessage, deleteAllMessages */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setRoom", function() { return setRoom; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "editActive", function() { return editActive; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addMessage", function() { return addMessage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteAllMessages", function() { return deleteAllMessages; });
 var setRoom = function setRoom(room) {
   return {
     type: 'SET_ROOM',
@@ -89008,6 +89284,17 @@ var editActive = function editActive(value) {
   return {
     type: 'EDIT_ACTIVE',
     value: value
+  };
+};
+var addMessage = function addMessage(value) {
+  return {
+    type: 'ADD_MESSAGE',
+    value: value
+  };
+};
+var deleteAllMessages = function deleteAllMessages() {
+  return {
+    type: 'DELETE_ALL_MESSAGES'
   };
 };
 
@@ -89063,6 +89350,14 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -89075,11 +89370,23 @@ var room = function room() {
 
   switch (action.type) {
     case 'SET_ROOM':
-      return action.room;
+      return _objectSpread({}, action.room, {
+        messages: []
+      });
 
     case 'EDIT_ACTIVE':
       return _objectSpread({}, state, {
         active: action.value
+      });
+
+    case 'ADD_MESSAGE':
+      return _objectSpread({}, state, {
+        messages: [].concat(_toConsumableArray(state.messages), [action.value])
+      });
+
+    case 'DELETE_ALL_MESSAGES':
+      return _objectSpread({}, state, {
+        messages: []
       });
 
     default:
