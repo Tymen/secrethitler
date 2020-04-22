@@ -564,8 +564,6 @@ body::-webkit-scrollbar-thumb {
     width: 298px;
     max-width: 298px;
     border-right: 1px solid white;
-    overflow: scroll;
-    overflow-x: hidden;
 }
 
 .players-in-lobby {
@@ -650,6 +648,7 @@ body::-webkit-scrollbar-thumb {
     height: 45px;
     background-color: #828282;
     max-width: none;
+
 }
 
 .in-game .show-players .player-name {
@@ -837,9 +836,9 @@ div.options > input:checked + .container-choose-chancellor{
 
 .player-name {
     margin-bottom: 0px;
-    padding: 10px;
     font-size: 20px;
     color: white;
+    padding: 0px;
 }
 
 .room-info {
@@ -1232,3 +1231,4 @@ div.options > input:checked + .container-choose-chancellor{
         margin: 1vw 0;
     }
 }
+

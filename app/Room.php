@@ -24,6 +24,36 @@ class Room extends Model
         return $this->hasOne(RoomState::class);
     }
 
+    public function rotatePresident($users)
+    {
+        $allUsers = $users->all();
+
+        $president = false;
+        $chancellor = false;
+        $lastUser = end($allUsers);
+
+        foreach ($allUsers as $u) {
+            $u->hasRole('President') ? $president = $u : false;
+            $u->hasRole('Chancellor') ? $chancellor = $u : false;
+        }
+
+        if ($president) {
+
+            $president->removeRole('President');
+
+            $chancellor ? $chancellor->removeRole('Chancellor') : false;
+
+            $key = array_search($president, $allUsers);
+
+            $president = $allUsers[$key] === $lastUser ? $allUsers[0] : $allUsers[$key + 1];
+
+        } else {
+            $president = Arr::random($allUsers);
+        }
+        $president->assignRole('President');
+
+    }
+
     public function divideRoles($users)
     {
         $fascists = false;
@@ -49,7 +79,6 @@ class Room extends Model
                     $r->name !== 'Admin' ? $user->removeRole($r->name) : false;
                 }
             });
-
             $chosenFascists = Arr::random($users->all(), $fascists);
             $hitler = Arr::random($chosenFascists);
 

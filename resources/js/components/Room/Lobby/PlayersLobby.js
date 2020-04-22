@@ -24,6 +24,14 @@ class PlayersLobby extends Component {
         }
     }
 
+    checkPresident = (userId) => {
+        const president = <p>President</p>
+
+        if(this.props.president === userId){
+            return president
+        }
+    }
+
     kickUser = (e, id) => {
         e.preventDefault()
         axios.post(`/api/v1/rooms/${this.props.room.id}/kick/${id}`)
@@ -40,6 +48,8 @@ class PlayersLobby extends Component {
                                 &nbsp;{user.username}
                             </p>
                             {this.checkFascists(user.id)}
+                            <i className="fa fa-2x fa-long-arrow-right arrow1" aria-hidden="true"></i>
+                            {this.checkPresident(user.id)}
                         </div>
                     )
                 } else {
@@ -54,6 +64,8 @@ class PlayersLobby extends Component {
                                    onClick={(e) => this.kickUser(e, user.id)}>Kick {user.username}</a>
                             </div>
                             {this.checkFascists(user.id)}
+                            <i className="fa fa-2x fa-long-arrow-right arrow1" aria-hidden="true"></i>
+                            {this.checkPresident(user.id)}
                         </div>
                     )
                 }
@@ -66,6 +78,8 @@ class PlayersLobby extends Component {
                             &nbsp;{user.username}
                         </p>
                         {this.checkFascists(user.id)}
+                        <i className="fa fa-2x fa-long-arrow-right arrow1" aria-hidden="true"></i>
+                        {this.checkPresident(user.id)}
                     </div>
                 )
             } else {
@@ -75,6 +89,8 @@ class PlayersLobby extends Component {
                             {user.username}
                         </p>
                         {this.checkFascists(user.id)}
+                        <i className="fa fa-2x fa-long-arrow-right arrow1" aria-hidden="true"></i>
+                        {this.checkPresident(user.id)}
                     </div>
                 )
             }
