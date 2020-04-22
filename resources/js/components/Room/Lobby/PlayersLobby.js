@@ -4,6 +4,9 @@ import {connect} from "react-redux";
 
 class PlayersLobby extends Component {
 
+    componentDidMount() {
+    }
+
     checkPage = () => {
         if (this.props.page === "Game") {
             return `${this.props.users.length}/${this.props.room.max_players} Players`

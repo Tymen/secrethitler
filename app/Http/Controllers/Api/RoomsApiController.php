@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Events\KickUserEvent;
+use App\Events\NewChancellorEvent;
 use App\Events\StartGameEvent;
 use App\Room;
 use App\User;
@@ -14,6 +15,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\RoomCollection;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\Room as RoomResource;
+use Pusher\Pusher;
 
 class RoomsApiController extends Controller
 {
@@ -193,5 +195,17 @@ class RoomsApiController extends Controller
             'Liberal_cards' => $liberal,
             'Card' => $result,
         ]);
+    }
+
+    public function setChancellor(Room $room, Request $request)
+    {
+        $this->authorize('isPresident', $room);
+
+        $user = User::find($request->uid);
+        $user->assignRole('Chancellor');
+
+        event(new NewChancellorEvent($room->id, $user->id));
+
+        return response()->json(['message' => 'completed']);
     }
 }
