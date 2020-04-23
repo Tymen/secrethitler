@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Room;
+use App\Rules\PolicyChecker;
 use App\User;
 use App\RoomState;
 use Illuminate\Http\Request;
@@ -14,6 +15,7 @@ use App\Events\RotatePresidentEvent;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\RoomCollection;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\Room as RoomResource;
 
@@ -33,7 +35,6 @@ class RoomsApiController extends Controller
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
     {
@@ -203,12 +204,68 @@ class RoomsApiController extends Controller
             $random = round(rand(0, 100));
             $result[] = $random < $chance ? "Fascist" : "Liberal";
         }
-
-        return response()->json([
+        $response = [
             'Fascist_cards' => $fascist,
             'Liberal_cards' => $liberal,
             'Card' => $result,
-        ]);
+        ];
+        $changePolicies = $room->roomState;
+        $changePolicies->chosen_policies = implode(" ", $result);
+        foreach ($result as $policy) {
+            $test[] = (strtolower($policy) === "fascist") ?
+                $changePolicies->fascist_policies = $changePolicies->fascist_policies - 1 :
+                $changePolicies->liberal_policies = $changePolicies->liberal_policies - 1;
+        }
+        $changePolicies->save();
+        return response()->json($response);
+    }
+
+    public function setPolicies(Room $room, Request $request)
+    {
+        $changePolicies = $room->roomState;
+        $validation = $this->policyValidation($room, $request);
+
+        if ($validation) {
+            (strtolower($request->removed) === "fascist") ?
+                $changePolicies->chosen_fascist += 1 :
+                $changePolicies->chosen_liberal += 1;
+            $changePolicies->save();
+        } else {
+            $request->leftOver = "Error";
+        }
+
+        return response()->json(['leftover' => $request->leftOver]);
+    }
+
+    private function policyValidation($room, $request)
+    {
+        $changePolicies = $room->roomState;
+        $mergedRequest = $request->leftOver;
+        array_push($mergedRequest, $request->removed);
+        $getPolicyCheckDB = array_count_values(explode(" ", $changePolicies->chosen_policies));
+        $getMergedCheck = array_count_values($mergedRequest);
+
+        if (count($getMergedCheck) <= 2) {
+            if (array_key_exists("Liberal", $getPolicyCheckDB) && array_key_exists("Fascist", $getPolicyCheckDB)) {
+                if (array_key_exists("Liberal", $getMergedCheck) && array_key_exists("Fascist", $getMergedCheck)) {
+                    $validation = (($getMergedCheck["Liberal"] === $getPolicyCheckDB["Liberal"]) &&
+                        ($getMergedCheck["Fascist"] === $getPolicyCheckDB["Fascist"])) ?
+                        true : false;
+                } else {
+                    $validation = false;
+                }
+            } else if (array_key_exists("Liberal", $getPolicyCheckDB)) {
+                $validation = ($getPolicyCheckDB["Liberal"] === $getMergedCheck["Liberal"]) ?
+                    true : false;
+            } else {
+                $validation = ($getPolicyCheckDB["Fascist"] === $getMergedCheck["Fascist"]) ?
+                    true : false;
+            }
+        } else {
+            $validation = false;
+        }
+
+        return $validation;
     }
 
     public function setChancellor(Room $room, Request $request)
