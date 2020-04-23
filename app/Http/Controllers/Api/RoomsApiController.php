@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api;
 
 use App\Room;
-use App\Rules\PolicyChecker;
 use App\User;
 use App\RoomState;
 use Illuminate\Http\Request;
