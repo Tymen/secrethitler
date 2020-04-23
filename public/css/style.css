@@ -438,7 +438,7 @@ body::-webkit-scrollbar-thumb {
 
 .show-rooms {
     overflow-y: scroll;
-    max-height: auto;
+    /*max-height: auto;*/
 }
 
 .room-block {
@@ -660,6 +660,16 @@ body::-webkit-scrollbar-thumb {
     padding: 0;
 }
 
+.president-container {
+    font-size: 8px;
+    margin: 0 0 0 3px;
+}
+
+.president-container-p {
+    font-size: 12px;
+    margin: -3px 0 0px -10px;
+}
+
 .bg-board .board-section {
     height: 500px;
 }
@@ -754,8 +764,8 @@ body::-webkit-scrollbar-thumb {
     position: absolute;
     right: 0;
     top: 0;
-    height: 49px;
-    width: 42px;
+    height: 100%;
+    width: 50px;
 }
 
 .both-sides {
@@ -1018,7 +1028,16 @@ div.options > input:checked + .container-choose-chancellor{
     }
 
     .player-name-div img {
-        height: 42px;
+        height: 100%;
+        width: 47px;
+    }
+    .president-container {
+        font-size: 6px;
+        margin: -6px 0 0 2px;
+    }
+    .president-container-p{
+        font-size: 7.8px;
+        margin: -6px 0 0px -16px;
     }
 }
 
@@ -1072,8 +1091,22 @@ div.options > input:checked + .container-choose-chancellor{
     }
 
     .player-name-div img {
-        height: 36px;
+        height: 100%;
         width: 37px;
+    }
+    .president-container {
+        font-size: 5px;
+        margin: -1px 0 0 3px;
+    }
+    .president-container-p{
+        font-size: 5.8px;
+        margin: -1px 0 0px -16px;
+    }
+
+    .header-choose-chancellor p {
+        text-align: center;
+        font-size: 12px;
+        padding: 11px;
     }
 }
 
@@ -1122,7 +1155,15 @@ div.options > input:checked + .container-choose-chancellor{
     }
 
     .player-name-div img {
-        width: 28px;
+        height: 100%;
+        width: 27px;
+    }
+    .president-container {
+        font-size: 3px;
+        margin: -1px 0 0 1px;
+    }
+    .president-container-p{
+        margin: -8px 0 0px 10px;
     }
 }
 

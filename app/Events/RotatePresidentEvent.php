@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Room;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -25,6 +26,7 @@ class RotatePresidentEvent implements ShouldBroadcast
     {
         $this->roomId = $roomId;
         $this->president = $president;
+        $this->changeStage($roomId);
     }
 
     /**
@@ -40,5 +42,11 @@ class RotatePresidentEvent implements ShouldBroadcast
     public function broadcastAs()
     {
         return 'president-rotated';
+    }
+
+    public function changeStage(Room $room)
+    {
+        $room->roomState->stage = 1;
+        $room->save();
     }
 }

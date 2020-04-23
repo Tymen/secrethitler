@@ -87064,13 +87064,16 @@ function (_Component) {
     _defineProperty(_assertThisInitialized(_this), "state", {
       fascists: [],
       hitler: '',
+      president: _this.props.president,
       loaded: false
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "getPresident", function () {
+      axios.get("/api/v1/rooms/".concat(_this.props.room.id, "/get_president"));
     });
 
     _defineProperty(_assertThisInitialized(_this), "getFascists", function () {
       axios.get("/api/v1/rooms/".concat(_this.props.room.id, "/fascists")).then(function (response) {
-        console.log(response.data);
-
         _this.setState(function () {
           return {
             fascists: response.data.fascists,
@@ -87084,8 +87087,6 @@ function (_Component) {
             loaded: true
           };
         });
-
-        console.log(_this.state.loaded);
       });
     });
 
@@ -87096,6 +87097,7 @@ function (_Component) {
     key: "componentDidMount",
     value: function componentDidMount() {
       setTimeout(this.getFascists, 1000);
+      setTimeout(this.getPresident, 1000);
     }
   }, {
     key: "render",
@@ -87115,7 +87117,8 @@ function (_Component) {
           users: this.props.users,
           page: "Game",
           fascists: this.state.fascists,
-          hitler: this.state.hitler
+          hitler: this.state.hitler,
+          president: this.props.president
         }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "col-7 bg-board"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -87146,7 +87149,13 @@ function (_Component) {
           onClick: function onClick() {
             return _this2.props.setInactive();
           }
-        }, "Inactive"))));
+        }, "Inactive"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          onClick: function onClick() {
+            _this2.props.rotatePresident();
+
+            _this2.getPresident();
+          }
+        }, "Rotate president"))));
       }
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -87345,9 +87354,7 @@ function (_Component) {
   _createClass(ChooseChancellor, [{
     key: "render",
     value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "header-choose-chancellor"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Choose one of the players to be the chancellor")), this.showOptions(), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.showOptions(), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         type: "submit"
       }, "submit"));
     }
@@ -87389,13 +87396,15 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
 
@@ -87406,15 +87415,43 @@ function (_Component) {
   _inherits(GameInteractionBlock, _Component);
 
   function GameInteractionBlock() {
+    var _getPrototypeOf2;
+
+    var _this;
+
     _classCallCheck(this, GameInteractionBlock);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(GameInteractionBlock).apply(this, arguments));
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(GameInteractionBlock)).call.apply(_getPrototypeOf2, [this].concat(args)));
+
+    _defineProperty(_assertThisInitialized(_this), "state", {
+      headerText: ''
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "loadComponents", function () {
+      if (_ChooseChancellor__WEBPACK_IMPORTED_MODULE_1__["default"]) {
+        _this.setState({
+          headerText: 'Choose one of the players to be the chancellor'
+        });
+      } else {
+        _this.setState({
+          headerText: 'No component is loaded!'
+        });
+      }
+    });
+
+    return _this;
   }
 
   _createClass(GameInteractionBlock, [{
     key: "render",
     value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ChooseChancellor__WEBPACK_IMPORTED_MODULE_1__["default"], {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "header-choose-chancellor"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.state.headerText)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ChooseChancellor__WEBPACK_IMPORTED_MODULE_1__["default"], {
         users: this.props.users
       }));
     }
@@ -87622,13 +87659,15 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
+      var _this$props$room$mess,
+          _this2 = this;
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "chat"
-      }, this.state.messages.map(function (message) {
+      }, (_this$props$room$mess = this.props.room.messages) === null || _this$props$room$mess === void 0 ? void 0 : _this$props$room$mess.map(function (message) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "message-container"
+          className: "message-container",
+          key: Math.floor(Math.random() * 99999)
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
           key: Math.floor(Math.random() * 99999),
           className: "message"
@@ -87765,6 +87804,25 @@ function (_Component) {
       }
     });
 
+    _defineProperty(_assertThisInitialized(_this), "checkPresident", function (userId) {
+      var president = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "row"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-sm-1 president-container"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fa fa-2x fa-long-arrow-right arrow1",
+        "aria-hidden": "true"
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-sm-5"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "president-container-p"
+      }, "President")));
+
+      if (_this.props.president === userId && _this.props.page === "Game") {
+        return president;
+      }
+    });
+
     _defineProperty(_assertThisInitialized(_this), "kickUser", function (e, id) {
       e.preventDefault();
       axios.post("/api/v1/rooms/".concat(_this.props.room.id, "/kick/").concat(id));
@@ -87785,7 +87843,7 @@ function (_Component) {
               className: "player-name"
             }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
               className: "fas fa-crown"
-            }), "\xA0", user.username), _this.checkFascists(user.id));
+            }), "\xA0", user.username), _this.checkFascists(user.id), _this.checkPresident(user.id));
           } else {
             return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
               key: user.id,
@@ -87805,7 +87863,7 @@ function (_Component) {
               onClick: function onClick(e) {
                 return _this.kickUser(e, user.id);
               }
-            }, "Kick ", user.username)), _this.checkFascists(user.id));
+            }, "Kick ", user.username)), _this.checkFascists(user.id), _this.checkPresident(user.id));
           }
         }
 
@@ -87817,14 +87875,14 @@ function (_Component) {
             className: "player-name"
           }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
             className: "fas fa-crown"
-          }), "\xA0", user.username), _this.checkFascists(user.id));
+          }), "\xA0", user.username), _this.checkFascists(user.id), _this.checkPresident(user.id));
         } else {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
             key: user.id,
             className: "player-name-div"
           }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
             className: "player-name"
-          }, user.username), _this.checkFascists(user.id));
+          }, user.username), _this.checkFascists(user.id), _this.checkPresident(user.id));
         }
       });
     });
@@ -88989,7 +89047,8 @@ function (_Component) {
       users: [],
       leftUsers: [],
       loggedIn: false,
-      loaded: false
+      loaded: false,
+      president: ''
     });
 
     _defineProperty(_assertThisInitialized(_this), "onUserJoin", function (user) {
@@ -89062,6 +89121,10 @@ function (_Component) {
       axios.post("/api/v1/rooms/".concat(_this.props.match.params.id, "/active"));
     });
 
+    _defineProperty(_assertThisInitialized(_this), "rotatePresident", function () {
+      axios.post("/api/v1/rooms/".concat(_this.props.match.params.id, "/president"));
+    });
+
     _defineProperty(_assertThisInitialized(_this), "setInactive", function () {
       axios.post("/api/v1/rooms/".concat(_this.props.match.params.id, "/inactive")).then(function (response) {
         _this.props.dispatch(Object(_redux_actions_room_actions__WEBPACK_IMPORTED_MODULE_7__["editActive"])(0));
@@ -89102,6 +89165,10 @@ function (_Component) {
                   }
                 }).listen('.game-started', function (e) {
                   _this2.props.dispatch(Object(_redux_actions_room_actions__WEBPACK_IMPORTED_MODULE_7__["editActive"])(1));
+                }).listen('.president-rotated', function (e) {
+                  _this2.setState({
+                    president: e.president
+                  });
                 });
 
               case 3:
@@ -89133,8 +89200,12 @@ function (_Component) {
           setInactive: function setInactive() {
             return _this3.setInactive();
           },
+          rotatePresident: function rotatePresident() {
+            return _this3.rotatePresident();
+          },
           users: this.state.users,
-          id: this.props.match.params.id
+          id: this.props.match.params.id,
+          president: this.state.president
         });
       }
 

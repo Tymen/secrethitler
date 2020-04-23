@@ -47,7 +47,7 @@ render()
 {
     return (
         <div>
-            <div className="header-choose-chancellor"><p>Choose one of the players to be the chancellor</p></div>
+            {/*<div className="header-choose-chancellor"><p>Choose one of the players to be the chancellor</p></div>*/}
             {this.showOptions()}
             <button type="submit" >submit</button>
         </div>

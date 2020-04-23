@@ -109,7 +109,7 @@ class Room extends Component {
         if (this.props.room.active) {
             return (
                 <Game setInactive={() => this.setInactive()} rotatePresident={() => this.rotatePresident()} users={this.state.users}
-                      id={this.props.match.params.id} president={this.state.president}/>
+                      id={this.props.match.params.id} president={this.state.president} />
             )
         }
         return (

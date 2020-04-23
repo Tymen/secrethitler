@@ -69,8 +69,8 @@ class ChatLobby extends Component {
         return (
             <div>
                 <div className="chat">
-                        {this.state.messages.map(message => (
-                            <div className="message-container">
+                        {this.props.room.messages?.map(message => (
+                            <div className="message-container" key={Math.floor(Math.random() * 99999)}>
                                 <p key={Math.floor(Math.random() * 99999)} className="message">{message.message}</p>
                                 <p className="time">{message.time}</p>
                             </div>
