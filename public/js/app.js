@@ -88794,7 +88794,7 @@ function (_Component) {
                 }).listen('.game-started', function (e) {
                   _this2.props.dispatch(Object(_redux_actions_room_actions__WEBPACK_IMPORTED_MODULE_7__["editActive"])(1));
                 }).listen('.update-stage', function (e) {
-                  _this2.getRoom();
+                  _this2.props.dispatch(Object(_redux_actions_room_actions__WEBPACK_IMPORTED_MODULE_7__["setStage"])(e.stageNum));
                 }).listen('.new-chancellor', function (e) {
                   _this2.props.dispatch(Object(_redux_actions_room_actions__WEBPACK_IMPORTED_MODULE_7__["setChancellor"])(e.chancellor));
                 });
@@ -88962,7 +88962,7 @@ if (document.getElementById('index')) {
 /*!****************************************************!*\
   !*** ./resources/js/redux/actions/room-actions.js ***!
   \****************************************************/
-/*! exports provided: setRoom, editActive, setPresident, setChancellor, addMessage, deleteAllMessages */
+/*! exports provided: setRoom, editActive, setPresident, setChancellor, setStage, addMessage, deleteAllMessages */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -88971,6 +88971,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "editActive", function() { return editActive; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setPresident", function() { return setPresident; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setChancellor", function() { return setChancellor; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setStage", function() { return setStage; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addMessage", function() { return addMessage; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteAllMessages", function() { return deleteAllMessages; });
 var setRoom = function setRoom(room) {
@@ -88995,6 +88996,12 @@ var setChancellor = function setChancellor(user) {
   return {
     type: 'SET_CHANCELLOR',
     user: user
+  };
+};
+var setStage = function setStage(_int) {
+  return {
+    type: 'SET_STAGE',
+    "int": _int
   };
 };
 var addMessage = function addMessage(value) {
@@ -89100,6 +89107,11 @@ var room = function room() {
     case 'SET_CHANCELLOR':
       return _objectSpread({}, state, {
         chancellor: action.user
+      });
+
+    case 'SET_STAGE':
+      return _objectSpread({}, state, {
+        stage: action["int"]
       });
 
     case 'ADD_MESSAGE':

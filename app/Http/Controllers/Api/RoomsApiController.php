@@ -285,7 +285,7 @@ class RoomsApiController extends Controller
 
         $user->assignRole('Chancellor');
 
-        event(new NewChancellorEvent($room, $user));
+        event(new NewChancellorEvent($room, ['id' => $user->id, 'username' => $user->username]));
 
         return response()->json(['message' => 'completed']);
     }

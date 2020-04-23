@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Helper\AppHelper;
 use App\Room;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
@@ -28,7 +29,7 @@ class RotatePresidentEvent implements ShouldBroadcast
     {
         $this->room = $room;
         $this->president = $president;
-        $this->changeStage();
+        AppHelper::changeState($room, 1);
     }
 
     /**
@@ -44,13 +45,5 @@ class RotatePresidentEvent implements ShouldBroadcast
     public function broadcastAs()
     {
         return 'president-rotated';
-    }
-
-    public function changeStage()
-    {
-        $this->room->roomState->stage = 1;
-        $this->room->roomState->save();
-
-        event(new UpdateStageEvent($this->room->id));
     }
 }

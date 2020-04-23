@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Helper\AppHelper;
 use App\Room;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
@@ -28,7 +29,7 @@ class NewChancellorEvent implements ShouldBroadcast
     {
         $this->room = $room;
         $this->chancellor = $chancellor;
-        $this->changeState();
+        AppHelper::changeState($room, 2);
     }
 
     /**
@@ -44,12 +45,5 @@ class NewChancellorEvent implements ShouldBroadcast
     public function broadcastAs()
     {
         return 'new-chancellor';
-    }
-
-    public function changeState()
-    {
-        $this->room->roomState->stage = 2;
-        $this->room->roomState->save();
-        event(new UpdateStageEvent($this->room->id));
     }
 }

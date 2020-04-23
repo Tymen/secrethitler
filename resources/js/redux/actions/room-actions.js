@@ -18,6 +18,11 @@ export const setChancellor = user => ({
     user
 })
 
+export const setStage = int => ({
+    type: 'SET_STAGE',
+    int
+})
+
 export const addMessage = value => ({
     type: 'ADD_MESSAGE',
     value
