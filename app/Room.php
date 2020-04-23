@@ -25,20 +25,21 @@ class Room extends Model
 
     public function rotatePresident($room)
     {
-        $allUsers = $room->users->all();
+        $users = $room->users;
+        $userIds = $users->pluck('id')->all();
 
         $president = User::role('President')->where('room_id', $room->id)->first();
-        $lastUser = end($allUsers);
+        $lastUser = end($userIds);
 
         if ($president) {
 
             $president->removeRole('President');
 
-            $key = array_search($president, $allUsers);
-            $president = $allUsers[$key] === $lastUser ? $allUsers[0] : $allUsers[$key + 1];
+            $key = array_search($president->id, $userIds);
+            $president = $userIds[$key] === $lastUser ? $users[0] : $users[$key + 1];
 
         } else {
-            $president = Arr::random($allUsers);
+            $president = Arr::random($users->all());
         }
         $president->assignRole('President');
 
