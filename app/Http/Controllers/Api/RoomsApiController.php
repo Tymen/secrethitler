@@ -115,7 +115,7 @@ class RoomsApiController extends Controller
         $this->authorize('getFascists', [$room, $fascists]);
 
         $data = ['fascists' => $fascists, 'hitler' => $hitler];
-        $user = Auth::user()->id;
+        $user = Auth::id();
 
         if ($countUsers > 6 && $user === $hitler) {
             $data = ['hitler' => $hitler];
