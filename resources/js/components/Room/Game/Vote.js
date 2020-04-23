@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-export default class ChoseYesNo extends Component {
+export default class Vote extends Component {
     render() {
         return (
             <div className="container">
