@@ -3,7 +3,7 @@ import PlayersLobby from "./Lobby/PlayersLobby";
 import ChatLobby from "./Lobby/ChatLobby";
 import {connect} from 'react-redux';
 import Board from "../../components/Room/Game/Board";
-
+import ChoseYesNo from "./Lobby/ChoseYesNo";
 
 class Game extends Component {
     state = {
@@ -74,8 +74,7 @@ class Game extends Component {
 
                         </div>
                         <div className="col-7 bg-dark-grey">
-
-
+                            <ChoseYesNo />
                         </div>
                         <div className="col-3 bg-grey">
                             <button onClick={() => this.props.setInactive()}>Inactive</button>

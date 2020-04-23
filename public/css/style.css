@@ -607,7 +607,7 @@ body::-webkit-scrollbar-thumb {
 .bg-board {
     background-color: #454545;
     max-width: none;
-    border-left: 1.5px solid #ffffff;
+    border-left: 0px solid #ffffff;
 }
 
 .in-game {
@@ -1162,3 +1162,22 @@ body::-webkit-scrollbar-thumb {
     }
 }
 
+.chose-cards{
+    opacity: 0.6;
+    margin-left: auto;
+    margin-right: auto;
+    /*display: block;*/
+    width: 30%;
+    height: auto;
+    cursor: pointer
+}
+
+.chose-cards:hover{
+    opacity: 1;
+    margin-left: auto;
+    margin-right: auto;
+    /*display: block;*/
+    width: 30%;
+    height: auto;
+    cursor: pointer
+}
