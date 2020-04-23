@@ -1,7 +1,7 @@
-const room = (state = {}, action) => {
+const room = (state = {messages: []}, action) => {
     switch (action.type) {
         case 'SET_ROOM':
-            return {...action.room, messages: []}
+            return {...action.room, messages: state.messages}
         case 'EDIT_ACTIVE':
             return {...state, active: action.value}
         case 'SET_PRESIDENT':

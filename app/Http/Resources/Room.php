@@ -17,7 +17,10 @@ class Room extends JsonResource
     public function toArray($request)
     {
         $president = User::role('President')->where('room_id', $this->id)->first();
-        $chancellor= User::role('Chancellor')->where('room_id', $this->id)->first();
+        $chancellor = User::role('Chancellor')->where('room_id', $this->id)->first();
+
+        $president = $president ? ['id' => $president->id, 'username' => $president->username] : false;
+        $chancellor = $chancellor ? ['id' => $chancellor->id, 'username' => $chancellor->username] : false;
 
         return [
             'id' => $this->id,
@@ -26,8 +29,8 @@ class Room extends JsonResource
             'owner' => $this->user,
             'max_players' => $this->max_players,
             'active' => $this->active,
-            'president' => ['id' => $president->id, 'username' => $president->username],
-            'chancellor' => ['id' => $chancellor->id, 'username' => $chancellor->username],
+            'president' => $president,
+            'chancellor' => $chancellor,
         ];
     }
 }

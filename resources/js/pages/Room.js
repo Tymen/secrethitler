@@ -4,7 +4,7 @@ import Lobby from "../components/Room/Lobby";
 import ChatLobby from "../components/Room/Lobby/ChatLobby";
 import PlayersLobby from "../components/Room/Lobby/PlayersLobby";
 import {connect} from 'react-redux';
-import {deleteAllMessages, editActive, setPresident, setRoom} from "../redux/actions/room-actions";
+import {editActive, setPresident, setRoom} from "../redux/actions/room-actions";
 
 class Room extends Component {
 
@@ -73,8 +73,6 @@ class Room extends Component {
                     users: this.state.users.filter(u => u.id !== user.id),
                     leftUsers: this.state.leftUsers.filter(id => id !== user.id),
                 })
-
- // To Remove all messages when player leaves game
 
                 this.props.room.owner.id === user.id ? this.getRoom() : false;
             }

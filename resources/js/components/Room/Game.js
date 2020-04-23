@@ -10,7 +10,6 @@ class Game extends Component {
     state = {
         fascists: [],
         hitler: '',
-        president: this.props.president,
         loaded: false
     }
 
