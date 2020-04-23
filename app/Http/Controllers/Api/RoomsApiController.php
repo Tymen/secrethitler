@@ -106,7 +106,7 @@ class RoomsApiController extends Controller
         $hitler = 0;
         $countUsers = $room->users->count();
 
-        foreach($room->users as $u) {
+        foreach ($room->users as $u) {
 
             $u->hasRole('Fascist') ? $fascists[] = $u->id : false;
             $u->hasRole('Hitler') ? $hitler = $u->id : false;
@@ -115,10 +115,10 @@ class RoomsApiController extends Controller
         $this->authorize('getFascists', [$room, $fascists]);
 
         $data = ['fascists' => $fascists, 'hitler' => $hitler];
-        $user =  Auth::user()->id;
+        $user = Auth::user()->id;
 
         if ($countUsers > 6 && $user === $hitler) {
-             $data = ['hitler' => $hitler];
+            $data = ['hitler' => $hitler];
         }
 
         return response()->json($data);
@@ -142,6 +142,7 @@ class RoomsApiController extends Controller
 
         return response()->json(['message' => 'completed']);
     }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -179,14 +180,16 @@ class RoomsApiController extends Controller
         return response()->json(['message' => 'completed']);
     }
 
-    public function changeHost(Room $room, Request $request){
+    public function changeHost(Room $room, Request $request)
+    {
         $this->authorize('isHost', $room);
         $room->user_id = $request->newUserHost;
         $room->save();
         return response()->json(['message' => $room]);
     }
 
-    public function getPolicies(Room $room){
+    public function getPolicies(Room $room)
+    {
 //        $randomInt = mt_rand(1, $total);
 //        $result = ($randomInt > $facist) ? "Liberal" : 1;
         $this->authorize('isPresident', $room);
@@ -195,7 +198,7 @@ class RoomsApiController extends Controller
 
         $result = [];
         $total = $liberal + $fascist;
-        for($i = 0; $i < 3; $i++){
+        for ($i = 0; $i < 3; $i++) {
             $chance = round($fascist / $total * 100);
             $random = round(rand(0, 100));
             $result[] = $random < $chance ? "Fascist" : "Liberal";
@@ -213,15 +216,22 @@ class RoomsApiController extends Controller
         $this->authorize('isPresident', $room);
 
         $chancellor = User::role('Chancellor')->where('room_id', $room->id)->first();
+        $id = intval($request->uid);
+        $user = User::find($id);
 
-        if ((Auth::id() !== $request->uid) && $chancellor && ($chancellor->id !== $request->uid)) {
+        abort_unless($user, 400, 'User does not exist');
 
-            $user = User::find($request->uid);
-            $user->assignRole('Chancellor');
+        abort_unless(Auth::id() !== $id, 400, 'Can not assign yourself');
+
+        if ($chancellor) {
+            abort_if($chancellor->id === $id, 400, 'Can not choose last chancellor again');
             $chancellor->removeRole('Chancellor');
-
-            event(new NewChancellorEvent($room->id, $user->id));
         }
+
+        $user->assignRole('Chancellor');
+
+        event(new NewChancellorEvent($room->id, $user->id));
+
 
         return response()->json(['message' => 'completed']);
     }
