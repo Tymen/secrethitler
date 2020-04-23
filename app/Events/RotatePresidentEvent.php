@@ -15,20 +15,20 @@ class RotatePresidentEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $roomId;
+    public $room;
     public $president;
 
     /**
      * Create a new event instance.
      *
-     * @param $roomId
+     * @param $room
      * @param $president
      */
     public function __construct(Room $room, $president)
     {
-        $this->roomId = $room->id;
+        $this->room = $room;
         $this->president = $president;
-        $this->changeStage($room);
+        $this->changeStage();
     }
 
     /**
@@ -38,7 +38,7 @@ class RotatePresidentEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PresenceChannel("room.{$this->roomId}");
+        return new PresenceChannel("room.{$this->room->id}");
     }
 
     public function broadcastAs()
@@ -46,11 +46,11 @@ class RotatePresidentEvent implements ShouldBroadcast
         return 'president-rotated';
     }
 
-    public function changeStage(Room $room)
+    public function changeStage()
     {
-        $room->roomState->stage = 1;
-        $room->roomState->save();
+        $this->room->roomState->stage = 1;
+        $this->room->roomState->save();
 
-        event(new UpdateStageEvent($room->id));
+        event(new UpdateStageEvent($this->room->id));
     }
 }

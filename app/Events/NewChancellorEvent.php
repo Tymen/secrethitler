@@ -24,11 +24,10 @@ class NewChancellorEvent implements ShouldBroadcast
      * @param $room
      * @param $userId
      */
-    public function __construct($room, $userId)
+    public function __construct($room)
     {
         $this->room = $room;
-        $this->userId = $userId;
-        $this->changeState($room);
+        $this->changeState();
     }
 
     /**
@@ -38,7 +37,7 @@ class NewChancellorEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PresenceChannel("room.{$this->room}");
+        return new PresenceChannel("room.{$this->room->id}");
     }
 
     public function broadcastAs()
@@ -46,10 +45,10 @@ class NewChancellorEvent implements ShouldBroadcast
         return 'new-chancellor';
     }
 
-    public function changeState(Room $room)
+    public function changeState()
     {
-        $room->roomState->stage = 2;
-        $room->roomState->save();
-        event(new UpdateStageEvent($room->id));
+        $this->room->roomState->stage = 2;
+        $this->room->roomState->save();
+        event(new UpdateStageEvent($this->room->id));
     }
 }
