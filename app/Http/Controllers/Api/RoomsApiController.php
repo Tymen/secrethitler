@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Events\KickUserEvent;
-use App\Events\RotatePresidentEvent;
-use App\Events\StartGameEvent;
 use App\Room;
-use App\Rules\PolicyChecker;
 use App\User;
 use App\RoomState;
 use Illuminate\Http\Request;
+use App\Events\KickUserEvent;
+use App\Events\StartGameEvent;
 use App\Events\RoomsUpdatedEvent;
+use App\Events\NewChancellorEvent;
+use App\Events\RotatePresidentEvent;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\RoomCollection;
@@ -34,7 +34,6 @@ class RoomsApiController extends Controller
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
     {
@@ -90,13 +89,14 @@ class RoomsApiController extends Controller
     {
         $this->authorize('isHost', $room);
 
-        $room->rotatePresident($room->users);
+        $room->rotatePresident($room);
 
         $room->divideRoles($room->users);
         $room->active = true;
         $room->save();
 
         event(new StartGameEvent($room->id));
+
         return response()->json(['message' => 'completed']);
     }
 
@@ -115,7 +115,7 @@ class RoomsApiController extends Controller
         $this->authorize('getFascists', [$room, $fascists]);
 
         $data = ['fascists' => $fascists, 'hitler' => $hitler];
-        $user = Auth::user()->id;
+        $user = Auth::id();
 
         if ($countUsers > 6 && $user === $hitler) {
             $data = ['hitler' => $hitler];
@@ -124,26 +124,13 @@ class RoomsApiController extends Controller
         return response()->json($data);
     }
 
-    public function getPresident(Room $room)
-    {
-        $president = 0;
-
-        foreach ($room->users as $u) {
-            $u->hasRole('President') ? $president = $u->id : false;
-        }
-
-        Event(new RotatePresidentEvent($room->id, $president));
-    }
-
     public function rotatePresident(Room $room)
     {
         $this->authorize('inRoom', $room);
 
-        $room->rotatePresident($room->users);
+        $room->rotatePresident($room);
 
-        $room->save();
-
-        return response()->json(['message' => 'rotated']);
+        return response()->json(['message' => 'completed']);
     }
 
     public function setInactive(Room $room)
@@ -201,7 +188,7 @@ class RoomsApiController extends Controller
         return response()->json(['message' => $room]);
     }
 
-    public function getPolicies(Room $room, Request $request)
+    public function getPolicies(Room $room)
     {
 //        $randomInt = mt_rand(1, $total);
 //        $result = ($randomInt > $facist) ? "Liberal" : 1;
@@ -278,5 +265,30 @@ class RoomsApiController extends Controller
         }
 
         return $validation;
+    }
+
+    public function setChancellor(Room $room, Request $request)
+    {
+        $this->authorize('isPresident', $room);
+
+        $chancellor = User::role('Chancellor')->where('room_id', $room->id)->first();
+        $id = intval($request->uid);
+        $user = User::find($id);
+
+        abort_unless($user, 400, 'User does not exist');
+
+        abort_unless(Auth::id() !== $id, 400, 'Can not assign yourself');
+
+        if ($chancellor) {
+            abort_if($chancellor->id === $id, 400, 'Can not choose last chancellor again');
+            $chancellor->removeRole('Chancellor');
+        }
+
+        $user->assignRole('Chancellor');
+
+        event(new NewChancellorEvent($room, $user->id));
+
+
+        return response()->json(['message' => 'completed']);
     }
 }

@@ -1,30 +1,39 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import ChooseChancellor from './ChooseChancellor'
+import {connect} from "react-redux";
 
 class GameInteractionBlock extends Component {
-    state= {
-        headerText: ''
-    }
-
     loadComponents = () => {
-        if (ChooseChancellor){
-            this.setState({
-                headerText: 'Choose one of the players to be the chancellor'
-            })
+        const isPresident = this.props.authUser.id === this.props.room.president?.id;
+        if (this.props.room.stage === 1 && isPresident) {
+            return (
+                <div>
+                    <ChooseChancellor  users={this.props.users}/>
+                </div>
+            )
         } else {
-            this.setState({
-                headerText: 'No component is loaded!'
-            })
+            return (
+                <div>
+                    <div className="header-choose-chancellor">
+                        <p>Waiting for an action...</p>
+                        <div className="text-center">
+                            <div className="spinner-border" role="status">
+                                <span className="sr-only">Loading...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )
         }
     }
+
     render() {
-        return (
-            <div>
-                <div className="header-choose-chancellor"><p>{this.state.headerText}</p></div>
-                <ChooseChancellor users={this.props.users}/>
-            </div>
-        )
+        return this.loadComponents()
     }
 }
 
-export default GameInteractionBlock;
+const mapStateToProps = state => {
+    const {room, users} = state;
+    return {room: room, authUser: users.authUser}
+}
+export default connect(mapStateToProps)(GameInteractionBlock);

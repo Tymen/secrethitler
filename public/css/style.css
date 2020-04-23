@@ -784,7 +784,13 @@ body::-webkit-scrollbar-thumb {
 .header-choose-chancellor p {
     text-align: center;
     font-size: 18px;
-    padding: 5px;
+    padding: 0 5px 0 5px;
+}
+
+.header-choose-chancellor .under-title {
+    font-size: 10px;
+    padding: 0;
+    margin: -21px 0 0 0;
 }
 
 div.options {
@@ -841,7 +847,12 @@ div.options > .container-choose-chancellor > input:checked + img {
 div.options > input:checked + .container-choose-chancellor{
     background-color: #C2C2C2;
 }
-
+.btn-chancellor {
+    margin: 0;
+    padding: 11px 18px;
+    font-size: 10px;
+    float: right;
+}
     /*end of layout in game*/
 
 .player-name {
