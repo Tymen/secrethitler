@@ -16,17 +16,18 @@ class NewChancellorEvent implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $room;
-    public $userId;
+    public $chancellor;
 
     /**
      * Create a new event instance.
      *
      * @param $room
-     * @param $userId
+     * @param $chancellor
      */
-    public function __construct($room)
+    public function __construct($room, $chancellor)
     {
         $this->room = $room;
+        $this->chancellor = $chancellor;
         $this->changeState();
     }
 

@@ -88796,7 +88796,7 @@ function (_Component) {
                 }).listen('.update-stage', function (e) {
                   _this2.getRoom();
                 }).listen('.new-chancellor', function (e) {
-                  _this2.getRoom();
+                  _this2.props.dispatch(Object(_redux_actions_room_actions__WEBPACK_IMPORTED_MODULE_7__["setChancellor"])(e.chancellor));
                 });
 
               case 3:
@@ -88962,7 +88962,7 @@ if (document.getElementById('index')) {
 /*!****************************************************!*\
   !*** ./resources/js/redux/actions/room-actions.js ***!
   \****************************************************/
-/*! exports provided: setRoom, editActive, setPresident, addMessage, deleteAllMessages */
+/*! exports provided: setRoom, editActive, setPresident, setChancellor, addMessage, deleteAllMessages */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -88970,6 +88970,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setRoom", function() { return setRoom; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "editActive", function() { return editActive; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setPresident", function() { return setPresident; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setChancellor", function() { return setChancellor; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addMessage", function() { return addMessage; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteAllMessages", function() { return deleteAllMessages; });
 var setRoom = function setRoom(room) {
@@ -88987,6 +88988,12 @@ var editActive = function editActive(value) {
 var setPresident = function setPresident(user) {
   return {
     type: 'SET_PRESIDENT',
+    user: user
+  };
+};
+var setChancellor = function setChancellor(user) {
+  return {
+    type: 'SET_CHANCELLOR',
     user: user
   };
 };
@@ -89088,6 +89095,11 @@ var room = function room() {
     case 'SET_PRESIDENT':
       return _objectSpread({}, state, {
         president: action.user
+      });
+
+    case 'SET_CHANCELLOR':
+      return _objectSpread({}, state, {
+        chancellor: action.user
       });
 
     case 'ADD_MESSAGE':
