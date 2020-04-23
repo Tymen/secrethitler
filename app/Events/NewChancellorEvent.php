@@ -11,24 +11,24 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class RotatePresidentEvent implements ShouldBroadcast
+class NewChancellorEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $roomId;
-    public $president;
+    public $room;
+    public $userId;
 
     /**
      * Create a new event instance.
      *
-     * @param $roomId
-     * @param $president
+     * @param $room
+     * @param $userId
      */
-    public function __construct(Room $room, $president)
+    public function __construct($room, $userId)
     {
-        $this->roomId = $room->id;
-        $this->president = $president;
-        $this->changeStage($room);
+        $this->room = $room;
+        $this->userId = $userId;
+        $this->changeState($room);
     }
 
     /**
@@ -38,19 +38,18 @@ class RotatePresidentEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PresenceChannel("room.{$this->roomId}");
+        return new PresenceChannel("room.{$this->room}");
     }
 
     public function broadcastAs()
     {
-        return 'president-rotated';
+        return 'new-chancellor';
     }
 
-    public function changeStage(Room $room)
+    public function changeState(Room $room)
     {
-        $room->roomState->stage = 1;
+        $room->roomState->stage = 2;
         $room->roomState->save();
-
         event(new UpdateStageEvent($room->id));
     }
 }
