@@ -438,7 +438,7 @@ body::-webkit-scrollbar-thumb {
 
 .show-rooms {
     overflow-y: scroll;
-    max-height: auto;
+    /*max-height: auto;*/
 }
 
 .room-block {
@@ -564,8 +564,6 @@ body::-webkit-scrollbar-thumb {
     width: 298px;
     max-width: 298px;
     border-right: 1px solid white;
-    overflow: scroll;
-    overflow-x: hidden;
 }
 
 .players-in-lobby {
@@ -650,6 +648,7 @@ body::-webkit-scrollbar-thumb {
     height: 45px;
     background-color: #828282;
     max-width: none;
+
 }
 
 .in-game .show-players .player-name {
@@ -659,6 +658,16 @@ body::-webkit-scrollbar-thumb {
     left: 0;
     margin-top: 10px;
     padding: 0;
+}
+
+.president-container {
+    font-size: 8px;
+    margin: 0 0 0 3px;
+}
+
+.president-container-p {
+    font-size: 12px;
+    margin: -3px 0 0px -10px;
 }
 
 .bg-board .board-section {
@@ -735,6 +744,7 @@ body::-webkit-scrollbar-thumb {
 .bg-dark-grey {
     background-color: #4b4b4b;
     border-left: 0px solid #ffffff;
+    padding: 0;
 }
 
 .player-name-div {
@@ -745,6 +755,7 @@ body::-webkit-scrollbar-thumb {
     border-bottom: 1px solid white;
     /*overflow: hidden;*/
 }
+
 .player-name-div p {
     text-align: left;
 }
@@ -753,8 +764,8 @@ body::-webkit-scrollbar-thumb {
     position: absolute;
     right: 0;
     top: 0;
-    height: 49px;
-    width: 42px;
+    height: 100%;
+    width: 50px;
 }
 
 .both-sides {
@@ -764,14 +775,91 @@ body::-webkit-scrollbar-thumb {
     position: absolute;
 }
 
+.header-choose-chancellor {
+    background-color: #464444;
+    color: white;
+    height: 40px;
+}
 
-/*end of layout in game*/
+.header-choose-chancellor p {
+    text-align: center;
+    font-size: 18px;
+    padding: 0 5px 0 5px;
+}
+
+.header-choose-chancellor .under-title {
+    font-size: 10px;
+    padding: 0;
+    margin: -21px 0 0 0;
+}
+
+div.options {
+    background-color: #606060;
+    color: white;
+    border-top: 1px solid white;
+    border-bottom: 1px solid white;
+    opacity: 35%;
+}
+
+.active {
+    opacity: 100% !important;
+}
+
+.active .container-choose-chancellor {
+    font-weight: bold;
+}
+
+div.options > .container-choose-chancellor > input {
+    visibility: hidden;
+}
+
+.container-choose-chancellor #text {
+    margin-left: 10px;
+}
+
+div.options > .container-choose-chancellor {
+    display: block;
+    margin: 0 0 0 -13px;
+    padding: 0 0 39px 0;
+    height: 20px;
+    width: 150px;
+}
+
+div.options > .container-choose-chancellor > img {
+    display: inline-block;
+    padding: 0px;
+    height: 40px;
+    width: 40px;
+    background-color: #4B4B4B;
+    border: none;
+    margin-right: 12px;
+}
+
+div.options > .container-choose-chancellor > input:checked + img {
+    background: url("../images/check.png");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 25px 25px;
+    border: none;
+    background-color: #C2C2C2;
+}
+
+div.options > input:checked + .container-choose-chancellor{
+    background-color: #C2C2C2;
+}
+.btn-chancellor {
+    margin: 0;
+    padding: 11px 18px;
+    font-size: 10px;
+    float: right;
+}
+    /*end of layout in game*/
 
 .player-name {
     margin-bottom: 0px;
-    padding: 10px;
     font-size: 20px;
     color: white;
+    padding: 0px;
 }
 
 .room-info {
@@ -951,7 +1039,16 @@ body::-webkit-scrollbar-thumb {
     }
 
     .player-name-div img {
-        height: 42px;
+        height: 100%;
+        width: 47px;
+    }
+    .president-container {
+        font-size: 6px;
+        margin: -6px 0 0 2px;
+    }
+    .president-container-p{
+        font-size: 7.8px;
+        margin: -6px 0 0px -16px;
     }
 }
 
@@ -1005,8 +1102,22 @@ body::-webkit-scrollbar-thumb {
     }
 
     .player-name-div img {
-        height: 36px;
+        height: 100%;
         width: 37px;
+    }
+    .president-container {
+        font-size: 5px;
+        margin: -1px 0 0 3px;
+    }
+    .president-container-p{
+        font-size: 5.8px;
+        margin: -1px 0 0px -16px;
+    }
+
+    .header-choose-chancellor p {
+        text-align: center;
+        font-size: 12px;
+        padding: 11px;
     }
 }
 
@@ -1055,7 +1166,15 @@ body::-webkit-scrollbar-thumb {
     }
 
     .player-name-div img {
-        width: 28px;
+        height: 100%;
+        width: 27px;
+    }
+    .president-container {
+        font-size: 3px;
+        margin: -1px 0 0 1px;
+    }
+    .president-container-p{
+        margin: -8px 0 0px 10px;
     }
 }
 
@@ -1115,6 +1234,7 @@ body::-webkit-scrollbar-thumb {
     .login-bolletjes {
         width: 27%;
     }
+
     .both-sides {
         top: 12px;
         right: 800px;
@@ -1136,6 +1256,7 @@ body::-webkit-scrollbar-thumb {
     .login-bolletjes {
         width: 28%;
     }
+
     .both-sides {
         top: 12px;
         right: 1200px;
@@ -1162,3 +1283,4 @@ body::-webkit-scrollbar-thumb {
         margin: 1vw 0;
     }
 }
+

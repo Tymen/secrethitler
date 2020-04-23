@@ -14,7 +14,7 @@ Route::namespace('Api')->group(function () {
     Route::prefix('v1')->group(function () {
         Route::get('/rooms', 'RoomsApiController@index');
 
-        Route::middleware('auth:api')->group(function() {
+        Route::middleware('auth:api')->group(function () {
             Route::prefix('users')->group(function () {
                 Route::get('check', 'UsersApiController@checkAuth');
                 Route::get('me', 'UsersApiController@me');
@@ -28,11 +28,16 @@ Route::namespace('Api')->group(function () {
                     Route::get('/', 'RoomsApiController@show');
                     Route::get('fascists', 'RoomsApiController@getFascists');
                     Route::get('get_policies', 'RoomsApiController@getPolicies');
+
+                    Route::post('president', 'RoomsApiController@rotatePresident');
+                    Route::post('set_policies', 'RoomsApiController@setPolicies');
+                    Route::post('chancellor', 'RoomsApiController@setChancellor');
                     Route::post('change_host', 'RoomsApiController@changeHost');
                     Route::post('active', 'RoomsApiController@setActive');
                     Route::post('inactive', 'RoomsApiController@setInactive');
                     Route::post('vote', 'RoomsApiController@setVote');
                     Route::post('kick/{user}', 'RoomsApiController@kickUser');
+
                     Route::delete('destroy', 'RoomsApiController@destroy');
                 });
             });
