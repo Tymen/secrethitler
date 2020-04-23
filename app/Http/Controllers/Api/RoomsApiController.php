@@ -89,13 +89,13 @@ class RoomsApiController extends Controller
     {
         $this->authorize('isHost', $room);
 
+        $room->rotatePresident($room);
+
         $room->divideRoles($room->users);
         $room->active = true;
         $room->save();
 
         event(new StartGameEvent($room->id));
-
-        $room->rotatePresident($room);
 
         return response()->json(['message' => 'completed']);
     }
