@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {Link} from "react-router-dom";
 import {connect} from "react-redux";
-import {setPresident} from "../../../redux/actions/room-actions";
 
 class PlayersLobby extends Component {
 
