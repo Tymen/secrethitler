@@ -15,19 +15,20 @@ class NewChancellorEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $roomId;
+    public $room;
     public $userId;
 
     /**
      * Create a new event instance.
      *
-     * @param $roomId
+     * @param $room
      * @param $userId
      */
-    public function __construct($roomId, $userId)
+    public function __construct($room, $userId)
     {
-        $this->roomId = $roomId;
+        $this->room = $room;
         $this->userId = $userId;
+        $this->changeState($room);
     }
 
     /**
@@ -37,11 +38,18 @@ class NewChancellorEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PresenceChannel("room.{$this->roomId}");
+        return new PresenceChannel("room.{$this->room}");
     }
 
     public function broadcastAs()
     {
         return 'new-chancellor';
+    }
+
+    public function changeState(Room $room)
+    {
+        $room->roomState->stage = 2;
+        $room->roomState->save();
+        event(new UpdateStageEvent($room->id));
     }
 }

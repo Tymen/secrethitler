@@ -3,6 +3,7 @@ import PlayersLobby from "./Lobby/PlayersLobby";
 import ChatLobby from "./Lobby/ChatLobby";
 import {connect} from 'react-redux';
 import Board from "../../components/Room/Game/Board";
+import GameInteractionBlock from "./Game/GameInteractionBlock";
 
 
 class Game extends Component {
@@ -10,7 +11,7 @@ class Game extends Component {
     state = {
         fascists: [],
         hitler: '',
-        loaded: false
+        loaded: false,
     }
 
     componentDidMount() {
@@ -73,8 +74,7 @@ class Game extends Component {
 
                         </div>
                         <div className="col-7 bg-dark-grey">
-
-
+                            <GameInteractionBlock users={this.props.users} />
                         </div>
                         <div className="col-3 bg-grey">
                             <button onClick={() => this.props.setInactive()}>Inactive</button>
@@ -99,6 +99,5 @@ const mapStateToProps = state => {
     return {room: room}
 }
 export default connect(mapStateToProps)(Game)
-
 
 

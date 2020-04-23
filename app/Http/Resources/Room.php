@@ -26,6 +26,7 @@ class Room extends JsonResource
             'owner' => $this->user,
             'max_players' => $this->max_players,
             'active' => $this->active,
+            'stage' => $this->roomState->stage,
             'president' => $president,
             'chancellor' => $chancellor,
         ];

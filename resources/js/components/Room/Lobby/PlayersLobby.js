@@ -24,11 +24,30 @@ class PlayersLobby extends Component {
         }
     }
 
-    checkPresident = (userId) => {
-        const president = <p>President</p>
-
-        if(this.props.room.president?.id === userId){
-            return president
+    checkRole = (userId) => {
+        if (this.props.room.president?.id === userId && this.props.page === "Game") {
+            return (
+                <div className="row">
+                    <div className="col-sm-1 president-container">
+                        <i className="fa fa-2x fa-long-arrow-right arrow1" aria-hidden="true"/>
+                    </div>
+                    <div className="col-sm-5">
+                        <p className="president-container-p">President</p>
+                    </div>
+                </div>
+            )
+        }
+        if (this.props.room.chancellor?.id === userId && this.props.page === "Game") {
+            return (
+                <div className="row">
+                    <div className="col-sm-1 president-container">
+                        <i className="fa fa-2x fa-long-arrow-right arrow1" aria-hidden="true"/>
+                    </div>
+                    <div className="col-sm-5">
+                        <p className="president-container-p">Chancellor</p>
+                    </div>
+                </div>
+            )
         }
     }
 
@@ -48,8 +67,7 @@ class PlayersLobby extends Component {
                                 &nbsp;{user.username}
                             </p>
                             {this.checkFascists(user.id)}
-                            <i className="fa fa-2x fa-long-arrow-right arrow1" aria-hidden="true"></i>
-                            {this.checkPresident(user.id)}
+                            {this.checkRole(user.id)}
                         </div>
                     )
                 } else {
@@ -64,8 +82,7 @@ class PlayersLobby extends Component {
                                    onClick={(e) => this.kickUser(e, user.id)}>Kick {user.username}</a>
                             </div>
                             {this.checkFascists(user.id)}
-                            <i className="fa fa-2x fa-long-arrow-right arrow1" aria-hidden="true"></i>
-                            {this.checkPresident(user.id)}
+                            {this.checkRole(user.id)}
                         </div>
                     )
                 }
@@ -78,8 +95,7 @@ class PlayersLobby extends Component {
                             &nbsp;{user.username}
                         </p>
                         {this.checkFascists(user.id)}
-                        <i className="fa fa-2x fa-long-arrow-right arrow1" aria-hidden="true"></i>
-                        {this.checkPresident(user.id)}
+                        {this.checkRole(user.id)}
                     </div>
                 )
             } else {
@@ -89,8 +105,7 @@ class PlayersLobby extends Component {
                             {user.username}
                         </p>
                         {this.checkFascists(user.id)}
-                        <i className="fa fa-2x fa-long-arrow-right arrow1" aria-hidden="true"></i>
-                        {this.checkPresident(user.id)}
+                        {this.checkRole(user.id)}
                     </div>
                 )
             }

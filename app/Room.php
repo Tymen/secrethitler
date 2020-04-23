@@ -43,7 +43,7 @@ class Room extends Model
         }
         $president->assignRole('President');
 
-        event(new RotatePresidentEvent($room->id, ['id' => $president->id, 'username' => $president->username]));
+        event(new RotatePresidentEvent($room, ['id' => $president->id, 'username' => $president->username]));
 
     }
 
