@@ -32,7 +32,6 @@ class Room extends Component {
                 this.onUserLeave(user)
             })
             .listen('.president-rotated', (e) => {
-                console.log(e)
                 this.props.dispatch(setPresident(e.president))
             })
             .listen('.user-kicked', (e) => {

@@ -5,32 +5,6 @@ import {setPresident} from "../../../redux/actions/room-actions";
 
 class PlayersLobby extends Component {
 
-    state = {
-        president: 0,
-        chancellor: 0,
-    }
-
-    componentDidMount() {
-        this._isMounted = true
-        // setTimeout(this.listener, 1000)
-    }
-
-    componentWillUnmount() {
-        this._isMounted = false
-    }
-
-    listener = () => {
-        if (this.props.room.id) {
-            // let channel = Echo.channel(`room.${this.props.room.id}`)
-            //
-            // channel.listen('.president-rotated', (e) => {
-            //     if (this._isMounted) {
-            //         this.props.dispatch(setPresident(e.president))
-            //     }
-            // })
-        }
-    }
-
     checkPage = () => {
         if (this.props.page === "Game") {
             return `${this.props.users.length}/${this.props.room.max_players} Players`
