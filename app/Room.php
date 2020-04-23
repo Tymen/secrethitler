@@ -2,10 +2,9 @@
 
 namespace App;
 
+use App\Events\RotatePresidentEvent;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Auth;
-use phpDocumentor\Reflection\Types\Null_;
 
 class Room extends Model
 {
@@ -24,33 +23,27 @@ class Room extends Model
         return $this->hasOne(RoomState::class);
     }
 
-    public function rotatePresident($users)
+    public function rotatePresident($room)
     {
-        $allUsers = $users->all();
+        $users = $room->users;
+        $userIds = $users->pluck('id')->all();
 
-        $president = false;
-        $chancellor = false;
-        $lastUser = end($allUsers);
-
-        foreach ($allUsers as $u) {
-            $u->hasRole('President') ? $president = $u : false;
-            $u->hasRole('Chancellor') ? $chancellor = $u : false;
-        }
+        $president = User::role('President')->where('room_id', $room->id)->first();
+        $lastUser = end($userIds);
 
         if ($president) {
 
             $president->removeRole('President');
 
-            $chancellor ? $chancellor->removeRole('Chancellor') : false;
-
-            $key = array_search($president, $allUsers);
-
-            $president = $allUsers[$key] === $lastUser ? $allUsers[0] : $allUsers[$key + 1];
+            $key = array_search($president->id, $userIds);
+            $president = $userIds[$key] === $lastUser ? $users[0] : $users[$key + 1];
 
         } else {
-            $president = Arr::random($allUsers);
+            $president = Arr::random($users->all());
         }
         $president->assignRole('President');
+
+        event(new RotatePresidentEvent($room->id, ['id' => $president->id, 'username' => $president->username]));
 
     }
 

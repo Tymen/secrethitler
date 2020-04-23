@@ -4,7 +4,7 @@ import Lobby from "../components/Room/Lobby";
 import ChatLobby from "../components/Room/Lobby/ChatLobby";
 import PlayersLobby from "../components/Room/Lobby/PlayersLobby";
 import {connect} from 'react-redux';
-import {deleteAllMessages, editActive, setRoom} from "../redux/actions/room-actions";
+import {editActive, setPresident, setRoom} from "../redux/actions/room-actions";
 
 class Room extends Component {
 
@@ -13,7 +13,6 @@ class Room extends Component {
         leftUsers: [],
         loggedIn: false,
         loaded: false,
-        president: '',
     }
 
     async componentDidMount() {
@@ -32,6 +31,9 @@ class Room extends Component {
             .leaving((user) => {
                 this.onUserLeave(user)
             })
+            .listen('.president-rotated', (e) => {
+                this.props.dispatch(setPresident(e.president))
+            })
             .listen('.user-kicked', (e) => {
                 if (this.props.authUser.id === e.userId) {
                     Echo.leave(`room.${this.props.room.id}`)
@@ -40,11 +42,6 @@ class Room extends Component {
             })
             .listen('.game-started', (e) => {
                 this.props.dispatch(editActive(1))
-            })
-            .listen('.president-rotated', (e) => {
-                this.setState({
-                    president: e.president
-                })
             })
     }
 
@@ -77,8 +74,6 @@ class Room extends Component {
                     leftUsers: this.state.leftUsers.filter(id => id !== user.id),
                 })
 
- // To Remove all messages when player leaves game
-
                 this.props.room.owner.id === user.id ? this.getRoom() : false;
             }
         }, 5000)
@@ -94,10 +89,6 @@ class Room extends Component {
         axios.post(`/api/v1/rooms/${this.props.match.params.id}/active`)
     };
 
-    rotatePresident = () =>{
-        axios.post(`/api/v1/rooms/${this.props.match.params.id}/president`)
-    }
-
     setInactive = () => {
         axios.post(`/api/v1/rooms/${this.props.match.params.id}/inactive`).then(response => {
                 this.props.dispatch(editActive(0))
@@ -109,7 +100,7 @@ class Room extends Component {
         if (this.props.room.active) {
             return (
                 <Game setInactive={() => this.setInactive()} rotatePresident={() => this.rotatePresident()} users={this.state.users}
-                      id={this.props.match.params.id} president={this.state.president}/>
+                      id={this.props.match.params.id}/>
             )
         }
         return (

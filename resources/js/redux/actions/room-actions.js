@@ -8,6 +8,11 @@ export const editActive = value => ({
     value
 })
 
+export const setPresident = user => ({
+    type: 'SET_PRESIDENT',
+    user
+})
+
 export const addMessage = value => ({
     type: 'ADD_MESSAGE',
     value

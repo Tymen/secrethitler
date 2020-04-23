@@ -27,7 +27,7 @@ class PlayersLobby extends Component {
     checkPresident = (userId) => {
         const president = <p>President</p>
 
-        if(this.props.president === userId){
+        if(this.props.room.president?.id === userId){
             return president
         }
     }
