@@ -276,7 +276,6 @@ class RoomsApiController extends Controller
         $user = User::find($id);
 
         abort_unless($user, 400, 'User does not exist');
-
         abort_unless(Auth::id() !== $id, 400, 'Can not assign yourself');
 
         if ($chancellor) {
@@ -286,8 +285,7 @@ class RoomsApiController extends Controller
 
         $user->assignRole('Chancellor');
 
-        event(new NewChancellorEvent($room, $user->id));
-
+        event(new NewChancellorEvent($room, ['id' => $user->id, 'username' => $user->username]));
 
         return response()->json(['message' => 'completed']);
     }
