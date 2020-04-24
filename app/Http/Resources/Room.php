@@ -29,6 +29,8 @@ class Room extends JsonResource
             'stage' => $this->roomState->stage,
             'president' => $president,
             'chancellor' => $chancellor,
+            'yesVotes' => $this->roomState->yesVotes,
+            'noVotes' => $this->roomState->noVotes,
         ];
     }
 }

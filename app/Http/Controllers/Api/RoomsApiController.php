@@ -133,6 +133,60 @@ class RoomsApiController extends Controller
         return response()->json(['message' => 'completed']);
     }
 
+    public function setVote(Request $request, Room $room)
+    {
+        $allUsers = $room->users->count();
+
+        $vote = $request->type;
+
+        $percentage = 0;
+
+        $yesVote = $room->roomState->yesVotes;
+        $noVote = $room->roomState->noVotes;
+
+        if ($vote === 'yes') {
+            $yesVote = $yesVote + 1;
+
+            $room->roomState->yesVotes += 1;
+
+            $room->roomState->save();
+
+        } else if ($vote === 'no') {
+            $noVote = $noVote + 1;
+
+            $room->roomState->noVotes += 1;
+            $room->roomState->save();
+
+        }
+
+        $totalVotes = $yesVote + $noVote;
+
+        if ($totalVotes === $allUsers) {
+            $percentage = $yesVote / $totalVotes * 100;
+
+            if ($percentage > 50) {
+
+
+
+
+                $room->roomState->yesVotes = 0;
+                $room->roomState->noVotes = 0;
+                $room->roomState->save();
+
+            } else {
+                //electiontracker + 1
+                //rotate president
+
+                $room->roomState->yesVotes = 0;
+                $room->roomState->noVotes = 0;
+                $room->roomState->save();
+            }
+        }
+
+        return response()->json(['message' => $percentage]);
+    }
+
+
     public function setInactive(Room $room)
     {
         $this->authorize('isHost', $room);

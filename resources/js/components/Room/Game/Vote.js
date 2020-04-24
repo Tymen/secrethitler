@@ -1,7 +1,38 @@
 import React, {Component} from 'react';
+import {connect} from "react-redux";
 
-export default class Vote extends Component {
+class Vote extends Component {
+
+    state = {
+        voted: false
+    }
+
+    handleVote = (type) => {
+        axios.post(`/api/v1/rooms/${this.props.room.id}/vote`, {
+            type
+        })
+            .then(response => {
+                this.setState({
+                    voted: true
+                })
+            })
+    }
+
     render() {
+        if(this.state.voted){
+            return (
+                <div>
+                    <div className="header-choose-chancellor">
+                        <p>Waiting for an action...</p>
+                        <div className="text-center">
+                            <div className="spinner-border" role="status">
+                                <span className="sr-only">Loading...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )
+        }
         return (
             <div>
 
@@ -20,10 +51,10 @@ export default class Vote extends Component {
 
                 <div className="container">
                     <div className="row">
-                        <a href="#1" className="chose-cards">
+                        <a onClick={() => this.handleVote('yes')} className="chose-cards">
                             <img src="/images/ja-card.svg"/>
                         </a>
-                        <a href="#2" className="chose-cards">
+                        <a onClick={() => this.handleVote('no')}className="chose-cards">
                             <img src="/images/nein-card.svg"/>
                         </a>
                     </div>
@@ -33,4 +64,8 @@ export default class Vote extends Component {
         );
     }
 }
-
+const mapStateToProps = state => {
+    const {room} = state;
+    return {room: room}
+}
+export default connect(mapStateToProps)(Vote);
