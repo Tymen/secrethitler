@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Events\KickUserEvent;
 use App\Events\RotatePresidentEvent;
+use App\Events\SendPolicyEvent;
 use App\Events\StartGameEvent;
 use App\Room;
 use App\Rules\PolicyChecker;
@@ -242,6 +243,7 @@ class RoomsApiController extends Controller
                 $changePolicies->chosen_fascist += 1 :
                 $changePolicies->chosen_liberal += 1;
             $changePolicies->save();
+//            event(new SendPolicyEvent($room->id, ))
         } else {
             $request->leftOver = "Error";
         }
