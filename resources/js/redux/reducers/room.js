@@ -6,6 +6,10 @@ const room = (state = {messages: []}, action) => {
             return {...state, active: action.value}
         case 'SET_PRESIDENT':
             return {...state, president: action.user}
+        case 'SET_CHANCELLOR':
+            return {...state, chancellor: action.user}
+        case 'SET_STAGE':
+            return {...state, stage: action.int}
         case 'ADD_MESSAGE':
             return {...state, messages: [...state.messages, action.value]};
         case 'DELETE_ALL_MESSAGES':

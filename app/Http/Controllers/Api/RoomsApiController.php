@@ -17,6 +17,7 @@ use App\Http\Resources\RoomCollection;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\Room as RoomResource;
+use App\Helper\AppHelper;
 
 class RoomsApiController extends Controller
 {
@@ -165,9 +166,9 @@ class RoomsApiController extends Controller
             $percentage = $yesVote / $totalVotes * 100;
 
             if ($percentage > 50) {
+                //choose van policy
 
-
-
+                AppHelper::changeState($room, 3);
 
                 $room->roomState->yesVotes = 0;
                 $room->roomState->noVotes = 0;
@@ -177,6 +178,10 @@ class RoomsApiController extends Controller
                 //electiontracker + 1
                 //rotate president
 
+                $this->rotatePresident($room);
+
+
+                AppHelper::changeState($room, 1);
                 $room->roomState->yesVotes = 0;
                 $room->roomState->noVotes = 0;
                 $room->roomState->save();
@@ -330,7 +335,6 @@ class RoomsApiController extends Controller
         $user = User::find($id);
 
         abort_unless($user, 400, 'User does not exist');
-
         abort_unless(Auth::id() !== $id, 400, 'Can not assign yourself');
 
         if ($chancellor) {
@@ -340,8 +344,7 @@ class RoomsApiController extends Controller
 
         $user->assignRole('Chancellor');
 
-        event(new NewChancellorEvent($room, $user->id));
-
+        event(new NewChancellorEvent($room, ['id' => $user->id, 'username' => $user->username]));
 
         return response()->json(['message' => 'completed']);
     }

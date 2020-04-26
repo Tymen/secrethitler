@@ -15,14 +15,17 @@ class UpdateStageEvent implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $roomId;
+    public $stageNum;
+
     /**
      * Create a new event instance.
      * @param $roomId
-     * @return void
+     * @param $stageNum
      */
-    public function __construct($roomId)
+    public function __construct($roomId, $stageNum)
     {
         $this->roomId = $roomId;
+        $this->stageNum = $stageNum;
     }
 
     /**

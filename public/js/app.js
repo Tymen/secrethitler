@@ -87464,6 +87464,8 @@ function (_Component) {
         }));
       } else if (_this.props.room.stage === 2) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Vote__WEBPACK_IMPORTED_MODULE_3__["default"], null));
+      } else if (_this.props.room.stage === 3) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "stage 3"));
       } else {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "header-choose-chancellor"
@@ -87582,7 +87584,7 @@ function (_Component) {
       if (this.state.voted) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "header-choose-chancellor"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Waiting for an action..."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Waiting for other players to vote..."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "text-center"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "spinner-border",
@@ -89351,9 +89353,9 @@ function (_Component) {
                 }).listen('.game-started', function (e) {
                   _this2.props.dispatch(Object(_redux_actions_room_actions__WEBPACK_IMPORTED_MODULE_7__["editActive"])(1));
                 }).listen('.update-stage', function (e) {
-                  _this2.getRoom();
+                  _this2.props.dispatch(Object(_redux_actions_room_actions__WEBPACK_IMPORTED_MODULE_7__["setStage"])(e.stageNum));
                 }).listen('.new-chancellor', function (e) {
-                  _this2.getRoom();
+                  _this2.props.dispatch(Object(_redux_actions_room_actions__WEBPACK_IMPORTED_MODULE_7__["setChancellor"])(e.chancellor));
                 });
 
               case 3:
@@ -89519,7 +89521,7 @@ if (document.getElementById('index')) {
 /*!****************************************************!*\
   !*** ./resources/js/redux/actions/room-actions.js ***!
   \****************************************************/
-/*! exports provided: setRoom, editActive, setPresident, addMessage, deleteAllMessages */
+/*! exports provided: setRoom, editActive, setPresident, setChancellor, setStage, addMessage, deleteAllMessages */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -89527,6 +89529,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setRoom", function() { return setRoom; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "editActive", function() { return editActive; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setPresident", function() { return setPresident; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setChancellor", function() { return setChancellor; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setStage", function() { return setStage; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addMessage", function() { return addMessage; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteAllMessages", function() { return deleteAllMessages; });
 var setRoom = function setRoom(room) {
@@ -89545,6 +89549,18 @@ var setPresident = function setPresident(user) {
   return {
     type: 'SET_PRESIDENT',
     user: user
+  };
+};
+var setChancellor = function setChancellor(user) {
+  return {
+    type: 'SET_CHANCELLOR',
+    user: user
+  };
+};
+var setStage = function setStage(_int) {
+  return {
+    type: 'SET_STAGE',
+    "int": _int
   };
 };
 var addMessage = function addMessage(value) {
@@ -89645,6 +89661,16 @@ var room = function room() {
     case 'SET_PRESIDENT':
       return _objectSpread({}, state, {
         president: action.user
+      });
+
+    case 'SET_CHANCELLOR':
+      return _objectSpread({}, state, {
+        chancellor: action.user
+      });
+
+    case 'SET_STAGE':
+      return _objectSpread({}, state, {
+        stage: action["int"]
       });
 
     case 'ADD_MESSAGE':

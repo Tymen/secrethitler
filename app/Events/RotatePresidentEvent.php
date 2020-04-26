@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Helper\AppHelper;
 use App\Room;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
@@ -15,20 +16,20 @@ class RotatePresidentEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $roomId;
+    public $room;
     public $president;
 
     /**
      * Create a new event instance.
      *
-     * @param $roomId
+     * @param $room
      * @param $president
      */
     public function __construct(Room $room, $president)
     {
-        $this->roomId = $room->id;
+        $this->room = $room;
         $this->president = $president;
-        $this->changeStage($room);
+        AppHelper::changeState($room, 1);
     }
 
     /**
@@ -38,19 +39,11 @@ class RotatePresidentEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PresenceChannel("room.{$this->roomId}");
+        return new PresenceChannel("room.{$this->room->id}");
     }
 
     public function broadcastAs()
     {
         return 'president-rotated';
-    }
-
-    public function changeStage(Room $room)
-    {
-        $room->roomState->stage = 1;
-        $room->roomState->save();
-
-        event(new UpdateStageEvent($room->id));
     }
 }

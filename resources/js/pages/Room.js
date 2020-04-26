@@ -4,7 +4,7 @@ import Lobby from "../components/Room/Lobby";
 import ChatLobby from "../components/Room/Lobby/ChatLobby";
 import PlayersLobby from "../components/Room/Lobby/PlayersLobby";
 import {connect} from 'react-redux';
-import {editActive, setPresident, setRoom} from "../redux/actions/room-actions";
+import {editActive, setChancellor, setPresident, setRoom, setStage} from "../redux/actions/room-actions";
 
 class Room extends Component {
 
@@ -44,10 +44,10 @@ class Room extends Component {
                 this.props.dispatch(editActive(1))
             })
             .listen('.update-stage', (e) => {
-                this.getRoom();
+                this.props.dispatch(setStage(e.stageNum))
             })
             .listen('.new-chancellor', (e) => {
-                this.getRoom();
+                this.props.dispatch(setChancellor(e.chancellor))
             })
 }
 

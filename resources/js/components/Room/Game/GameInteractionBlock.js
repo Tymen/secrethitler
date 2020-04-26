@@ -18,7 +18,15 @@ class GameInteractionBlock extends Component {
                     <Vote/>
                 </div>
             )
-        } else {
+        } else if (this.props.room.stage === 3) {
+            return (
+                <div>
+                    <p>stage 3</p>
+                </div>
+            )
+        }
+
+        else {
             return (
                 <div>
                     <div className="header-choose-chancellor">

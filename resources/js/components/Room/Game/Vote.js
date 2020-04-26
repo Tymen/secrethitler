@@ -23,7 +23,7 @@ class Vote extends Component {
             return (
                 <div>
                     <div className="header-choose-chancellor">
-                        <p>Waiting for an action...</p>
+                        <p>Waiting for other players to vote...</p>
                         <div className="text-center">
                             <div className="spinner-border" role="status">
                                 <span className="sr-only">Loading...</span>
@@ -35,7 +35,6 @@ class Vote extends Component {
         }
         return (
             <div>
-
                 <div className="header-choose-chancellor">
                     <div className="row">
                         <div className="col-2">
@@ -64,6 +63,7 @@ class Vote extends Component {
         );
     }
 }
+
 const mapStateToProps = state => {
     const {room} = state;
     return {room: room}
