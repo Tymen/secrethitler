@@ -38,7 +38,7 @@ class NewChancellorEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PresenceChannel("room.{$this->room}");
+        return new PresenceChannel("room.{$this->room->id}");
     }
 
     public function broadcastAs()

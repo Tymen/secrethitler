@@ -10,4 +10,10 @@ class RoomState extends Model
     {
         return $this->belongsTo(Room::class);
     }
+
+    protected function changeState($value)
+    {
+        $this->stage = $value;
+        $this->save();
+    }
 }

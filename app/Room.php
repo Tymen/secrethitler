@@ -23,12 +23,12 @@ class Room extends Model
         return $this->hasOne(RoomState::class);
     }
 
-    public function rotatePresident($room)
+    public function rotatePresident()
     {
-        $users = $room->users;
+        $users = $this->users;
         $userIds = $users->pluck('id')->all();
 
-        $president = User::role('President')->where('room_id', $room->id)->first();
+        $president = User::role('President')->where('room_id', $this->id)->first();
         $lastUser = end($userIds);
 
         if ($president) {
@@ -43,7 +43,7 @@ class Room extends Model
         }
         $president->assignRole('President');
 
-        event(new RotatePresidentEvent($room, ['id' => $president->id, 'username' => $president->username]));
+        event(new RotatePresidentEvent($this, ['id' => $president->id, 'username' => $president->username]));
 
     }
 

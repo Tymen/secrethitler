@@ -276,8 +276,8 @@ class RoomsApiController extends Controller
         $id = intval($request->uid);
         $user = User::find($id);
 
+        abort_unless($room->roomState->stage === 1, 400, 'Wrong stage');
         abort_unless($user, 400, 'User does not exist');
-
         abort_unless(Auth::id() !== $id, 400, 'Can not assign yourself');
 
         if ($chancellor) {
@@ -295,7 +295,6 @@ class RoomsApiController extends Controller
 
     public function setVote(Room $room, Request $request)
     {
-        dd();
         $this->authorize('canVote', $room);
 
         $roomState = $room->roomState;
@@ -309,7 +308,8 @@ class RoomsApiController extends Controller
         $user->save();
 
         if (!$room->users->pluck('voted')->contains(false)) {
-            $roomState->ja >= $roomState->nein ? event(new VotesDoneEvent()) : event(new VotesDoneEvent());
+            $passed = $roomState->ja >= $roomState->nein;
+//            event(new VotesDoneEvent($passed));
         }
 
         return response()->json(['message' => 'completed']);
