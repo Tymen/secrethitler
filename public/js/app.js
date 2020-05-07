@@ -86876,8 +86876,7 @@ function (_Component) {
       checkedUser: ''
     });
 
-    _defineProperty(_assertThisInitialized(_this), "handleSubmit", function (e) {
-      e.preventDefault();
+    _defineProperty(_assertThisInitialized(_this), "handleSubmit", function () {
       axios.post("/api/v1/rooms/".concat(_this.props.room.id, "/chancellor"), {
         uid: _this.state.checkedUser
       });
@@ -86935,9 +86934,19 @@ function (_Component) {
   }
 
   _createClass(ChooseChancellor, [{
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps, prevState, snapshot) {
+      var _this$props$room;
+
+      if (((_this$props$room = this.props.room) === null || _this$props$room === void 0 ? void 0 : _this$props$room.second) <= 0) {
+        this.handleSubmit();
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
+      var _this$props$room2,
+          _this2 = this;
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "header-choose-chancellor"
@@ -86945,7 +86954,7 @@ function (_Component) {
         className: "row"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-2"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, (_this$props$room2 = this.props.room) === null || _this$props$room2 === void 0 ? void 0 : _this$props$room2.second)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-8"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Choose one of the players to be the chancellor"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "under-title"
@@ -86955,7 +86964,9 @@ function (_Component) {
         type: "submit",
         className: "btn btn btn-explanation btn-chancellor",
         onClick: function onClick(e) {
-          return _this2.handleSubmit(e);
+          e.preventDefault();
+
+          _this2.handleSubmit();
         }
       }, "submit")))), this.showOptions());
     }
@@ -88682,6 +88693,19 @@ function (_Component) {
       loaded: false
     });
 
+    _defineProperty(_assertThisInitialized(_this), "timer", function () {
+      var timer = setInterval(function () {
+        var cancel = false;
+
+        if (_this.props.room.second <= 0) {
+          cancel = true;
+          clearInterval(timer);
+        }
+
+        !cancel ? _this.props.dispatch(Object(_redux_actions_room_actions__WEBPACK_IMPORTED_MODULE_7__["setSecond"])(_this.props.room.second - 1)) : false;
+      }, 1000);
+    });
+
     _defineProperty(_assertThisInitialized(_this), "onUserJoin", function (user) {
       if (!_this.state.users.some(function (u) {
         return u.id === user.id;
@@ -88736,10 +88760,15 @@ function (_Component) {
             case 0:
               _context.next = 2;
               return axios.get("/api/v1/rooms/".concat(_this.props.match.params.id)).then(function (response) {
+                console.log(response.data.data);
+
                 _this.props.dispatch(Object(_redux_actions_room_actions__WEBPACK_IMPORTED_MODULE_7__["setRoom"])(response.data.data));
               });
 
             case 2:
+              _this.timer();
+
+            case 3:
             case "end":
               return _context.stop();
           }
@@ -88794,9 +88823,13 @@ function (_Component) {
                 }).listen('.game-started', function (e) {
                   _this2.props.dispatch(Object(_redux_actions_room_actions__WEBPACK_IMPORTED_MODULE_7__["editActive"])(1));
                 }).listen('.update-stage', function (e) {
-                  _this2.getRoom();
+                  _this2.props.dispatch(Object(_redux_actions_room_actions__WEBPACK_IMPORTED_MODULE_7__["setStage"])(e.stageNum));
                 }).listen('.new-chancellor', function (e) {
-                  _this2.getRoom();
+                  _this2.props.dispatch(Object(_redux_actions_room_actions__WEBPACK_IMPORTED_MODULE_7__["setChancellor"])(e.chancellor));
+                }).listen('.start-timer', function (e) {
+                  _this2.props.dispatch(Object(_redux_actions_room_actions__WEBPACK_IMPORTED_MODULE_7__["setSecond"])(e.second));
+
+                  _this2.timer();
                 });
 
               case 3:
@@ -88962,7 +88995,7 @@ if (document.getElementById('index')) {
 /*!****************************************************!*\
   !*** ./resources/js/redux/actions/room-actions.js ***!
   \****************************************************/
-/*! exports provided: setRoom, editActive, setPresident, addMessage, deleteAllMessages */
+/*! exports provided: setRoom, editActive, setPresident, setChancellor, setStage, setSecond, addMessage, deleteAllMessages */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -88970,6 +89003,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setRoom", function() { return setRoom; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "editActive", function() { return editActive; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setPresident", function() { return setPresident; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setChancellor", function() { return setChancellor; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setStage", function() { return setStage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setSecond", function() { return setSecond; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addMessage", function() { return addMessage; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteAllMessages", function() { return deleteAllMessages; });
 var setRoom = function setRoom(room) {
@@ -88988,6 +89024,24 @@ var setPresident = function setPresident(user) {
   return {
     type: 'SET_PRESIDENT',
     user: user
+  };
+};
+var setChancellor = function setChancellor(user) {
+  return {
+    type: 'SET_CHANCELLOR',
+    user: user
+  };
+};
+var setStage = function setStage(_int) {
+  return {
+    type: 'SET_STAGE',
+    "int": _int
+  };
+};
+var setSecond = function setSecond(_int2) {
+  return {
+    type: 'SET_SECOND',
+    "int": _int2
   };
 };
 var addMessage = function addMessage(value) {
@@ -89088,6 +89142,21 @@ var room = function room() {
     case 'SET_PRESIDENT':
       return _objectSpread({}, state, {
         president: action.user
+      });
+
+    case 'SET_CHANCELLOR':
+      return _objectSpread({}, state, {
+        chancellor: action.user
+      });
+
+    case 'SET_STAGE':
+      return _objectSpread({}, state, {
+        stage: action["int"]
+      });
+
+    case 'SET_SECOND':
+      return _objectSpread({}, state, {
+        second: action["int"]
       });
 
     case 'ADD_MESSAGE':

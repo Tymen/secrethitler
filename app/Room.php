@@ -44,7 +44,6 @@ class Room extends Model
         $president->assignRole('President');
 
         event(new RotatePresidentEvent($this, ['id' => $president->id, 'username' => $president->username]));
-
     }
 
     public function divideRoles($users)

@@ -2,30 +2,32 @@
 
 namespace App\Events;
 
+use App\Room;
 use Illuminate\Broadcasting\Channel;
-use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Broadcasting\PresenceChannel;
-use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
-use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Broadcasting\PrivateChannel;
+use Illuminate\Broadcasting\PresenceChannel;
+use Illuminate\Foundation\Events\Dispatchable;
+use Illuminate\Broadcasting\InteractsWithSockets;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class UpdateStageEvent implements ShouldBroadcast
+class StartTimerEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $roomId;
-    public $stageNum;
+    public $second;
 
     /**
      * Create a new event instance.
-     * @param $roomId
-     * @param $stageNum
+     *
+     * @param Room $room
+     * @param $end
      */
-    public function __construct($roomId, $stageNum)
+    public function __construct(Room $room, $end)
     {
-        $this->roomId = $roomId;
-        $this->stageNum = $stageNum;
+        $this->roomId = $room->id;
+        $this->second = $end->unix() - now()->unix();
     }
 
     /**
@@ -40,6 +42,6 @@ class UpdateStageEvent implements ShouldBroadcast
 
     public function broadcastAs()
     {
-        return 'update-stage';
+        return 'start-timer';
     }
 }

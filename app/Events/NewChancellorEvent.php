@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Helper\AppHelper;
 use App\Room;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
@@ -16,19 +17,19 @@ class NewChancellorEvent implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $room;
-    public $userId;
+    public $chancellor;
 
     /**
      * Create a new event instance.
      *
      * @param $room
-     * @param $userId
+     * @param $chancellor
      */
-    public function __construct($room, $userId)
+    public function __construct($room, $chancellor)
     {
         $this->room = $room;
-        $this->userId = $userId;
-        $this->changeState($room);
+        $this->chancellor = $chancellor;
+        $room->roomState->changeState(2);
     }
 
     /**
@@ -44,12 +45,5 @@ class NewChancellorEvent implements ShouldBroadcast
     public function broadcastAs()
     {
         return 'new-chancellor';
-    }
-
-    public function changeState(Room $room)
-    {
-        $room->roomState->stage = 2;
-        $room->roomState->save();
-        event(new UpdateStageEvent($room->id));
     }
 }

@@ -8,7 +8,7 @@ class GameInteractionBlock extends Component {
         if (this.props.room.stage === 1 && isPresident) {
             return (
                 <div>
-                    <ChooseChancellor  users={this.props.users}/>
+                    <ChooseChancellor users={this.props.users}/>
                 </div>
             )
         } else {

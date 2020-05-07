@@ -6,8 +6,8 @@ class ChooseChancellor extends Component {
     state = {
         checkedUser: ''
     }
-    handleSubmit = (e) => {
-        e.preventDefault();
+
+    handleSubmit = () => {
         axios.post(`/api/v1/rooms/${this.props.room.id}/chancellor`, {uid: this.state.checkedUser})
     }
 
@@ -15,6 +15,12 @@ class ChooseChancellor extends Component {
         this.setState({
             checkedUser: userId
         })
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.props.room?.second <= 0) {
+            this.handleSubmit()
+        }
     }
 
     showOptions = () => {
@@ -54,13 +60,14 @@ render()
             <div className="header-choose-chancellor">
                 <div className="row">
                     <div className="col-2">
+                        <p>{this.props.room?.second}</p>
                     </div>
                     <div className="col-8">
                         <p>Choose one of the players to be the chancellor</p>
                         <p className="under-title">(select one player and click submit to continue)</p>
                     </div>
                     <div className="col-2">
-                        <button type="submit" className="btn btn btn-explanation btn-chancellor" onClick={(e) => this.handleSubmit(e)}>submit</button>
+                        <button type="submit" className="btn btn btn-explanation btn-chancellor" onClick={(e) => {e.preventDefault(); this.handleSubmit()}}>submit</button>
                     </div>
                 </div>
             </div>

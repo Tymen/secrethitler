@@ -14,14 +14,16 @@ class VotesDoneEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    public $room;
+
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($room)
     {
-        //
+        $this->room = $room;
     }
 
     /**
@@ -31,6 +33,6 @@ class VotesDoneEvent
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('channel-name');
+        return new PresenceChannel("room.{$this->room->id}");
     }
 }

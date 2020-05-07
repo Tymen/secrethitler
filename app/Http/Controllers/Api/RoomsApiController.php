@@ -8,14 +8,12 @@ use App\RoomState;
 use Illuminate\Http\Request;
 use App\Events\KickUserEvent;
 use App\Events\StartGameEvent;
-use App\Events\VotesDoneEvent;
 use App\Events\RoomsUpdatedEvent;
 use App\Events\NewChancellorEvent;
-use App\Events\RotatePresidentEvent;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\RoomCollection;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\Room as RoomResource;
 
@@ -129,7 +127,7 @@ class RoomsApiController extends Controller
     {
         $this->authorize('inRoom', $room);
 
-        $room->rotatePresident($room);
+        $room->rotatePresident();
 
         return response()->json(['message' => 'completed']);
     }
@@ -272,11 +270,25 @@ class RoomsApiController extends Controller
     {
         $this->authorize('isPresident', $room);
 
+        abort_unless($room->roomState->stage === 1, 400, 'Wrong stage');
+
         $chancellor = User::role('Chancellor')->where('room_id', $room->id)->first();
-        $id = intval($request->uid);
+
+        if ($request->uid) {
+            $id = intval($request->uid);
+        } else {
+            $condition = [
+                ['id', '!=', Auth::id()]
+            ];
+
+            $chancellor ? $condition[] = ['id', '!=', $chancellor->id] : false;
+            $users = $room->users()->where($condition)->get();
+
+            $id = Arr::random($users->pluck('id')->all());
+        }
+
         $user = User::find($id);
 
-        abort_unless($room->roomState->stage === 1, 400, 'Wrong stage');
         abort_unless($user, 400, 'User does not exist');
         abort_unless(Auth::id() !== $id, 400, 'Can not assign yourself');
 
@@ -287,8 +299,7 @@ class RoomsApiController extends Controller
 
         $user->assignRole('Chancellor');
 
-        event(new NewChancellorEvent($room, $user->id));
-
+        event(new NewChancellorEvent($room, ['id' => $user->id, 'username' => $user->username]));
 
         return response()->json(['message' => 'completed']);
     }

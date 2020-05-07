@@ -13,6 +13,21 @@ export const setPresident = user => ({
     user
 })
 
+export const setChancellor = user => ({
+    type: 'SET_CHANCELLOR',
+    user
+})
+
+export const setStage = int => ({
+    type: 'SET_STAGE',
+    int
+})
+
+export const setSecond = int => ({
+    type: 'SET_SECOND',
+    int
+})
+
 export const addMessage = value => ({
     type: 'ADD_MESSAGE',
     value

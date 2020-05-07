@@ -4,7 +4,7 @@ import Lobby from "../components/Room/Lobby";
 import ChatLobby from "../components/Room/Lobby/ChatLobby";
 import PlayersLobby from "../components/Room/Lobby/PlayersLobby";
 import {connect} from 'react-redux';
-import {editActive, setPresident, setRoom} from "../redux/actions/room-actions";
+import {editActive, setChancellor, setPresident, setRoom, setSecond, setStage} from "../redux/actions/room-actions";
 
 class Room extends Component {
 
@@ -44,15 +44,32 @@ class Room extends Component {
                 this.props.dispatch(editActive(1))
             })
             .listen('.update-stage', (e) => {
-                this.getRoom();
+                this.props.dispatch(setStage(e.stageNum))
             })
             .listen('.new-chancellor', (e) => {
-                this.getRoom();
+                this.props.dispatch(setChancellor(e.chancellor))
+            })
+            .listen('.start-timer', (e) => {
+                this.props.dispatch(setSecond(e.second))
+                this.timer()
             })
 }
 
     componentWillUnmount() {
         Echo.leave(`room.${this.props.room.id}`)
+    }
+
+    timer = () => {
+        let timer = setInterval(() => {
+            let cancel = false
+
+            if (this.props.room.second <= 0) {
+                cancel = true
+                clearInterval(timer)
+            }
+
+            !cancel ? this.props.dispatch(setSecond(this.props.room.second - 1)) : false;
+        }, 1000)
     }
 
     onUserJoin = (user) => {
@@ -87,8 +104,11 @@ class Room extends Component {
 
     getRoom = async () => {
         await axios.get(`/api/v1/rooms/${this.props.match.params.id}`).then(response => {
+            console.log(response.data.data)
             this.props.dispatch(setRoom(response.data.data))
         })
+
+        this.timer()
     };
 
     setActive = () => {
