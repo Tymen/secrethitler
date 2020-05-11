@@ -12,24 +12,24 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class RotatePresidentEvent implements ShouldBroadcast
+class NewChancellorEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $room;
-    public $president;
+    public $chancellor;
 
     /**
      * Create a new event instance.
      *
      * @param $room
-     * @param $president
+     * @param $chancellor
      */
-    public function __construct(Room $room, $president)
+    public function __construct($room, $chancellor)
     {
         $this->room = $room;
-        $this->president = $president;
-        AppHelper::changeState($room, 1);
+        $this->chancellor = $chancellor;
+        AppHelper::changeState($room, 2);
     }
 
     /**
@@ -44,6 +44,6 @@ class RotatePresidentEvent implements ShouldBroadcast
 
     public function broadcastAs()
     {
-        return 'president-rotated';
+        return 'new-chancellor';
     }
 }
