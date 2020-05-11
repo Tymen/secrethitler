@@ -1,3 +1,5 @@
+import {setSecond} from "../actions/room-actions";
+
 const room = (state = {messages: []}, action) => {
     switch (action.type) {
         case 'SET_ROOM':

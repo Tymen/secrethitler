@@ -10,6 +10,7 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Auth;
 
 class RotatePresidentEvent implements ShouldBroadcast
 {
@@ -30,7 +31,7 @@ class RotatePresidentEvent implements ShouldBroadcast
         $this->president = $president;
 
         $room->roomState->changeState(1);
-        $room->roomState->startTimer();
+        $room->roomState->startTimer($president['id'] === Auth::id());
     }
 
     /**

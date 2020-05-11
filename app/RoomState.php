@@ -26,10 +26,17 @@ class RoomState extends Model
         event(new UpdateStageEvent($this->room->id, $value));
     }
 
-    public function startTimer()
+    public function voteHandler()
+    {
+        if ($this->ja > $this->nein) {
+
+        }
+    }
+
+    public function startTimer($condition)
     {
         $this->timer_end = now()->addSeconds(15);
         $this->save();
-        event(new StartTimerEvent($this->room, $this->timer_end));
+        event(new StartTimerEvent($this->room, $this->timer_end, $condition));
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Room;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -14,16 +15,18 @@ class VotesDoneEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $room;
+    public $roomId;
 
     /**
      * Create a new event instance.
      *
-     * @return void
+     * @param Room $room
      */
-    public function __construct($room)
+    public function __construct(Room $room)
     {
-        $this->room = $room;
+        $this->roomId = $room->id;
+
+        $room->roomState->changeState(3);
     }
 
     /**
@@ -33,6 +36,6 @@ class VotesDoneEvent
      */
     public function broadcastOn()
     {
-        return new PresenceChannel("room.{$this->room->id}");
+        return new PresenceChannel("room.{$this->roomId}");
     }
 }

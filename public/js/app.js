@@ -88690,11 +88690,16 @@ function (_Component) {
       users: [],
       leftUsers: [],
       loggedIn: false,
-      loaded: false
+      loaded: false,
+      timer: 0
     });
 
     _defineProperty(_assertThisInitialized(_this), "timer", function () {
       var timer = setInterval(function () {
+        _this.setState({
+          timer: timer
+        });
+
         var cancel = false;
 
         if (_this.props.room.second <= 0) {
@@ -88702,7 +88707,7 @@ function (_Component) {
           clearInterval(timer);
         }
 
-        !cancel ? _this.props.dispatch(Object(_redux_actions_room_actions__WEBPACK_IMPORTED_MODULE_7__["setSecond"])(_this.props.room.second - 1)) : false;
+        _this.props.dispatch(Object(_redux_actions_room_actions__WEBPACK_IMPORTED_MODULE_7__["setSecond"])(_this.props.room.second - 1));
       }, 1000);
     });
 
@@ -88827,9 +88832,15 @@ function (_Component) {
                 }).listen('.new-chancellor', function (e) {
                   _this2.props.dispatch(Object(_redux_actions_room_actions__WEBPACK_IMPORTED_MODULE_7__["setChancellor"])(e.chancellor));
                 }).listen('.start-timer', function (e) {
-                  _this2.props.dispatch(Object(_redux_actions_room_actions__WEBPACK_IMPORTED_MODULE_7__["setSecond"])(e.second));
+                  console.log(e);
 
-                  _this2.timer();
+                  if (e.canStart) {
+                    clearInterval(_this2.state.timer);
+
+                    _this2.props.dispatch(Object(_redux_actions_room_actions__WEBPACK_IMPORTED_MODULE_7__["setSecond"])(e.second));
+
+                    _this2.timer();
+                  }
                 });
 
               case 3:
@@ -89108,6 +89119,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _actions_room_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/room-actions */ "./resources/js/redux/actions/room-actions.js");
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
@@ -89121,6 +89133,8 @@ function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (O
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
 
 var room = function room() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {

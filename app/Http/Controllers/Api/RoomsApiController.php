@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Events\VotesDoneEvent;
 use App\Room;
 use App\User;
 use App\RoomState;
@@ -319,8 +320,7 @@ class RoomsApiController extends Controller
         $user->save();
 
         if (!$room->users->pluck('voted')->contains(false)) {
-            $passed = $roomState->ja >= $roomState->nein;
-//            event(new VotesDoneEvent($passed));
+            event(new VotesDoneEvent($room));
         }
 
         return response()->json(['message' => 'completed']);

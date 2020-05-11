@@ -13,6 +13,7 @@ class Room extends Component {
         leftUsers: [],
         loggedIn: false,
         loaded: false,
+        timer: 0,
     }
 
     async componentDidMount() {
@@ -50,17 +51,23 @@ class Room extends Component {
                 this.props.dispatch(setChancellor(e.chancellor))
             })
             .listen('.start-timer', (e) => {
-                this.props.dispatch(setSecond(e.second))
-                this.timer()
+                console.log(e)
+                if (e.canStart) {
+                    clearInterval(this.state.timer)
+                    this.props.dispatch(setSecond(e.second))
+                    this.timer()
+                }
             })
-}
+    }
 
     componentWillUnmount() {
         Echo.leave(`room.${this.props.room.id}`)
     }
 
     timer = () => {
-        let timer = setInterval(() => {
+        const timer = setInterval(() => {
+            this.setState({timer: timer})
+
             let cancel = false
 
             if (this.props.room.second <= 0) {
@@ -68,7 +75,7 @@ class Room extends Component {
                 clearInterval(timer)
             }
 
-            !cancel ? this.props.dispatch(setSecond(this.props.room.second - 1)) : false;
+            this.props.dispatch(setSecond(this.props.room.second - 1));
         }, 1000)
     }
 
