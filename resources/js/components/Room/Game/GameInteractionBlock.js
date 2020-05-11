@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import ChooseChancellor from './ChooseChancellor'
 import {connect} from "react-redux";
+import Vote from "./Vote";
 
 class GameInteractionBlock extends Component {
     loadComponents = () => {
@@ -11,7 +12,21 @@ class GameInteractionBlock extends Component {
                     <ChooseChancellor users={this.props.users}/>
                 </div>
             )
-        } else {
+        } else if (this.props.room.stage === 2) {
+            return (
+                <div>
+                    <Vote/>
+                </div>
+            )
+        } else if (this.props.room.stage === 3) {
+            return (
+                <div>
+                    <p>stage 3</p>
+                </div>
+            )
+        }
+
+        else {
             return (
                 <div>
                     <div className="header-choose-chancellor">

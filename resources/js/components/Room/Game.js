@@ -36,7 +36,7 @@ class Game extends Component {
         })
     }
 
-    rotatePresident = () =>{
+    rotatePresident = () => {
         axios.post(`/api/v1/rooms/${this.props.room.id}/president`)
     }
 
@@ -47,7 +47,8 @@ class Game extends Component {
                     <div className="row">
                         <div className="col-2 bg-dark col-wrap">
                             <div className="in-game">
-                                <PlayersLobby users={this.props.users} page='Game' fascists={this.state.fascists} hitler={this.state.hitler}/>
+                                <PlayersLobby users={this.props.users} page='Game' fascists={this.state.fascists}
+                                              hitler={this.state.hitler}/>
                             </div>
                         </div>
 
@@ -74,7 +75,7 @@ class Game extends Component {
 
                         </div>
                         <div className="col-7 bg-dark-grey">
-                            <GameInteractionBlock users={this.props.users} />
+                            <GameInteractionBlock users={this.props.users}/>
                         </div>
                         <div className="col-3 bg-grey">
                             <button onClick={() => this.props.setInactive()}>Inactive</button>
@@ -94,6 +95,7 @@ class Game extends Component {
         )
     }
 }
+
 const mapStateToProps = state => {
     const {room} = state
     return {room: room}

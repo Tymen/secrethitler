@@ -32,6 +32,8 @@ class Room extends JsonResource
             'second' => $second < 0 ? 0 : $second,
             'president' => $president,
             'chancellor' => $chancellor,
+            'yesVotes' => $this->roomState->yesVotes,
+            'noVotes' => $this->roomState->noVotes,
         ];
     }
 }
