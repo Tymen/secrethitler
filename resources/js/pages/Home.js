@@ -43,7 +43,7 @@ export default class Home extends Component {
                         </div>
                     </div>
                     <div className="col-12 join-text">
-                        Join a game
+                        <p>Join a game</p>
                     </div>
                     <div className="background-rooms">
                         <Rooms/>
