@@ -37,7 +37,7 @@ class Room extends Component {
             })
             .listen('.user-kicked', (e) => {
                 if (this.props.authUser.id === e.userId) {
-                    Echo.leave(`room.${this.props.room.id}`)
+                    Echo.leave(`room.${this.props.room.id}`);
                     window.location.href = '/'
                 }
             })

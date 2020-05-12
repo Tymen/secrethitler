@@ -67,7 +67,7 @@ class ChatLobby extends Component {
 
     render() {
         return (
-            <div>
+            <div className="warp-chat">
                 <div className="chat">
                         {this.props.room.messages?.map(message => (
                             <div className="message-container" key={Math.floor(Math.random() * 99999)}>
