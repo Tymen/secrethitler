@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Events\sendPoliciesChancellor;
+use App\Events\setPolicyEvent;
 use App\Room;
 use App\User;
 use App\RoomState;
@@ -197,8 +198,15 @@ class RoomsApiController extends Controller
         $this->authorize('isPresident', $room);
         $fascist = $room->roomState->fascist_policies;
         $liberal = $room->roomState->liberal_policies;
+        $changePolicies = $room->roomState;
 
         $result = [];
+        if (($changePolicies->fascist_policies < 3) || $changePolicies->liberal_policies < 3){
+            $changePolicies-> fascist_policies = 11;
+            $changePolicies-> fascist_policies = 6;
+            $liberal = 6;
+            $fascist = 11;
+        }
         $total = $liberal + $fascist;
         for ($i = 0; $i < 3; $i++) {
             $chance = round($fascist / $total * 100);
@@ -206,12 +214,9 @@ class RoomsApiController extends Controller
             $result[] = $random < $chance ? "Fascist" : "Liberal";
         }
         $response = [
-            'Fascist_cards' => $fascist,
-            'Liberal_cards' => $liberal,
-            'Card' => $result,
+            'result' => $result,
         ];
 
-        $changePolicies = $room->roomState;
         $changePolicies->chosen_policies = implode(" ", $result);
         foreach ($result as $policy) {
             $test[] = (strtolower($policy) === "fascist") ?
@@ -240,12 +245,15 @@ class RoomsApiController extends Controller
 
             $changePolicies->chosen_policies = implode(" ", $chosenPoliciesArr);
             $changePolicies->save();
-//            event(new SendPolicyEvent($room->id, ))
+            if(Auth::user()->hasrole("President")){
+                $getChanId = User::role("Chancellor")->where("room_id", $room->id)->first();
+                event(new sendPoliciesChancellor($room, $getChanId));
+            }else {
+                event(new setPolicyEvent($room));
+            }
         } else {
             $request->leftOver = "Error";
         }
-        $getChanId = User::role("Chancellor")->where("room_id", $room->id)->first();
-        Auth::user()->hasrole("President") ? event(new sendPoliciesChancellor($room, $getChanId->id)) : false ;
         return response()->json(['leftover' => $request->leftOver]);
     }
 
@@ -256,27 +264,11 @@ class RoomsApiController extends Controller
         array_push($mergedRequest, $request->removed);
         $getPolicyCheckDB = array_count_values(explode(" ", $changePolicies->chosen_policies));
         $getMergedCheck = array_count_values($mergedRequest);
-
-        if (count($getMergedCheck) <= 2) {
-            if (array_key_exists("Liberal", $getPolicyCheckDB) && array_key_exists("Fascist", $getPolicyCheckDB)) {
-                if (array_key_exists("Liberal", $getMergedCheck) && array_key_exists("Fascist", $getMergedCheck)) {
-                    $validation = (($getMergedCheck["Liberal"] === $getPolicyCheckDB["Liberal"]) &&
-                        ($getMergedCheck["Fascist"] === $getPolicyCheckDB["Fascist"])) ?
-                        true : false;
-                } else {
-                    $validation = false;
-                }
-            } else if (array_key_exists("Liberal", $getPolicyCheckDB)) {
-                $validation = ($getPolicyCheckDB["Liberal"] === $getMergedCheck["Liberal"]) ?
-                    true : false;
-            } else {
-                $validation = ($getPolicyCheckDB["Fascist"] === $getMergedCheck["Fascist"]) ?
-                    true : false;
-            }
-        } else {
+        if ($getMergedCheck === $getPolicyCheckDB){
+            $validation = true;
+        }else {
             $validation = false;
         }
-
         return $validation;
     }
 
