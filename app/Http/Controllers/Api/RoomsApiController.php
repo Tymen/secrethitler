@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Events\sendPoliciesChancellor;
 use App\Room;
 use App\User;
 use App\RoomState;
@@ -17,6 +18,7 @@ use App\Http\Resources\RoomCollection;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\Room as RoomResource;
+use League\Event\Event;
 
 class RoomsApiController extends Controller
 {
@@ -208,6 +210,7 @@ class RoomsApiController extends Controller
             'Liberal_cards' => $liberal,
             'Card' => $result,
         ];
+
         $changePolicies = $room->roomState;
         $changePolicies->chosen_policies = implode(" ", $result);
         foreach ($result as $policy) {
@@ -221,19 +224,28 @@ class RoomsApiController extends Controller
 
     public function setPolicies(Room $room, Request $request)
     {
+        $this->authorize("isPresOrChan", $room);
+
         $changePolicies = $room->roomState;
         $validation = $this->policyValidation($room, $request);
 
         if ($validation) {
-            (strtolower($request->removed) === "fascist") ?
+             (strtolower($request->removed) === "fascist") ?
                 $changePolicies->chosen_fascist += 1 :
                 $changePolicies->chosen_liberal += 1;
+
+            $chosenPoliciesArr = explode(" ",$changePolicies->chosen_policies);
+            $getIndexPolicy = (array_search($request->removed, $chosenPoliciesArr));
+            unset($chosenPoliciesArr[$getIndexPolicy]);
+
+            $changePolicies->chosen_policies = implode(" ", $chosenPoliciesArr);
             $changePolicies->save();
 //            event(new SendPolicyEvent($room->id, ))
         } else {
             $request->leftOver = "Error";
         }
-
+        $getChanId = User::role("Chancellor")->where("room_id", $room->id)->first();
+        Auth::user()->hasrole("President") ? event(new sendPoliciesChancellor($room, $getChanId->id)) : false ;
         return response()->json(['leftover' => $request->leftOver]);
     }
 
