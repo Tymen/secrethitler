@@ -45,13 +45,13 @@ class Game extends Component {
             return (
                 <div className="container-fluid">
                     <div className="row">
-                        <div className="col-2 bg-dark col-wrap">
+                        <div className="col-md-2 col-12 bg-dark col-wrap">
                             <div className="in-game">
                                 <PlayersLobby users={this.props.users} page='Game' fascists={this.state.fascists} hitler={this.state.hitler}/>
                             </div>
                         </div>
 
-                        <div className="col-7 bg-board">
+                        <div className="col-md-7 col-12 bg-board">
                             <div className="board-section">
                                 <div className="col-12 board-section">
                                     <Board/>
@@ -63,7 +63,7 @@ class Game extends Component {
                             </div>
                         </div>
 
-                        <div className="col-3 col-wrap">
+                        <div className="col-md-3 col-12 col-wrap">
                             <div className="in-game">
                                 <ChatLobby page='Game'/>
                             </div>
