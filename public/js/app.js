@@ -86515,7 +86515,7 @@ function (_Component) {
           className: "home-rooms",
           key: room.id
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "col-12 background-room"
+          className: "col background-room"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "fas fa-mug-hot"
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
@@ -88451,7 +88451,81 @@ function (_Component) {
   _createClass(GameRule, [{
     key: "render",
     value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "GameRule"));
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "container"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        className: "home-logo",
+        src: "images/Secrethitler-no-bg.png"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "row gamerule"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-12 page-title"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        className: "gamerule-bolletjes",
+        src: "images/uitleg-bolletjes.svg"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
+        className: "text-center"
+      }, "Over ons:")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-6 mb-5"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "title"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "- In het spel:")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "text"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "In het spel heb je een president en een kanselier. Deze hebben dan in die ronde de kans policy kaarten te kiezen."))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-6 mb-5"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "title"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "- Policy kaarten:")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "text"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Blauwe \u201CPolicy kaarten\u201D: Deze wil je als liberaal Rode \u201CPolicy kaarten\u201D: Deze wil je als fascist juist graag op het bord krijgen. Zodra er zes rode policy kaarten op het bord liggen winnen de fascisten."))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-6 mb-5"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "title"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "- Het bord:")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "text"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Het bord bevat twee kanten de \u201Crode\u201D en de \u201Cblauwe\u201C kant. Zoals je hierboven kunt lezen wil je als een liberaal de blauwe kant vullen met de blauwe policykaarten en de fascisten willen juist de rode kant vullen met de rode policykaarten. Voor de rode kant gelden nog een paart extra regels/opties. Deze verschillen voor de hoeveel spelers die meedoen tijdens het spel."))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-6 mb-5"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "title"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "- Voor 7 tot 8 spelers:")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "text"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Geld er dat bij de tweede rode policykaart die op het bord gelegd word de president iemand mag kiezen om zijn identiteit kaart te zien(hierover mogen beide spelers over liegen). Bij de derde rode policykaart die op het bord gelegd word mag de huidige president de nieuwe president kiezen. De fascisten weten van elkaar dat ze fascisten zijn maar Hitler weet niet wie de fascisten zijn."))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-6 mb-5"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "title"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "- Voor 5 tot 6 spelers:")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "text"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Geld er dat bij de derde rode policy kaart de vorige president de drie policykaarten mag inzien. Zo kan hij kijken of er een fascist tussen de huidige president en kanselier zit (de vorige president kan zelf een fascist zijn). Ook geld er hier dat Hitler en de fascisten van elkaar weten dat ze fascisten of Hitler zijn."))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-6 mb-5"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "title"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "- Voor 9 tot 10 spelers:")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "text"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Geld er dat bij de eerste rode policykaart de huidige president iemand mag kiezen om zijn identiteit kaart te zien(hierover mogen beide spelers over liegen). Bij de tweede rode policykaart mag de huidige president wederom iemand kiezen om zijn identiteit kaart te zien(hierover mogen beide spelers over liegen). Bij de derde rode policykaart mag de huidige president de nieuwe president kiezen. De fascisten weten van elkaar dat ze fascisten zijn maar Hitler weet niet wie de fascisten zijn."))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-6 mb-5"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "title"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "-  Regels zonder een x aantal spelers:")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "text"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Bij de vijfde policykaart mag diegene die hem oplegt iemand vermoorden als liberaal wil je een fascist doden en als fascist juist een liberaal. Dit geld ook voor de zesde rode policykaart. Als je dood geschoten word doe je niet meer mee met het spel!"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-6 mb-5"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "title"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "- Tijdens het spel:")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "text"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Elke ronde word er een nieuwe president aangesteld (de eerste keer is dit random) deze word telkens met de klok mee aangesteld. De president kiest vervolgens een kanselier. Vervolgens gaan alle spelers stemmen of zij de kanselier goedkeuren. Hiervoor heb je een \u201CJa\u201D en \u201CNein\u201D kaarten. Als er meer dan 50% ja gekozen heeft mogen ze de policy kaarten pakken. Als er minder dan 50% ja kiest noemen we dit een \u201Cfail\u201D als dit drie keer gebeurd, dan word de bovenste policykaart omgedraaid en op het bord gelegd dit kan een rode of blauwe zijn. De president krijgt drie policykaarten en moet daar dan \xE9\xE9n policy kaart eruit halen deze doet dan niet meer mee, vervolgens geeft hij de overgebleven twee kaarten door aan de kanselier. De kanselier mag er dan weer \xE9\xE9n van de twee eruit halen. De kaart die overblijft word vervolgens op het bord gelegd."))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-6 mb-5"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "title"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "- Het is spel eindigt wanneer:")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "text"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "- Hitler vermoord is (liberalen winnen) - De rode kant van het bord vol ligt met rode policykaarten(fascisten winnen) - De blauwe kant van het bord vol ligt met blauwe policykaarten(liberalen winnen) - Als Hitler de kanselier is als er 4 of meer rode policykaarten liggen op het bord"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-6 mb-5"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "title"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "- Tijdens het spel:")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "text"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "In het spel heb je een president en een kanselier. Deze hebben dan in die ronde de kans policy kaarten te kiezen.")))));
     }
   }]);
 
