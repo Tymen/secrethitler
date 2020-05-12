@@ -72,7 +72,7 @@ export default class Rooms extends Component {
 
             return (
                 <div className="home-rooms" key={room.id}>
-                    <div className="col-12 background-room">
+                    <div className="col background-room">
                         <i className="fas fa-mug-hot"></i>
                         <Link key={room.id} to="/" onClick={() => {
                             window.location.href = `/rooms/${room.id}`
