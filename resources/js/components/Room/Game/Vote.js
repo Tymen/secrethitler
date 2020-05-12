@@ -9,13 +9,19 @@ class Vote extends Component {
 
     handleVote = (type) => {
         axios.post(`/api/v1/rooms/${this.props.room.id}/vote`, {
-            type
+            nein: !type
         })
             .then(response => {
                 this.setState({
                     voted: true
                 })
             })
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.props.room?.second <= 0) {
+            this.handleVote(true)
+        }
     }
 
     render() {
@@ -38,6 +44,7 @@ class Vote extends Component {
                 <div className="header-choose-chancellor">
                     <div className="row">
                         <div className="col-2">
+                            <p>{this.props.room?.second}</p>
                         </div>
                         <div className="col-8">
                             <p>Do you want to vote for this party?</p>
@@ -50,10 +57,10 @@ class Vote extends Component {
 
                 <div className="container">
                     <div className="row">
-                        <a onClick={() => this.handleVote('yes')} className="chose-cards">
+                        <a onClick={() => this.handleVote(true)} className="chose-cards">
                             <img src="/images/ja-card.svg"/>
                         </a>
-                        <a onClick={() => this.handleVote('no')}className="chose-cards">
+                        <a onClick={() => this.handleVote(false)}className="chose-cards">
                             <img src="/images/nein-card.svg"/>
                         </a>
                     </div>

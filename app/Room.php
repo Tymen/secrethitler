@@ -46,11 +46,11 @@ class Room extends Model
         event(new RotatePresidentEvent($this, ['id' => $president->id, 'username' => $president->username]));
     }
 
-    public function divideRoles($users)
+    public function divideRoles()
     {
-        $fascists = false;
+        $fascists = 0;
 
-        switch ($users->count()) {
+        switch ($this->users->count()) {
             case 5 :
             case 6 :
                 $fascists = 2;
@@ -65,13 +65,14 @@ class Room extends Model
                 break;
         }
 
+        $this->users->map(function ($user) {
+            foreach ($user->roles as $r) {
+                $r->name !== 'Admin' ? $user->removeRole($r->name) : false;
+            }
+        });
+
         if ($fascists) {
-            $users->map(function ($user) {
-                foreach ($user->roles as $r) {
-                    $r->name !== 'Admin' ? $user->removeRole($r->name) : false;
-                }
-            });
-            $chosenFascists = Arr::random($users->all(), $fascists);
+            $chosenFascists = Arr::random($this->users->all(), $fascists);
             $hitler = Arr::random($chosenFascists);
 
             foreach ($chosenFascists as $f) {

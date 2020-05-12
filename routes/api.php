@@ -32,7 +32,6 @@ Route::namespace('Api')->group(function () {
                     Route::post('president', 'RoomsApiController@rotatePresident');
                     Route::post('set_policies', 'RoomsApiController@setPolicies');
                     Route::post('chancellor', 'RoomsApiController@setChancellor');
-                    Route::post('vote', 'RoomsApiController@setVote');
                     Route::post('change_host', 'RoomsApiController@changeHost');
                     Route::post('active', 'RoomsApiController@setActive');
                     Route::post('inactive', 'RoomsApiController@setInactive');

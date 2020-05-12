@@ -31,7 +31,7 @@ class RotatePresidentEvent implements ShouldBroadcast
         $this->president = $president;
 
         $room->roomState->changeState(1);
-        $room->roomState->startTimer($president['id'] === Auth::id());
+        $room->roomState->startTimer($president['id']);
     }
 
     /**

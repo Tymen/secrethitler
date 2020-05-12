@@ -33,6 +33,7 @@ class Room extends Component {
                 this.onUserLeave(user)
             })
             .listen('.president-rotated', (e) => {
+                console.log(e)
                 this.props.dispatch(setPresident(e.president))
             })
             .listen('.user-kicked', (e) => {
@@ -51,9 +52,10 @@ class Room extends Component {
                 this.props.dispatch(setChancellor(e.chancellor))
             })
             .listen('.start-timer', (e) => {
-                console.log(e)
-                if (e.canStart) {
+                console.log(e);
+                if (e.extra === this.props.authUser?.id || e.extra === 'everyone') {
                     clearInterval(this.state.timer)
+                    console.log('cleared')
                     this.props.dispatch(setSecond(e.second))
                     this.timer()
                 }
@@ -75,7 +77,7 @@ class Room extends Component {
                 clearInterval(timer)
             }
 
-            this.props.dispatch(setSecond(this.props.room.second - 1));
+            !cancel ? this.props.dispatch(setSecond(this.props.room.second - 1)) : false;
         }, 1000)
     }
 
@@ -111,7 +113,6 @@ class Room extends Component {
 
     getRoom = async () => {
         await axios.get(`/api/v1/rooms/${this.props.match.params.id}`).then(response => {
-            console.log(response.data.data)
             this.props.dispatch(setRoom(response.data.data))
         })
 

@@ -7,17 +7,9 @@ class GameInteractionBlock extends Component {
     loadComponents = () => {
         const isPresident = this.props.authUser.id === this.props.room.president?.id;
         if (this.props.room.stage === 1 && isPresident) {
-            return (
-                <div>
-                    <ChooseChancellor users={this.props.users}/>
-                </div>
-            )
+            return <ChooseChancellor users={this.props.users}/>
         } else if (this.props.room.stage === 2) {
-            return (
-                <div>
-                    <Vote/>
-                </div>
-            )
+            return <Vote/>
         } else if (this.props.room.stage === 3) {
             return (
                 <div>

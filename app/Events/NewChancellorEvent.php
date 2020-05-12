@@ -30,6 +30,7 @@ class NewChancellorEvent implements ShouldBroadcast
         $this->room = $room;
         $this->chancellor = $chancellor;
         $room->roomState->changeState(2);
+        $room->roomState->startTimer('everyone');
     }
 
     /**

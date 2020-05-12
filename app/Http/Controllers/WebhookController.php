@@ -42,6 +42,8 @@ class WebhookController extends Controller
 
     public function onMemberLeave(User $user, Room $room)
     {
+        $user->voted = false;
+        $user->vote_type = NULL;
         $user->room_id = NULL;
         $user->save();
 

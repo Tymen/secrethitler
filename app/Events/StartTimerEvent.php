@@ -19,20 +19,20 @@ class StartTimerEvent implements ShouldBroadcast
 
     public $roomId;
     public $second;
-    public $canStart;
+    public $extra;
 
     /**
      * Create a new event instance.
      *
      * @param Room $room
      * @param $end
-     * @param $condition
+     * @param $extra
      */
-    public function __construct(Room $room, $end, $condition)
+    public function __construct(Room $room, $end, $extra)
     {
         $this->roomId = $room->id;
         $this->second = $end->unix() - now()->unix();
-        $this->canStart = $condition;
+        $this->extra = $extra;
     }
 
     /**
