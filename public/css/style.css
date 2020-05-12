@@ -386,7 +386,7 @@ body::-webkit-scrollbar-thumb {
 
 .background-rooms {
     max-height: 300px;
-    overflow: scroll;
+    max-height: 300px;
 }
 
 .in-game {
@@ -397,8 +397,6 @@ body::-webkit-scrollbar-thumb {
 .home-logo {
     margin: 145px auto 0px auto;
     max-height: 250px;
-    margin: 0 auto;
-    max-height: 100px;
     display: block;
 }
 
