@@ -114,10 +114,11 @@ h1 {
 }
 .gamerule-bolletjes {
     position: absolute;
-    width: 150%;
-    left: -380px;
-    top: -105px;
+    width: 168%;
+    left: -390px;
+    top: -405px;
 }
+
 .gamerule {
     .title {
         background-color:#2B2929;
@@ -134,9 +135,9 @@ h1 {
         .liberal {
             margin-left: 30px;
         }
+        margin-bottom:95px!important;
         background-color:#727272;
         border-radius: 0px 0px 0px 52px;
-        height: 100%;
         display: table-cell;
         p {
             padding: 30px;

@@ -2,10 +2,9 @@
 
 namespace App;
 
+use App\Events\RotatePresidentEvent;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Auth;
-use phpDocumentor\Reflection\Types\Null_;
 
 class Room extends Model
 {
@@ -22,6 +21,30 @@ class Room extends Model
     public function roomState()
     {
         return $this->hasOne(RoomState::class);
+    }
+
+    public function rotatePresident($room)
+    {
+        $users = $room->users;
+        $userIds = $users->pluck('id')->all();
+
+        $president = User::role('President')->where('room_id', $room->id)->first();
+        $lastUser = end($userIds);
+
+        if ($president) {
+
+            $president->removeRole('President');
+
+            $key = array_search($president->id, $userIds);
+            $president = $userIds[$key] === $lastUser ? $users[0] : $users[$key + 1];
+
+        } else {
+            $president = Arr::random($users->all());
+        }
+        $president->assignRole('President');
+
+        event(new RotatePresidentEvent($room, ['id' => $president->id, 'username' => $president->username]));
+
     }
 
     public function divideRoles($users)
@@ -49,7 +72,6 @@ class Room extends Model
                     $r->name !== 'Admin' ? $user->removeRole($r->name) : false;
                 }
             });
-
             $chosenFascists = Arr::random($users->all(), $fascists);
             $hitler = Arr::random($chosenFascists);
 

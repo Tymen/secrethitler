@@ -26,7 +26,7 @@ class CanJoinRoom
         if (!Auth::check()) {
             return redirect('/auth/login')->with(['message' => 'You are not logged in']);
         }
-    
+
         if (Auth::user()->room_id === $room->id) {
             return $next($request);
         } else if ($room->active) {

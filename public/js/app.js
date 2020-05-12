@@ -87015,6 +87015,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Lobby_ChatLobby__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Lobby/ChatLobby */ "./resources/js/components/Room/Lobby/ChatLobby.js");
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _components_Room_Game_Board__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../components/Room/Game/Board */ "./resources/js/components/Room/Game/Board.js");
+/* harmony import */ var _Game_GameInteractionBlock__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Game/GameInteractionBlock */ "./resources/js/components/Room/Game/GameInteractionBlock.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -87034,6 +87035,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -87067,8 +87069,6 @@ function (_Component) {
 
     _defineProperty(_assertThisInitialized(_this), "getFascists", function () {
       axios.get("/api/v1/rooms/".concat(_this.props.room.id, "/fascists")).then(function (response) {
-        console.log(response.data);
-
         _this.setState(function () {
           return {
             fascists: response.data.fascists,
@@ -87082,9 +87082,11 @@ function (_Component) {
             loaded: true
           };
         });
-
-        console.log(_this.state.loaded);
       });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "rotatePresident", function () {
+      axios.post("/api/v1/rooms/".concat(_this.props.room.id, "/president"));
     });
 
     return _this;
@@ -87136,13 +87138,19 @@ function (_Component) {
           className: "col-2 bg-grey"
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "col-7 bg-dark-grey"
-        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Game_GameInteractionBlock__WEBPACK_IMPORTED_MODULE_5__["default"], {
+          users: this.props.users
+        })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "col-3 bg-grey"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           onClick: function onClick() {
             return _this2.props.setInactive();
           }
-        }, "Inactive"))));
+        }, "Inactive"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          onClick: function onClick() {
+            return _this2.rotatePresident();
+          }
+        }, "Rotate president"))));
       }
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -87230,6 +87238,268 @@ function (_Component) {
 
 /***/ }),
 
+/***/ "./resources/js/components/Room/Game/ChooseChancellor.js":
+/*!***************************************************************!*\
+  !*** ./resources/js/components/Room/Game/ChooseChancellor.js ***!
+  \***************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+
+var ChooseChancellor =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(ChooseChancellor, _Component);
+
+  function ChooseChancellor() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    _classCallCheck(this, ChooseChancellor);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(ChooseChancellor)).call.apply(_getPrototypeOf2, [this].concat(args)));
+
+    _defineProperty(_assertThisInitialized(_this), "state", {
+      checkedUser: ''
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "handleSubmit", function (e) {
+      e.preventDefault();
+      axios.post("/api/v1/rooms/".concat(_this.props.room.id, "/chancellor"), {
+        uid: _this.state.checkedUser
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "isChecked", function (userId) {
+      _this.setState({
+        checkedUser: userId
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "showOptions", function () {
+      return _this.props.users.map(function (user) {
+        var _this$props$authUser;
+
+        if (user.id !== ((_this$props$authUser = _this.props.authUser) === null || _this$props$authUser === void 0 ? void 0 : _this$props$authUser.id)) {
+          if (user.id === _this.state.checkedUser) {
+            return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+              className: "options active",
+              key: user.id
+            }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+              className: "container-choose-chancellor"
+            }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+              type: "radio",
+              name: "radio",
+              onChange: function onChange() {
+                return _this.isChecked(user.id);
+              }
+            }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+              name: user.id,
+              className: "checkbox"
+            }), user.username));
+          } else {
+            return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+              className: "options",
+              key: user.id
+            }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+              className: "container-choose-chancellor"
+            }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+              type: "radio",
+              name: "radio",
+              onChange: function onChange() {
+                return _this.isChecked(user.id);
+              }
+            }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+              name: user.id,
+              className: "checkbox"
+            }), user.username));
+          }
+        }
+      });
+    });
+
+    return _this;
+  }
+
+  _createClass(ChooseChancellor, [{
+    key: "render",
+    value: function render() {
+      var _this2 = this;
+
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "header-choose-chancellor"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "row"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-2"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-8"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Choose one of the players to be the chancellor"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "under-title"
+      }, "(select one player and click submit to continue)")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-2"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        type: "submit",
+        className: "btn btn btn-explanation btn-chancellor",
+        onClick: function onClick(e) {
+          return _this2.handleSubmit(e);
+        }
+      }, "submit")))), this.showOptions());
+    }
+  }]);
+
+  return ChooseChancellor;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+
+var mapStateToProps = function mapStateToProps(state) {
+  var users = state.users,
+      room = state.room;
+  return {
+    authUser: users.authUser,
+    room: room
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps)(ChooseChancellor));
+
+/***/ }),
+
+/***/ "./resources/js/components/Room/Game/GameInteractionBlock.js":
+/*!*******************************************************************!*\
+  !*** ./resources/js/components/Room/Game/GameInteractionBlock.js ***!
+  \*******************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _ChooseChancellor__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ChooseChancellor */ "./resources/js/components/Room/Game/ChooseChancellor.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+
+
+var GameInteractionBlock =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(GameInteractionBlock, _Component);
+
+  function GameInteractionBlock() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    _classCallCheck(this, GameInteractionBlock);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(GameInteractionBlock)).call.apply(_getPrototypeOf2, [this].concat(args)));
+
+    _defineProperty(_assertThisInitialized(_this), "loadComponents", function () {
+      var _this$props$room$pres;
+
+      var isPresident = _this.props.authUser.id === ((_this$props$room$pres = _this.props.room.president) === null || _this$props$room$pres === void 0 ? void 0 : _this$props$room$pres.id);
+
+      if (_this.props.room.stage === 1 && isPresident) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ChooseChancellor__WEBPACK_IMPORTED_MODULE_1__["default"], {
+          users: _this.props.users
+        }));
+      } else {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "header-choose-chancellor"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Waiting for an action..."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "text-center"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "spinner-border",
+          role: "status"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+          className: "sr-only"
+        }, "Loading...")))));
+      }
+    });
+
+    return _this;
+  }
+
+  _createClass(GameInteractionBlock, [{
+    key: "render",
+    value: function render() {
+      return this.loadComponents();
+    }
+  }]);
+
+  return GameInteractionBlock;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+
+var mapStateToProps = function mapStateToProps(state) {
+  var room = state.room,
+      users = state.users;
+  return {
+    room: room,
+    authUser: users.authUser
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(mapStateToProps)(GameInteractionBlock));
+
+/***/ }),
+
 /***/ "./resources/js/components/Room/Lobby.js":
 /*!***********************************************!*\
   !*** ./resources/js/components/Room/Lobby.js ***!
@@ -87306,15 +87576,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _redux_actions_room_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../redux/actions/room-actions */ "./resources/js/redux/actions/room-actions.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
-
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
-
-function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -87333,6 +87596,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -87364,14 +87628,10 @@ function (_Component) {
       var channel = Echo.channel("room.".concat(_this.props.room.id));
       channel.listen('.message-event', function (data) {
         if (_this._isMounted) {
-          _this.setState(function () {
-            return {
-              messages: [].concat(_toConsumableArray(_this.state.messages), [{
-                time: _this.getCurrentTime(),
-                message: data.user.username + " : " + data.message
-              }])
-            };
-          });
+          _this.props.dispatch(Object(_redux_actions_room_actions__WEBPACK_IMPORTED_MODULE_2__["addMessage"])({
+            time: _this.getCurrentTime(),
+            message: data.user.username + " : " + data.message
+          }));
 
           _this.scrollToBottom();
         }
@@ -87435,15 +87695,17 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
+      var _this$props$room$mess,
+          _this2 = this;
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "warp-chat"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "chat"
-      }, this.state.messages.map(function (message) {
+      }, (_this$props$room$mess = this.props.room.messages) === null || _this$props$room$mess === void 0 ? void 0 : _this$props$room$mess.map(function (message) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "message-container"
+          className: "message-container",
+          key: Math.floor(Math.random() * 99999)
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
           key: Math.floor(Math.random() * 99999),
           className: "message"
@@ -87580,6 +87842,40 @@ function (_Component) {
       }
     });
 
+    _defineProperty(_assertThisInitialized(_this), "checkRole", function (userId) {
+      var _this$props$room$pres, _this$props$room$chan;
+
+      if (((_this$props$room$pres = _this.props.room.president) === null || _this$props$room$pres === void 0 ? void 0 : _this$props$room$pres.id) === userId && _this.props.page === "Game") {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "row"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "col-sm-1 president-container"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "fa fa-2x fa-long-arrow-right arrow1",
+          "aria-hidden": "true"
+        })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "col-sm-5"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+          className: "president-container-p"
+        }, "President")));
+      }
+
+      if (((_this$props$room$chan = _this.props.room.chancellor) === null || _this$props$room$chan === void 0 ? void 0 : _this$props$room$chan.id) === userId && _this.props.page === "Game") {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "row"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "col-sm-1 president-container"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "fa fa-2x fa-long-arrow-right arrow1",
+          "aria-hidden": "true"
+        })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "col-sm-5"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+          className: "president-container-p"
+        }, "Chancellor")));
+      }
+    });
+
     _defineProperty(_assertThisInitialized(_this), "kickUser", function (e, id) {
       e.preventDefault();
       axios.post("/api/v1/rooms/".concat(_this.props.room.id, "/kick/").concat(id));
@@ -87600,7 +87896,7 @@ function (_Component) {
               className: "player-name"
             }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
               className: "fas fa-crown"
-            }), "\xA0", user.username), _this.checkFascists(user.id));
+            }), "\xA0", user.username), _this.checkFascists(user.id), _this.checkRole(user.id));
           } else {
             return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
               key: user.id,
@@ -87620,7 +87916,7 @@ function (_Component) {
               onClick: function onClick(e) {
                 return _this.kickUser(e, user.id);
               }
-            }, "Kick ", user.username)), _this.checkFascists(user.id));
+            }, "Kick ", user.username)), _this.checkFascists(user.id), _this.checkRole(user.id));
           }
         }
 
@@ -87632,14 +87928,14 @@ function (_Component) {
             className: "player-name"
           }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
             className: "fas fa-crown"
-          }), "\xA0", user.username), _this.checkFascists(user.id));
+          }), "\xA0", user.username), _this.checkFascists(user.id), _this.checkRole(user.id));
         } else {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
             key: user.id,
             className: "player-name-div"
           }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
             className: "player-name"
-          }, user.username), _this.checkFascists(user.id));
+          }, user.username), _this.checkFascists(user.id), _this.checkRole(user.id));
         }
       });
     });
@@ -88595,42 +88891,20 @@ function (_Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "title"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "- In het spel:")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "text"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "In het spel heb je een president en een kanselier. Deze hebben dan in die ronde de kans policy kaarten te kiezen."))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-6 mb-5"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "title"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "- Policy kaarten:")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "text"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Blauwe \u201CPolicy kaarten\u201D:> Deze wil je als liberaal"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Rode \u201CPolicy kaarten\u201D: Deze wil je als fascist juist graag op het bord krijgen. Zodra er zes rode policy kaarten op het bord liggen winnen de fascisten.", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        className: "liberal",
-        width: "170",
-        src: "images/gamerule/liberal-article.png"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        className: "facist",
-        width: "280",
-        src: "images/gamerule/facist-article.png"
-      })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-6 mb-5"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "text d-block"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "In het spel heb je een president en een kanselier. Deze hebben dan in die ronde de kans policy kaarten te kiezen.")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "title"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "- Het bord:")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "text"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Het bord bevat twee kanten de \u201Crode\u201D en de \u201Cblauwe\u201C kant. Zoals je hierboven kunt lezen wil je als een liberaal de blauwe kant vullen met de blauwe policykaarten en de fascisten willen juist de rode kant vullen met de rode policykaarten. Voor de rode kant gelden nog een paart extra regels/opties. Deze verschillen voor de hoeveel spelers die meedoen tijdens het spel."))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-6 mb-5"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "title"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "- Voor 7 tot 8 spelers:")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "text"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Geld er dat bij de tweede rode policykaart die op het bord gelegd word de president iemand mag kiezen om zijn identiteit kaart te zien(hierover mogen beide spelers over liegen). Bij de derde rode policykaart die op het bord gelegd word mag de huidige president de nieuwe president kiezen. De fascisten weten van elkaar dat ze fascisten zijn maar Hitler weet niet wie de fascisten zijn."))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-6 mb-5"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "text d-block"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Het bord bevat twee kanten de \u201Crode\u201D en de \u201Cblauwe\u201C kant. Zoals je hierboven kunt lezen wil je als een liberaal de blauwe kant vullen met de blauwe policykaarten en de fascisten willen juist de rode kant vullen met de rode policykaarten. Voor de rode kant gelden nog een paart extra regels/opties. Deze verschillen voor de hoeveel spelers die meedoen tijdens het spel.")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "title"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "- Voor 5 tot 6 spelers:")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "text"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Geld er dat bij de derde rode policy kaart de vorige president de drie policykaarten mag inzien. Zo kan hij kijken of er een fascist tussen de huidige president en kanselier zit (de vorige president kan zelf een fascist zijn). Ook geld er hier dat Hitler en de fascisten van elkaar weten dat ze fascisten of Hitler zijn."))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-6 mb-5"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "text d-block"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Geld er dat bij de derde rode policy kaart de vorige president de drie policykaarten mag inzien. Zo kan hij kijken of er een fascist tussen de huidige president en kanselier zit (de vorige president kan zelf een fascist zijn). Ook geld er hier dat Hitler en de fascisten van elkaar weten dat ze fascisten of Hitler zijn.", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        className: "",
+        width: "150",
+        src: "images/gamerule/5-6Players.png"
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "title"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "- Voor 9 tot 10 spelers:")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "text d-block"
@@ -88646,31 +88920,53 @@ function (_Component) {
         className: "",
         width: "150",
         src: "images/gamerule/Kat-pictogram.png"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "De fascisten weten van elkaar dat ze fascisten zijn maar Hitler weet niet wie de fascisten zijn."))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-6 mb-5"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "title"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "-  Regels zonder een x aantal spelers:")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "text"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Bij de vijfde policykaart mag diegene die hem oplegt iemand vermoorden als liberaal wil je een fascist doden en als fascist juist een liberaal. Dit geld ook voor de zesde rode policykaart. Als je dood geschoten word doe je niet meer mee met het spel!"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-6 mb-5"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "title"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "- Tijdens het spel:")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "text"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Elke ronde word er een nieuwe president aangesteld (de eerste keer is dit random) deze word telkens met de klok mee aangesteld. De president kiest vervolgens een kanselier. Vervolgens gaan alle spelers stemmen of zij de kanselier goedkeuren. Hiervoor heb je een \u201CJa\u201D en \u201CNein\u201D kaarten. Als er meer dan 50% ja gekozen heeft mogen ze de policy kaarten pakken. Als er minder dan 50% ja kiest noemen we dit een \u201Cfail\u201D als dit drie keer gebeurd, dan word de bovenste policykaart omgedraaid en op het bord gelegd dit kan een rode of blauwe zijn. De president krijgt drie policykaarten en moet daar dan \xE9\xE9n policy kaart eruit halen deze doet dan niet meer mee, vervolgens geeft hij de overgebleven twee kaarten door aan de kanselier. De kanselier mag er dan weer \xE9\xE9n van de twee eruit halen. De kaart die overblijft word vervolgens op het bord gelegd."))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-6 mb-5"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "De fascisten weten van elkaar dat ze fascisten zijn maar Hitler weet niet wie de fascisten zijn.")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "title"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "- Het is spel eindigt wanneer:")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "text"
+        className: "text d-block"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "- Hitler vermoord is (liberalen winnen) - De rode kant van het bord vol ligt met rode policykaarten(fascisten winnen) - De blauwe kant van het bord vol ligt met blauwe policykaarten(liberalen winnen) - Als Hitler de kanselier is als er 4 of meer rode policykaarten liggen op het bord"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-6 mb-5"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "title"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "- Policy kaarten:")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "text d-block"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Blauwe \u201CPolicy kaarten\u201D:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Deze wil je als liberaal"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Rode \u201CPolicy kaarten\u201D: Deze wil je als fascist juist graag op het bord krijgen. Zodra er zes rode policy kaarten op het bord liggen winnen de fascisten.", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        className: "liberal",
+        width: "170",
+        src: "images/gamerule/liberal-article.png"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        className: "facist",
+        width: "280",
+        src: "images/gamerule/facist-article.png"
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "title"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "- Voor 7 tot 8 spelers:")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "text d-block"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Geld er dat bij de tweede rode policykaart die op het bord gelegd word de president iemand mag kiezen om zijn identiteit kaart te zien(hierover mogen beide spelers over liegen). Bij de derde rode policykaart die op het bord gelegd word mag de huidige president de nieuwe president kiezen.", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        className: "",
+        width: "150",
+        src: "images/gamerule/6-8Players.png"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        className: "",
+        width: "150",
+        src: "images/gamerule/5-6Players.png"
+      }), "De fascisten weten van elkaar dat ze fascisten zijn maar Hitler weet niet wie de fascisten zijn.")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "title"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "-  Regels zonder een x aantal spelers:")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "text d-block"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Bij de vijfde policykaart mag diegene die hem oplegt iemand vermoorden als liberaal wil je een fascist doden en als fascist juist een liberaal. Dit geld ook voor de zesde rode policykaart. Als je dood geschoten word doe je niet meer mee met het spel!")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "title"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "- Tijdens het spel:")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "text"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "In het spel heb je een president en een kanselier. Deze hebben dan in die ronde de kans policy kaarten te kiezen.")))));
+        className: "text d-block"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Elke ronde word er een nieuwe president aangesteld (de eerste keer is dit random) deze word telkens met de klok mee aangesteld. De president kiest vervolgens een kanselier. Vervolgens gaan alle spelers stemmen of zij de kanselier goedkeuren. Hiervoor heb je een \u201CJa\u201D en \u201CNein\u201D kaarten. Als er meer dan 50% ja gekozen heeft mogen ze de policy kaarten pakken.", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        className: "",
+        width: "150",
+        src: "images/gamerule/ja-card.png"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        className: "",
+        width: "150",
+        src: "images/gamerule/nein-card.png"
+      }), "Als er minder dan 50% ja kiest noemen we dit een \u201Cfail\u201D als dit drie keer gebeurd, dan word de bovenste policykaart omgedraaid en op het bord gelegd dit kan een rode of blauwe zijn. De president krijgt drie policykaarten en moet daar dan \xE9\xE9n policy kaart eruit halen deze doet dan niet meer mee, vervolgens geeft hij de overgebleven twee kaarten door aan de kanselier. De kanselier mag er dan weer \xE9\xE9n van de twee eruit halen. De kaart die overblijft word vervolgens op het bord gelegd.")))));
     }
   }]);
 
@@ -89003,6 +89299,8 @@ function (_Component) {
                   _this2.onUserJoin(user);
                 }).leaving(function (user) {
                   _this2.onUserLeave(user);
+                }).listen('.president-rotated', function (e) {
+                  _this2.props.dispatch(Object(_redux_actions_room_actions__WEBPACK_IMPORTED_MODULE_7__["setPresident"])(e.president));
                 }).listen('.user-kicked', function (e) {
                   if (_this2.props.authUser.id === e.userId) {
                     Echo.leave("room.".concat(_this2.props.room.id));
@@ -89010,6 +89308,10 @@ function (_Component) {
                   }
                 }).listen('.game-started', function (e) {
                   _this2.props.dispatch(Object(_redux_actions_room_actions__WEBPACK_IMPORTED_MODULE_7__["editActive"])(1));
+                }).listen('.update-stage', function (e) {
+                  _this2.props.dispatch(Object(_redux_actions_room_actions__WEBPACK_IMPORTED_MODULE_7__["setStage"])(e.stageNum));
+                }).listen('.new-chancellor', function (e) {
+                  _this2.props.dispatch(Object(_redux_actions_room_actions__WEBPACK_IMPORTED_MODULE_7__["setChancellor"])(e.chancellor));
                 });
 
               case 3:
@@ -89041,8 +89343,10 @@ function (_Component) {
           setInactive: function setInactive() {
             return _this3.setInactive();
           },
-          users: this.state.users,
-          id: this.props.match.params.id
+          rotatePresident: function rotatePresident() {
+            return _this3.rotatePresident();
+          },
+          users: this.state.users
         });
       }
 
@@ -89173,13 +89477,18 @@ if (document.getElementById('index')) {
 /*!****************************************************!*\
   !*** ./resources/js/redux/actions/room-actions.js ***!
   \****************************************************/
-/*! exports provided: setRoom, editActive */
+/*! exports provided: setRoom, editActive, setPresident, setChancellor, setStage, addMessage, deleteAllMessages */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setRoom", function() { return setRoom; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "editActive", function() { return editActive; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setPresident", function() { return setPresident; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setChancellor", function() { return setChancellor; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setStage", function() { return setStage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addMessage", function() { return addMessage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteAllMessages", function() { return deleteAllMessages; });
 var setRoom = function setRoom(room) {
   return {
     type: 'SET_ROOM',
@@ -89190,6 +89499,35 @@ var editActive = function editActive(value) {
   return {
     type: 'EDIT_ACTIVE',
     value: value
+  };
+};
+var setPresident = function setPresident(user) {
+  return {
+    type: 'SET_PRESIDENT',
+    user: user
+  };
+};
+var setChancellor = function setChancellor(user) {
+  return {
+    type: 'SET_CHANCELLOR',
+    user: user
+  };
+};
+var setStage = function setStage(_int) {
+  return {
+    type: 'SET_STAGE',
+    "int": _int
+  };
+};
+var addMessage = function addMessage(value) {
+  return {
+    type: 'ADD_MESSAGE',
+    value: value
+  };
+};
+var deleteAllMessages = function deleteAllMessages() {
+  return {
+    type: 'DELETE_ALL_MESSAGES'
   };
 };
 
@@ -89245,6 +89583,14 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -89252,16 +89598,45 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 var room = function room() {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
+    messages: []
+  };
   var action = arguments.length > 1 ? arguments[1] : undefined;
 
   switch (action.type) {
     case 'SET_ROOM':
-      return action.room;
+      return _objectSpread({}, action.room, {
+        messages: state.messages
+      });
 
     case 'EDIT_ACTIVE':
       return _objectSpread({}, state, {
         active: action.value
+      });
+
+    case 'SET_PRESIDENT':
+      return _objectSpread({}, state, {
+        president: action.user
+      });
+
+    case 'SET_CHANCELLOR':
+      return _objectSpread({}, state, {
+        chancellor: action.user
+      });
+
+    case 'SET_STAGE':
+      return _objectSpread({}, state, {
+        stage: action["int"]
+      });
+
+    case 'ADD_MESSAGE':
+      return _objectSpread({}, state, {
+        messages: [].concat(_toConsumableArray(state.messages), [action.value])
+      });
+
+    case 'DELETE_ALL_MESSAGES':
+      return _objectSpread({}, state, {
+        messages: []
       });
 
     default:
