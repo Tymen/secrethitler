@@ -55,6 +55,12 @@ class RoomsPolicy
             ? Response::allow()
             : Response::deny('User is not in room');
     }
+    public  function isPresOrChan(User $user, Room $room)
+    {
+        return $user->hasAnyRole(["President", "Chancellor"])
+            ? Response::allow()
+            : Response::deny("You're not allowed to perform this action");
+    }
 //    public function policyValidation(User $user, Room $room, $request)
 //    {
 //        $changePolicies = $room->roomState;
