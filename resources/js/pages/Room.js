@@ -33,7 +33,6 @@ class Room extends Component {
                 this.onUserLeave(user)
             })
             .listen('.president-rotated', (e) => {
-                console.log(e)
                 this.props.dispatch(setPresident(e.president))
             })
             .listen('.user-kicked', (e) => {
@@ -52,10 +51,8 @@ class Room extends Component {
                 this.props.dispatch(setChancellor(e.chancellor))
             })
             .listen('.start-timer', (e) => {
-                console.log(e);
                 if (e.extra === this.props.authUser?.id || e.extra === 'everyone') {
                     clearInterval(this.state.timer)
-                    console.log('cleared')
                     this.props.dispatch(setSecond(e.second))
                     this.timer()
                 }
