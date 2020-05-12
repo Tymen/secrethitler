@@ -584,7 +584,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .in-lobby .input-message {
-    width: 716px;
+    width: 100%;
 }
 
 /*end of lobby layout*/

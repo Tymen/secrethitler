@@ -11040,3 +11040,65 @@ a.text-dark:focus {
   color: white;
 }
 
+@media (max-width: 1199.98px) {
+  .warp-chat {
+    width: 50%;
+  }
+
+  .chat {
+    width: 662px !important;
+  }
+
+  .send-message {
+    width: 662px !important;
+  }
+
+  .btn-send-button {
+    margin-top: -20px !important;
+  }
+
+  .start-game {
+    width: 962px !important;
+  }
+}
+
+@media (max-width: 991.98px) {
+  .chat {
+    width: 422px !important;
+  }
+
+  .send-message {
+    width: 422px !important;
+  }
+
+  .start-game {
+    width: 722px !important;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .show-players {
+    width: 538px !important;
+    max-width: 538px !important;
+    min-height: 200px !important;
+    max-height: 200px !important;
+  }
+
+  .players-in-lobby {
+    width: 538px !important;
+    max-width: 538px !important;
+  }
+
+  .chat {
+    width: 538px !important;
+  }
+
+  .send-message {
+    width: 538px !important;
+  }
+
+  .start-game {
+    width: 538px !important;
+  }
+}
+

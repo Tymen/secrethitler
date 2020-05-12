@@ -70,7 +70,7 @@ class ChatLobby extends Component {
 
     render() {
         return (
-            <div>
+            <div className="warp-chat">
                 <div className="chat">
                         {this.state.messages.map(message => (
                             <div className="message-container">
