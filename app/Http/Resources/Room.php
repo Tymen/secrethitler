@@ -3,9 +3,7 @@
 namespace App\Http\Resources;
 
 use App\User;
-use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Http\Resources\User as UserResource;
 
 class Room extends JsonResource
 {
