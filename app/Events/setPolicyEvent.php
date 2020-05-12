@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Room;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -10,23 +11,20 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class SendPolicyEvent implements ShouldBroadcast
+class setPolicyEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-
-    public $roomId;
-    public $userId;
-    public $policies;
+    public $roomID;
+    public $policy;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($roomId, $userId, $policies)
+    public function __construct(Room $room)
     {
-        $this->roomId = $roomId;
-        $this->userId = $userId;
-        $this->policies = $policies;
+        $this->roomID = $room->id;
+        $this->policy = [$room->roomState->chosen_policies];
     }
 
     /**
@@ -36,10 +34,10 @@ class SendPolicyEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PresenceChannel("room.{$this->roomId}");
+        return new PresenceChannel("room.{$this->roomID}");
     }
     public function broadcastAs()
     {
-        return "policies_choose_event";
+        return "get-policy";
     }
 }
