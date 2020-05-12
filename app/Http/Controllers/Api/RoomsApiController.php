@@ -3,13 +3,14 @@
 namespace App\Http\Controllers\Api;
 
 use App\Events\sendPoliciesChancellor;
-use App\Events\setPolicyEvent;
+
 use App\Room;
 use App\User;
 use App\RoomState;
 use Illuminate\Http\Request;
 use App\Events\KickUserEvent;
 use App\Events\StartGameEvent;
+use App\Events\setPolicyEvent;
 use App\Events\RoomsUpdatedEvent;
 use App\Events\NewChancellorEvent;
 use App\Events\RotatePresidentEvent;
@@ -216,7 +217,6 @@ class RoomsApiController extends Controller
         $response = [
             'result' => $result,
         ];
-
         $changePolicies->chosen_policies = implode(" ", $result);
         foreach ($result as $policy) {
             $test[] = (strtolower($policy) === "fascist") ?
