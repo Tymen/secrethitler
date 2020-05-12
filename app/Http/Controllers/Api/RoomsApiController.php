@@ -217,6 +217,7 @@ class RoomsApiController extends Controller
         $response = [
             'result' => $result,
         ];
+
         $changePolicies->chosen_policies = implode(" ", $result);
         foreach ($result as $policy) {
             $test[] = (strtolower($policy) === "fascist") ?

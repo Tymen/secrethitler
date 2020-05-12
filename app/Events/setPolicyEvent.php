@@ -19,7 +19,8 @@ class setPolicyEvent implements ShouldBroadcast
     /**
      * Create a new event instance.
      *
-     * @return void
+     * @param $roomID
+     * @param $policy
      */
     public function __construct(Room $room)
     {
