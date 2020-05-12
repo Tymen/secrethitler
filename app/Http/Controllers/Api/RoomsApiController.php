@@ -14,6 +14,7 @@ use App\Events\setPolicyEvent;
 use App\Events\RoomsUpdatedEvent;
 use App\Events\NewChancellorEvent;
 use App\Events\RotatePresidentEvent;
+use App\Events\setPolicyEvent;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\RoomCollection;
@@ -217,6 +218,7 @@ class RoomsApiController extends Controller
         $response = [
             'result' => $result,
         ];
+        $changePolicies = $room->roomState;
 
         $changePolicies->chosen_policies = implode(" ", $result);
         foreach ($result as $policy) {
