@@ -17,7 +17,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\RoomCollection;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\Room as RoomResource;
-use App\Helper\AppHelper;
 
 class RoomsApiController extends Controller
 {

@@ -27,7 +27,7 @@ class VotesDoneEvent
         $this->roomId = $room->id;
 
         $room->roomState->changeState(3);
-//        $room->roomState->startTimer('everyone');
+//        $room->roomState->startTimer(president id);
     }
 
     /**
