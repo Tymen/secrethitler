@@ -8,15 +8,18 @@ use App\RoomState;
 use Illuminate\Http\Request;
 use App\Events\KickUserEvent;
 use App\Events\StartGameEvent;
+use App\Events\setPolicyEvent;
 use App\Events\RoomsUpdatedEvent;
 use App\Events\NewChancellorEvent;
 use App\Events\RotatePresidentEvent;
+use App\Events\sendPoliciesChancellor;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\RoomCollection;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\Room as RoomResource;
+use League\Event\Event;
 
 class RoomsApiController extends Controller
 {
@@ -195,8 +198,15 @@ class RoomsApiController extends Controller
         $this->authorize('isPresident', $room);
         $fascist = $room->roomState->fascist_policies;
         $liberal = $room->roomState->liberal_policies;
+        $changePolicies = $room->roomState;
 
         $result = [];
+        if (($changePolicies->fascist_policies < 3) || $changePolicies->liberal_policies < 3){
+            $changePolicies-> fascist_policies = 11;
+            $changePolicies-> fascist_policies = 6;
+            $liberal = 6;
+            $fascist = 11;
+        }
         $total = $liberal + $fascist;
         for ($i = 0; $i < 3; $i++) {
             $chance = round($fascist / $total * 100);
@@ -204,11 +214,9 @@ class RoomsApiController extends Controller
             $result[] = $random < $chance ? "Fascist" : "Liberal";
         }
         $response = [
-            'Fascist_cards' => $fascist,
-            'Liberal_cards' => $liberal,
-            'Card' => $result,
+            'result' => $result,
         ];
-        $changePolicies = $room->roomState;
+
         $changePolicies->chosen_policies = implode(" ", $result);
         foreach ($result as $policy) {
             $test[] = (strtolower($policy) === "fascist") ?
@@ -221,18 +229,31 @@ class RoomsApiController extends Controller
 
     public function setPolicies(Room $room, Request $request)
     {
+        $this->authorize("isPresOrChan", $room);
+
         $changePolicies = $room->roomState;
         $validation = $this->policyValidation($room, $request);
 
         if ($validation) {
-            (strtolower($request->removed) === "fascist") ?
+             (strtolower($request->removed) === "fascist") ?
                 $changePolicies->chosen_fascist += 1 :
                 $changePolicies->chosen_liberal += 1;
+
+            $chosenPoliciesArr = explode(" ",$changePolicies->chosen_policies);
+            $getIndexPolicy = (array_search($request->removed, $chosenPoliciesArr));
+            unset($chosenPoliciesArr[$getIndexPolicy]);
+
+            $changePolicies->chosen_policies = implode(" ", $chosenPoliciesArr);
             $changePolicies->save();
+            if(Auth::user()->hasrole("President")){
+                $getChanId = User::role("Chancellor")->where("room_id", $room->id)->first();
+                event(new sendPoliciesChancellor($room, $getChanId));
+            }else {
+                event(new setPolicyEvent($room));
+            }
         } else {
             $request->leftOver = "Error";
         }
-
         return response()->json(['leftover' => $request->leftOver]);
     }
 
@@ -243,27 +264,11 @@ class RoomsApiController extends Controller
         array_push($mergedRequest, $request->removed);
         $getPolicyCheckDB = array_count_values(explode(" ", $changePolicies->chosen_policies));
         $getMergedCheck = array_count_values($mergedRequest);
-
-        if (count($getMergedCheck) <= 2) {
-            if (array_key_exists("Liberal", $getPolicyCheckDB) && array_key_exists("Fascist", $getPolicyCheckDB)) {
-                if (array_key_exists("Liberal", $getMergedCheck) && array_key_exists("Fascist", $getMergedCheck)) {
-                    $validation = (($getMergedCheck["Liberal"] === $getPolicyCheckDB["Liberal"]) &&
-                        ($getMergedCheck["Fascist"] === $getPolicyCheckDB["Fascist"])) ?
-                        true : false;
-                } else {
-                    $validation = false;
-                }
-            } else if (array_key_exists("Liberal", $getPolicyCheckDB)) {
-                $validation = ($getPolicyCheckDB["Liberal"] === $getMergedCheck["Liberal"]) ?
-                    true : false;
-            } else {
-                $validation = ($getPolicyCheckDB["Fascist"] === $getMergedCheck["Fascist"]) ?
-                    true : false;
-            }
-        } else {
+        if ($getMergedCheck === $getPolicyCheckDB){
+            $validation = true;
+        }else {
             $validation = false;
         }
-
         return $validation;
     }
 
