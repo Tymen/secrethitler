@@ -4,7 +4,7 @@ import Lobby from "../components/Room/Lobby";
 import ChatLobby from "../components/Room/Lobby/ChatLobby";
 import PlayersLobby from "../components/Room/Lobby/PlayersLobby";
 import {connect} from 'react-redux';
-import {editActive, setChancellor, setPresident, setRoom, setStage} from "../redux/actions/room-actions";
+import {editActive, setChancellor, setPresident, setRoom, setSecond, setStage} from "../redux/actions/room-actions";
 
 class Room extends Component {
 
@@ -13,6 +13,7 @@ class Room extends Component {
         leftUsers: [],
         loggedIn: false,
         loaded: false,
+        timer: 0,
     }
 
     async componentDidMount() {
@@ -49,10 +50,32 @@ class Room extends Component {
             .listen('.new-chancellor', (e) => {
                 this.props.dispatch(setChancellor(e.chancellor))
             })
-}
+            .listen('.start-timer', (e) => {
+                if (e.extra === this.props.authUser?.id || e.extra === 'everyone') {
+                    clearInterval(this.state.timer)
+                    this.props.dispatch(setSecond(e.second))
+                    this.timer()
+                }
+            })
+    }
 
     componentWillUnmount() {
         Echo.leave(`room.${this.props.room.id}`)
+    }
+
+    timer = () => {
+        const timer = setInterval(() => {
+            this.setState({timer: timer})
+
+            let cancel = false
+
+            if (this.props.room.second <= 0) {
+                cancel = true
+                clearInterval(timer)
+            }
+
+            !cancel ? this.props.dispatch(setSecond(this.props.room.second - 1)) : false;
+        }, 1000)
     }
 
     onUserJoin = (user) => {
@@ -89,6 +112,8 @@ class Room extends Component {
         await axios.get(`/api/v1/rooms/${this.props.match.params.id}`).then(response => {
             this.props.dispatch(setRoom(response.data.data))
         })
+
+        this.timer()
     };
 
     setActive = () => {
