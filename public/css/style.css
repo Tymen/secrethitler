@@ -367,7 +367,15 @@ body::-webkit-scrollbar-thumb {
 .join-text {
     font-size: 25px;
     color: white;
-    background-color: transparent;
+    background-color: #343030;
+    height: 50px;
+    border-radius: 20px 20px 0 0;
+    margin: 30px 0 0 0;
+    text-align: center;
+}
+
+.join-text p {
+    padding-top: 5px;
 }
 
 .rooms-body {
@@ -382,11 +390,27 @@ body::-webkit-scrollbar-thumb {
 
 .home-rooms {
     display: inline-block;
+    margin: 0 20px 0 0;
 }
 
 .background-rooms {
     max-height: 300px;
     max-height: 300px;
+    border-radius: 0 0 20px 20px;
+}
+
+.background-room {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 20px;
+    font-weight: lighter;
+    letter-spacing: 2px;
+    transition: 0.7s box-shadow;
+}
+
+.background-room:hover {
+    box-shadow: 0 5px 35px 0px rgba(0,0,0,.5);
+    background-color: #6b6b6b;
+    cursor: pointer;
 }
 
 .in-game {
@@ -403,6 +427,7 @@ body::-webkit-scrollbar-thumb {
 .home-bolletjes {
     position: absolute;
     margin-top: -6rem;
+    z-index: -1;
 }
 
 .explanation-text {
