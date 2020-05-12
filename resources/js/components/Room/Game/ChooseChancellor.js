@@ -26,7 +26,7 @@ class ChooseChancellor extends Component {
     showOptions = () => {
         return this.props.users.map(user => {
             if (user.id !== this.props.authUser?.id) {
-                if(user.id === this.state.checkedUser){
+                if (user.id === this.state.checkedUser) {
                     return (
                         <div className="options active" key={user.id}>
                             <label className="container-choose-chancellor">
@@ -37,7 +37,7 @@ class ChooseChancellor extends Component {
                         </div>
 
                     )
-                }else{
+                } else {
                     return (
                         <div className="options" key={user.id}>
                             <label className="container-choose-chancellor">
@@ -53,28 +53,31 @@ class ChooseChancellor extends Component {
         })
     }
 
-render()
-{
-    return (
-        <div>
-            <div className="header-choose-chancellor">
-                <div className="row">
-                    <div className="col-2">
-                        <p>{this.props.room?.second}</p>
+    render() {
+        return (
+            <div>
+                <div className="header-choose-chancellor">
+                    <div className="row">
+                        <div className="col-2">
+                            <p>{this.props.room?.second}</p>
+                        </div>
+                        <div className="col-8">
+                            <p>Choose one of the players to be the chancellor</p>
+                            <p className="under-title">(select one player and click submit to continue)</p>
+                        </div>
+                        <div className="col-2">
+                            <button type="submit" className="btn btn btn-explanation btn-chancellor" onClick={(e) => {
+                                e.preventDefault();
+                                this.handleSubmit()
+                            }}>submit
+                            </button>
+                        </div>
                     </div>
-                    <div className="col-8">
-                        <p>Choose one of the players to be the chancellor</p>
-                        <p className="under-title">(select one player and click submit to continue)</p>
-                    </div>
-                    <div className="col-2">
-                        <button type="submit" className="btn btn btn-explanation btn-chancellor" onClick={(e) => {e.preventDefault(); this.handleSubmit()}}>submit</button>
-                    </div>
+                    {this.showOptions()}
                 </div>
             </div>
-            {this.showOptions()}
-        </div>
-    )
-}
+        )
+    }
 }
 
 const mapStateToProps = state => {

@@ -86513,20 +86513,17 @@ function (_Component) {
       return _this.state.rooms.map(function (room) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "home-rooms",
-          key: room.id
+          key: room.id,
+          onClick: function onClick() {
+            return window.location.href = "/rooms/".concat(room.id);
+          }
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "col background-room"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "fas fa-mug-hot"
-        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-          key: room.id,
-          to: "/",
-          onClick: function onClick() {
-            window.location.href = "/rooms/".concat(room.id);
-          }
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
           className: "room-name-li"
-        }, room.name))));
+        }, room.name)));
       });
     });
 
@@ -86968,7 +86965,7 @@ function (_Component) {
 
           _this2.handleSubmit();
         }
-      }, "submit")))), this.showOptions());
+      }, "submit"))), this.showOptions()));
     }
   }]);
 
@@ -88817,7 +88814,7 @@ function (_Component) {
         className: "col-4 text-center"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Home_CreateRoom__WEBPACK_IMPORTED_MODULE_2__["default"], null))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-12 join-text"
-      }, "Join a game"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Join a game")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "background-rooms"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Home_Rooms__WEBPACK_IMPORTED_MODULE_3__["default"], null)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "row text-white container-explanation explanation-text"
