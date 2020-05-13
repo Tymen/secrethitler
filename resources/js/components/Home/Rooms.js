@@ -39,6 +39,7 @@ export default class Rooms extends Component {
         this.request = React.createRef();
         this.child = React.createRef();
     };
+
     componentDidMount() {
         this._isMounted = true;
         get('api/v1/users/me').then(response => {
@@ -56,29 +57,28 @@ export default class Rooms extends Component {
     getRooms = () => {
         get('/api/v1/rooms')
             .then(response => {
-                if(response.error){
+                if (response.error) {
                     this.child.getNotify(this.state.getMsg.internalServer);
-                }else {
+                } else {
 
                     this.setState({rooms: response.data});
                 }
             })
     };
+
     componentWillUnmount() {
         this._isMounted = false
     }
+
     showRooms = () => {
         return this.state.rooms.map(room => {
 
             return (
-                <div className="home-rooms" key={room.id}>
-                    <div className="col-12 background-room">
+                <div className="home-rooms" key={room.id} onClick={() => window.location.href = `/rooms/${room.id}`}>
+                    <div className="col background-room">
                         <i className="fas fa-mug-hot"></i>
-                        <Link key={room.id} to="/" onClick={() => {
-                            window.location.href = `/rooms/${room.id}`
-                        }}>
-                            <p className="room-name-li">{room.name}</p>
-                        </Link>
+
+                        <p className="room-name-li">{room.name}</p>
                     </div>
                 </div>
             )

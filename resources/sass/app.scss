@@ -8,6 +8,8 @@
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+@import "Game";
 .background-rooms {
     padding: 30px;
     background-color:#B8B8B8;
@@ -110,3 +112,102 @@ h1 {
 .about-us {
     background-color:#727272;
 }
+.gamerule-bolletjes {
+    position: absolute;
+    width: 168%;
+    left: -390px;
+    top: -405px;
+}
+
+.gamerule {
+    .title {
+        background-color:#2B2929;
+        border-radius: 0px 19px 0px 0px;
+        h1 {
+            font-size: 30px;
+            font-weight: bold;
+            color: white;
+            padding: 10px 40px;
+            margin-bottom: 0px;
+        }
+    }
+    .text {
+        .liberal {
+            margin-left: 30px;
+        }
+        margin-bottom:95px!important;
+        background-color:#727272;
+        border-radius: 0px 0px 0px 52px;
+        display: table-cell;
+        p {
+            padding: 30px;
+            font-size: 20px;
+            font-weight: bold;
+            color: white;
+        }
+    }
+}
+// Large devices (desktops, less than 1200px)
+@media (max-width: 1199.98px) {
+    .warp-chat {
+    width: 50%;
+    }
+    .chat {
+             width: 662px!important;
+    }
+    .send-message {
+        width: 662px!important;
+    }
+    .btn-send-button {
+        margin-top: -20px!important;
+    }
+    .start-game {
+        width: 962px!important;
+    }
+}
+
+// Medium devices (tablets, less than 992px)
+@media (max-width: 991.98px) {
+    .chat {
+        width: 422px !important;
+    }
+    .send-message {
+        width: 422px !important;
+    }
+    .start-game {
+        width: 722px !important;
+    }
+}
+
+
+// Small devices (landscape phones, less than 768px)
+@media (max-width: 767.98px) {
+    .show-players {
+        width: 538px!important;
+        max-width: 538px!important;
+        min-height: 200px!important;
+        max-height: 200px!important;
+    }
+    .players-in-lobby {
+        width: 538px!important;
+        max-width: 538px!important;
+    }
+    .chat {
+        width: 538px !important;
+    }
+    .send-message {
+        width: 538px !important;
+    }
+    .start-game {
+        width: 538px !important;
+    }
+}
+
+// Extra small devices (portrait phones, less than 576px)
+@media (max-width: 575.98px) {
+
+}
+
+
+
+

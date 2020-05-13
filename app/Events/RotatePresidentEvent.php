@@ -2,7 +2,6 @@
 
 namespace App\Events;
 
-use App\Helper\AppHelper;
 use App\Room;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
@@ -29,7 +28,9 @@ class RotatePresidentEvent implements ShouldBroadcast
     {
         $this->room = $room;
         $this->president = $president;
-        AppHelper::changeState($room, 1);
+
+        $room->roomState->changeState(1);
+        $room->roomState->startTimer($president['id']);
     }
 
     /**

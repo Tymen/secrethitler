@@ -86932,20 +86932,17 @@ function (_Component) {
       return _this.state.rooms.map(function (room) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "home-rooms",
-          key: room.id
+          key: room.id,
+          onClick: function onClick() {
+            return window.location.href = "/rooms/".concat(room.id);
+          }
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "col-12 background-room"
+          className: "col background-room"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "fas fa-mug-hot"
-        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-          key: room.id,
-          to: "/",
-          onClick: function onClick() {
-            window.location.href = "/rooms/".concat(room.id);
-          }
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
           className: "room-name-li"
-        }, room.name))));
+        }, room.name)));
       });
     });
 
@@ -87108,7 +87105,7 @@ function (_Component) {
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "row"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "col-2 bg-dark col-wrap"
+          className: "col-md-2 col-12 bg-dark col-wrap"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "in-game"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Lobby_PlayersLobby__WEBPACK_IMPORTED_MODULE_1__["default"], {
@@ -87117,7 +87114,7 @@ function (_Component) {
           fascists: this.state.fascists,
           hitler: this.state.hitler
         }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "col-7 bg-board"
+          className: "col-md-7 col-12 bg-board"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "board-section"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -87127,7 +87124,7 @@ function (_Component) {
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
           className: "name-of-room"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", null, "Room: "), this.props.room.name)))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "col-3 col-wrap"
+          className: "col-md-3 col-12 col-wrap"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "in-game"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Lobby_ChatLobby__WEBPACK_IMPORTED_MODULE_2__["default"], {
@@ -87478,8 +87475,7 @@ function (_Component) {
       checkedUser: ''
     });
 
-    _defineProperty(_assertThisInitialized(_this), "handleSubmit", function (e) {
-      e.preventDefault();
+    _defineProperty(_assertThisInitialized(_this), "handleSubmit", function () {
       axios.post("/api/v1/rooms/".concat(_this.props.room.id, "/chancellor"), {
         uid: _this.state.checkedUser
       });
@@ -87538,9 +87534,19 @@ function (_Component) {
   }
 
   _createClass(ChooseChancellor, [{
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps, prevState, snapshot) {
+      var _this$props$room;
+
+      if (((_this$props$room = this.props.room) === null || _this$props$room === void 0 ? void 0 : _this$props$room.second) <= 0) {
+        this.handleSubmit();
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
+      var _this$props$room2,
+          _this2 = this;
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "header-choose-chancellor"
@@ -87548,7 +87554,7 @@ function (_Component) {
         className: "row"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-2"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, (_this$props$room2 = this.props.room) === null || _this$props$room2 === void 0 ? void 0 : _this$props$room2.second)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-8"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Choose one of the players to be the chancellor"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "under-title"
@@ -87558,9 +87564,11 @@ function (_Component) {
         type: "submit",
         className: "btn btn btn-explanation btn-chancellor",
         onClick: function onClick(e) {
-          return _this2.handleSubmit(e);
+          e.preventDefault();
+
+          _this2.handleSubmit();
         }
-      }, "submit")))), this.showOptions());
+      }, "submit"))), this.showOptions()));
     }
   }]);
 
@@ -87969,7 +87977,7 @@ function (_Component) {
 
     _defineProperty(_assertThisInitialized(_this), "handleVote", function (type) {
       axios.post("/api/v1/rooms/".concat(_this.props.room.id, "/vote"), {
-        type: type
+        nein: !type
       }).then(function (response) {
         _this.setState({
           voted: true
@@ -87981,9 +87989,19 @@ function (_Component) {
   }
 
   _createClass(Vote, [{
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps, prevState, snapshot) {
+      var _this$props$room;
+
+      if (((_this$props$room = this.props.room) === null || _this$props$room === void 0 ? void 0 : _this$props$room.second) <= 0) {
+        this.handleVote(true);
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
+      var _this$props$room2,
+          _this2 = this;
 
       if (this.state.voted) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -88004,7 +88022,7 @@ function (_Component) {
         className: "row"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-2"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, (_this$props$room2 = this.props.room) === null || _this$props$room2 === void 0 ? void 0 : _this$props$room2.second)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-8"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Do you want to vote for this party?"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "under-title"
@@ -88014,14 +88032,14 @@ function (_Component) {
         className: "row"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         onClick: function onClick() {
-          return _this2.handleVote('yes');
+          return _this2.handleVote(true);
         },
         className: "chose-cards"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         src: "/images/ja-card.svg"
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         onClick: function onClick() {
-          return _this2.handleVote('no');
+          return _this2.handleVote(false);
         },
         className: "chose-cards"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
@@ -88242,7 +88260,9 @@ function (_Component) {
       var _this$props$room$mess,
           _this2 = this;
 
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "warp-chat"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "chat"
       }, (_this$props$room$mess = this.props.room.messages) === null || _this$props$room$mess === void 0 ? void 0 : _this$props$room$mess.map(function (message) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -89414,7 +89434,101 @@ function (_Component) {
   _createClass(GameRule, [{
     key: "render",
     value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "GameRule"));
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "container"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        className: "home-logo",
+        src: "images/Secrethitler-no-bg.png"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "row gamerule"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-12 page-title"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        className: "gamerule-bolletjes",
+        src: "images/uitleg-bolletjes.svg"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
+        className: "text-center"
+      }, "Over ons:")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-6 mb-5"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "title"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "- In het spel:")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "text d-block"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "In het spel heb je een president en een kanselier. Deze hebben dan in die ronde de kans policy kaarten te kiezen.")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "title"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "- Het bord:")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "text d-block"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Het bord bevat twee kanten de \u201Crode\u201D en de \u201Cblauwe\u201C kant. Zoals je hierboven kunt lezen wil je als een liberaal de blauwe kant vullen met de blauwe policykaarten en de fascisten willen juist de rode kant vullen met de rode policykaarten. Voor de rode kant gelden nog een paart extra regels/opties. Deze verschillen voor de hoeveel spelers die meedoen tijdens het spel.")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "title"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "- Voor 5 tot 6 spelers:")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "text d-block"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Geld er dat bij de derde rode policy kaart de vorige president de drie policykaarten mag inzien. Zo kan hij kijken of er een fascist tussen de huidige president en kanselier zit (de vorige president kan zelf een fascist zijn). Ook geld er hier dat Hitler en de fascisten van elkaar weten dat ze fascisten of Hitler zijn.", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        className: "",
+        width: "150",
+        src: "images/gamerule/5-6Players.png"
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "title"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "- Voor 9 tot 10 spelers:")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "text d-block"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Geld er dat bij de eerste rode policykaart de huidige president iemand mag kiezen om zijn identiteit kaart te zien(hierover mogen beide spelers over liegen). Bij de tweede rode policykaart mag de huidige president wederom iemand kiezen om zijn identiteit kaart te zien(hierover mogen beide spelers over liegen). Bij de derde rode policykaart mag de huidige president de nieuwe president kiezen."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        className: "",
+        width: "150",
+        src: "images/gamerule/6-8Players.png"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        className: "",
+        width: "150",
+        src: "images/gamerule/5-6Players.png"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        className: "",
+        width: "150",
+        src: "images/gamerule/Kat-pictogram.png"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "De fascisten weten van elkaar dat ze fascisten zijn maar Hitler weet niet wie de fascisten zijn.")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "title"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "- Het is spel eindigt wanneer:")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "text d-block"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "- Hitler vermoord is (liberalen winnen) - De rode kant van het bord vol ligt met rode policykaarten(fascisten winnen) - De blauwe kant van het bord vol ligt met blauwe policykaarten(liberalen winnen) - Als Hitler de kanselier is als er 4 of meer rode policykaarten liggen op het bord"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-6 mb-5"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "title"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "- Policy kaarten:")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "text d-block"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Blauwe \u201CPolicy kaarten\u201D:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Deze wil je als liberaal"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Rode \u201CPolicy kaarten\u201D: Deze wil je als fascist juist graag op het bord krijgen. Zodra er zes rode policy kaarten op het bord liggen winnen de fascisten.", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        className: "liberal",
+        width: "170",
+        src: "images/gamerule/liberal-article.png"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        className: "facist",
+        width: "280",
+        src: "images/gamerule/facist-article.png"
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "title"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "- Voor 7 tot 8 spelers:")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "text d-block"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Geld er dat bij de tweede rode policykaart die op het bord gelegd word de president iemand mag kiezen om zijn identiteit kaart te zien(hierover mogen beide spelers over liegen). Bij de derde rode policykaart die op het bord gelegd word mag de huidige president de nieuwe president kiezen.", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        className: "",
+        width: "150",
+        src: "images/gamerule/6-8Players.png"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        className: "",
+        width: "150",
+        src: "images/gamerule/5-6Players.png"
+      }), "De fascisten weten van elkaar dat ze fascisten zijn maar Hitler weet niet wie de fascisten zijn.")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "title"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "-  Regels zonder een x aantal spelers:")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "text d-block"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Bij de vijfde policykaart mag diegene die hem oplegt iemand vermoorden als liberaal wil je een fascist doden en als fascist juist een liberaal. Dit geld ook voor de zesde rode policykaart. Als je dood geschoten word doe je niet meer mee met het spel!")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "title"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "- Tijdens het spel:")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "text d-block"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Elke ronde word er een nieuwe president aangesteld (de eerste keer is dit random) deze word telkens met de klok mee aangesteld. De president kiest vervolgens een kanselier. Vervolgens gaan alle spelers stemmen of zij de kanselier goedkeuren. Hiervoor heb je een \u201CJa\u201D en \u201CNein\u201D kaarten. Als er meer dan 50% ja gekozen heeft mogen ze de policy kaarten pakken.", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        className: "",
+        width: "150",
+        src: "images/gamerule/ja-card.png"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        className: "",
+        width: "150",
+        src: "images/gamerule/nein-card.png"
+      }), "Als er minder dan 50% ja kiest noemen we dit een \u201Cfail\u201D als dit drie keer gebeurd, dan word de bovenste policykaart omgedraaid en op het bord gelegd dit kan een rode of blauwe zijn. De president krijgt drie policykaarten en moet daar dan \xE9\xE9n policy kaart eruit halen deze doet dan niet meer mee, vervolgens geeft hij de overgebleven twee kaarten door aan de kanselier. De kanselier mag er dan weer \xE9\xE9n van de twee eruit halen. De kaart die overblijft word vervolgens op het bord gelegd.")))));
     }
   }]);
 
@@ -89523,7 +89637,7 @@ function (_Component) {
         className: "col-4 text-center"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Home_CreateRoom__WEBPACK_IMPORTED_MODULE_2__["default"], null))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-12 join-text"
-      }, "Join a game"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Join a game")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "background-rooms"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Home_Rooms__WEBPACK_IMPORTED_MODULE_3__["default"], null)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "row text-white container-explanation explanation-text"
@@ -89642,7 +89756,25 @@ function (_Component) {
       users: [],
       leftUsers: [],
       loggedIn: false,
-      loaded: false
+      loaded: false,
+      timer: 0
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "timer", function () {
+      var timer = setInterval(function () {
+        _this.setState({
+          timer: timer
+        });
+
+        var cancel = false;
+
+        if (_this.props.room.second <= 0) {
+          cancel = true;
+          clearInterval(timer);
+        }
+
+        !cancel ? _this.props.dispatch(Object(_redux_actions_room_actions__WEBPACK_IMPORTED_MODULE_7__["setSecond"])(_this.props.room.second - 1)) : false;
+      }, 1000);
     });
 
     _defineProperty(_assertThisInitialized(_this), "onUserJoin", function (user) {
@@ -89703,6 +89835,9 @@ function (_Component) {
               });
 
             case 2:
+              _this.timer();
+
+            case 3:
             case "end":
               return _context.stop();
           }
@@ -89761,7 +89896,17 @@ function (_Component) {
                 }).listen('.new-chancellor', function (e) {
                   _this2.props.dispatch(Object(_redux_actions_room_actions__WEBPACK_IMPORTED_MODULE_7__["setChancellor"])(e.chancellor));
                 }).listen('.chosen-truth-bluff', function (e) {
-                  console.log(e.chosenAwnser.options);
+                  console.log(e.chosenAwnser.options).listen('.start-timer', function (e) {
+                    var _this2$props$authUser;
+
+                    if (e.extra === ((_this2$props$authUser = _this2.props.authUser) === null || _this2$props$authUser === void 0 ? void 0 : _this2$props$authUser.id) || e.extra === 'everyone') {
+                      clearInterval(_this2.state.timer);
+
+                      _this2.props.dispatch(Object(_redux_actions_room_actions__WEBPACK_IMPORTED_MODULE_7__["setSecond"])(e.second));
+
+                      _this2.timer();
+                    }
+                  });
                 });
 
               case 3:
@@ -89927,7 +90072,7 @@ if (document.getElementById('index')) {
 /*!****************************************************!*\
   !*** ./resources/js/redux/actions/room-actions.js ***!
   \****************************************************/
-/*! exports provided: setRoom, editActive, setPresident, setChancellor, setStage, addMessage, deleteAllMessages */
+/*! exports provided: setRoom, editActive, setPresident, setChancellor, setStage, setSecond, addMessage, deleteAllMessages */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -89937,6 +90082,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setPresident", function() { return setPresident; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setChancellor", function() { return setChancellor; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setStage", function() { return setStage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setSecond", function() { return setSecond; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addMessage", function() { return addMessage; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteAllMessages", function() { return deleteAllMessages; });
 var setRoom = function setRoom(room) {
@@ -89967,6 +90113,12 @@ var setStage = function setStage(_int) {
   return {
     type: 'SET_STAGE',
     "int": _int
+  };
+};
+var setSecond = function setSecond(_int2) {
+  return {
+    type: 'SET_SECOND',
+    "int": _int2
   };
 };
 var addMessage = function addMessage(value) {
@@ -90033,6 +90185,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _actions_room_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/room-actions */ "./resources/js/redux/actions/room-actions.js");
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
@@ -90046,6 +90199,8 @@ function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (O
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
 
 var room = function room() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
@@ -90077,6 +90232,11 @@ var room = function room() {
     case 'SET_STAGE':
       return _objectSpread({}, state, {
         stage: action["int"]
+      });
+
+    case 'SET_SECOND':
+      return _objectSpread({}, state, {
+        second: action["int"]
       });
 
     case 'ADD_MESSAGE':

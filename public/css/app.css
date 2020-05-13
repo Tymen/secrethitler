@@ -11002,3 +11002,103 @@ a.text-dark:focus {
   background-color: #727272;
 }
 
+.gamerule-bolletjes {
+  position: absolute;
+  width: 168%;
+  left: -390px;
+  top: -405px;
+}
+
+.gamerule .title {
+  background-color: #2B2929;
+  border-radius: 0px 19px 0px 0px;
+}
+
+.gamerule .title h1 {
+  font-size: 30px;
+  font-weight: bold;
+  color: white;
+  padding: 10px 40px;
+  margin-bottom: 0px;
+}
+
+.gamerule .text {
+  margin-bottom: 95px !important;
+  background-color: #727272;
+  border-radius: 0px 0px 0px 52px;
+  display: table-cell;
+}
+
+.gamerule .text .liberal {
+  margin-left: 30px;
+}
+
+.gamerule .text p {
+  padding: 30px;
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+}
+
+@media (max-width: 1199.98px) {
+  .warp-chat {
+    width: 50%;
+  }
+
+  .chat {
+    width: 662px !important;
+  }
+
+  .send-message {
+    width: 662px !important;
+  }
+
+  .btn-send-button {
+    margin-top: -20px !important;
+  }
+
+  .start-game {
+    width: 962px !important;
+  }
+}
+
+@media (max-width: 991.98px) {
+  .chat {
+    width: 422px !important;
+  }
+
+  .send-message {
+    width: 422px !important;
+  }
+
+  .start-game {
+    width: 722px !important;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .show-players {
+    width: 538px !important;
+    max-width: 538px !important;
+    min-height: 200px !important;
+    max-height: 200px !important;
+  }
+
+  .players-in-lobby {
+    width: 538px !important;
+    max-width: 538px !important;
+  }
+
+  .chat {
+    width: 538px !important;
+  }
+
+  .send-message {
+    width: 538px !important;
+  }
+
+  .start-game {
+    width: 538px !important;
+  }
+}
+
