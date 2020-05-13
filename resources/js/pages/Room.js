@@ -49,7 +49,10 @@ class Room extends Component {
             .listen('.new-chancellor', (e) => {
                 this.props.dispatch(setChancellor(e.chancellor))
             })
-}
+            .listen('.chosen-truth-bluff', (e) => {
+                console.log(e.chosenAwnser.options)
+            })
+    }
 
     componentWillUnmount() {
         Echo.leave(`room.${this.props.room.id}`)
@@ -105,7 +108,8 @@ class Room extends Component {
     render() {
         if (this.props.room.active) {
             return (
-                <Game setInactive={() => this.setInactive()} rotatePresident={() => this.rotatePresident()} users={this.state.users}/>
+                <Game setInactive={() => this.setInactive()} rotatePresident={() => this.rotatePresident()}
+                      users={this.state.users}/>
             )
         }
         return (

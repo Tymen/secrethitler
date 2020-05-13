@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Events\ChosenTruthBluff;
 use App\Room;
 use App\User;
 use App\RoomState;
@@ -97,6 +98,19 @@ class RoomsApiController extends Controller
         $room->save();
 
         event(new StartGameEvent($room->id));
+
+        return response()->json(['message' => 'completed']);
+    }
+
+    public function presidentTruthBluff(Room $room, Request $request){
+
+        $this->authorize('isPresident', $room);
+
+        $chosenAnswer = $request->option;
+
+        event(new ChosenTruthBluff($room->id, $chosenAnswer));
+
+        AppHelper::changeState($room, 6);
 
         return response()->json(['message' => 'completed']);
     }

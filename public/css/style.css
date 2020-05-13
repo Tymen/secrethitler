@@ -822,7 +822,7 @@ div.options > .container-choose-chancellor {
     margin: 0 0 0 -13px;
     padding: 0 0 39px 0;
     height: 20px;
-    width: 150px;
+    width: 250px;
 }
 
 div.options > .container-choose-chancellor > img {
@@ -1304,3 +1304,53 @@ div.options > input:checked + .container-choose-chancellor{
     cursor: pointer
 }
 
+.truth-button{
+    margin: 10px;
+    background-color: #2D2929;
+    color: white;
+    border: 1px solid white;
+    width: 20%;
+    height: 200%;
+    border-top-right-radius: 35px 35px;
+    border-bottom-left-radius: 35px 35px;
+    font-size: 30px;
+}
+
+.bluff-button{
+    background-color: #2D2929;
+    color: white;
+    border: 1px solid white;
+    width: 20%;
+    height: 200%;
+    border-top-left-radius: 35px 35px;
+    border-bottom-right-radius: 35px 35px;
+    font-size: 30px;
+}
+
+.truth-button:hover{
+    margin: 10px;
+    background-color: #000000;
+    color: white;
+    border: 1px solid white;
+    width: 20%;
+    height: 200%;
+    border-top-right-radius: 35px 35px;
+    border-bottom-left-radius: 35px 35px;
+    font-size: 30px;
+}
+
+.bluff-button:hover{
+    background-color: #000000;
+    color: white;
+    border: 1px solid white;
+    width: 20%;
+    height: 200%;
+    border-top-left-radius: 35px 35px;
+    border-bottom-right-radius: 35px 35px;
+    font-size: 30px;
+}
+
+.container-bluff-truth{
+    text-align: center;
+    height: 100%;
+}

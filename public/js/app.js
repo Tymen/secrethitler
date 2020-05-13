@@ -87238,6 +87238,189 @@ function (_Component) {
 
 /***/ }),
 
+/***/ "./resources/js/components/Room/Game/ChancellorTruthBluff.js":
+/*!*******************************************************************!*\
+  !*** ./resources/js/components/Room/Game/ChancellorTruthBluff.js ***!
+  \*******************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+
+var ChancellorTruthBluff =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(ChancellorTruthBluff, _Component);
+
+  function ChancellorTruthBluff() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    _classCallCheck(this, ChancellorTruthBluff);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(ChancellorTruthBluff)).call.apply(_getPrototypeOf2, [this].concat(args)));
+
+    _defineProperty(_assertThisInitialized(_this), "state", {
+      Bluff: false,
+      Truth: false,
+      CardOption: '',
+      CardOptions: [{
+        id: 1,
+        option: 'fascist, liberal'
+      }, {
+        id: 2,
+        option: 'liberal, liberal'
+      }, {
+        id: 3,
+        option: 'fascist, fascist'
+      }]
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "HandleOnClick", function (e) {
+      if (e === 'truth') {
+        _this.setState({
+          Truth: true
+        });
+      } else if (e === 'bluff') {
+        _this.setState({
+          Bluff: true
+        });
+      }
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "isChecked", function (option) {
+      _this.setState({
+        CardOption: option
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "showOptions", function (option) {
+      return _this.state.CardOptions.map(function (option) {
+        if (option.id === _this.state.CardOption) {
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            className: "options active",
+            key: option.id
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+            className: "container-choose-chancellor"
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+            type: "radio",
+            name: "radio",
+            onChange: function onChange() {
+              return _this.isChecked(option.id);
+            }
+          }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+            className: "checkbox"
+          }), option.option));
+        } else {
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            className: "options",
+            key: option.id
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+            className: "container-choose-chancellor"
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+            type: "radio",
+            name: "radio",
+            onChange: function onChange() {
+              return _this.isChecked(option.id);
+            }
+          }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+            className: "checkbox"
+          }), option.option));
+        }
+      });
+    });
+
+    return _this;
+  }
+
+  _createClass(ChancellorTruthBluff, [{
+    key: "render",
+    value: function render() {
+      var _this2 = this;
+
+      if (this.state.Truth) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "truth");
+      } else if (this.state.Bluff) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "header-choose-chancellor"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "row"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "col-2"
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "col-8"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Choose one of the bluff options"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+          className: "under-title"
+        }, "(select one option and click submit to continue)")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "col-2"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          type: "submit",
+          className: "btn btn btn-explanation btn-chancellor",
+          onClick: function onClick(e) {
+            return _this2.handleSubmit(e);
+          }
+        }, "submit")))), this.showOptions());
+      } else {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          name: "truth",
+          onClick: function onClick() {
+            return _this2.HandleOnClick('truth');
+          }
+        }, "Truth"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          name: "bluff",
+          onClick: function onClick() {
+            return _this2.HandleOnClick('bluff');
+          }
+        }, "Bluff"));
+      }
+    }
+  }]);
+
+  return ChancellorTruthBluff;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+
+var mapStateToProps = function mapStateToProps(state) {
+  var room = state.room;
+  return {
+    room: room
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps)(ChancellorTruthBluff));
+
+/***/ }),
+
 /***/ "./resources/js/components/Room/Game/ChooseChancellor.js":
 /*!***************************************************************!*\
   !*** ./resources/js/components/Room/Game/ChooseChancellor.js ***!
@@ -87309,6 +87492,7 @@ function (_Component) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "showOptions", function () {
+      console.log(_this.props.users);
       return _this.props.users.map(function (user) {
         var _this$props$authUser;
 
@@ -87410,6 +87594,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ChooseChancellor__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ChooseChancellor */ "./resources/js/components/Room/Game/ChooseChancellor.js");
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _Vote__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Vote */ "./resources/js/components/Room/Game/Vote.js");
+/* harmony import */ var _PresidentTruthBluff__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./PresidentTruthBluff */ "./resources/js/components/Room/Game/PresidentTruthBluff.js");
+/* harmony import */ var _ChancellorTruthBluff__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./ChancellorTruthBluff */ "./resources/js/components/Room/Game/ChancellorTruthBluff.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -87435,6 +87621,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
+
+
 var GameInteractionBlock =
 /*#__PURE__*/
 function (_Component) {
@@ -87454,29 +87642,41 @@ function (_Component) {
     _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(GameInteractionBlock)).call.apply(_getPrototypeOf2, [this].concat(args)));
 
     _defineProperty(_assertThisInitialized(_this), "loadComponents", function () {
-      var _this$props$room$pres;
+      var isPresident = _this.props.authUser.id === _this.props.room.president.id;
+      var stage = _this.props.room.stage;
 
-      var isPresident = _this.props.authUser.id === ((_this$props$room$pres = _this.props.room.president) === null || _this$props$room$pres === void 0 ? void 0 : _this$props$room$pres.id);
+      switch (true) {
+        case stage === 1 && isPresident:
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ChooseChancellor__WEBPACK_IMPORTED_MODULE_1__["default"], {
+            users: _this.props.users
+          });
 
-      if (_this.props.room.stage === 1 && isPresident) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ChooseChancellor__WEBPACK_IMPORTED_MODULE_1__["default"], {
-          users: _this.props.users
-        }));
-      } else if (_this.props.room.stage === 2) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Vote__WEBPACK_IMPORTED_MODULE_3__["default"], null));
-      } else if (_this.props.room.stage === 3) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "stage 3"));
-      } else {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "header-choose-chancellor"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Waiting for an action..."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "text-center"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "spinner-border",
-          role: "status"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-          className: "sr-only"
-        }, "Loading...")))));
+        case stage === 2:
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Vote__WEBPACK_IMPORTED_MODULE_3__["default"], null);
+
+        case stage === 3 && isPresident:
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "President policy");
+
+        case stage === 4:
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Chancellor policy");
+
+        case stage === 5 && isPresident:
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_PresidentTruthBluff__WEBPACK_IMPORTED_MODULE_4__["default"], null);
+
+        case stage === 6:
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ChancellorTruthBluff__WEBPACK_IMPORTED_MODULE_5__["default"], null);
+
+        default:
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            className: "header-choose-chancellor"
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Waiting for an action..."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            className: "text-center"
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            className: "spinner-border",
+            role: "status"
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+            className: "sr-only"
+          }, "Loading...")))));
       }
     });
 
@@ -87503,6 +87703,210 @@ var mapStateToProps = function mapStateToProps(state) {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(mapStateToProps)(GameInteractionBlock));
+
+/***/ }),
+
+/***/ "./resources/js/components/Room/Game/PresidentTruthBluff.js":
+/*!******************************************************************!*\
+  !*** ./resources/js/components/Room/Game/PresidentTruthBluff.js ***!
+  \******************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+
+var PresidentTruthBluff =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(PresidentTruthBluff, _Component);
+
+  function PresidentTruthBluff() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    _classCallCheck(this, PresidentTruthBluff);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(PresidentTruthBluff)).call.apply(_getPrototypeOf2, [this].concat(args)));
+
+    _defineProperty(_assertThisInitialized(_this), "state", {
+      Bluff: false,
+      Truth: false,
+      CardOption: '',
+      CardOptions: [{
+        id: 1,
+        option: 'fascist, liberal, liberal'
+      }, {
+        id: 2,
+        option: 'fascist, liberal, fascist'
+      }, {
+        id: 3,
+        option: 'liberal, liberal, liberal'
+      }, {
+        id: 4,
+        option: 'fascist, fascist, fascist'
+      }]
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "handleSubmit", function (e) {
+      axios.post("/api/v1/rooms/".concat(_this.props.room.id, "/president_truth_bluff"), {
+        option: e
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "HandleOnClick", function (e) {
+      if (e === 'truth') {
+        _this.setState({
+          Truth: true
+        });
+      } else if (e === 'bluff') {
+        _this.setState({
+          Bluff: true
+        });
+      }
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "isChecked", function (option) {
+      _this.setState({
+        CardOption: option
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "showOptions", function (option) {
+      return _this.state.CardOptions.map(function (option) {
+        if (option.id === _this.state.CardOption.id) {
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            className: "options active",
+            key: option.id
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+            className: "container-choose-chancellor"
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+            type: "radio",
+            name: "radio",
+            onChange: function onChange() {
+              return _this.isChecked(option);
+            }
+          }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+            className: "checkbox"
+          }), option.option));
+        } else {
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            className: "options",
+            key: option.id
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+            className: "container-choose-chancellor"
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+            type: "radio",
+            name: "radio",
+            onChange: function onChange() {
+              return _this.isChecked(option);
+            }
+          }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+            className: "checkbox"
+          }), option.option));
+        }
+      });
+    });
+
+    return _this;
+  }
+
+  _createClass(PresidentTruthBluff, [{
+    key: "render",
+    value: function render() {
+      var _this2 = this;
+
+      if (this.state.Truth) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "truth");
+      } else if (this.state.Bluff) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "header-choose-chancellor"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "row"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "col-2"
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "col-8"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Choose one of the bluff options"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+          className: "under-title"
+        }, "(select one option and click submit to continue)")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "col-2"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          type: "submit",
+          className: "btn btn btn-explanation btn-chancellor",
+          onClick: function onClick(e) {
+            return _this2.handleSubmit(_this2.state.CardOption);
+          }
+        }, "submit")))), this.showOptions());
+      } else {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "header-choose-chancellor"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "row"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "col-2"
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "col-8"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Choose if you want to bluff or tell the truth"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "container-bluff-truth"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          name: "truth",
+          className: "truth-button",
+          onClick: function onClick() {
+            return _this2.HandleOnClick('truth');
+          }
+        }, "Truth"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          name: "bluff",
+          className: "bluff-button",
+          onClick: function onClick() {
+            return _this2.HandleOnClick('bluff');
+          }
+        }, "Bluff")));
+      }
+    }
+  }]);
+
+  return PresidentTruthBluff;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+
+var mapStateToProps = function mapStateToProps(state) {
+  var room = state.room;
+  return {
+    room: room
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps)(PresidentTruthBluff));
 
 /***/ }),
 
@@ -89356,6 +89760,8 @@ function (_Component) {
                   _this2.props.dispatch(Object(_redux_actions_room_actions__WEBPACK_IMPORTED_MODULE_7__["setStage"])(e.stageNum));
                 }).listen('.new-chancellor', function (e) {
                   _this2.props.dispatch(Object(_redux_actions_room_actions__WEBPACK_IMPORTED_MODULE_7__["setChancellor"])(e.chancellor));
+                }).listen('.chosen-truth-bluff', function (e) {
+                  console.log(e.chosenAwnser.options);
                 });
 
               case 3:
