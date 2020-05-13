@@ -338,6 +338,6 @@ class RoomsApiController extends Controller
 
         !$room->users()->pluck('voted')->contains(false) ? $roomState->voteHandler() : false;
 
-        return respddddddddddonse()->json(['message' => 'completed']);
+        return response()->json(['message' => 'completed']);
     }
 }
