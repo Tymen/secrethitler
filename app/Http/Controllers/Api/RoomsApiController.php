@@ -92,8 +92,8 @@ class RoomsApiController extends Controller
     {
         $this->authorize('isHost', $room);
 
-        $room->rotatePresident();
         $room->divideRoles();
+        $room->rotatePresident();
 
         $room->active = true;
         $room->save();
@@ -286,7 +286,6 @@ class RoomsApiController extends Controller
 
     public function setChancellor(Room $room, Request $request)
     {
-//        dd(Auth::user()->hasRole('President'));
         $this->authorize('isPresident', $room);
 
         abort_unless($room->roomState->stage === 1, 400, 'Wrong stage');
@@ -339,6 +338,6 @@ class RoomsApiController extends Controller
 
         !$room->users()->pluck('voted')->contains(false) ? $roomState->voteHandler() : false;
 
-        return response()->json(['message' => 'completed']);
+        return respddddddddddonse()->json(['message' => 'completed']);
     }
 }
