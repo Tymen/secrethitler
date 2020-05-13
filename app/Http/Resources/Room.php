@@ -4,7 +4,6 @@ namespace App\Http\Resources;
 
 use App\User;
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Http\Resources\User as UserResource;
 
 class Room extends JsonResource
 {
@@ -18,6 +17,7 @@ class Room extends JsonResource
     {
         $president = User::role('President')->where('room_id', $this->id)->first(['id', 'username']);
         $chancellor = User::role('Chancellor')->where('room_id', $this->id)->first(['id', 'username']);
+        $second = $this->roomState->timer_end->unix() - now()->unix();
 
         return [
             'id' => $this->id,
@@ -27,8 +27,11 @@ class Room extends JsonResource
             'max_players' => $this->max_players,
             'active' => $this->active,
             'stage' => $this->roomState->stage,
+            'second' => $second < 0 ? 0 : $second,
             'president' => $president,
             'chancellor' => $chancellor,
+            'yesVotes' => $this->roomState->yesVotes,
+            'noVotes' => $this->roomState->noVotes,
         ];
     }
 }

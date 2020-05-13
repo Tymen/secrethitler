@@ -11,26 +11,23 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class RotatePresidentEvent implements ShouldBroadcast
+class VotesDoneEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $room;
-    public $president;
+    public $roomId;
 
     /**
      * Create a new event instance.
      *
-     * @param $room
-     * @param $president
+     * @param Room $room
      */
-    public function __construct(Room $room, $president)
+    public function __construct(Room $room)
     {
-        $this->room = $room;
-        $this->president = $president;
+        $this->roomId = $room->id;
 
-        $room->roomState->changeState(1);
-        $room->roomState->startTimer($president['id']);
+        $room->roomState->changeState(3);
+//        $room->roomState->startTimer(president id);
     }
 
     /**
@@ -40,11 +37,6 @@ class RotatePresidentEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PresenceChannel("room.{$this->room->id}");
-    }
-
-    public function broadcastAs()
-    {
-        return 'president-rotated';
+        return new PresenceChannel("room.{$this->roomId}");
     }
 }

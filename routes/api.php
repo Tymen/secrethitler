@@ -35,6 +35,7 @@ Route::namespace('Api')->group(function () {
                     Route::post('change_host', 'RoomsApiController@changeHost');
                     Route::post('active', 'RoomsApiController@setActive');
                     Route::post('inactive', 'RoomsApiController@setInactive');
+                    Route::post('vote', 'RoomsApiController@setVote');
                     Route::post('kick/{user}', 'RoomsApiController@kickUser');
 
                     Route::delete('destroy', 'RoomsApiController@destroy');

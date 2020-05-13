@@ -23,6 +23,11 @@ export const setStage = int => ({
     int
 })
 
+export const setSecond = int => ({
+    type: 'SET_SECOND',
+    int
+})
+
 export const addMessage = value => ({
     type: 'ADD_MESSAGE',
     value

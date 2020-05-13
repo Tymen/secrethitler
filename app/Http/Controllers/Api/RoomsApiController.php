@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Events\VotesDoneEvent;
 use App\Room;
 use App\User;
 use App\RoomState;
@@ -11,15 +12,14 @@ use App\Events\StartGameEvent;
 use App\Events\setPolicyEvent;
 use App\Events\RoomsUpdatedEvent;
 use App\Events\NewChancellorEvent;
+use Illuminate\Support\Arr;
 use App\Events\RotatePresidentEvent;
 use App\Events\sendPoliciesChancellor;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\RoomCollection;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\Room as RoomResource;
-use League\Event\Event;
 
 class RoomsApiController extends Controller
 {
@@ -92,9 +92,9 @@ class RoomsApiController extends Controller
     {
         $this->authorize('isHost', $room);
 
-        $room->rotatePresident($room);
+        $room->rotatePresident();
+        $room->divideRoles();
 
-        $room->divideRoles($room->users);
         $room->active = true;
         $room->save();
 
@@ -109,7 +109,7 @@ class RoomsApiController extends Controller
         $hitler = 0;
         $countUsers = $room->users->count();
 
-        foreach ($room->users as $u) {
+        foreach($room->users as $u) {
 
             $u->hasRole('Fascist') ? $fascists[] = $u->id : false;
             $u->hasRole('Hitler') ? $hitler = $u->id : false;
@@ -131,7 +131,7 @@ class RoomsApiController extends Controller
     {
         $this->authorize('inRoom', $room);
 
-        $room->rotatePresident($room);
+        $room->rotatePresident();
 
         return response()->json(['message' => 'completed']);
     }
@@ -139,6 +139,18 @@ class RoomsApiController extends Controller
     public function setInactive(Room $room)
     {
         $this->authorize('isHost', $room);
+
+        $roomState = $room->roomState;
+
+        $roomState->ja = 0;
+        $roomState->nein = 0;
+        $roomState->save();
+
+        $room->users->map(function($user) {
+            $user->voted = false;
+            $user->vote_type = NULL;
+            $user->save();
+        });
 
         $room->active = false;
         $room->save();
@@ -274,10 +286,26 @@ class RoomsApiController extends Controller
 
     public function setChancellor(Room $room, Request $request)
     {
+//        dd(Auth::user()->hasRole('President'));
         $this->authorize('isPresident', $room);
 
+        abort_unless($room->roomState->stage === 1, 400, 'Wrong stage');
+
         $chancellor = User::role('Chancellor')->where('room_id', $room->id)->first();
-        $id = intval($request->uid);
+
+        if ($request->uid) {
+            $id = intval($request->uid);
+        } else {
+            $condition = [
+                ['id', '!=', Auth::id()]
+            ];
+
+            $chancellor ? $condition[] = ['id', '!=', $chancellor->id] : false;
+            $users = $room->users()->where($condition)->get();
+
+            $id = Arr::random($users->pluck('id')->all());
+        }
+
         $user = User::find($id);
 
         abort_unless($user, 400, 'User does not exist');
@@ -291,6 +319,25 @@ class RoomsApiController extends Controller
         $user->assignRole('Chancellor');
 
         event(new NewChancellorEvent($room, ['id' => $user->id, 'username' => $user->username]));
+
+        return response()->json(['message' => 'completed']);
+    }
+
+    public function setVote(Room $room, Request $request)
+    {
+        $this->authorize('canVote', $room);
+
+        $roomState = $room->roomState;
+
+        $request->nein ? $roomState->nein += 1 : $roomState->ja += 1;
+        $roomState->save();
+
+        $user = Auth::user();
+        $user->voted = true;
+        $user->vote_type = $request->nein ? 'nein' : 'ja';
+        $user->save();
+
+        !$room->users()->pluck('voted')->contains(false) ? $roomState->voteHandler() : false;
 
         return response()->json(['message' => 'completed']);
     }

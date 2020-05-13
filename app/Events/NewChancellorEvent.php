@@ -2,7 +2,6 @@
 
 namespace App\Events;
 
-use App\Helper\AppHelper;
 use App\Room;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
@@ -25,11 +24,12 @@ class NewChancellorEvent implements ShouldBroadcast
      * @param $room
      * @param $chancellor
      */
-    public function __construct($room, $chancellor)
+    public function __construct(Room $room, $chancellor)
     {
         $this->room = $room;
         $this->chancellor = $chancellor;
-        AppHelper::changeState($room, 2);
+        $room->roomState->changeState(2);
+        $room->roomState->startTimer('everyone');
     }
 
     /**
