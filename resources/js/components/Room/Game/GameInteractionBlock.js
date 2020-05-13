@@ -5,7 +5,7 @@ import {connect} from "react-redux";
 class GameInteractionBlock extends Component {
     loadComponents = () => {
         const isPresident = this.props.authUser.id === this.props.room.president?.id;
-        if (this.props.room.stage === 3 && isPresident) {
+        if (this.props.room.stage === 1 && isPresident) {
             return (
                 <div>
                     <ChooseChancellor  users={this.props.users}/>
