@@ -22,10 +22,10 @@ class setPolicyEvent implements ShouldBroadcast
      * @param $roomID
      * @param $policy
      */
-    public function __construct(Room $room)
+    public function __construct(Room $room, $board)
     {
         $this->roomID = $room->id;
-        $this->policy = [$room->roomState->chosen_policies];
+        $this->policy = $board;
     }
 
     /**

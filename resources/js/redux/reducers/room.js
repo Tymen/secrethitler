@@ -16,6 +16,12 @@ const room = (state = {messages: []}, action) => {
             return {...state, second: action.int}
         case 'ADD_MESSAGE':
             return {...state, messages: [...state.messages, action.value]};
+        case 'SET_POLICIES':
+            return {...state, policies: action.value};
+        case 'SET_BOARD_FASCIST':
+            return {...state, fascist_board: action.value};
+        case 'SET_BOARD_LIBERAL':
+            return {...state, liberal_board: action.value};
         case 'DELETE_ALL_MESSAGES':
             return {...state, messages: []};
         default:

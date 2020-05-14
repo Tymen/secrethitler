@@ -32,7 +32,18 @@ export const addMessage = value => ({
     type: 'ADD_MESSAGE',
     value
 })
-
+export const setPolicies = value => ({
+    type: 'SET_POLICIES',
+    value
+})
+export const setBoardFascist = value => ({
+    type: 'SET_BOARD_FASCIST',
+    value
+})
+export const setBoardLiberal = value => ({
+    type: 'SET_BOARD_LIBERAL',
+    value
+})
 export const deleteAllMessages = () => ({
     type: 'DELETE_ALL_MESSAGES',
 })

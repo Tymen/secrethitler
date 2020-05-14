@@ -4,21 +4,22 @@ import {connect} from "react-redux";
 import Vote from "./Vote";
 import PresidentTruthBluff from "./PresidentTruthBluff";
 import ChancellorTruthBluff from "./ChancellorTruthBluff";
+import ChoosePolicy from "./ChoosePolicy";
 
 class GameInteractionBlock extends Component {
     loadComponents = () => {
-        const isPresident = this.props.authUser.id === this.props.room.president.id;
+        const isPresident = this.props.authUser.id === this.props.room.president?.id;
+        const isChancellor = this.props.authUser.id === this.props.room.chancellor?.id;
         const stage = this.props.room.stage;
-
         switch (true) {
             case stage === 1 && isPresident:
                 return <ChooseChancellor users={this.props.users}/>;
             case stage === 2:
                 return <Vote/>;
             case stage === 3 && isPresident:
-                return <p>President policy</p>;
-            case stage === 4:
-                return <p>Chancellor policy</p>;
+                return <ChoosePolicy/>;
+            case stage === 4 && isChancellor :
+                return <ChoosePolicy/>;
             case stage === 5 && isPresident:
                 return <PresidentTruthBluff/>;
             case stage === 6:
