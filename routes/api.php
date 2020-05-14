@@ -33,6 +33,11 @@ Route::namespace('Api')->group(function () {
                     Route::post('set_policies', 'RoomsApiController@setPolicies');
                     Route::post('chancellor', 'RoomsApiController@setChancellor');
                     Route::post('president_truth_bluff', 'RoomsApiController@presidentTruthBluff');
+                    Route::post('chancellor_truth_bluff', 'RoomsApiController@chancellorTruthBluff');
+
+                    Route::post('chosen_president_options', 'RoomsApiController@showChosenPresidentPolicies');
+                    Route::post('chosen_chancellor_options', 'RoomsApiController@showChosenChancellorPolicies');
+
                     Route::post('change_host', 'RoomsApiController@changeHost');
                     Route::post('active', 'RoomsApiController@setActive');
                     Route::post('inactive', 'RoomsApiController@setInactive');

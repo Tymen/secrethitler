@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Events\ChosenTruthBluff;
+use App\Events\PresidentChosenTruthBluff;
+use App\Events\ChancellorChosenTruthBluff;
+use App\Events\ShowChosenPoliciesPresident;
 use App\Room;
 use App\User;
 use App\RoomState;
@@ -106,11 +108,38 @@ class RoomsApiController extends Controller
 
         $this->authorize('isPresident', $room);
 
-        $chosenAnswer = $request->option;
+        $chosenAnswer = $request->option["option"];
 
-        event(new ChosenTruthBluff($room->id, $chosenAnswer));
+        event(new PresidentChosenTruthBluff($room, explode(', ', $chosenAnswer)));
 
-        $room->roomState->changeState(6);
+        return response()->json(['message' => 'completed']);
+    }
+
+    public function chancellorTruthBluff(Room $room, Request $request){
+
+        $this->authorize('isChancellor', $room);
+
+        $chosenAnswer = $request->option["option"];
+
+        event(new ChancellorChosenTruthBluff($room, explode(', ', $chosenAnswer)));
+
+        return response()->json(['message' => 'completed']);
+    }
+
+    public function showChosenPresidentPolicies(Room $room){
+
+//        $this->authorize('isChancellor', $room);
+
+        event(new ShowChosenPoliciesPresident());
+
+        return response()->json(['message' => 'completed']);
+    }
+
+    public function showChosenChancellorPolicies(Room $room){
+
+//        $this->authorize('isChancellor', $room);
+
+        event(new ShowChosenPoliciesPresident());
 
         return response()->json(['message' => 'completed']);
     }

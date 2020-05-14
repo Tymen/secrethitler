@@ -11,7 +11,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class ChosenTruthBluff implements ShouldBroadcast
+class PresidentChosenTruthBluff implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -20,13 +20,16 @@ class ChosenTruthBluff implements ShouldBroadcast
     /**
      * Create a new event instance.
      *
-     * @param $roomId
+     * @param $room
      * @param $chosenAnswer
      */
-    public function __construct($roomId, $chosenAnswer)
+    public function __construct(Room $room, $chosenAnswer)
     {
         $this->chosenAnswer = $chosenAnswer;
-        $this->roomId = $roomId;
+        $this->roomId = $room->id;
+
+        $room->roomState->changeState(6);
+        $room->roomState->startTimer('everyone');
     }
 
     /**
@@ -41,6 +44,6 @@ class ChosenTruthBluff implements ShouldBroadcast
 
     public function broadcastAs()
     {
-        return 'chosen-truth-bluff';
+        return 'president-chosen-truth-bluff';
     }
 }

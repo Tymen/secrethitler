@@ -18,6 +18,10 @@ const room = (state = {messages: []}, action) => {
             return {...state, messages: [...state.messages, action.value]};
         case 'DELETE_ALL_MESSAGES':
             return {...state, messages: []};
+        case 'PRESIDENT_CHOSEN_ANSWER':
+            return {...state, presidentAnswer: action.value}
+        case 'CHANCELLOR_CHOSEN_ANSWER':
+            return {...state, chancellorAnswer: action.value}
         default:
             return state
     }

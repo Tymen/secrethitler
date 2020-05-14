@@ -33,6 +33,16 @@ export const addMessage = value => ({
     value
 })
 
+export const presidentChosenAnswer = value => ({
+    type: 'PRESIDENT_CHOSEN_ANSWER',
+    value
+})
+
+export const chancellorChosenAnswer = value => ({
+    type: 'CHANCELLOR_CHOSEN_ANSWER',
+    value
+})
+
 export const deleteAllMessages = () => ({
     type: 'DELETE_ALL_MESSAGES',
 })

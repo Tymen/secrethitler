@@ -1387,3 +1387,27 @@ div.options > input:checked + .container-choose-chancellor{
     text-align: center;
     height: 100%;
 }
+
+.middle-line{
+    border-right: 2px solid #828282;
+}
+
+.president-choosed .header-choose-chancellor{
+    margin: 0 -7px 0 0;
+}
+
+.answer-images{
+    width: 15%;
+    height: auto;
+}
+
+.answer-chancellor-images{
+    width: 15%;
+    height: auto;
+}
+
+.centered-options{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

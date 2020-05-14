@@ -14,6 +14,11 @@ class ChancellorTruthBluff extends Component {
         ],
     }
 
+
+    handleSubmit = (e) => {
+        axios.post(`/api/v1/rooms/${this.props.room.id}/chancellor_truth_bluff`, {option: e})
+    }
+
     HandleOnClick = (e) => {
         if (e === 'truth') {
             this.setState({
@@ -34,11 +39,11 @@ class ChancellorTruthBluff extends Component {
 
     showOptions = (option) => {
         return this.state.CardOptions.map(option => {
-            if (option.id === this.state.CardOption) {
+            if (option.id === this.state.CardOption.id) {
                 return (
                     <div className="options active" key={option.id}>
                         <label className="container-choose-chancellor">
-                            <input type="radio" name="radio" onChange={() => this.isChecked(option.id)}/>
+                            <input type="radio" name="radio" onChange={() => this.isChecked(option)}/>
                             <img className="checkbox"/>
                             {option.option}
                         </label>
@@ -48,7 +53,7 @@ class ChancellorTruthBluff extends Component {
                 return (
                     <div className="options" key={option.id}>
                         <label className="container-choose-chancellor">
-                            <input type="radio" name="radio" onChange={() => this.isChecked(option.id)}/>
+                            <input type="radio" name="radio" onChange={() => this.isChecked(option)}/>
                             <img className="checkbox"/>
                             {option.option}
                         </label>
@@ -70,6 +75,7 @@ class ChancellorTruthBluff extends Component {
                     <div className="header-choose-chancellor">
                         <div className="row">
                             <div className="col-2">
+                                <p>{this.props.room?.second}</p>
                             </div>
                             <div className="col-8">
                                 <p>Choose one of the bluff options</p>
@@ -77,7 +83,7 @@ class ChancellorTruthBluff extends Component {
                             </div>
                             <div className="col-2">
                                 <button type="submit" className="btn btn btn-explanation btn-chancellor"
-                                        onClick={(e) => this.handleSubmit(e)}>submit
+                                        onClick={(e) => this.handleSubmit(this.state.CardOption)}>submit
                                 </button>
                             </div>
                         </div>
@@ -87,9 +93,24 @@ class ChancellorTruthBluff extends Component {
             )
         } else {
             return (
-                <div>
-                    <button name="truth" onClick={() => this.HandleOnClick('truth')}>Truth</button>
-                    <button name="bluff" onClick={() => this.HandleOnClick('bluff')}>Bluff</button>
+                <div className="header-choose-chancellor">
+                    <div className="row">
+                        <div className="col-2">
+                            <p>{this.props.room?.second}</p>
+                        </div>
+                        <div className="col-8">
+                            <p>Choose if you want to bluff or tell the truth about the policy cards you got</p>
+                            {/*<p className="under-title">(select one option and click submit to continue)</p>*/}
+                        </div>
+                    </div>
+                    <div className="container-bluff-truth">
+                        <button name="truth" className="truth-button"
+                                onClick={() => this.HandleOnClick('truth')}>Truth
+                        </button>
+                        <button name="bluff" className="bluff-button"
+                                onClick={() => this.HandleOnClick('bluff')}>Bluff
+                        </button>
+                    </div>
                 </div>
             )
         }

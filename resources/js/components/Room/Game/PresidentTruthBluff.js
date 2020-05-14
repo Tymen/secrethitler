@@ -75,6 +75,7 @@ class PresidentTruthBluff extends Component {
                     <div className="header-choose-chancellor">
                         <div className="row">
                             <div className="col-2">
+                                <p>{this.props.room?.second}</p>
                             </div>
                             <div className="col-8">
                                 <p>Choose one of the bluff options</p>
@@ -95,9 +96,10 @@ class PresidentTruthBluff extends Component {
                 <div className="header-choose-chancellor">
                     <div className="row">
                         <div className="col-2">
+                            <p>{this.props.room?.second}</p>
                         </div>
                         <div className="col-8">
-                            <p>Choose if you want to bluff or tell the truth</p>
+                            <p>Choose if you want to bluff or tell the truth about the policy cards you got</p>
                             {/*<p className="under-title">(select one option and click submit to continue)</p>*/}
                         </div>
                     </div>
