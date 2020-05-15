@@ -13,10 +13,7 @@ class ChosenPresidentOptions extends Component {
                 this.setState({
                     presidentAnswer: response.data.options,
                 })
-            })
-            .catch(error => {
-
-            })
+            }).catch(error => {})
     }
 
     showPresidentOptions = () => {
@@ -24,7 +21,6 @@ class ChosenPresidentOptions extends Component {
         const fascist = <img src="/images/facist-article.png" className="answer-images"/>;
 
         return this.state.presidentAnswer.map(option => {
-            console.log(option)
             return option === 'Liberal' ? liberal : fascist
         })
     }
@@ -38,7 +34,7 @@ class ChosenPresidentOptions extends Component {
                         <p>{this.props.room?.second}</p>
                     </div>
                     <div className="col-8">
-                        <p>President had these cards</p>
+                        <p>The president claims he has received these cards</p>
                         <p className="under-title"></p>
                     </div>
                     <div className="col-2">
