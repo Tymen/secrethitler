@@ -33,6 +33,31 @@ export const addMessage = value => ({
     value
 })
 
+export const presidentChosenAnswer = value => ({
+    type: 'PRESIDENT_CHOSEN_ANSWER',
+    value
+})
+
+export const chancellorChosenAnswer = value => ({
+    type: 'CHANCELLOR_CHOSEN_ANSWER',
+    value
+})
+
+export const setPolicies = value => ({
+    type: 'SET_POLICIES',
+    value
+})
+
+export const setBoardFascist = value => ({
+    type: 'SET_BOARD_FASCIST',
+    value
+})
+
+export const setBoardLiberal = value => ({
+    type: 'SET_BOARD_LIBERAL',
+    value
+})
+
 export const deleteAllMessages = () => ({
     type: 'DELETE_ALL_MESSAGES',
 })

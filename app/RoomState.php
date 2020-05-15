@@ -45,7 +45,6 @@ class RoomState extends Model
         $this->ja = 0;
         $this->nein = 0;
         $this->save();
-
     }
 
     public function startTimer($extra = null)

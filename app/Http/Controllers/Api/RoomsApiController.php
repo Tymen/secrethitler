@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Events\VotesDoneEvent;
+use App\Events\PresidentChosenTruthBluff;
+use App\Events\ChancellorChosenTruthBluff;
+use App\Events\ShowChosenPoliciesPresident;
+use App\Events\TruthEvent;
 use App\Room;
 use App\User;
 use App\RoomState;
@@ -13,7 +16,6 @@ use App\Events\setPolicyEvent;
 use App\Events\RoomsUpdatedEvent;
 use App\Events\NewChancellorEvent;
 use Illuminate\Support\Arr;
-use App\Events\RotatePresidentEvent;
 use App\Events\sendPoliciesChancellor;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
@@ -92,8 +94,8 @@ class RoomsApiController extends Controller
     {
         $this->authorize('isHost', $room);
 
-        $room->rotatePresident();
         $room->divideRoles();
+        $room->rotatePresident();
 
         $room->active = true;
         $room->save();
@@ -101,6 +103,56 @@ class RoomsApiController extends Controller
         event(new StartGameEvent($room->id));
 
         return response()->json(['message' => 'completed']);
+    }
+
+    public function presidentTruthBluff(Room $room, Request $request){
+
+        $this->authorize('isPresident', $room);
+
+        $chosenAnswer = $request->option;
+        $roomState = $room->roomState;
+        if($chosenAnswer === null){
+            event(new PresidentChosenTruthBluff($room));
+        }else{
+            event(new PresidentChosenTruthBluff($room));
+            $roomState->received_pres = $chosenAnswer;
+            $roomState->save();
+
+        }
+
+        return response()->json(['message' => 'completed']);
+    }
+
+    public function chancellorTruthBluff(Room $room, Request $request)
+    {
+
+        $this->authorize('isChancellor', $room);
+
+        $chosenAnswer = $request->option;
+        $roomState = $room->roomState;
+        if($chosenAnswer === null){
+            event(new ChancellorChosenTruthBluff($room));
+        }else{
+            event(new ChancellorChosenTruthBluff($room));
+            $roomState->received_chan = $chosenAnswer;
+            $roomState->save();
+        }
+
+        return response()->json(['message' => 'completed']);
+    }
+
+    public function getPresidentPolicies(Room $room)
+    {
+        $options = $room->roomState->received_pres;
+
+        return response()->json(['options' => explode(' ', $options)]);
+    }
+
+    public function getChancellorPolicies(Room $room)
+    {
+        $options = $room->roomState->received_chan;
+
+        return response()->json(['options' => explode(' ', $options)]);
     }
 
     public function getFascists(Room $room)
@@ -202,39 +254,53 @@ class RoomsApiController extends Controller
         $room->save();
         return response()->json(['message' => $room]);
     }
-
+    public function getBoard(Room $room){
+        $object = (object)[
+            "fascist" => $room->roomState->fascist_board_amount,
+            "liberal" => $room->roomState->liberal_board_amount
+        ];
+        return response()->json($object);
+    }
     public function getPolicies(Room $room)
     {
 //        $randomInt = mt_rand(1, $total);
 //        $result = ($randomInt > $facist) ? "Liberal" : 1;
+        if (Auth::user()->hasrole("Chancellor") && $room->roomState->stage == 4){
+            return response()->json(["result" => explode(" ", $room->roomState->chosen_policies)]);
+        }
         $this->authorize('isPresident', $room);
         $fascist = $room->roomState->fascist_policies;
         $liberal = $room->roomState->liberal_policies;
         $changePolicies = $room->roomState;
 
         $result = [];
-        if (($changePolicies->fascist_policies < 3) || $changePolicies->liberal_policies < 3){
-            $changePolicies-> fascist_policies = 11;
-            $changePolicies-> fascist_policies = 6;
-            $liberal = 6;
-            $fascist = 11;
-        }
-        $total = $liberal + $fascist;
-        for ($i = 0; $i < 3; $i++) {
-            $chance = round($fascist / $total * 100);
-            $random = round(rand(0, 100));
-            $result[] = $random < $chance ? "Fascist" : "Liberal";
+        if ($changePolicies->chosen_policies == null){
+            if (($changePolicies->fascist_policies < 3) || $changePolicies->liberal_policies < 3){
+                $changePolicies-> fascist_policies = 11;
+                $changePolicies-> liberal_policies = 6;
+                $changePolicies->save();
+                $liberal = 6;
+                $fascist = 11;
+            }
+            $total = $liberal + $fascist;
+            for ($i = 0; $i < 3; $i++) {
+                $chance = round($fascist / $total * 100);
+                $random = round(rand(0, 100));
+                $result[] = $random < $chance ? "Fascist" : "Liberal";
+            }
+            $changePolicies->received_pres = implode(" ", $result);
+            $changePolicies->chosen_policies = implode(" ", $result);
+            foreach ($result as $policy) {
+                $test[] = (strtolower($policy) === "fascist") ?
+                    $changePolicies->fascist_policies = $changePolicies->fascist_policies - 1 :
+                    $changePolicies->liberal_policies = $changePolicies->liberal_policies - 1;
+            }
+        }else {
+            $result = explode(" ", $changePolicies->chosen_policies);
         }
         $response = [
             'result' => $result,
         ];
-
-        $changePolicies->chosen_policies = implode(" ", $result);
-        foreach ($result as $policy) {
-            $test[] = (strtolower($policy) === "fascist") ?
-                $changePolicies->fascist_policies = $changePolicies->fascist_policies - 1 :
-                $changePolicies->liberal_policies = $changePolicies->liberal_policies - 1;
-        }
         $changePolicies->save();
         return response()->json($response);
     }
@@ -256,13 +322,23 @@ class RoomsApiController extends Controller
             unset($chosenPoliciesArr[$getIndexPolicy]);
 
             $changePolicies->chosen_policies = implode(" ", $chosenPoliciesArr);
-            $changePolicies->save();
             if(Auth::user()->hasrole("President")){
-                $getChanId = User::role("Chancellor")->where("room_id", $room->id)->first();
-                event(new sendPoliciesChancellor($room, $getChanId));
+                $getChan = User::role("Chancellor")->where("room_id", $room->id)->first();
+                $changePolicies->received_chan = $changePolicies->chosen_policies;
+                $changePolicies->save();
+                event(new sendPoliciesChancellor($room, $getChan->id));
             }else {
-                event(new setPolicyEvent($room));
+                $changePolicies->chosen_policies == "Fascist"?
+                    $changePolicies->fascist_board_amount += 1:
+                    $changePolicies->liberal_board_amount += 1;
+                $changePolicies->chosen_policies = null;
+                $board = (object)[
+                    "fascist" => $room->roomState->fascist_board_amount,
+                    "liberal" => $room->roomState->liberal_board_amount
+                ];
+                event(new setPolicyEvent($room, $board));
             }
+            $changePolicies->save();
         } else {
             $request->leftOver = "Error";
         }
@@ -276,17 +352,13 @@ class RoomsApiController extends Controller
         array_push($mergedRequest, $request->removed);
         $getPolicyCheckDB = array_count_values(explode(" ", $changePolicies->chosen_policies));
         $getMergedCheck = array_count_values($mergedRequest);
-        if ($getMergedCheck === $getPolicyCheckDB){
-            $validation = true;
-        }else {
-            $validation = false;
-        }
-        return $validation;
+        sort($getPolicyCheckDB);
+        sort($getMergedCheck);
+        return $getMergedCheck === $getPolicyCheckDB ? true : false;
     }
 
     public function setChancellor(Room $room, Request $request)
     {
-//        dd(Auth::user()->hasRole('President'));
         $this->authorize('isPresident', $room);
 
         abort_unless($room->roomState->stage === 1, 400, 'Wrong stage');
