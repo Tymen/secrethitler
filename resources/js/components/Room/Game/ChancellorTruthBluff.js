@@ -8,15 +8,15 @@ class ChancellorTruthBluff extends Component {
         Truth: false,
         CardOption: '',
         CardOptions: [
-            {id: 1, option: 'fascist, liberal'},
-            {id: 2, option: 'liberal, liberal'},
-            {id: 3, option: 'fascist, fascist'},
+            {id: 1, option: 'Fascist Liberal'},
+            {id: 2, option: 'Liberal Liberal'},
+            {id: 3, option: 'Fascist Fascist'},
         ],
     }
 
 
     handleSubmit = (e) => {
-        axios.post(`/api/v1/rooms/${this.props.room.id}/chancellor_truth_bluff`, {option: e})
+        axios.post(`/api/v1/rooms/${this.props.room.id}/chancellor_truth_bluff`, {option: e.option})
     }
 
     HandleOnClick = (e) => {
@@ -24,6 +24,7 @@ class ChancellorTruthBluff extends Component {
             this.setState({
                 Truth: true
             })
+            axios.post(`/api/v1/rooms/${this.props.room.id}/chancellor_truth_bluff`, {option: null})
         } else if (e === 'bluff') {
             this.setState({
                 Bluff: true
@@ -65,11 +66,7 @@ class ChancellorTruthBluff extends Component {
 
     render() {
 
-        if (this.state.Truth) {
-            return <p>truth</p>
-
-        } else if (this.state.Bluff) {
-
+        if (this.state.Bluff) {
             return (
                 <div>
                     <div className="header-choose-chancellor">

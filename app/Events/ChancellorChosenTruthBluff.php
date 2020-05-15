@@ -15,22 +15,19 @@ class ChancellorChosenTruthBluff implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $chosenAnswer;
-    public $room;
+    private $roomId;
 
     /**
      * Create a new event instance.
      *
      * @param $room
-     * @param $chosenAnswer
      */
-    public function __construct(Room $room, $chosenAnswer)
+    public function __construct(Room $room)
     {
-        $this->chosenAnswer = $chosenAnswer;
         $this->roomId = $room->id;
 
         $room->roomState->changeState(8);
-
+        $room->roomState->startTimer('everyone');
     }
 
     /**

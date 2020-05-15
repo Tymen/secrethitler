@@ -4,19 +4,27 @@ import {connect} from "react-redux";
 class ChosenChancellorOptions extends Component {
 
     state = {
-        chancellorAnswer: ['liberal, fascist'],
+        chancellorAnswer: [],
     }
 
-    // componentDidMount() {
-    //get chosenpolicies and put in state
-    // }
+    componentDidMount() {
+        axios.get(`/api/v1/rooms/${this.props.room.id}/get_chancellor_policies`)
+            .then(response => {
+                this.setState({
+                    chancellorAnswer: response.data.options,
+                })
+            })
+            .catch(error => {
+
+            })
+    }
 
     showChancellorOptions = () => {
         const liberal = <img src="/images/liberal-article.png" className="answer-chancellor-images"/>;
         const fascist = <img src="/images/facist-article.png" className="answer-chancellor-images"/>;
 
         return this.state.chancellorAnswer.map(option => {
-            return option === 'liberal' ? liberal : fascist
+            return option === 'Liberal' ? liberal : fascist
         })
     }
 

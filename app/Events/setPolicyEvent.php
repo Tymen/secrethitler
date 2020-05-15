@@ -3,6 +3,7 @@
 namespace App\Events;
 
 use App\Room;
+use App\User;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -22,10 +23,14 @@ class setPolicyEvent implements ShouldBroadcast
      * @param $roomID
      * @param $policy
      */
-    public function __construct(Room $room)
+    public function __construct(Room $room, $board)
     {
         $this->roomID = $room->id;
-        $this->policy = [$room->roomState->chosen_policies];
+        $this->policy = $board;
+        $president = User::role('President')->where('room_id', $room->id)->first();
+
+        $room->roomState->changeState(5);
+        $room->roomState->startTimer($president->id);
     }
 
     /**

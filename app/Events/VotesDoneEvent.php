@@ -3,6 +3,7 @@
 namespace App\Events;
 
 use App\Room;
+use App\User;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -25,9 +26,10 @@ class VotesDoneEvent
     public function __construct(Room $room)
     {
         $this->roomId = $room->id;
+        $president = User::role('President')->where('room_id', $room->id)->first();
 
         $room->roomState->changeState(3);
-//        $room->roomState->startTimer(president id);
+        $room->roomState->startTimer($president->id);
     }
 
     /**

@@ -4,11 +4,19 @@ import {connect} from "react-redux";
 class ChosenPresidentOptions extends Component {
 
     state = {
-        presidentAnswer: ['liberal, fascist, liberal'],
+        presidentAnswer: [],
     }
 
     componentDidMount() {
-        //get chosenpolicies and put in state
+        axios.get(`/api/v1/rooms/${this.props.room.id}/get_president_policies`)
+            .then(response => {
+                this.setState({
+                    presidentAnswer: response.data.options,
+                })
+            })
+            .catch(error => {
+
+            })
     }
 
     showPresidentOptions = () => {
@@ -17,7 +25,7 @@ class ChosenPresidentOptions extends Component {
 
         return this.state.presidentAnswer.map(option => {
             console.log(option)
-            return option === 'liberal' ? liberal : fascist
+            return option === 'Liberal' ? liberal : fascist
         })
     }
 

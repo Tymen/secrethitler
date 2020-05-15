@@ -419,7 +419,7 @@ body::-webkit-scrollbar-thumb {
 
 
 .home-logo {
-    margin: 145px auto 0px auto;
+    margin: 0px auto 0px auto;
     max-height: 250px;
     display: block;
 }
@@ -666,7 +666,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .player-name-block {
-    margin: 0 0 0 -16px;
+    margin: 0 0 0 -26px;
     width: 135%;
     height: 45px;
     background-color: #828282;
@@ -694,7 +694,10 @@ body::-webkit-scrollbar-thumb {
 }
 
 .bg-board .board-section {
+    max-height: 500px;
     height: 500px;
+    padding: 1%;
+    text-align: center
 }
 
 .name-of-room {
@@ -984,6 +987,7 @@ div.options > input:checked + .container-choose-chancellor{
     text-align: center;
 }
 .choosePolicies img {
+    margin: 10px;
     transition: .1s;
     width: 15%;
     height: 15%;

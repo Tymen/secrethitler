@@ -4,7 +4,10 @@ import Lobby from "../components/Room/Lobby";
 import ChatLobby from "../components/Room/Lobby/ChatLobby";
 import PlayersLobby from "../components/Room/Lobby/PlayersLobby";
 import {connect} from 'react-redux';
+
 import {
+    setBoardFascist,
+    setBoardLiberal,
     chancellorChosenAnswer,
     editActive,
     presidentChosenAnswer,
@@ -12,8 +15,10 @@ import {
     setPresident,
     setRoom,
     setSecond,
-    setStage
+    setStage,
+    setPolicies
 } from "../redux/actions/room-actions";
+
 
 class Room extends Component {
 
@@ -59,15 +64,18 @@ class Room extends Component {
             .listen('.new-chancellor', (e) => {
                 this.props.dispatch(setChancellor(e.chancellor))
             })
-            .listen('.president-chosen-truth-bluff', (e) => {
-                console.log(e.chosenAnswer)
-                this.props.dispatch(presidentChosenAnswer(e.chosenAnswer))
+            .listen('.get-policies-chancellor', (e) => {
+                if (this.props.authUser.id === e.chancellorID.id) {
+                    this.props.dispatch(setPolicies(e.policies))
+                }
             })
-            .listen('.chancellor-chosen-truth-bluff', (e) => {
-                console.log(e.chosenAnswer)
-                this.props.dispatch(chancellorChosenAnswer(e.chosenAnswer))
+            .listen('.get-policy', (e) => {
+                console.log(e)
+                this.props.dispatch(setBoardFascist(e.policy.fascist));
+                this.props.dispatch(setBoardLiberal(e.policy.liberal));
             })
             .listen('.start-timer', (e) => {
+                console.log(e)
                 if (e.extra === this.props.authUser?.id || e.extra === 'everyone') {
                     clearInterval(this.state.timer)
                     this.props.dispatch(setSecond(e.second))

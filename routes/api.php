@@ -28,12 +28,18 @@ Route::namespace('Api')->group(function () {
                     Route::get('/', 'RoomsApiController@show');
                     Route::get('fascists', 'RoomsApiController@getFascists');
                     Route::get('get_policies', 'RoomsApiController@getPolicies');
+                    Route::get('getboard', 'RoomsApiController@getBoard');
 
                     Route::post('president', 'RoomsApiController@rotatePresident');
                     Route::post('set_policies', 'RoomsApiController@setPolicies');
                     Route::post('chancellor', 'RoomsApiController@setChancellor');
                     Route::post('president_truth_bluff', 'RoomsApiController@presidentTruthBluff');
                     Route::post('chancellor_truth_bluff', 'RoomsApiController@chancellorTruthBluff');
+
+                    Route::post('truth_event', 'RoomsApiController@TruthEvent');
+
+                    Route::get('get_president_policies', 'RoomsApiController@getPresidentPolicies');
+                    Route::get('get_chancellor_policies', 'RoomsApiController@getChancellorPolicies');
 
                     Route::post('chosen_president_options', 'RoomsApiController@showChosenPresidentPolicies');
                     Route::post('chosen_chancellor_options', 'RoomsApiController@showChosenChancellorPolicies');
