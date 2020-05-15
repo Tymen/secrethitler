@@ -2,35 +2,48 @@ import React, {Component} from 'react';
 import ChooseChancellor from './ChooseChancellor'
 import {connect} from "react-redux";
 import Vote from "./Vote";
+import PresidentTruthBluff from "./PresidentTruthBluff";
+import ChancellorTruthBluff from "./ChancellorTruthBluff";
+import ChosenPresidentOptions from "./ChosenPresidentOptions";
+import ChosenChancellorOptions from "./ChosenChancellorOptions"
+
+import ChoosePolicy from "./ChoosePolicy";
 
 class GameInteractionBlock extends Component {
     loadComponents = () => {
         const isPresident = this.props.authUser.id === this.props.room.president?.id;
-        if (this.props.room.stage === 1 && isPresident) {
-            return <ChooseChancellor users={this.props.users}/>
-        } else if (this.props.room.stage === 2) {
-            return <Vote/>
-        } else if (this.props.room.stage === 3) {
-            return (
-                <div>
-                    <p>stage 3</p>
-                </div>
-            )
-        }
-
-        else {
-            return (
-                <div>
-                    <div className="header-choose-chancellor">
-                        <p>Waiting for an action...</p>
-                        <div className="text-center">
-                            <div className="spinner-border" role="status">
-                                <span className="sr-only">Loading...</span>
+        const isChancellor = this.props.authUser.id === this.props.room.chancellor?.id;
+        const stage = this.props.room.stage;
+        switch (true) {
+            case stage === 1 && isPresident:
+                return <ChooseChancellor users={this.props.users}/>;
+            case stage === 2:
+                return <Vote/>;
+            case stage === 3 && isPresident:
+                return <ChoosePolicy/>;
+            case stage === 4 && isChancellor :
+                return <ChoosePolicy/>;
+            case stage === 5 && isPresident:
+                return <PresidentTruthBluff/>;
+            case stage === 6:
+                return <ChosenPresidentOptions/>;
+            case stage === 7 && isChancellor:
+                return <ChancellorTruthBluff/>;
+            case stage === 8:
+                return <ChosenChancellorOptions/>;
+            default:
+                return (
+                    <div>
+                        <div className="header-choose-chancellor">
+                            <p>Waiting for an action...</p>
+                            <div className="text-center">
+                                <div className="spinner-border" role="status">
+                                    <span className="sr-only">Loading...</span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            )
+                )
         }
     }
 
