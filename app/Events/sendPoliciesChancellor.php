@@ -29,6 +29,9 @@ class sendPoliciesChancellor implements ShouldBroadcast
         $this->roomID = $room->id;
         $this->policies = explode(" ",$room->roomState->chosen_policies);
         $this->chancellorID = $chancellorID;
+
+        $room->roomState->changeState(4);
+        $room->roomState->startTimer($chancellorID);
     }
 
     /**

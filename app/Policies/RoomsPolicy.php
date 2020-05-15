@@ -36,6 +36,13 @@ class RoomsPolicy
             : Response::deny('You are not the president');
     }
 
+    public function isChancellor(User $user, Room $room)
+    {
+        return $room->users->contains($user) && $user->hasRole("Chancellor")
+            ? Response::allow()
+            : Response::deny('You are not the Chancellor');
+    }
+
     public function store(User $user)
     {
         return $user->hostsRoom || $user->inRoom
