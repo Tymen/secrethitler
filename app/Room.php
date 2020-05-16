@@ -23,12 +23,18 @@ class Room extends Model
         return $this->hasOne(RoomState::class);
     }
 
+    public function getUserByRole($role, $columns = false)
+    {
+        $query = User::role($role)->where('room_id', $this->id);
+        return $columns ? $query->first($columns) : $query->first();
+    }
+
     public function rotatePresident()
     {
         $users = $this->users;
         $userIds = $users->pluck('id')->all();
 
-        $president = User::role('President')->where('room_id', $this->id)->first();
+        $president = $this->getUserByRole('President');
         $lastUser = end($userIds);
 
         if ($president) {

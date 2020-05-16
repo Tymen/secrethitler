@@ -323,7 +323,7 @@ class RoomsApiController extends Controller
 
             $changePolicies->chosen_policies = implode(" ", $chosenPoliciesArr);
             if(Auth::user()->hasrole("President")){
-                $getChan = User::role("Chancellor")->where("room_id", $room->id)->first();
+                $getChan = $room->getUserByRole('Chancellor');
                 $changePolicies->received_chan = $changePolicies->chosen_policies;
                 $changePolicies->save();
                 event(new sendPoliciesChancellor($room, $getChan->id));
@@ -363,7 +363,7 @@ class RoomsApiController extends Controller
 
         abort_unless($room->roomState->stage === 1, 400, 'Wrong stage');
 
-        $chancellor = User::role('Chancellor')->where('room_id', $room->id)->first();
+        $chancellor = $room->getUserByRole('Chancellor');
 
         if ($request->uid) {
             $id = intval($request->uid);

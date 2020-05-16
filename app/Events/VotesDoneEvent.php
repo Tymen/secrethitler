@@ -26,7 +26,7 @@ class VotesDoneEvent
     public function __construct(Room $room)
     {
         $this->roomId = $room->id;
-        $president = User::role('President')->where('room_id', $room->id)->first();
+        $president = $room->getUserByRole('President');
 
         $room->roomState->changeState(3);
         $room->roomState->startTimer($president->id);

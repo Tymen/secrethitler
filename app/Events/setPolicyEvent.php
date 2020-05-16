@@ -27,7 +27,7 @@ class setPolicyEvent implements ShouldBroadcast
     {
         $this->roomID = $room->id;
         $this->policy = $board;
-        $president = User::role('President')->where('room_id', $room->id)->first();
+        $president = $room->getUserByRole('President');
 
         $room->roomState->changeState(5);
         $room->roomState->startTimer($president->id);
