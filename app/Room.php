@@ -54,7 +54,7 @@ class Room extends Model
 
     public function divideRoles()
     {
-        $fascists = 2;
+        $fascists = 0;
 
         switch ($this->users->count()) {
             case 5 :

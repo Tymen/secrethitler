@@ -15,11 +15,6 @@ Route::get('/', function () {
     return view('index');
 });
 
-Route::get('/test', function () {
-    dd(\App\Room::find(94)->getUserByRole('President', ['id', 'username']));
-    return view('index');
-});
-
 Route::get('/profile', function () {
     return view('profile');
 });
