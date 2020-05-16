@@ -70,17 +70,19 @@ class Room extends Component {
                 }
             })
             .listen('.get-policy', (e) => {
-                console.log(e)
                 this.props.dispatch(setBoardFascist(e.policy.fascist));
                 this.props.dispatch(setBoardLiberal(e.policy.liberal));
             })
             .listen('.start-timer', (e) => {
-                console.log(e)
                 if (e.extra === this.props.authUser?.id || e.extra === 'everyone') {
                     clearInterval(this.state.timer)
                     this.props.dispatch(setSecond(e.second))
                     this.timer()
                 }
+            })
+            .listen('.winner', (e) => {
+                clearInterval(this.state.timer)
+                console.log(e)
             })
     }
 

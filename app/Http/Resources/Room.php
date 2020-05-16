@@ -15,8 +15,8 @@ class Room extends JsonResource
      */
     public function toArray($request)
     {
-        $president = User::role('President')->where('room_id', $this->id)->first(['id', 'username']);
-        $chancellor = User::role('Chancellor')->where('room_id', $this->id)->first(['id', 'username']);
+        $president = $this->getUserByRole('President', ['id', 'username']);
+        $chancellor = $this->getUserByRole('Chancellor', ['id', 'username']);
         $second = $this->roomState->timer_end->unix() - now()->unix();
 
         return [
@@ -30,8 +30,8 @@ class Room extends JsonResource
             'second' => $second < 0 ? 0 : $second,
             'president' => $president,
             'chancellor' => $chancellor,
-            'yesVotes' => $this->roomState->ja,
-            'noVotes' => $this->roomState->nein,
+            'ja' => $this->roomState->ja,
+            'nein' => $this->roomState->nein,
             'chosen_policies' => $this->roomState->chosen_policies,
         ];
     }

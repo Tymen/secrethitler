@@ -3,7 +3,6 @@
 namespace App\Events;
 
 use App\Room;
-use App\User;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -12,25 +11,23 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class setPolicyEvent implements ShouldBroadcast
+class WinnerEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-    public $roomID;
-    public $policy;
+
+    public $roomId;
+    public $winner;
+
     /**
      * Create a new event instance.
      *
-     * @param $roomID
-     * @param $policy
+     * @param Room $room
+     * @param $winner
      */
-    public function __construct(Room $room, $board)
+    public function __construct(Room $room, $winner)
     {
-        $this->roomID = $room->id;
-        $this->policy = $board;
-        $president = $room->getUserByRole('President');
-
-        $room->roomState->changeState(5);
-        $room->roomState->startTimer($president->id);
+        $this->roomId = $room->id;
+        $this->winner = $winner;
     }
 
     /**
@@ -40,10 +37,11 @@ class setPolicyEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PresenceChannel("room.{$this->roomID}");
+        return new PresenceChannel("room.{$this->roomId}");
     }
+
     public function broadcastAs()
     {
-        return "get-policy";
+        return 'winner';
     }
 }

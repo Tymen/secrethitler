@@ -89976,15 +89976,11 @@ function (_Component) {
                     _this2.props.dispatch(Object(_redux_actions_room_actions__WEBPACK_IMPORTED_MODULE_7__["setPolicies"])(e.policies));
                   }
                 }).listen('.get-policy', function (e) {
-                  console.log(e);
-
                   _this2.props.dispatch(Object(_redux_actions_room_actions__WEBPACK_IMPORTED_MODULE_7__["setBoardFascist"])(e.policy.fascist));
 
                   _this2.props.dispatch(Object(_redux_actions_room_actions__WEBPACK_IMPORTED_MODULE_7__["setBoardLiberal"])(e.policy.liberal));
                 }).listen('.start-timer', function (e) {
                   var _this2$props$authUser;
-
-                  console.log(e);
 
                   if (e.extra === ((_this2$props$authUser = _this2.props.authUser) === null || _this2$props$authUser === void 0 ? void 0 : _this2$props$authUser.id) || e.extra === 'everyone') {
                     clearInterval(_this2.state.timer);
@@ -89993,6 +89989,9 @@ function (_Component) {
 
                     _this2.timer();
                   }
+                }).listen('.winner', function (e) {
+                  clearInterval(_this2.state.timer);
+                  console.log(e);
                 });
 
               case 3:
