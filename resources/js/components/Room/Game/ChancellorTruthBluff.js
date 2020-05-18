@@ -71,7 +71,7 @@ class ChancellorTruthBluff extends Component {
                             </div>
                             <div className="col-2">
                                 <button type="submit" className="btn btn btn-explanation btn-chancellor"
-                                        onClick={(e) => this.handleSubmit(this.state.CardOption)}>submit
+                                        onClick={(e) => this.handleOnClick(this.state.CardOption)}>submit
                                 </button>
                             </div>
                         </div>
