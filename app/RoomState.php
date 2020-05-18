@@ -28,13 +28,26 @@ class RoomState extends Model
         $this->save();
         event(new UpdateStageEvent($this->room->id, $value));
     }
-
+    public function reset()
+    {
+        $this->ja = 0;
+        $this->nein = 0;
+        $this->fascist_board_amount = 0;
+        $this->liberal_board_amount = 0;
+        $this->fascist_policies = 11;
+        $this->liberal_policies = 6;
+        $this->chosen_fascist = 0;
+        $this->chosen_liberal = 0;
+        $this->election_tracker = 0;
+        $this->stage = 0;
+        $this->save();
+    }
     public function voteHandler()
     {
         $room = $this->load('room', 'room.users')->room;
         if ($this->ja > $this->nein) {
             $condition = $this->fascist_board_amount >= 4 && $room->getUserByRole('Chancellor')->hasRole('Hitler');
-            $event = $condition ? new WinnerEvent($room, 'fascists') : new VotesDoneEvent($room);
+            $event = $condition ? new WinnerEvent($room, "fascist") : new VotesDoneEvent($room);
             event($event);
         } else {
             $room->rotatePresident();

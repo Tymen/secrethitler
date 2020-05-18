@@ -16,7 +16,8 @@ import {
     setRoom,
     setSecond,
     setStage,
-    setPolicies
+    setPolicies,
+    setWinner
 } from "../redux/actions/room-actions";
 
 
@@ -81,15 +82,25 @@ class Room extends Component {
                 }
             })
             .listen('.winner', (e) => {
-                clearInterval(this.state.timer)
-                console.log(e)
+                clearInterval(this.state.timer);
+                this.props.dispatch(setWinner(e.winner));
+            })
+            .listen('.set-inactive', (e) => {
+                this.props.dispatch(editActive(0))
             })
     }
 
     componentWillUnmount() {
         Echo.leave(`room.${this.props.room.id}`)
     }
-
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.props.room.winner){
+            this.winner();
+        }
+    }
+    winner = () => {
+        $('.modal').modal();
+    }
     timer = () => {
         const timer = setInterval(() => {
             this.setState({timer: timer})
@@ -153,7 +164,9 @@ class Room extends Component {
             }
         )
     };
-
+    removeWinnerWindow = () =>{
+        this.props.dispatch(setWinner(null));
+    };
     render() {
         if (this.props.room.active) {
             return (
@@ -182,6 +195,26 @@ class Room extends Component {
                         <Lobby setActive={() => this.setActive()}/>
                     </div>
                     <div className="height-for-start-button"/>
+                </div>
+                <button onClick={() => this.test()}>
+                    Launch demo modal
+                </button>
+                <div className="modal fade right" id="exampleModalPreview" tabIndex="-1" role="dialog"
+                     aria-labelledby="exampleModalPreviewLabel" aria-hidden="true">
+                    <div className="modal-dialog-full-width modal-dialog momodel modal-fluid"
+                         role="document">
+                        <div className="modal-content-full-width modal-content ">
+                            <div className="modal-body">
+
+                                <h1 className="section-heading text-center wow fadeIn my-5 pt-3">The {this.props.room.winner}s have won the game</h1>
+                            </div>
+                            <div className="modal-footer-full-width  modal-footer">
+                                <button type="button" className="btn btn-danger btn-md btn-rounded"
+                                        data-dismiss="modal" onClick={() => this.removeWinnerWindow()}>Close
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         )
