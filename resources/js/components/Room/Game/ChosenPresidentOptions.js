@@ -15,7 +15,13 @@ class ChosenPresidentOptions extends Component {
                 })
             }).catch(error => {})
     }
-
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.props.room?.second <= 0) {
+            if (this.props.room.president.id === this.props.authUser.id ){
+                axios.get(`/api/v1/rooms/${this.props.room.id}/showReceivedChan`)
+            }
+        }
+    }
     showPresidentOptions = () => {
         const liberal = <img src="/images/liberal-article.png" className="answer-images"/>;
         const fascist = <img src="/images/facist-article.png" className="answer-images"/>;
@@ -52,7 +58,7 @@ class ChosenPresidentOptions extends Component {
 }
 
 const mapStateToProps = state => {
-    const {room} = state;
-    return {room: room}
+    const {room, users} = state;
+    return {room: room, authUser: users.authUser}
 }
 export default connect(mapStateToProps)(ChosenPresidentOptions)
