@@ -32,13 +32,13 @@ class GameInteractionBlock extends Component {
                 return <ChancellorTruthBluff/>;
             case stage === 8:
                 return <ChosenChancellorOptions/>;
-            case stage === 9:
+            case stage === 9 && isPresident:
                 // President sees 3 policy cards
-            case stage === 10:
+            case stage === 10 && isPresident:
                 // See someone's role
-            case stage === 11:
+            case stage === 11 && isPresident:
                 // Pick next president
-            case stage === 12:
+            case stage === 12 && isPresident:
                 // Kill player
             default:
                 return (

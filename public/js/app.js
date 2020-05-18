@@ -87499,10 +87499,10 @@ function (_Component) {
       var _this$props$room;
 
       if (((_this$props$room = this.props.room) === null || _this$props$room === void 0 ? void 0 : _this$props$room.second) <= 0) {
-        var _this$props$room$pres;
+        var _this$props$room$owne;
 
-        if (((_this$props$room$pres = this.props.room.president) === null || _this$props$room$pres === void 0 ? void 0 : _this$props$room$pres.id) === this.props.authUser.id) {
-          axios.post("/api/v1/rooms/".concat(this.props.room.id, "/president"));
+        if (((_this$props$room$owne = this.props.room.owner) === null || _this$props$room$owne === void 0 ? void 0 : _this$props$room$owne.id) === this.props.authUser.id) {
+          axios.post("/api/v1/rooms/".concat(this.props.room.id, "/check"));
         }
       }
     }
@@ -87795,13 +87795,13 @@ function (_Component) {
         case stage === 8:
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ChosenChancellorOptions__WEBPACK_IMPORTED_MODULE_7__["default"], null);
 
-        case stage === 9: // President sees 3 policy cards
+        case stage === 9 && isPresident: // President sees 3 policy cards
 
-        case stage === 10: // See someone's role
+        case stage === 10 && isPresident: // See someone's role
 
-        case stage === 11: // Pick next president
+        case stage === 11 && isPresident: // Pick next president
 
-        case stage === 12: // Kill player
+        case stage === 12 && isPresident: // Kill player
 
         default:
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {

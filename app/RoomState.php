@@ -56,4 +56,48 @@ class RoomState extends Model
         $this->save();
         event(new StartTimerEvent($this->room, $this->timer_end, $extra));
     }
+
+    public function checkStateLow()
+    {
+        switch ($this->fascist_board_amount) {
+            case 3:
+                // policy check event
+            case 4:
+            case 5:
+                // Killer event
+            default:
+                $this->room->rotatePresident();
+        }
+    }
+
+    public function checkStateMid()
+    {
+        switch ($this->fascist_board_amount) {
+            case 2:
+                // see role event
+            case 3:
+                // choose president event
+            case 4:
+            case 5:
+                // Killer event
+            default:
+                $this->room->rotatePresident();
+        }
+    }
+
+    public function checkStateHigh()
+    {
+        switch ($this->fascist_board_amount) {
+            case 1:
+            case 2:
+                // see role event
+            case 3:
+                // choose president event
+            case 4:
+            case 5:
+                // Killer event
+            default:
+                $this->room->rotatePresident();
+        }
+    }
 }

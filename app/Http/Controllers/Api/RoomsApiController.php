@@ -427,4 +427,25 @@ class RoomsApiController extends Controller
 
         return response()->json(['message' => 'completed']);
     }
+
+    public function checkState(Room $room)
+    {
+        $this->authorize('isHost', $room);
+
+        $total = $room->users->count();
+
+        switch (true) {
+            case $total === 5 || $total === 6:
+                $room->roomState->checkStateLow();
+                break;
+            case $total === 7 || $total === 8:
+                $room->roomState->checkStateMid();
+                break;
+            case ($total === 9 || $total === 10) && $room->roomState->:
+                $room->roomState->checkStateHigh();
+                break;
+            default:
+                $room->rotatePresident();
+        }
+    }
 }
