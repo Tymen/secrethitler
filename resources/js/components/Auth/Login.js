@@ -72,9 +72,6 @@ export default class Login extends Component {
                                     </div>
                                 </form>
                             </div>
-                            <div className="col">
-
-                            </div>
                         </div>
 
                         <div className="row">
@@ -84,14 +81,14 @@ export default class Login extends Component {
                         </div>
                     </div>
                 </div>
-                <div className="box box-container">
-                    <div className="row">
-                        <div className="col">
-                            <div></div>
-                        </div>
-                        <div className="box_2"> </div>
-                    </div>
-                </div>
+                {/*<div className="box box-container">*/}
+                {/*    <div className="row">*/}
+                {/*        <div className="col">*/}
+                {/*            <div></div>*/}
+                {/*        </div>*/}
+                {/*        <div className="box_2"> </div>*/}
+                {/*    </div>*/}
+                {/*</div>*/}
             </div>
         );
     }
