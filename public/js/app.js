@@ -87749,6 +87749,14 @@ function (_Component) {
         case stage === 8:
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ChosenChancellorOptions__WEBPACK_IMPORTED_MODULE_7__["default"], null);
 
+        case stage === 9: // President sees 3 policy cards
+
+        case stage === 10: // See someone's role
+
+        case stage === 11: // Pick next president
+
+        case stage === 12: // Kill player
+
         default:
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
             className: "header-choose-chancellor"
