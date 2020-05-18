@@ -16,8 +16,10 @@ import {
     setRoom,
     setSecond,
     setStage,
-    setPolicies
+    setPolicies,
+
 } from "../redux/actions/room-actions";
+import {setUsers} from "../redux/actions/users-actions";
 
 
 class Room extends Component {
@@ -83,6 +85,10 @@ class Room extends Component {
             .listen('.winner', (e) => {
                 clearInterval(this.state.timer)
                 console.log(e)
+            })
+            .listen('.killed-player', (e) => {
+                // clearInterval(this.state.timer)
+                console.log(e.killedPlayer)
             })
     }
 
