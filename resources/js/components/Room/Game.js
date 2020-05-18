@@ -4,6 +4,7 @@ import ChatLobby from "./Lobby/ChatLobby";
 import {connect} from 'react-redux';
 import Board from "../../components/Room/Game/Board";
 import GameInteractionBlock from "./Game/GameInteractionBlock";
+import {setBoardLiberal, setBoardFascist} from "../../redux/actions/room-actions";
 
 
 class Game extends Component {
@@ -12,9 +13,17 @@ class Game extends Component {
         fascists: [],
         hitler: '',
         loaded: false,
+        board: false,
     }
 
-    componentDidMount() {
+    async componentDidMount() {
+        await axios.get(`/api/v1/rooms/${this.props.room.id}/getboard`)
+            .then(response => {
+                this.props.dispatch(setBoardFascist(response.data.fascist));
+                this.props.dispatch(setBoardLiberal(response.data.liberal));
+                this.setState({board: true})
+            }).catch(err => {
+            })
         setTimeout(this.getFascists, 1000)
         setTimeout(() => $('#highlight-div').addClass('highlight'), 2500)
         setTimeout(() =>  $('#highlight-div').removeClass('highlight'), 4500)
@@ -37,13 +46,12 @@ class Game extends Component {
             })
         })
     }
-
     rotatePresident = () => {
         axios.post(`/api/v1/rooms/${this.props.room.id}/president`)
     }
 
     render() {
-        if (this.state.loaded) {
+        if (this.state.loaded && this.state.board) {
             return (
                 <div className="container-fluid">
                     <div className="row">
@@ -57,7 +65,7 @@ class Game extends Component {
                         <div className="col-md-7 col-12 bg-board">
                             <div className="board-section">
                                 <div className="col-12 board-section">
-                                    <Board/>
+                                    <Board fascist={this.props.room.fascist_board} liberal={this.props.room.liberal_board}/>
                                 </div>
                                 <div className="col-12 player-name-block"><p className="name-of-room">
                                     <strong>Room: </strong>{this.props.room.name}</p>

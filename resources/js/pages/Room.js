@@ -4,7 +4,21 @@ import Lobby from "../components/Room/Lobby";
 import ChatLobby from "../components/Room/Lobby/ChatLobby";
 import PlayersLobby from "../components/Room/Lobby/PlayersLobby";
 import {connect} from 'react-redux';
-import {editActive, setChancellor, setPresident, setRoom, setSecond, setStage} from "../redux/actions/room-actions";
+
+import {
+    setBoardFascist,
+    setBoardLiberal,
+    chancellorChosenAnswer,
+    editActive,
+    presidentChosenAnswer,
+    setChancellor,
+    setPresident,
+    setRoom,
+    setSecond,
+    setStage,
+    setPolicies
+} from "../redux/actions/room-actions";
+
 
 class Room extends Component {
 
@@ -50,12 +64,25 @@ class Room extends Component {
             .listen('.new-chancellor', (e) => {
                 this.props.dispatch(setChancellor(e.chancellor))
             })
+            .listen('.get-policies-chancellor', (e) => {
+                if (this.props.authUser.id === e.chancellorID.id) {
+                    this.props.dispatch(setPolicies(e.policies))
+                }
+            })
+            .listen('.get-policy', (e) => {
+                this.props.dispatch(setBoardFascist(e.policy.fascist));
+                this.props.dispatch(setBoardLiberal(e.policy.liberal));
+            })
             .listen('.start-timer', (e) => {
                 if (e.extra === this.props.authUser?.id || e.extra === 'everyone') {
                     clearInterval(this.state.timer)
                     this.props.dispatch(setSecond(e.second))
                     this.timer()
                 }
+            })
+            .listen('.winner', (e) => {
+                clearInterval(this.state.timer)
+                console.log(e)
             })
     }
 
@@ -130,7 +157,8 @@ class Room extends Component {
     render() {
         if (this.props.room.active) {
             return (
-                <Game setInactive={() => this.setInactive()} rotatePresident={() => this.rotatePresident()} users={this.state.users}/>
+                <Game setInactive={() => this.setInactive()} rotatePresident={() => this.rotatePresident()}
+                      users={this.state.users}/>
             )
         }
         return (

@@ -6,6 +6,7 @@ use App\Events\RotatePresidentEvent;
 use App\Events\StartTimerEvent;
 use App\Events\UpdateStageEvent;
 use App\Events\VotesDoneEvent;
+use App\Events\WinnerEvent;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
@@ -32,7 +33,9 @@ class RoomState extends Model
     {
         $room = $this->load('room', 'room.users')->room;
         if ($this->ja > $this->nein) {
-            event(new VotesDoneEvent($room));
+            $condition = $this->fascist_board_amount >= 4 && $room->getUserByRole('Chancellor')->hasRole('Hitler');
+            $event = $condition ? new WinnerEvent($room, 'fascists') : new VotesDoneEvent($room);
+            event($event);
         } else {
             $room->rotatePresident();
         }
@@ -45,7 +48,6 @@ class RoomState extends Model
         $this->ja = 0;
         $this->nein = 0;
         $this->save();
-
     }
 
     public function startTimer($extra = null)
