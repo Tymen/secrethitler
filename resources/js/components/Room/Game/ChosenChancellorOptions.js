@@ -17,8 +17,8 @@ class ChosenChancellorOptions extends Component {
     }
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (this.props.room?.second <= 0) {
-            if (this.props.room.president?.id === this.props.authUser.id ){
-                axios.post(`/api/v1/rooms/${this.props.room.id}/president`)
+            if (this.props.room.owner?.id === this.props.authUser.id ){
+                axios.post(`/api/v1/rooms/${this.props.room.id}/check`)
             }
         }
     }
