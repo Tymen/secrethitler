@@ -32,12 +32,12 @@ export default class Home extends Component {
 
                     <img className="home-logo" src="images/Secrethitler-no-bg.png"/>
                     <div className="row">
-                        <div className="col-4 offset-2 text-center">
+                        <div className="col-sm-4 col-12 offset-sm-2 text-center">
                             <JoinRoom/>
 
                         </div>
 
-                        <div className="col-4 text-center">
+                        <div className="col-sm-4 col-12 text-center">
                             <CreateRoom/>
 
                         </div>

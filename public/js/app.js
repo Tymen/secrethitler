@@ -86407,21 +86407,11 @@ function (_Component) {
       }, "Dont have an account? Signup ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
         className: "btn-link",
         to: "/auth/register"
-      }, "here")))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col"
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "here"))))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "row"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col"
-      })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "box box-container"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "row"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "box_2"
-      }, " "))));
+      })))));
     }
   }]);
 
@@ -86981,7 +86971,7 @@ function (_Component) {
       var _this3 = this;
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "test"
+        className: "test text-center"
       }, this.showRooms(), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Universal_Notification__WEBPACK_IMPORTED_MODULE_2__["default"], {
         onRef: function onRef(ref) {
           return _this3.child = ref;
@@ -89228,9 +89218,9 @@ function (_Component) {
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "row"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-4 offset-2 text-center"
+        className: "col-sm-4 col-12 offset-sm-2 text-center"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Home_JoinRoom__WEBPACK_IMPORTED_MODULE_1__["default"], null)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-4 text-center"
+        className: "col-sm-4 col-12 text-center"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Home_CreateRoom__WEBPACK_IMPORTED_MODULE_2__["default"], null))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-12 join-text"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Join a game")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
