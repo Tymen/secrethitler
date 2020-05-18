@@ -434,16 +434,16 @@ class RoomsApiController extends Controller
         $this->authorize('isHost', $room);
 
         $total = $room->users->count();
-        $hasDone = !$room->roomState->has_done;
+        $condition = !$room->roomState->has_done && $room->roomState->stage === 8;
 
         switch (true) {
-            case ($total === 5 || $total === 6) && $hasDone:
+            case ($total === 5 || $total === 6) && $condition:
                 $room->roomState->checkStateLow();
                 break;
-            case ($total === 7 || $total === 8) && $hasDone:
+            case ($total === 7 || $total === 8) && $condition:
                 $room->roomState->checkStateMid();
                 break;
-            case ($total === 9 || $total === 10) && $hasDone:
+            case ($total === 9 || $total === 10) && $condition:
                 $room->roomState->checkStateHigh();
                 break;
             default:
