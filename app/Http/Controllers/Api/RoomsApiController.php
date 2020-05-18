@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Events\PresidentChosenTruthBluff;
 use App\Events\ChancellorChosenTruthBluff;
 use App\Events\resetStage;
+use App\Events\SetInactive;
 use App\Events\ShowChosenPoliciesPresident;
 use App\Events\ShowReceivedChan;
 use App\Events\TruthEvent;
@@ -205,7 +206,7 @@ class RoomsApiController extends Controller
             $user->vote_type = NULL;
             $user->save();
         });
-
+        event(new SetInactive($room));
         $room->active = false;
         $room->save();
 

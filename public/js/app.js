@@ -86716,9 +86716,6 @@ function (_Component) {
       return componentDidMount;
     }()
   }, {
-    key: "componentDidUpdate",
-    value: function componentDidUpdate(prevProps, prevState, snapshot) {}
-  }, {
     key: "render",
     value: function render() {
       var _this3 = this;
@@ -86767,32 +86764,6 @@ function (_Component) {
         })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
           className: "col-3 bg-grey"
         }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
-          onClick: function onClick() {
-            return _this3.test();
-          }
-        }, "Launch demo modal"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
-          className: "modal fade right",
-          id: "exampleModalPreview",
-          tabIndex: "-1",
-          role: "dialog",
-          "aria-labelledby": "exampleModalPreviewLabel",
-          "aria-hidden": "true"
-        }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
-          className: "modal-dialog-full-width modal-dialog momodel modal-fluid",
-          role: "document"
-        }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
-          className: "modal-content-full-width modal-content "
-        }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
-          className: "modal-body"
-        }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("h1", {
-          className: "section-heading text-center wow fadeIn my-5 pt-3"
-        }, "Test")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
-          className: "modal-footer-full-width  modal-footer"
-        }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
-          type: "button",
-          className: "btn btn-danger btn-md btn-rounded",
-          "data-dismiss": "modal"
-        }, "Close"))))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
           onClick: function onClick() {
             return _this3.props.setInactive();
           }
@@ -87046,7 +87017,7 @@ function (_Component) {
           type: "submit",
           className: "btn btn btn-explanation btn-chancellor",
           onClick: function onClick(e) {
-            return _this2.handleSubmit(_this2.state.CardOption);
+            return _this2.handleOnClick(_this2.state.CardOption);
           }
         }, "submit")))), this.showOptions());
       } else {
@@ -87165,7 +87136,6 @@ function (_Component) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "showOptions", function () {
-      console.log(_this.props.users);
       return _this.props.users.map(function (user) {
         var _this$props$authUser;
 
@@ -87509,8 +87479,7 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this$props$room2,
-          _this3 = this;
+      var _this$props$room2;
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "header-choose-chancellor"
@@ -87520,17 +87489,11 @@ function (_Component) {
         className: "col-2"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, (_this$props$room2 = this.props.room) === null || _this$props$room2 === void 0 ? void 0 : _this$props$room2.second)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-8"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Chancellor had these cards"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "The president claims he has received these cards"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "under-title"
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-2"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        type: "submit",
-        className: "btn btn btn-explanation btn-chancellor",
-        onClick: function onClick(e) {
-          return _this3.handleSubmit(_this3.state.CardOption);
-        }
-      }, "submit"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "centered-options"
       }, this.showChancellorOptions()));
     }
@@ -87651,8 +87614,7 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this$props$room2,
-          _this3 = this;
+      var _this$props$room2;
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "header-choose-chancellor"
@@ -87666,13 +87628,7 @@ function (_Component) {
         className: "under-title"
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-2"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        type: "submit",
-        className: "btn btn btn-explanation btn-chancellor",
-        onClick: function onClick(e) {
-          return _this3.handleSubmit(_this3.state.CardOption);
-        }
-      }, "submit"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "centered-options"
       }, this.showPresidentOptions()));
     }
@@ -88123,7 +88079,8 @@ function (_Component) {
     value: function componentDidUpdate(prevProps, prevState, snapshot) {
       var _this$props$room;
 
-      if (((_this$props$room = this.props.room) === null || _this$props$room === void 0 ? void 0 : _this$props$room.second) <= 0) {// this.handleVote(true)
+      if (((_this$props$room = this.props.room) === null || _this$props$room === void 0 ? void 0 : _this$props$room.second) <= 0) {
+        this.handleVote(true);
       }
     }
   }, {
@@ -89889,6 +89846,10 @@ function (_Component) {
       timer: 0
     });
 
+    _defineProperty(_assertThisInitialized(_this), "winner", function () {
+      $('.modal').modal();
+    });
+
     _defineProperty(_assertThisInitialized(_this), "timer", function () {
       var timer = setInterval(function () {
         _this.setState({
@@ -89984,6 +89945,10 @@ function (_Component) {
       });
     });
 
+    _defineProperty(_assertThisInitialized(_this), "removeWinnerWindow", function () {
+      _this.props.dispatch(Object(_redux_actions_room_actions__WEBPACK_IMPORTED_MODULE_7__["setWinner"])(null));
+    });
+
     return _this;
   }
 
@@ -90044,7 +90009,10 @@ function (_Component) {
                   }
                 }).listen('.winner', function (e) {
                   clearInterval(_this2.state.timer);
-                  console.log(e);
+
+                  _this2.props.dispatch(Object(_redux_actions_room_actions__WEBPACK_IMPORTED_MODULE_7__["setWinner"])(e.winner));
+                }).listen('.set-inactive', function (e) {
+                  _this2.props.dispatch(Object(_redux_actions_room_actions__WEBPACK_IMPORTED_MODULE_7__["editActive"])(0));
                 });
 
               case 3:
@@ -90065,6 +90033,13 @@ function (_Component) {
     key: "componentWillUnmount",
     value: function componentWillUnmount() {
       Echo.leave("room.".concat(this.props.room.id));
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps, prevState, snapshot) {
+      if (this.props.room.winner) {
+        this.winner();
+      }
     }
   }, {
     key: "render",
@@ -90112,7 +90087,36 @@ function (_Component) {
         }
       })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
         className: "height-for-start-button"
-      })));
+      })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
+        onClick: function onClick() {
+          return _this3.test();
+        }
+      }, "Launch demo modal"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+        className: "modal fade right",
+        id: "exampleModalPreview",
+        tabIndex: "-1",
+        role: "dialog",
+        "aria-labelledby": "exampleModalPreviewLabel",
+        "aria-hidden": "true"
+      }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+        className: "modal-dialog-full-width modal-dialog momodel modal-fluid",
+        role: "document"
+      }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+        className: "modal-content-full-width modal-content "
+      }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+        className: "modal-body"
+      }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("h1", {
+        className: "section-heading text-center wow fadeIn my-5 pt-3"
+      }, "The ", this.props.room.winner, "s have won the game")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+        className: "modal-footer-full-width  modal-footer"
+      }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
+        type: "button",
+        className: "btn btn-danger btn-md btn-rounded",
+        "data-dismiss": "modal",
+        onClick: function onClick() {
+          return _this3.removeWinnerWindow();
+        }
+      }, "Close"))))));
     }
   }]);
 
@@ -90210,7 +90214,7 @@ if (document.getElementById('index')) {
 /*!****************************************************!*\
   !*** ./resources/js/redux/actions/room-actions.js ***!
   \****************************************************/
-/*! exports provided: setRoom, editActive, setPresident, setChancellor, setStage, setSecond, addMessage, presidentChosenAnswer, chancellorChosenAnswer, setPolicies, setBoardFascist, setBoardLiberal, deleteAllMessages */
+/*! exports provided: setRoom, editActive, setPresident, setChancellor, setStage, setSecond, addMessage, presidentChosenAnswer, chancellorChosenAnswer, setPolicies, setBoardFascist, setBoardLiberal, setWinner, deleteAllMessages */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -90227,6 +90231,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setPolicies", function() { return setPolicies; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setBoardFascist", function() { return setBoardFascist; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setBoardLiberal", function() { return setBoardLiberal; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setWinner", function() { return setWinner; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteAllMessages", function() { return deleteAllMessages; });
 var setRoom = function setRoom(room) {
   return {
@@ -90297,6 +90302,12 @@ var setBoardFascist = function setBoardFascist(value) {
 var setBoardLiberal = function setBoardLiberal(value) {
   return {
     type: 'SET_BOARD_LIBERAL',
+    value: value
+  };
+};
+var setWinner = function setWinner(value) {
+  return {
+    type: 'SET_WINNER',
     value: value
   };
 };
@@ -90425,6 +90436,11 @@ var room = function room() {
     case 'SET_BOARD_FASCIST':
       return _objectSpread({}, state, {
         fascist_board: action.value
+      });
+
+    case 'SET_WINNER':
+      return _objectSpread({}, state, {
+        winner: action.value
       });
 
     case 'SET_BOARD_LIBERAL':

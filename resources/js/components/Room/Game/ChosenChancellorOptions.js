@@ -40,13 +40,10 @@ class ChosenChancellorOptions extends Component {
                         <p>{this.props.room?.second}</p>
                     </div>
                     <div className="col-8">
-                        <p>Chancellor had these cards</p>
+                        <p>The president claims he has received these cards</p>
                         <p className="under-title"></p>
                     </div>
                     <div className="col-2">
-                        <button type="submit" className="btn btn btn-explanation btn-chancellor"
-                                onClick={(e) => this.handleSubmit(this.state.CardOption)}>submit
-                        </button>
                     </div>
                 </div>
                 <div className="centered-options">
