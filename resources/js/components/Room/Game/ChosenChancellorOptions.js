@@ -14,9 +14,13 @@ class ChosenChancellorOptions extends Component {
                     chancellorAnswer: response.data.options,
                 })
             })
-            .catch(error => {
-
-            })
+    }
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.props.room?.second <= 0) {
+            if (this.props.room.president?.id === this.props.authUser.id ){
+                axios.post(`/api/v1/rooms/${this.props.room.id}/president`)
+            }
+        }
     }
 
     showChancellorOptions = () => {
@@ -54,7 +58,7 @@ class ChosenChancellorOptions extends Component {
 }
 
 const mapStateToProps = state => {
-    const {room} = state;
-    return {room: room}
+    const {room, users} = state;
+    return {room: room, authUser: users.authUser}
 }
 export default connect(mapStateToProps)(ChosenChancellorOptions)

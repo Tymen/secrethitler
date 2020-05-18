@@ -86678,6 +86678,10 @@ function (_Component) {
       axios.post("/api/v1/rooms/".concat(_this.props.room.id, "/president"));
     });
 
+    _defineProperty(_assertThisInitialized(_this), "test", function () {
+      $('.modal').modal();
+    });
+
     return _this;
   }
 
@@ -86721,6 +86725,9 @@ function (_Component) {
 
       return componentDidMount;
     }()
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps, prevState, snapshot) {}
   }, {
     key: "render",
     value: function render() {
@@ -86770,6 +86777,32 @@ function (_Component) {
         })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
           className: "col-3 bg-grey"
         }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
+          onClick: function onClick() {
+            return _this3.test();
+          }
+        }, "Launch demo modal"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+          className: "modal fade right",
+          id: "exampleModalPreview",
+          tabIndex: "-1",
+          role: "dialog",
+          "aria-labelledby": "exampleModalPreviewLabel",
+          "aria-hidden": "true"
+        }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+          className: "modal-dialog-full-width modal-dialog momodel modal-fluid",
+          role: "document"
+        }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+          className: "modal-content-full-width modal-content "
+        }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+          className: "modal-body"
+        }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("h1", {
+          className: "section-heading text-center wow fadeIn my-5 pt-3"
+        }, "Test")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+          className: "modal-footer-full-width  modal-footer"
+        }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
+          type: "button",
+          className: "btn btn-danger btn-md btn-rounded",
+          "data-dismiss": "modal"
+        }, "Close"))))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
           onClick: function onClick() {
             return _this3.props.setInactive();
           }
@@ -86925,7 +86958,6 @@ function (_Component) {
 
     _defineProperty(_assertThisInitialized(_this), "state", {
       Bluff: false,
-      Truth: false,
       CardOption: '',
       CardOptions: [{
         id: 1,
@@ -86939,26 +86971,11 @@ function (_Component) {
       }]
     });
 
-    _defineProperty(_assertThisInitialized(_this), "handleSubmit", function (e) {
+    _defineProperty(_assertThisInitialized(_this), "handleOnClick", function () {
+      var e = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
       axios.post("/api/v1/rooms/".concat(_this.props.room.id, "/chancellor_truth_bluff"), {
-        option: e.option
+        option: _this.state.Bluff ? e.option : null
       });
-    });
-
-    _defineProperty(_assertThisInitialized(_this), "HandleOnClick", function (e) {
-      if (e === 'truth') {
-        _this.setState({
-          Truth: true
-        });
-
-        axios.post("/api/v1/rooms/".concat(_this.props.room.id, "/chancellor_truth_bluff"), {
-          option: null
-        });
-      } else if (e === 'bluff') {
-        _this.setState({
-          Bluff: true
-        });
-      }
     });
 
     _defineProperty(_assertThisInitialized(_this), "isChecked", function (option) {
@@ -87007,12 +87024,21 @@ function (_Component) {
   }
 
   _createClass(ChancellorTruthBluff, [{
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps, prevState, snapshot) {
+      var _this$props$room;
+
+      if (((_this$props$room = this.props.room) === null || _this$props$room === void 0 ? void 0 : _this$props$room.second) <= 0) {
+        this.handleOnClick();
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this2 = this;
 
       if (this.state.Bluff) {
-        var _this$props$room;
+        var _this$props$room2;
 
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "header-choose-chancellor"
@@ -87020,7 +87046,7 @@ function (_Component) {
           className: "row"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "col-2"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, (_this$props$room = this.props.room) === null || _this$props$room === void 0 ? void 0 : _this$props$room.second)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, (_this$props$room2 = this.props.room) === null || _this$props$room2 === void 0 ? void 0 : _this$props$room2.second)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "col-8"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Choose one of the bluff options"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
           className: "under-title"
@@ -87034,7 +87060,7 @@ function (_Component) {
           }
         }, "submit")))), this.showOptions());
       } else {
-        var _this$props$room2;
+        var _this$props$room3;
 
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "header-choose-chancellor"
@@ -87042,7 +87068,7 @@ function (_Component) {
           className: "row"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "col-2"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, (_this$props$room2 = this.props.room) === null || _this$props$room2 === void 0 ? void 0 : _this$props$room2.second)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, (_this$props$room3 = this.props.room) === null || _this$props$room3 === void 0 ? void 0 : _this$props$room3.second)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "col-8"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Choose if you want to bluff or tell the truth about the policy cards you got"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "container-bluff-truth"
@@ -87050,13 +87076,15 @@ function (_Component) {
           name: "truth",
           className: "truth-button",
           onClick: function onClick() {
-            return _this2.HandleOnClick('truth');
+            return _this2.handleOnClick();
           }
         }, "Truth"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           name: "bluff",
           className: "bluff-button",
           onClick: function onClick() {
-            return _this2.HandleOnClick('bluff');
+            return _this2.setState({
+              Bluff: true
+            });
           }
         }, "Bluff")));
       }
@@ -87473,12 +87501,25 @@ function (_Component) {
         _this2.setState({
           chancellorAnswer: response.data.options
         });
-      })["catch"](function (error) {});
+      });
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps, prevState, snapshot) {
+      var _this$props$room;
+
+      if (((_this$props$room = this.props.room) === null || _this$props$room === void 0 ? void 0 : _this$props$room.second) <= 0) {
+        var _this$props$room$pres;
+
+        if (((_this$props$room$pres = this.props.room.president) === null || _this$props$room$pres === void 0 ? void 0 : _this$props$room$pres.id) === this.props.authUser.id) {
+          axios.post("/api/v1/rooms/".concat(this.props.room.id, "/president"));
+        }
+      }
     }
   }, {
     key: "render",
     value: function render() {
-      var _this$props$room,
+      var _this$props$room2,
           _this3 = this;
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -87487,7 +87528,7 @@ function (_Component) {
         className: "row"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-2"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, (_this$props$room = this.props.room) === null || _this$props$room === void 0 ? void 0 : _this$props$room.second)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, (_this$props$room2 = this.props.room) === null || _this$props$room2 === void 0 ? void 0 : _this$props$room2.second)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-8"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Chancellor had these cards"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "under-title"
@@ -87509,9 +87550,11 @@ function (_Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
 var mapStateToProps = function mapStateToProps(state) {
-  var room = state.room;
+  var room = state.room,
+      users = state.users;
   return {
-    room: room
+    room: room,
+    authUser: users.authUser
   };
 };
 
@@ -87605,9 +87648,20 @@ function (_Component) {
       })["catch"](function (error) {});
     }
   }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps, prevState, snapshot) {
+      var _this$props$room;
+
+      if (((_this$props$room = this.props.room) === null || _this$props$room === void 0 ? void 0 : _this$props$room.second) <= 0) {
+        if (this.props.room.president.id === this.props.authUser.id) {
+          axios.get("/api/v1/rooms/".concat(this.props.room.id, "/showReceivedChan"));
+        }
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
-      var _this$props$room,
+      var _this$props$room2,
           _this3 = this;
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -87616,7 +87670,7 @@ function (_Component) {
         className: "row"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-2"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, (_this$props$room = this.props.room) === null || _this$props$room === void 0 ? void 0 : _this$props$room.second)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, (_this$props$room2 = this.props.room) === null || _this$props$room2 === void 0 ? void 0 : _this$props$room2.second)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-8"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "The president claims he has received these cards"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "under-title"
@@ -87638,9 +87692,11 @@ function (_Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
 var mapStateToProps = function mapStateToProps(state) {
-  var room = state.room;
+  var room = state.room,
+      users = state.users;
   return {
-    room: room
+    room: room,
+    authUser: users.authUser
   };
 };
 
@@ -88069,8 +88125,7 @@ function (_Component) {
     value: function componentDidUpdate(prevProps, prevState, snapshot) {
       var _this$props$room;
 
-      if (((_this$props$room = this.props.room) === null || _this$props$room === void 0 ? void 0 : _this$props$room.second) <= 0) {
-        this.handleVote(true);
+      if (((_this$props$room = this.props.room) === null || _this$props$room === void 0 ? void 0 : _this$props$room.second) <= 0) {// this.handleVote(true)
       }
     }
   }, {
@@ -90474,8 +90529,8 @@ var store = Object(redux__WEBPACK_IMPORTED_MODULE_0__["createStore"])(_reducers_
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\joost\Desktop\The%20SS%20-%20SecretHitler\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\joost\Desktop\The%20SS%20-%20SecretHitler\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! E:\Programma's\Documents\A-Coderen\Coderen\The%20SS%20-%20SecretHitler\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! E:\Programma's\Documents\A-Coderen\Coderen\The%20SS%20-%20SecretHitler\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

@@ -29,6 +29,8 @@ Route::namespace('Api')->group(function () {
                     Route::get('fascists', 'RoomsApiController@getFascists');
                     Route::get('get_policies', 'RoomsApiController@getPolicies');
                     Route::get('getboard', 'RoomsApiController@getBoard');
+                    Route::get('showReceivedChan', 'RoomsApiController@showReceivedChan');
+                    Route::get('reset_stage', 'RoomsApiController@reset_stage');
 
                     Route::post('president', 'RoomsApiController@rotatePresident');
                     Route::post('set_policies', 'RoomsApiController@setPolicies');
