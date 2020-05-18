@@ -16,6 +16,8 @@ class Game extends Component {
 
     componentDidMount() {
         setTimeout(this.getFascists, 1000)
+        setTimeout(() => $('#highlight-div').addClass('highlight'), 2500)
+        setTimeout(() =>  $('#highlight-div').removeClass('highlight'), 4500)
     }
 
     getFascists = () => {
@@ -74,8 +76,9 @@ class Game extends Component {
                         <div className="col-2 bg-grey">
 
                         </div>
-                        <div className="col-7 bg-dark-grey">
+                        <div id="highlight-div" className="col-7 bg-dark-grey">
                             <GameInteractionBlock users={this.props.users}/>
+                            <div className="ball-5"></div>
                         </div>
                         <div className="col-3 bg-grey">
                             <button onClick={() => this.props.setInactive()}>Inactive</button>

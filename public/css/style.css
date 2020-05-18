@@ -1337,3 +1337,26 @@ div.options > input:checked + .container-choose-chancellor{
     cursor: pointer
 }
 
+/*@keyframes highlight {*/
+    /*0% {*/
+        /*background: #ffffff;*/
+    /*}*/
+    /*100% {*/
+        /*background: none;*/
+    /*}*/
+/*}*/
+
+.highlight {
+    background-size: 400% 400%;
+    animation: highlight 0.7s ease infinite;
+}
+
+@keyframes highlight {
+    0%{
+        background: #f1f1f1;
+    }
+    100% {
+        background: none;
+    }
+}
+
