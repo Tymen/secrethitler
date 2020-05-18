@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Events\PresidentChosenTruthBluff;
 use App\Events\ChancellorChosenTruthBluff;
+use App\Events\resetStage;
 use App\Events\ShowChosenPoliciesPresident;
+use App\Events\ShowReceivedChan;
 use App\Events\TruthEvent;
 use App\Room;
 use App\User;
@@ -223,6 +225,8 @@ class RoomsApiController extends Controller
 
         foreach ($room->users as $user) {
             $user->room_id = NULL;
+            $user->hasRole('President') ? $user->removeRole("President") : false;
+            $user->hasRole('Chancellor') ? $user->removeRole("Chancellor") : false;
             $user->save();
         }
 
@@ -357,6 +361,16 @@ class RoomsApiController extends Controller
         return $getMergedCheck === $getPolicyCheckDB ? true : false;
     }
 
+    public function showReceivedChan(Room $room)
+    {
+        event(new ShowReceivedChan($room));
+        return response()->json(["message" => "Completed"]);
+    }
+    public function resetStage(Room $room)
+    {
+        $room->roomState->changeStage(1);
+        return response()->json(["message" => "Completed"]);
+    }
     public function setChancellor(Room $room, Request $request)
     {
         $this->authorize('isPresident', $room);

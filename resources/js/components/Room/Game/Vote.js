@@ -20,7 +20,7 @@ class Vote extends Component {
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (this.props.room?.second <= 0) {
-            this.handleVote(true)
+            // this.handleVote(true)
         }
     }
 

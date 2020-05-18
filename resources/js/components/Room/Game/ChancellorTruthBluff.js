@@ -5,7 +5,6 @@ class ChancellorTruthBluff extends Component {
 
     state = {
         Bluff: false,
-        Truth: false,
         CardOption: '',
         CardOptions: [
             {id: 1, option: 'Fascist Liberal'},
@@ -14,22 +13,14 @@ class ChancellorTruthBluff extends Component {
         ],
     }
 
-
-    handleSubmit = (e) => {
-        axios.post(`/api/v1/rooms/${this.props.room.id}/chancellor_truth_bluff`, {option: e.option})
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.props.room?.second <= 0) {
+            this.handleOnClick()
+        }
     }
 
-    HandleOnClick = (e) => {
-        if (e === 'truth') {
-            this.setState({
-                Truth: true
-            })
-            axios.post(`/api/v1/rooms/${this.props.room.id}/chancellor_truth_bluff`, {option: null})
-        } else if (e === 'bluff') {
-            this.setState({
-                Bluff: true
-            })
-        }
+    handleOnClick = (e = {}) => {
+        axios.post(`/api/v1/rooms/${this.props.room.id}/chancellor_truth_bluff`, {option: this.state.Bluff ? e.option : null})
     }
 
     isChecked = (option) => {
@@ -102,10 +93,10 @@ class ChancellorTruthBluff extends Component {
                     </div>
                     <div className="container-bluff-truth">
                         <button name="truth" className="truth-button"
-                                onClick={() => this.HandleOnClick('truth')}>Truth
+                                onClick={() => this.handleOnClick()}>Truth
                         </button>
                         <button name="bluff" className="bluff-button"
-                                onClick={() => this.HandleOnClick('bluff')}>Bluff
+                                onClick={() => this.setState({Bluff: true})}>Bluff
                         </button>
                     </div>
                 </div>

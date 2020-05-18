@@ -167,7 +167,7 @@ body::-webkit-scrollbar-thumb {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 50%;
+    width: 35%;
     z-index: 9999;
     box-shadow: -6px 3px 6px rgba(0, 0, 0, 0.39);
 }
@@ -253,7 +253,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .login-bolletjes {
-    width: 25%;
+    width: 480px;
     margin: 1vw 0;
 }
 
@@ -394,8 +394,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .background-rooms {
-    max-height: 300px;
-    max-height: 300px;
+    width: 100%;
     border-radius: 0 0 20px 20px;
 }
 
@@ -699,7 +698,30 @@ body::-webkit-scrollbar-thumb {
     padding: 1%;
     text-align: center
 }
+.modal-dialog-full-width {
+    width: 100% !important;
+    height: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    max-width:none !important;
 
+}
+
+
+.modal-content-full-width  {
+    height: auto !important;
+    min-height: 100% !important;
+    border-radius: 0 !important;
+    background-color: #ececec !important
+}
+
+.modal-header-full-width  {
+    border-bottom: 1px solid #9ea2a2 !important;
+}
+
+.modal-footer-full-width  {
+    border-top: 1px solid #9ea2a2 !important;
+}
 .name-of-room {
     padding-top: 7px;
     color: #ffff;
@@ -914,6 +936,14 @@ div.options > input:checked + .container-choose-chancellor{
 
 /*Large devices (desktops, less than 1200px)*/
 @media (max-width: 1199.98px) {
+    .join-room {
+        width: 300px!important;
+        padding: 0px;
+    }
+    .create-room {
+        width: 300px;
+        padding: 0px;
+    }
     .box div {
         height: 40.9vw;
         left: 27vw;
@@ -997,6 +1027,18 @@ div.options > input:checked + .container-choose-chancellor{
 }
 /*// Medium devices (tablets, less than 992px)*/
 @media (max-width: 991.98px) {
+    .input-room-name {
+        text-align: center;
+        width: 230px;
+    }
+    .join-room {
+        width: 205px!important;
+        padding: 0px;
+    }
+    .create-room {
+        width: 205px;
+        padding: 0px;
+    }
     .box div {
         display: none;
     }
@@ -1091,6 +1133,22 @@ div.options > input:checked + .container-choose-chancellor{
 
 /*// Small devices (landscape phones, less than 768px)*/
 @media (max-width: 767.98px) {
+    .join-room {
+        width: 145px!important;
+    }
+    .create-room {
+        width: 155px;
+    }
+    .input-room-name {
+        width: 170px;
+    }
+    .home-bolletjes {
+        margin-top: -3rem;
+    }
+    .home-logo {
+        margin: 0px;
+        max-height: 200px;
+    }
     .card-login {
         height: 57%;
     }
@@ -1160,6 +1218,19 @@ div.options > input:checked + .container-choose-chancellor{
 
 /*// Extra small devices (portrait phones, less than 576px)*/
 @media (max-width: 575.98px) {
+    .home-bolletjes {
+        width: 100%;
+    }
+    .home-logo {
+        margin: 0 auto!important;
+        width: 100%;
+    }
+    .join-room {
+        width: 170px!important;
+    }
+    .create-room {
+        width: 170px;
+    }
     .form-group {
         margin-bottom: 0.3rem;
     }
@@ -1226,7 +1297,7 @@ div.options > input:checked + .container-choose-chancellor{
     }
 
     .login-bolletjes {
-        width: 26%;
+        width: 480px;
     }
 
     .both-sides {
