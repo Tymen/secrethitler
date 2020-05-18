@@ -88,7 +88,7 @@ export default class Rooms extends Component {
     render() {
         return (
             <div>
-                <div className="test">
+                <div className="test text-center">
                     {this.showRooms()}
                     <Notification onRef={ref => (this.child = ref)}/>
                 </div>
