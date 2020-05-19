@@ -206,6 +206,7 @@ class RoomsApiController extends Controller
         $room->users->map(function ($user) {
             $user->voted = false;
             $user->vote_type = NULL;
+            $user->is_killed = 0;
             $user->save();
         });
         event(new SetInactive($room));

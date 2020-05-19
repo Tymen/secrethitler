@@ -813,6 +813,19 @@ body::-webkit-scrollbar-thumb {
 .is-killed .president-container{
     opacity: 0.3;
 }
+.is-killed .player-name-div img {
+    opacity: 0.3;
+}
+
+.is-killed-icon {
+    position: absolute;
+    right: 0;
+    top: 30%;
+    width: 50px;
+    font-size: 23px;
+    text-align: center;
+    z-index: 2;
+}
 
 .player-name-div p {
     text-align: left;
