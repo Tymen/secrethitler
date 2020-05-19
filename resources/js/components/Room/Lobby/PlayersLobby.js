@@ -74,7 +74,7 @@ class PlayersLobby extends Component {
                 this.showUser(user, true)
             } else {
                 return (
-                    <div key={user.id} className="player-name-div">
+                    <div key={user.id} className="player-name-div is-killed">
                         <p className="player-name dropdown-toggle" type="button" id="dropdownMenuButton"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             {user.username}
@@ -85,6 +85,7 @@ class PlayersLobby extends Component {
                         </div>
                         {this.checkFascists(user.id)}
                         {this.checkRole(user.id)}
+                        <i className="fas fa-skull-crossbones"></i>
                     </div>
                 )
             }

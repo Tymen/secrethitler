@@ -804,6 +804,16 @@ body::-webkit-scrollbar-thumb {
     /*overflow: hidden;*/
 }
 
+.is-killed {
+    background:rgba(255,3,0,0.39);
+}
+.is-killed p {
+    opacity: 0.3;
+}
+.is-killed .president-container{
+    opacity: 0.3;
+}
+
 .player-name-div p {
     text-align: left;
 }

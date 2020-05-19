@@ -89003,7 +89003,7 @@ function (_Component) {
         } else {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
             key: user.id,
-            className: "player-name-div"
+            className: "player-name-div is-killed"
           }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
             className: "player-name dropdown-toggle",
             type: "button",
@@ -89019,7 +89019,9 @@ function (_Component) {
             onClick: function onClick(e) {
               return _this.kickUser(e, user.id);
             }
-          }, "Kick ", user.username)), _this.checkFascists(user.id), _this.checkRole(user.id));
+          }, "Kick ", user.username)), _this.checkFascists(user.id), _this.checkRole(user.id), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+            className: "fas fa-skull-crossbones"
+          }));
         }
       });
     });
