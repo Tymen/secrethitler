@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Events\ChooseRoleEvent;
 use App\Events\PresidentChosenTruthBluff;
 use App\Events\ChancellorChosenTruthBluff;
 use App\Events\resetStage;
@@ -405,6 +406,17 @@ class RoomsApiController extends Controller
         $user->assignRole('Chancellor');
 
         event(new NewChancellorEvent($room, ['id' => $user->id, 'username' => $user->username]));
+
+        return response()->json(['message' => 'completed']);
+    }
+
+    public function chooseRole(Room $room, Request $request)
+    {
+        $this->authorize('isPresident', $room);
+
+        $chosenPlayer = $request->uid;
+
+        event(new ChooseRoleEvent($room ,$chosenPlayer));
 
         return response()->json(['message' => 'completed']);
     }
