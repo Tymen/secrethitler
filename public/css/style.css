@@ -220,7 +220,7 @@ body::-webkit-scrollbar-thumb {
 
 .box {
     position: relative;
-    z-index: 11111111;
+    z-index: 1000;
     width: 50%;
     float: right;
 }

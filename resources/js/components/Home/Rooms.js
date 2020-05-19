@@ -41,6 +41,9 @@ export default class Rooms extends Component {
     };
 
     componentDidMount() {
+        if (document.getElementById('index').dataset.message) {
+            this.child.getNotify({type: "error", title: "Room", message: document.getElementById('index').dataset.message});
+        }
         this._isMounted = true;
         get('api/v1/users/me').then(response => {
             return (response.data) ? this.setState({loggedIn: true}) : this.setState({loggedIn: false})
