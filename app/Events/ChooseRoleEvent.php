@@ -14,7 +14,7 @@ use Illuminate\Queue\SerializesModels;
 class ChooseRoleEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-    
+
     public $roomId;
     public $choosePlayer;
     /**
