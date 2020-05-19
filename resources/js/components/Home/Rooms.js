@@ -40,6 +40,7 @@ export default class Rooms extends Component {
         this.child = React.createRef();
     };
 
+
     componentDidMount() {
         if (document.getElementById('index').dataset.message) {
             this.child.getNotify({type: "error", title: "Room", message: document.getElementById('index').dataset.message});
