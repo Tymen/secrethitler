@@ -87763,41 +87763,41 @@ function (_Component) {
 
       var isPresident = _this.props.authUser.id === ((_this$props$room$pres = _this.props.room.president) === null || _this$props$room$pres === void 0 ? void 0 : _this$props$room$pres.id);
       var isChancellor = _this.props.authUser.id === ((_this$props$room$chan = _this.props.room.chancellor) === null || _this$props$room$chan === void 0 ? void 0 : _this$props$room$chan.id);
-      var isKilled = !_this.props.authUser.isKilled;
+      var isKilled = _this.props.authUser.isKilled;
       var stage = _this.props.room.stage;
 
       switch (true) {
         case stage === 1 && isPresident:
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ChooseChancellor__WEBPACK_IMPORTED_MODULE_1__["default"], null);
 
-        case stage === 2 && isKilled:
+        case stage === 2 && !isKilled:
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Vote__WEBPACK_IMPORTED_MODULE_3__["default"], null);
 
-        case stage === 3 && isPresident && isKilled:
+        case stage === 3 && isPresident && !isKilled:
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ChoosePolicy__WEBPACK_IMPORTED_MODULE_8__["default"], null);
 
-        case stage === 4 && isChancellor && isKilled:
+        case stage === 4 && isChancellor && !isKilled:
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ChoosePolicy__WEBPACK_IMPORTED_MODULE_8__["default"], null);
 
-        case stage === 5 && isPresident && isKilled:
+        case stage === 5 && isPresident && !isKilled:
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_PresidentTruthBluff__WEBPACK_IMPORTED_MODULE_4__["default"], null);
 
         case stage === 6:
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ChosenPresidentOptions__WEBPACK_IMPORTED_MODULE_6__["default"], null);
 
-        case stage === 7 && isChancellor && isKilled:
+        case stage === 7 && isChancellor && !isKilled:
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ChancellorTruthBluff__WEBPACK_IMPORTED_MODULE_5__["default"], null);
 
         case stage === 8:
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ChosenChancellorOptions__WEBPACK_IMPORTED_MODULE_7__["default"], null);
 
-        case stage === 9 && isPresident && isKilled: // President sees 3 policy cards
+        case stage === 9 && isPresident && !isKilled: // President sees 3 policy cards
 
-        case stage === 10 && isPresident && isKilled: // See someone's role
+        case stage === 10 && isPresident && !isKilled: // See someone's role
 
-        case stage === 11 && isPresident && isKilled: // Pick next president
+        case stage === 11 && isPresident && !isKilled: // Pick next president
 
-        case stage === 12 && isPresident && isKilled:
+        case stage === 12 && isPresident && !isKilled:
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_KillAPlayer__WEBPACK_IMPORTED_MODULE_9__["default"], null);
 
         default:

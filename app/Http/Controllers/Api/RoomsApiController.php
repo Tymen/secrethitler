@@ -424,6 +424,7 @@ class RoomsApiController extends Controller
 
         $user = User::find($request->uid);
         $user->is_killed = true;
+        $user->voted = true;
         $user->save();
 
         event(new KilledPlayerEvent($room,

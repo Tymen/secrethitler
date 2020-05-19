@@ -55,7 +55,7 @@ class RoomState extends Model
             $room->rotatePresident();
         }
 
-        foreach ($room->users as $user) {
+        foreach ($room->users()->where('is_killed', false)->get() as $user) {
             $user->voted = false;
             $user->save();
         }
