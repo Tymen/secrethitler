@@ -1,14 +1,13 @@
 import React, {Component} from 'react';
-import {connect} from 'react-redux';
+import {connect} from "react-redux";
 
-class ChooseChancellor extends Component {
-
+class KillAPlayer extends Component {
     state = {
         checkedUser: ''
     }
 
     handleSubmit = () => {
-        axios.post(`/api/v1/rooms/${this.props.room.id}/chancellor`, {uid: this.state.checkedUser})
+        axios.post(`/api/v1/rooms/${this.props.room.id}/killed_player`, {uid: this.state.checkedUser})
     }
 
     isChecked = (userId) => {
@@ -16,14 +15,15 @@ class ChooseChancellor extends Component {
             checkedUser: userId
         })
     }
-
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if (this.props.room?.second <= 0) {
-            this.handleSubmit()
-        }
-    }
+    //
+    // componentDidUpdate(prevProps, prevState, snapshot) {
+    //     if (this.props.room?.second <= 0) {
+    //         // this.handleSubmit()
+    //     }
+    // }
 
     showOptions = () => {
+        // console.log(this.props.users)
         return this.props.users.filter(user => !user.isKilled).map(user => {
             if (user.id !== this.props.authUser?.id) {
                 if (user.id === this.state.checkedUser) {
@@ -62,7 +62,7 @@ class ChooseChancellor extends Component {
                             <p>{this.props.room?.second}</p>
                         </div>
                         <div className="col-8">
-                            <p>Choose one of the players to be the chancellor</p>
+                            <p>Choose the player you want to kill</p>
                             <p className="under-title">(select one player and click submit to continue)</p>
                         </div>
                         <div className="col-2">
@@ -81,7 +81,7 @@ class ChooseChancellor extends Component {
 }
 
 const mapStateToProps = state => {
-    const {users, room} = state;
-    return {authUser: users.authUser, room: room, users: users.users}
+    const {room, users} = state;
+    return {room: room, authUser: users.authUser, users: users.users}
 }
-export default connect(mapStateToProps)(ChooseChancellor);
+export default connect(mapStateToProps)(KillAPlayer)

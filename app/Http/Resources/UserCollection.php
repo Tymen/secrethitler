@@ -19,6 +19,7 @@ class UserCollection extends ResourceCollection
                 'id' => $user->id,
                 'username' => $user->username,
                 'email' => $user->email,
+                'isKilled' => $user->is_killed,
                 'room' => $user->room,
                 'created_at' => $user->created_at
             ];

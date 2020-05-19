@@ -28,6 +28,7 @@ class RoomState extends Model
         $this->save();
         event(new UpdateStageEvent($this->room->id, $value));
     }
+
     public function reset()
     {
         $this->ja = 0;
@@ -42,6 +43,7 @@ class RoomState extends Model
         $this->stage = 0;
         $this->save();
     }
+
     public function voteHandler()
     {
         $room = $this->load('room', 'room.users')->room;
@@ -77,7 +79,8 @@ class RoomState extends Model
                 // policy check event
             case 4:
             case 5:
-                // Killer event
+                $this->changeState(12);
+                break;
             default:
                 $this->room->rotatePresident();
         }
@@ -92,7 +95,8 @@ class RoomState extends Model
                 // choose president event
             case 4:
             case 5:
-                // Killer event
+                $this->changeState(12);
+                break;
             default:
                 $this->room->rotatePresident();
         }
@@ -108,7 +112,8 @@ class RoomState extends Model
                 // choose president event
             case 4:
             case 5:
-                // Killer event
+                $this->changeState(12);
+                break;
             default:
                 $this->room->rotatePresident();
         }

@@ -21,12 +21,11 @@ import {
     setPolicies,
     setWinner
 } from "../redux/actions/room-actions";
-
+import {addUser, changeUserIsKilled, deleteUser, setUsers, setAuthUser} from "../redux/actions/users-actions";
 
 class Room extends Component {
 
     state = {
-        users: [],
         leftUsers: [],
         loggedIn: false,
         loaded: false,
@@ -43,9 +42,7 @@ class Room extends Component {
 
         Echo.join(`room.${this.props.room.id}`)
             .here((users) => {
-                this.setState({
-                    users: users
-                })
+                this.props.dispatch(setUsers(users))
             })
             .joining((user) => {
                 this.onUserJoin(user)
@@ -94,6 +91,14 @@ class Room extends Component {
             .listen('.set-inactive', (e) => {
                 this.props.dispatch(editActive(0))
             })
+            .listen('.killed-player', (e) => {
+                clearInterval(this.state.timer);
+                this.props.dispatch(changeUserIsKilled(e.killedPlayer.id));
+
+                if(e.killedPlayer === this.props.authUser.id){
+                    this.props.dispatch(setAuthUser(e.killedPlayer));
+                }
+            })
     }
 
     componentWillUnmount() {
@@ -123,10 +128,8 @@ class Room extends Component {
     }
 
     onUserJoin = (user) => {
-        if (!this.state.users.some(u => u.id === user.id)) {
-            this.setState({
-                users: [...this.state.users, user]
-            })
+        if (!this.props.users.some(u => u.id === user.id)) {
+            this.props.dispatch(addUser(user))
         }
 
         if (this.state.leftUsers.some(id => id === user.id)) {
@@ -143,9 +146,9 @@ class Room extends Component {
         setTimeout(() => {
             if (this.state.leftUsers.some(id => id === user.id)) {
                 this.setState({
-                    users: this.state.users.filter(u => u.id !== user.id),
                     leftUsers: this.state.leftUsers.filter(id => id !== user.id),
                 })
+                this.props.dispatch(deleteUser(user.id))
 
                 this.props.room.owner.id === user.id ? this.getRoom() : false;
             }
@@ -182,8 +185,7 @@ class Room extends Component {
     render() {
         if (this.props.room.active) {
             return (
-                <Game setInactive={() => this.setInactive()} rotatePresident={() => this.rotatePresident()}
-                      users={this.state.users}/>
+                <Game setInactive={() => this.setInactive()} rotatePresident={() => this.rotatePresident()}/>
             )
         }
         return (
@@ -196,11 +198,11 @@ class Room extends Component {
                     <div className="row">
                         <div className="room-info">
                             <p className="room-name">Room: {this.props.room.name}</p>
-                            <p className="player-count">{this.state.users.length}/{this.props.room.max_players} Players</p>
+                            <p className="player-count">{this.props.users?.length}/{this.props.room.max_players} Players</p>
                         </div>
                     </div>
                     <div className="row">
-                        <PlayersLobby users={this.state.users}/>
+                        <PlayersLobby/>
                         <ChatLobby/>
 
                     </div>
@@ -236,7 +238,7 @@ class Room extends Component {
 
 const mapStateToProps = state => {
     const {users, room} = state
-    return {authUser: users.authUser, room: room}
+    return {authUser: users.authUser, room: room, users: users.users}
 }
 
 export default connect(mapStateToProps)(Room)
