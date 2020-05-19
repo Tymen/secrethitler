@@ -59,7 +59,7 @@ class Game extends Component {
                     <div className="row">
                         <div className="col-md-2 col-12 bg-dark col-wrap">
                             <div className="in-game">
-                                <PlayersLobby users={this.props.users} page='Game' fascists={this.state.fascists}
+                                <PlayersLobby page='Game' fascists={this.state.fascists}
                                               hitler={this.state.hitler}/>
                             </div>
                         </div>

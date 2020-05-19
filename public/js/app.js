@@ -87010,7 +87010,6 @@ function (_Component) {
         }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
           className: "in-game"
         }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_Lobby_PlayersLobby__WEBPACK_IMPORTED_MODULE_2__["default"], {
-          users: this.props.users,
           page: "Game",
           fascists: this.state.fascists,
           hitler: this.state.hitler
@@ -87514,7 +87513,8 @@ var mapStateToProps = function mapStateToProps(state) {
       room = state.room;
   return {
     authUser: users.authUser,
-    room: room
+    room: room,
+    users: users.users
   };
 };
 
@@ -88011,45 +88011,42 @@ function (_Component) {
 
       var isPresident = _this.props.authUser.id === ((_this$props$room$pres = _this.props.room.president) === null || _this$props$room$pres === void 0 ? void 0 : _this$props$room$pres.id);
       var isChancellor = _this.props.authUser.id === ((_this$props$room$chan = _this.props.room.chancellor) === null || _this$props$room$chan === void 0 ? void 0 : _this$props$room$chan.id);
+      var isKilled = !_this.props.authUser.isKilled;
       var stage = _this.props.room.stage;
 
       switch (true) {
         case stage === 1 && isPresident:
-          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ChooseChancellor__WEBPACK_IMPORTED_MODULE_1__["default"], {
-            users: _this.props.users
-          });
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ChooseChancellor__WEBPACK_IMPORTED_MODULE_1__["default"], null);
 
-        case stage === 2:
+        case stage === 2 && isKilled:
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Vote__WEBPACK_IMPORTED_MODULE_3__["default"], null);
 
-        case stage === 3 && isPresident:
+        case stage === 3 && isPresident && isKilled:
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ChoosePolicy__WEBPACK_IMPORTED_MODULE_8__["default"], null);
 
-        case stage === 4 && isChancellor:
+        case stage === 4 && isChancellor && isKilled:
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ChoosePolicy__WEBPACK_IMPORTED_MODULE_8__["default"], null);
 
-        case stage === 5 && isPresident:
+        case stage === 5 && isPresident && isKilled:
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_PresidentTruthBluff__WEBPACK_IMPORTED_MODULE_4__["default"], null);
 
         case stage === 6:
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ChosenPresidentOptions__WEBPACK_IMPORTED_MODULE_6__["default"], null);
 
-        case stage === 7 && isChancellor:
+        case stage === 7 && isChancellor && isKilled:
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ChancellorTruthBluff__WEBPACK_IMPORTED_MODULE_5__["default"], null);
 
         case stage === 8:
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ChosenChancellorOptions__WEBPACK_IMPORTED_MODULE_7__["default"], null);
 
-        case stage === 9 && isPresident: // President sees 3 policy cards
+        case stage === 9 && isPresident && isKilled: // President sees 3 policy cards
 
-        case stage === 10 && isPresident: // See someone's role
+        case stage === 10 && isPresident && isKilled: // See someone's role
 
-        case stage === 11 && isPresident: // Pick next president
+        case stage === 11 && isPresident && isKilled: // Pick next president
 
-        case stage === 12 && isPresident:
-          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_KillAPlayer__WEBPACK_IMPORTED_MODULE_9__["default"], {
-            users: _this.props.users
-          });
+        case stage === 12 && isPresident && isKilled:
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_KillAPlayer__WEBPACK_IMPORTED_MODULE_9__["default"], null);
 
         default:
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -88162,7 +88159,9 @@ function (_Component) {
 
     _defineProperty(_assertThisInitialized(_this), "showOptions", function () {
       // console.log(this.props.users)
-      return _this.props.users.map(function (user) {
+      return _this.props.users.filter(function (user) {
+        return !user.isKilled;
+      }).map(function (user) {
         var _this$props$authUser;
 
         if (user.id !== ((_this$props$authUser = _this.props.authUser) === null || _this$props$authUser === void 0 ? void 0 : _this$props$authUser.id)) {
@@ -88207,18 +88206,9 @@ function (_Component) {
   }
 
   _createClass(KillAPlayer, [{
-    key: "componentDidUpdate",
-    value: function componentDidUpdate(prevProps, prevState, snapshot) {
-      var _this$props$room;
-
-      if (((_this$props$room = this.props.room) === null || _this$props$room === void 0 ? void 0 : _this$props$room.second) <= 0) {
-        this.handleSubmit();
-      }
-    }
-  }, {
     key: "render",
     value: function render() {
-      var _this$props$room2,
+      var _this$props$room,
           _this2 = this;
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -88227,7 +88217,7 @@ function (_Component) {
         className: "row"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-2"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, (_this$props$room2 = this.props.room) === null || _this$props$room2 === void 0 ? void 0 : _this$props$room2.second)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, (_this$props$room = this.props.room) === null || _this$props$room === void 0 ? void 0 : _this$props$room.second)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-8"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Choose the player you want to kill"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "under-title"
@@ -88253,7 +88243,8 @@ var mapStateToProps = function mapStateToProps(state) {
       users = state.users;
   return {
     room: room,
-    authUser: users.authUser
+    authUser: users.authUser,
+    users: users.users
   };
 };
 
@@ -88991,61 +88982,62 @@ function (_Component) {
       axios.post("/api/v1/rooms/".concat(_this.props.room.id, "/kick/").concat(id));
     });
 
-    _defineProperty(_assertThisInitialized(_this), "showPlayers", function () {
+    _defineProperty(_assertThisInitialized(_this), "showUser", function (user) {
+      var owner = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        key: user.id,
+        className: "player-name-div"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "player-name"
+      }, owner ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-crown"
+      }) : false, "\xA0", user.username), _this.checkFascists(user.id), _this.checkRole(user.id));
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "ownerView", function () {
       return _this.props.users.map(function (user) {
-        var _this$props$authUser, _this$props$room$owne, _this$props$room$owne3;
+        var _this$props$room$owne;
 
-        if (((_this$props$authUser = _this.props.authUser) === null || _this$props$authUser === void 0 ? void 0 : _this$props$authUser.id) === ((_this$props$room$owne = _this.props.room.owner) === null || _this$props$room$owne === void 0 ? void 0 : _this$props$room$owne.id)) {
-          var _this$props$room$owne2;
-
-          if (((_this$props$room$owne2 = _this.props.room.owner) === null || _this$props$room$owne2 === void 0 ? void 0 : _this$props$room$owne2.id) === user.id) {
-            return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-              key: user.id,
-              className: "player-name-div"
-            }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-              className: "player-name"
-            }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-              className: "fas fa-crown"
-            }), "\xA0", user.username), _this.checkFascists(user.id), _this.checkRole(user.id));
-          } else {
-            return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-              key: user.id,
-              className: "player-name-div"
-            }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-              className: "player-name dropdown-toggle",
-              type: "button",
-              id: "dropdownMenuButton",
-              "data-toggle": "dropdown",
-              "aria-haspopup": "true",
-              "aria-expanded": "false"
-            }, user.username), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-              className: "dropdown-menu",
-              "aria-labelledby": "dropdownMenuButton"
-            }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-              className: "dropdown-item",
-              onClick: function onClick(e) {
-                return _this.kickUser(e, user.id);
-              }
-            }, "Kick ", user.username)), _this.checkFascists(user.id), _this.checkRole(user.id));
-          }
-        }
-
-        if (((_this$props$room$owne3 = _this.props.room.owner) === null || _this$props$room$owne3 === void 0 ? void 0 : _this$props$room$owne3.id) === user.id) {
-          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-            key: user.id,
-            className: "player-name-div"
-          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-            className: "player-name"
-          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-            className: "fas fa-crown"
-          }), "\xA0", user.username), _this.checkFascists(user.id), _this.checkRole(user.id));
+        if (((_this$props$room$owne = _this.props.room.owner) === null || _this$props$room$owne === void 0 ? void 0 : _this$props$room$owne.id) === user.id) {
+          _this.showUser(user, true);
         } else {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
             key: user.id,
             className: "player-name-div"
           }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-            className: "player-name"
-          }, user.username), _this.checkFascists(user.id), _this.checkRole(user.id));
+            className: "player-name dropdown-toggle",
+            type: "button",
+            id: "dropdownMenuButton",
+            "data-toggle": "dropdown",
+            "aria-haspopup": "true",
+            "aria-expanded": "false"
+          }, user.username), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            className: "dropdown-menu",
+            "aria-labelledby": "dropdownMenuButton"
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+            className: "dropdown-item",
+            onClick: function onClick(e) {
+              return _this.kickUser(e, user.id);
+            }
+          }, "Kick ", user.username)), _this.checkFascists(user.id), _this.checkRole(user.id));
+        }
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "showPlayers", function () {
+      var _this$props$authUser, _this$props$room$owne2;
+
+      if (((_this$props$authUser = _this.props.authUser) === null || _this$props$authUser === void 0 ? void 0 : _this$props$authUser.id) === ((_this$props$room$owne2 = _this.props.room.owner) === null || _this$props$room$owne2 === void 0 ? void 0 : _this$props$room$owne2.id)) {
+        return _this.ownerView();
+      }
+
+      return _this.props.users.map(function (user) {
+        var _this$props$room$owne3;
+
+        if (((_this$props$room$owne3 = _this.props.room.owner) === null || _this$props$room$owne3 === void 0 ? void 0 : _this$props$room$owne3.id) === user.id) {
+          _this.showUser(user, true);
+        } else {
+          _this.showUser(user);
         }
       });
     });
@@ -90474,7 +90466,12 @@ function (_Component) {
                   _this2.props.dispatch(Object(_redux_actions_room_actions__WEBPACK_IMPORTED_MODULE_7__["editActive"])(0));
                 }).listen('.killed-player', function (e) {
                   clearInterval(_this2.state.timer);
-                  console.log(e.killedPlayer); // this.props.dispatch(changeUserIsKilled(e.killedPlayer));
+
+                  _this2.props.dispatch(Object(_redux_actions_users_actions__WEBPACK_IMPORTED_MODULE_8__["changeUserIsKilled"])(e.killedPlayer.id));
+
+                  if (e.killedPlayer === _this2.props.authUser.id) {
+                    _this2.props.dispatch(Object(_redux_actions_users_actions__WEBPACK_IMPORTED_MODULE_8__["setAuthUser"])(e.killedPlayer));
+                  }
                 });
 
               case 3:
@@ -90818,10 +90815,10 @@ var deleteUser = function deleteUser(id) {
     id: id
   };
 };
-var changeUserIsKilled = function changeUserIsKilled(user) {
+var changeUserIsKilled = function changeUserIsKilled(id) {
   return {
     type: 'CHANGE_USER_IS_KILLED',
-    user: user
+    id: id
   };
 };
 
@@ -91014,16 +91011,26 @@ var users = function users() {
       });
 
     case 'CHANGE_USER_IS_KILLED':
-      return _objectSpread({}, state, {
-        users: state.users.filter(function (user) {
-          return user.id !== action.id;
-        })
-      });
+      return changeUserIsKilled(state, action);
 
     default:
       return state;
   }
 };
+
+function changeUserIsKilled(state, action) {
+  var user = state.users.filter(function (user) {
+    return user.id === action.id;
+  })[0];
+
+  var newUser = _objectSpread({}, user, {
+    isKilled: true
+  });
+
+  var index = state.users.indexOf(user);
+  state.users.splice(index, 1, newUser);
+  return state;
+}
 
 /* harmony default export */ __webpack_exports__["default"] = (users);
 

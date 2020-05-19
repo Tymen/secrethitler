@@ -27,7 +27,7 @@ class KilledPlayerEvent implements ShouldBroadcast
     public function __construct(Room $room, $killedPlayer)
     {
         $this->roomId = $room->id;
-        $this->killedPlayer = $killedPlayer->id;
+        $this->killedPlayer = $killedPlayer;
 
         $room->roomState->has_done = true;
         $room->roomState->save();

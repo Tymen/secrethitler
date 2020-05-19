@@ -15,16 +15,16 @@ class KillAPlayer extends Component {
             checkedUser: userId
         })
     }
-
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if (this.props.room?.second <= 0) {
-            this.handleSubmit()
-        }
-    }
+    //
+    // componentDidUpdate(prevProps, prevState, snapshot) {
+    //     if (this.props.room?.second <= 0) {
+    //         // this.handleSubmit()
+    //     }
+    // }
 
     showOptions = () => {
         // console.log(this.props.users)
-        return this.props.users.map(user => {
+        return this.props.users.filter(user => !user.isKilled).map(user => {
             if (user.id !== this.props.authUser?.id) {
                 if (user.id === this.state.checkedUser) {
                     return (
@@ -82,6 +82,6 @@ class KillAPlayer extends Component {
 
 const mapStateToProps = state => {
     const {room, users} = state;
-    return {room: room, authUser: users.authUser}
+    return {room: room, authUser: users.authUser, users: users.users}
 }
 export default connect(mapStateToProps)(KillAPlayer)

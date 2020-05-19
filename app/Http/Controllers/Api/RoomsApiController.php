@@ -426,7 +426,12 @@ class RoomsApiController extends Controller
         $user->is_killed = true;
         $user->save();
 
-        event(new KilledPlayerEvent($room, $user));
+        event(new KilledPlayerEvent($room,
+            [
+                'id' => $user->id,
+                'username' => $user->username,
+                'isKilled' => $user->is_killed
+            ]));
     }
 
     public function setVote(Room $room, Request $request)

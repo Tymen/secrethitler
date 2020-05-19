@@ -19,7 +19,7 @@ import {
     setPolicies,
     setWinner
 } from "../redux/actions/room-actions";
-import {addUser, changeUserIsKilled, deleteUser, setUsers} from "../redux/actions/users-actions";
+import {addUser, changeUserIsKilled, deleteUser, setUsers, setAuthUser} from "../redux/actions/users-actions";
 
 class Room extends Component {
 
@@ -87,8 +87,11 @@ class Room extends Component {
             })
             .listen('.killed-player', (e) => {
                 clearInterval(this.state.timer);
-                console.log(e.killedPlayer);
-                // this.props.dispatch(changeUserIsKilled(e.killedPlayer));
+                this.props.dispatch(changeUserIsKilled(e.killedPlayer.id));
+
+                if(e.killedPlayer === this.props.authUser.id){
+                    this.props.dispatch(setAuthUser(e.killedPlayer));
+                }
             })
     }
 
