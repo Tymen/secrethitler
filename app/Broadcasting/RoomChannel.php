@@ -27,6 +27,6 @@ class RoomChannel
      */
     public function join(User $user, Room $room)
     {
-        return ['id' => $user->id, 'username' => $user->username];
+        return ['id' => $user->id, 'username' => $user->username, 'isKilled' => $user->is_killed];
     }
 }

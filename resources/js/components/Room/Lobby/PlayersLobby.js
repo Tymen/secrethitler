@@ -130,7 +130,7 @@ class PlayersLobby extends Component {
 
 const mapStateToProps = state => {
     const {users, room} = state
-    return {authUser: users.authUser, room: room}
+    return {authUser: users.authUser, room: room, users: users.users}
 }
 
 export default connect(mapStateToProps)(PlayersLobby)

@@ -58,6 +58,11 @@ export const setBoardLiberal = value => ({
     value
 })
 
+export const setWinner = value => ({
+    type: 'SET_WINNER',
+    value
+})
+
 export const deleteAllMessages = () => ({
     type: 'DELETE_ALL_MESSAGES',
 })

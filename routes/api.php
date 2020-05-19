@@ -31,6 +31,8 @@ Route::namespace('Api')->group(function () {
                     Route::get('getboard', 'RoomsApiController@getBoard');
                     Route::get('showReceivedChan', 'RoomsApiController@showReceivedChan');
                     Route::get('reset_stage', 'RoomsApiController@reset_stage');
+                    Route::get('get_president_policies', 'RoomsApiController@getPresidentPolicies');
+                    Route::get('get_chancellor_policies', 'RoomsApiController@getChancellorPolicies');
 
                     Route::post('president', 'RoomsApiController@rotatePresident');
                     Route::post('set_policies', 'RoomsApiController@setPolicies');
@@ -40,15 +42,13 @@ Route::namespace('Api')->group(function () {
 
                     Route::post('truth_event', 'RoomsApiController@TruthEvent');
 
-                    Route::get('get_president_policies', 'RoomsApiController@getPresidentPolicies');
-                    Route::get('get_chancellor_policies', 'RoomsApiController@getChancellorPolicies');
-
                     Route::post('chosen_president_options', 'RoomsApiController@showChosenPresidentPolicies');
                     Route::post('chosen_chancellor_options', 'RoomsApiController@showChosenChancellorPolicies');
                     Route::post('killed_player', 'RoomsApiController@killedPlayer');
 
                     Route::post('change_host', 'RoomsApiController@changeHost');
                     Route::post('active', 'RoomsApiController@setActive');
+                    Route::post('check', 'RoomsApiController@checkState');
                     Route::post('inactive', 'RoomsApiController@setInactive');
                     Route::post('vote', 'RoomsApiController@setVote');
                     Route::post('kick/{user}', 'RoomsApiController@kickUser');

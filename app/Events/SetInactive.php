@@ -11,27 +11,18 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class KilledPlayerEvent implements ShouldBroadcast
+class SetInactive implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-
-    public $roomId;
-    public $killedPlayer;
-
+    private $roomID;
     /**
      * Create a new event instance.
      *
-     * @param Room $room
-     * @param $killedPlayer
+     * @return void
      */
-    public function __construct(Room $room, $killedPlayer)
+    public function __construct(Room $room)
     {
-        $this->roomId = $room->id;
-        $this->killedPlayer = $killedPlayer->id;
-
-        $room->roomState->has_done = true;
-        $room->roomState->save();
-        $room->rotatePresident();
+        $this->roomID = $room->id;
     }
 
     /**
@@ -41,11 +32,10 @@ class KilledPlayerEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PresenceChannel("room.{$this->roomId}");
+        return new PresenceChannel("room.{$this->roomID}");
     }
-
     public function broadcastAs()
     {
-        return 'killed-player';
+        return "set-inactive";
     }
 }

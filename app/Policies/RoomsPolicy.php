@@ -59,7 +59,7 @@ class RoomsPolicy
 
     public function canVote(User $user, Room $room)
     {
-        return $room->users->contains($user) && !$user->voted
+        return $room->users->contains($user) && !$user->voted && !$user->is_killed
             ? Response::allow()
             : Response::deny('You can not vote!');
     }

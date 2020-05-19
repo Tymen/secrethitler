@@ -6,6 +6,7 @@ use App\Events\KilledPlayerEvent;
 use App\Events\PresidentChosenTruthBluff;
 use App\Events\ChancellorChosenTruthBluff;
 use App\Events\resetStage;
+use App\Events\SetInactive;
 use App\Events\ShowChosenPoliciesPresident;
 use App\Events\ShowReceivedChan;
 use App\Events\TruthEvent;
@@ -207,7 +208,7 @@ class RoomsApiController extends Controller
             $user->vote_type = NULL;
             $user->save();
         });
-
+        event(new SetInactive($room));
         $room->active = false;
         $room->save();
 
@@ -403,6 +404,7 @@ class RoomsApiController extends Controller
 
         abort_unless($user, 400, 'User does not exist');
         abort_unless(Auth::id() !== $id, 400, 'Can not assign yourself');
+        abort_unless(!$user->is_killed, 400, 'This user has been killed!');
 
         if ($chancellor) {
             abort_if($chancellor->id === $id, 400, 'Can not choose last chancellor again');
@@ -419,9 +421,12 @@ class RoomsApiController extends Controller
     public function killedPlayer(Room $room, Request $request)
     {
         $this->authorize('isPresident', $room);
-        $chosenPlayer = $request->uid;
 
-        event(new KilledPlayerEvent($room, $chosenPlayer));
+        $user = User::find($request->uid);
+        $user->is_killed = true;
+        $user->save();
+
+        event(new KilledPlayerEvent($room, $user));
     }
 
     public function setVote(Room $room, Request $request)
@@ -443,4 +448,25 @@ class RoomsApiController extends Controller
         return response()->json(['message' => 'completed']);
     }
 
+    public function checkState(Room $room)
+    {
+        $this->authorize('isHost', $room);
+
+        $total = $room->users->count();
+        $condition = !$room->roomState->has_done && $room->roomState->stage === 8;
+
+        switch (true) {
+            case ($total === 5 || $total === 6) && $condition:
+                $room->roomState->checkStateLow();
+                break;
+            case ($total === 7 || $total === 8) && $condition:
+                $room->roomState->checkStateMid();
+                break;
+            case ($total === 9 || $total === 10) && $condition:
+                $room->roomState->checkStateHigh();
+                break;
+            default:
+                $room->rotatePresident();
+        }
+    }
 }

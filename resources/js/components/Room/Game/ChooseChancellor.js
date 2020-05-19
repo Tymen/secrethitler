@@ -24,8 +24,7 @@ class ChooseChancellor extends Component {
     }
 
     showOptions = () => {
-        console.log(this.props.users)
-        return this.props.users.map(user => {
+        return this.props.users.filter(user => !user.isKilled).map(user => {
             if (user.id !== this.props.authUser?.id) {
                 if (user.id === this.state.checkedUser) {
                     return (

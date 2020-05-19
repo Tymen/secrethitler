@@ -9,6 +9,7 @@ class KillAPlayer extends Component {
     handleSubmit = () => {
         axios.post(`/api/v1/rooms/${this.props.room.id}/killed_player`, {uid: this.state.checkedUser})
     }
+
     isChecked = (userId) => {
         this.setState({
             checkedUser: userId
