@@ -58,11 +58,12 @@ class PlayersLobby extends Component {
 
     showUser = (user, owner = false) => {
         return (
-            <div key={user.id} className="player-name-div">
+            <div key={user.id} className={user.isKilled ? "player-name-div is-killed" : "player-name-div"}>
                 <p className="player-name">
                     {owner ? <i className="fas fa-crown"></i> : false}
                     &nbsp;{user.username}
                 </p>
+                {user.isKilled ? <i className="is-killed-icon fas fa-skull-crossbones"></i> : false}
                 {this.checkFascists(user.id)}
                 {this.checkRole(user.id)}
             </div>
@@ -75,7 +76,7 @@ class PlayersLobby extends Component {
                 return this.showUser(user, true)
             } else {
                 return (
-                    <div key={user.id} className="player-name-div is-killed">
+                    <div key={user.id} className={user.isKilled ? "player-name-div is-killed" : "player-name-div"}>
                         <p className="player-name dropdown-toggle" type="button" id="dropdownMenuButton"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             {user.username}
@@ -84,9 +85,9 @@ class PlayersLobby extends Component {
                             <a className="dropdown-item"
                                onClick={(e) => this.kickUser(e, user.id)}>Kick {user.username}</a>
                         </div>
+                        {user.isKilled ? <i className="is-killed-icon fas fa-skull-crossbones"></i> : false}
                         {this.checkFascists(user.id)}
                         {this.checkRole(user.id)}
-                        <i className="fas fa-skull-crossbones"></i>
                     </div>
                 )
             }
