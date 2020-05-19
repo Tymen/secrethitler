@@ -90,6 +90,9 @@ class Room extends Component {
             })
             .listen('.set-inactive', (e) => {
                 this.props.dispatch(editActive(0))
+                this.props.users.map(user => {
+                    user.isKilled ? this.props.dispatch(changeUserIsKilled(user.id)) : false;
+                })
             })
             .listen('.killed-player', (e) => {
                 clearInterval(this.state.timer);

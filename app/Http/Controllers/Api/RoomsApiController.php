@@ -199,15 +199,15 @@ class RoomsApiController extends Controller
 
         $roomState = $room->roomState;
 
-        $roomState->ja = 0;
-        $roomState->nein = 0;
-        $roomState->save();
+        $roomState->reset();
 
         $room->users->map(function ($user) {
             $user->voted = false;
             $user->vote_type = NULL;
+            $user->is_killed = false;
             $user->save();
         });
+
         event(new SetInactive($room));
         $room->active = false;
         $room->save();

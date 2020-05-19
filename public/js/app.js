@@ -90220,6 +90220,10 @@ function (_Component) {
                   _this2.props.dispatch(Object(_redux_actions_room_actions__WEBPACK_IMPORTED_MODULE_9__["setWinner"])(e.winner));
                 }).listen('.set-inactive', function (e) {
                   _this2.props.dispatch(Object(_redux_actions_room_actions__WEBPACK_IMPORTED_MODULE_9__["editActive"])(0));
+
+                  _this2.props.users.map(function (user) {
+                    user.isKilled ? _this2.props.dispatch(Object(_redux_actions_users_actions__WEBPACK_IMPORTED_MODULE_10__["changeUserIsKilled"])(user.id)) : false;
+                  });
                 }).listen('.killed-player', function (e) {
                   clearInterval(_this2.state.timer);
 
@@ -90784,7 +90788,7 @@ function changeUserIsKilled(state, action) {
   })[0];
 
   var newUser = _objectSpread({}, user, {
-    isKilled: true
+    isKilled: !user.isKilled
   });
 
   var index = state.users.indexOf(user);
