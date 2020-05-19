@@ -91,6 +91,7 @@ class Room extends Component {
             .listen('.set-inactive', (e) => {
                 this.props.dispatch(editActive(0))
                 this.props.users.map(user => {
+                    console.log(user, user.isKilled)
                     user.isKilled ? this.props.dispatch(changeUserIsKilled(user.id)) : false;
                 })
             })
