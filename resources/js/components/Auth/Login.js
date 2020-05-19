@@ -31,7 +31,6 @@ export default class Login extends Component {
         }
     }
 
-
     onSubmit(e) {
         e.preventDefault();
         axios.post('/login', {
