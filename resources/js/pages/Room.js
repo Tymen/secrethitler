@@ -164,9 +164,11 @@ class Room extends Component {
             }
         )
     };
+
     removeWinnerWindow = () =>{
         this.props.dispatch(setWinner(null));
     };
+
     render() {
         if (this.props.room.active) {
             return (
