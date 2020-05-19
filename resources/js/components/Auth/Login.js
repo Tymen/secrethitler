@@ -1,25 +1,34 @@
 import React, {Component} from 'react';
 import {Link} from "react-router-dom";
 import {messagesConfig} from "../../appSettings";
+import Notification from "../Universal/Notification"
+import ReactDOM from "react-dom";
+import Index from "../../pages";
 
 export default class Login extends Component {
 
     constructor(props) {
         super(props);
+        this.child = React.createRef();
         this.state = {
             email: '',
             password: '',
             errors: [],
+            getMsg: messagesConfig.pages.home,
         };
 
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
     }
-
     onChange = (e) => {
         this.setState({
             [e.target.name]: e.target.value,
         })
+    }
+    componentDidMount() {
+        if (document.getElementById('index').dataset.message) {
+            this.child.getNotify({type: "error", title: "Auth", message: document.getElementById('index').dataset.message});
+        }
     }
 
     onSubmit(e) {
@@ -32,9 +41,7 @@ export default class Login extends Component {
                 window.location.href = '/'
             })
             .catch(error => {
-                this.setState({
-                    errors: [...this.state.errors, error]
-                })
+                this.child.getNotify({type: "error", title: "Auth", message: error.response.data.message});
             })
     }
 
@@ -42,6 +49,7 @@ export default class Login extends Component {
     render() {
         return (
             <div className="container_login ">
+                <Notification onRef={ref => (this.child = ref)} />
                 <img className="login-bolletjes" src="/images/login-bolletjes.svg"/>
                 <div className="card-login rounded-bottom-left">
                     <h5 className="card-header-login">Login</h5>

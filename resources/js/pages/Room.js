@@ -4,6 +4,8 @@ import Lobby from "../components/Room/Lobby";
 import ChatLobby from "../components/Room/Lobby/ChatLobby";
 import PlayersLobby from "../components/Room/Lobby/PlayersLobby";
 import {connect} from 'react-redux';
+import {messagesConfig} from "../appSettings";
+import Notification from "../components/Universal/Notification";
 
 import {
     setBoardFascist,
@@ -29,8 +31,12 @@ class Room extends Component {
         loggedIn: false,
         loaded: false,
         timer: 0,
+        getMsg: messagesConfig.pages.home,
     }
-
+    constructor(props) {
+        super(props);
+        this.child = React.createRef();
+    };
     async componentDidMount() {
 
         await this.getRoom()
@@ -156,6 +162,10 @@ class Room extends Component {
 
     setActive = () => {
         axios.post(`/api/v1/rooms/${this.props.match.params.id}/active`)
+            .catch(err => {
+                console.log(err)
+                this.child.getNotify({type: "error", title: "Room", message: err.response.data.message});
+        })
     };
 
     setInactive = () => {
@@ -178,6 +188,7 @@ class Room extends Component {
         }
         return (
             <div className="in-lobby">
+                <Notification onRef={ref => (this.child = ref)} />
                 <div className="container">
                     <div className="row">
                         <img className="home-logo" src="/images/Secrethitler-no-bg.png"/>
