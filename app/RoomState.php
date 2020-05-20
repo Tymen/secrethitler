@@ -49,7 +49,7 @@ class RoomState extends Model
         $room = $this->load('room', 'room.users')->room;
         if ($this->ja > $this->nein) {
             $condition = $this->fascist_board_amount >= 4 && $room->getUserByRole('Chancellor')->hasRole('Hitler');
-            $event = $condition ? new WinnerEvent($room, "fascist") : new VotesDoneEvent($room);
+            $event = $condition ? new WinnerEvent($room, "fascist", 'Hitler has been elected as the chancellor') : new VotesDoneEvent($room);
             event($event);
         } else {
             $room->rotatePresident();
@@ -77,6 +77,7 @@ class RoomState extends Model
         switch ($this->fascist_board_amount) {
             case 3:
                 // policy check event
+                break;
             case 4:
             case 5:
                 $this->changeState(12);

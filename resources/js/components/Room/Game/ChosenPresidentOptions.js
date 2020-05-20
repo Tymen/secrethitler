@@ -17,14 +17,14 @@ class ChosenPresidentOptions extends Component {
     }
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (this.props.room?.second <= 0) {
-            if (this.props.room.president.id === this.props.authUser.id ){
-                axios.get(`/api/v1/rooms/${this.props.room.id}/showReceivedChan`)
+            if (this.props.room?.president?.id === this.props.authUser?.id ){
+                axios.get(`/api/v1/rooms/${this.props.room?.id}/showReceivedChan`)
             }
         }
     }
     showPresidentOptions = () => {
         const liberal = <img src="/images/liberal-article.png" className="answer-images"/>;
-        const fascist = <img src="/images/facist-article.png" className="answer-images"/>;
+        const fascist = <img src="/images/faci ç  st-article.png" className="answer-images"/>;
 
         return this.state.presidentAnswer.map(option => {
             return option === 'Liberal' ? liberal : fascist

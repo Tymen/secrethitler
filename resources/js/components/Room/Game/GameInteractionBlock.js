@@ -15,7 +15,7 @@ class GameInteractionBlock extends Component {
         const isChancellor = this.props.authUser.id === this.props.room.chancellor?.id;
         const isKilled = this.props.authUser.isKilled;
         const stage = this.props.room.stage;
-
+        console.log(isKilled)
         switch (true) {
             case stage === 1 && isPresident:
                 return <ChooseChancellor/>;
@@ -64,6 +64,6 @@ class GameInteractionBlock extends Component {
 
 const mapStateToProps = state => {
     const {room, users} = state;
-    return {room: room, authUser: users.authUser}
+    return {room: room, authUser: users.authUser, users: users.users}
 }
 export default connect(mapStateToProps)(GameInteractionBlock);

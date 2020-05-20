@@ -17,11 +17,10 @@ const users = (state = {users: []}, action) => {
 
 function changeUserIsKilled(state, action) {
     const user = state.users.filter(user => user.id === action.id)[0];
-    const newUser = {...user, isKilled: !user.isKilled}
+    const newUser = {...user, isKilled: action.value}
     const index = state.users.indexOf(user)
 
     state.users.splice(index, 1, newUser)
-
     return state
 }
 

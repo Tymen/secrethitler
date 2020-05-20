@@ -29,9 +29,10 @@ class CanJoinRoom
 
         if (Auth::user()->room_id === $room->id) {
             return $next($request);
-        } else if ($room->active) {
-            return redirect('/')->with(['message' => 'Game has already started']);
         }
+//        else if ($room->active) {
+//            return redirect('/')->with(['message' => 'Game has already started']);
+//        }
 
         if ($room->users->count() >= $room->max_players) {
             return redirect('/')->with(['message' => 'Chosen room is full!']);

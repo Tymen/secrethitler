@@ -14,7 +14,8 @@ export const deleteUser = id => ({
     type: 'DELETE_USER',
     id
 })
-export const changeUserIsKilled = id => ({
+export const changeUserIsKilled = (id, value) => ({
     type: 'CHANGE_USER_IS_KILLED',
-    id
+    id,
+    value
 })
