@@ -439,7 +439,7 @@ class RoomsApiController extends Controller
         $total = $room->users->count();
         $condition = !$room->roomState->has_done && $room->roomState->stage === 8;
         switch (true) {
-            case ($total === 2 || $total === 6) && $condition:
+            case ($total === 5 || $total === 6) && $condition:
                 $room->roomState->checkStateLow();
                 break;
             case ($total === 7 || $total === 8) && $condition:
