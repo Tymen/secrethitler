@@ -333,9 +333,12 @@ class RoomsApiController extends Controller
                 $changePolicies->save();
                 event(new sendPoliciesChancellor($room, $getChan->id));
             }else {
-                $changePolicies->chosen_policies == "Fascist"?
-                    $changePolicies->fascist_board_amount += 1:
+                if($changePolicies->chosen_policies == "Fascist"){
+                    $changePolicies->fascist_board_amount += 1;
+                    $changePolicies->has_done = false;
+                }else {
                     $changePolicies->liberal_board_amount += 1;
+                }
                 $changePolicies->chosen_policies = null;
                 $board = (object)[
                     "fascist" => $room->roomState->fascist_board_amount,
@@ -431,13 +434,12 @@ class RoomsApiController extends Controller
 
     public function checkState(Room $room)
     {
-        $this->authorize('isHost', $room);
+        $this->authorize('isPresident', $room);
 
         $total = $room->users->count();
         $condition = !$room->roomState->has_done && $room->roomState->stage === 8;
-
         switch (true) {
-            case ($total === 5 || $total === 6) && $condition:
+            case ($total === 2 || $total === 6) && $condition:
                 $room->roomState->checkStateLow();
                 break;
             case ($total === 7 || $total === 8) && $condition:

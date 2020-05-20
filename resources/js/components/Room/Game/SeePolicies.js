@@ -1,17 +1,17 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
 
-class ChosenChancellorOptions extends Component {
+class ChosenPresidentOptions extends Component {
 
     state = {
-        chancellorAnswer: [],
+        presidentAnswer: [],
     }
 
     componentDidMount() {
-        axios.get(`/api/v1/rooms/${this.props.room.id}/get_chancellor_policies`)
+        axios.get(`/api/v1/rooms/${this.props.room.id}/get_policies`)
             .then(response => {
                 this.setState({
-                    chancellorAnswer: response.data.options,
+                    presidentAnswer: response.data.result,
                 })
             })
     }
@@ -22,32 +22,32 @@ class ChosenChancellorOptions extends Component {
             }
         }
     }
+    showPresidentOptions = () => {
+        const liberal = <img src="/images/liberal-article.png" className="answer-images"/>;
+        const fascist = <img src="/images/facist-article.png" className="answer-images"/>;
 
-    showChancellorOptions = () => {
-        const liberal = <img src="/images/liberal-article.png" className="answer-chancellor-images"/>;
-        const fascist = <img src="/images/facist-article.png" className="answer-chancellor-images"/>;
-
-        return this.state.chancellorAnswer.map(option => {
+        return this.state.presidentAnswer.map(option => {
             return option === 'Liberal' ? liberal : fascist
         })
     }
 
     render() {
         return (
+
             <div className="header-choose-chancellor">
                 <div className="row">
                     <div className="col-2">
                         <p>{this.props.room?.second}</p>
                     </div>
                     <div className="col-8">
-                        <p>The chancellor claims he has received these cards</p>
+                        <p>The next president will receive these cards</p>
                         <p className="under-title"></p>
                     </div>
                     <div className="col-2">
                     </div>
                 </div>
                 <div className="centered-options">
-                    {this.showChancellorOptions()}
+                    {this.showPresidentOptions()}
                 </div>
             </div>
         )
@@ -58,4 +58,4 @@ const mapStateToProps = state => {
     const {room, users} = state;
     return {room: room, authUser: users.authUser}
 }
-export default connect(mapStateToProps)(ChosenChancellorOptions)
+export default connect(mapStateToProps)(ChosenPresidentOptions)
