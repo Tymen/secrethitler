@@ -10,8 +10,11 @@ use App\Events\SetInactive;
 use App\Events\ShowChosenPoliciesPresident;
 use App\Events\ShowReceivedChan;
 use App\Events\TruthEvent;
+use App\Events\WinnerEvent;
+use App\Http\Resources\UserCollection;
 use App\Room;
 use App\User;
+use App\Http\Resources\User as UserResource;
 use App\RoomState;
 use Illuminate\Http\Request;
 use App\Events\KickUserEvent;
@@ -197,20 +200,7 @@ class RoomsApiController extends Controller
     {
         $this->authorize('isHost', $room);
 
-        $roomState = $room->roomState;
-
-        $roomState->reset();
-
-        $room->users->map(function ($user) {
-            $user->voted = false;
-            $user->vote_type = NULL;
-            $user->is_killed = false;
-            $user->save();
-        });
-
         event(new SetInactive($room));
-        $room->active = false;
-        $room->save();
 
         return response()->json(['message' => 'completed']);
     }
@@ -422,17 +412,21 @@ class RoomsApiController extends Controller
     {
         $this->authorize('isPresident', $room);
 
-        $user = User::find($request->uid);
-        $user->is_killed = true;
-        $user->voted = true;
-        $user->save();
+        $deadPlayer = User::find($request->uid);
+        $deadPlayer->is_killed = true;
+        $deadPlayer->voted = true;
+        $deadPlayer->save();
 
         event(new KilledPlayerEvent($room,
             [
-                'id' => $user->id,
-                'username' => $user->username,
-                'isKilled' => $user->is_killed
+                'id' => $deadPlayer->id,
+                'username' => $deadPlayer->username,
+                'isKilled' => $deadPlayer->is_killed
             ]));
+
+        if ($deadPlayer->hasRole('Hitler')) {
+            event(new WinnerEvent($room, 'liberal', 'Hitler has been killed!'));
+        }
     }
 
     public function setVote(Room $room, Request $request)
@@ -452,6 +446,20 @@ class RoomsApiController extends Controller
         !$room->users()->pluck('voted')->contains(false) ? $roomState->voteHandler() : false;
 
         return response()->json(['message' => 'completed']);
+    }
+
+    public function users(Room $room)
+    {
+        $users = $room->users;
+        !$users->pluck('id')->contains(Auth::id())
+            ? $users[] = (object)[
+                'id' => Auth::id(),
+                'username' => Auth::user()->username,
+                'is_killed' => Auth::user()->is_killed
+            ]
+            : false;
+
+        return new UserCollection($users);
     }
 
     public function checkState(Room $room)

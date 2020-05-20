@@ -40,10 +40,9 @@ class Room extends Component {
 
         await this.getRoom()
 
+        this.getUsers()
+
         Echo.join(`room.${this.props.room.id}`)
-            .here((users) => {
-                this.props.dispatch(setUsers(users))
-            })
             .joining((user) => {
                 this.onUserJoin(user)
             })
@@ -86,36 +85,41 @@ class Room extends Component {
             })
             .listen('.winner', (e) => {
                 clearInterval(this.state.timer);
+                console.log(e)
                 this.props.dispatch(setWinner(e.winner));
+                if(e.authUser.id === this.props.authUser.id){
+                    this.props.dispatch(setAuthUser(e.authUser));
+                }
             })
             .listen('.set-inactive', (e) => {
                 this.props.dispatch(editActive(0))
                 this.props.users.map(user => {
-                    console.log(user, user.isKilled)
-                    user.isKilled ? this.props.dispatch(changeUserIsKilled(user.id)) : false;
+                   this.props.dispatch(changeUserIsKilled(user.id, false))
                 })
             })
             .listen('.killed-player', (e) => {
                 clearInterval(this.state.timer);
-                this.props.dispatch(changeUserIsKilled(e.killedPlayer.id));
-
-                if(e.killedPlayer === this.props.authUser.id){
+                if(e.killedPlayer.id === this.props.authUser.id){
                     this.props.dispatch(setAuthUser(e.killedPlayer));
                 }
+                this.props.dispatch(changeUserIsKilled(e.killedPlayer.id, true));
             })
     }
 
     componentWillUnmount() {
         Echo.leave(`room.${this.props.room.id}`)
     }
+
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (this.props.room.winner){
             this.winner();
         }
     }
+
     winner = () => {
         $('.modal').modal();
     }
+
     timer = () => {
         const timer = setInterval(() => {
             this.setState({timer: timer})
@@ -165,7 +169,14 @@ class Room extends Component {
         })
 
         this.timer()
-    };
+    }
+
+    getUsers = () => {
+        axios.get(`/api/v1/rooms/${this.props.match.params.id}/users`).then(response => {
+            console.log(response)
+            this.props.dispatch(setUsers(response.data.data))
+        })
+    }
 
     setActive = () => {
         axios.post(`/api/v1/rooms/${this.props.match.params.id}/active`)
@@ -218,7 +229,7 @@ class Room extends Component {
                 <button onClick={() => this.test()}>
                     Launch demo modal
                 </button>
-                <div className="modal fade right" id="exampleModalPreview" tabIndex="-1" role="dialog"
+                <div id="test" className="modal fade right" tabIndex="-1" role="dialog"
                      aria-labelledby="exampleModalPreviewLabel" aria-hidden="true">
                     <div className="modal-dialog-full-width modal-dialog momodel modal-fluid"
                          role="document">

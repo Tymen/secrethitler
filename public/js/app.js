@@ -87617,7 +87617,7 @@ function (_Component) {
         className: "answer-images"
       });
       var fascist = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        src: "/images/facist-article.png",
+        src: "/images/faci \xE7  st-article.png",
         className: "answer-images"
       });
       return _this.state.presidentAnswer.map(function (option) {
@@ -87645,15 +87645,19 @@ function (_Component) {
       var _this$props$room;
 
       if (((_this$props$room = this.props.room) === null || _this$props$room === void 0 ? void 0 : _this$props$room.second) <= 0) {
-        if (this.props.room.president.id === this.props.authUser.id) {
-          axios.get("/api/v1/rooms/".concat(this.props.room.id, "/showReceivedChan"));
+        var _this$props$room2, _this$props$room2$pre, _this$props$authUser;
+
+        if (((_this$props$room2 = this.props.room) === null || _this$props$room2 === void 0 ? void 0 : (_this$props$room2$pre = _this$props$room2.president) === null || _this$props$room2$pre === void 0 ? void 0 : _this$props$room2$pre.id) === ((_this$props$authUser = this.props.authUser) === null || _this$props$authUser === void 0 ? void 0 : _this$props$authUser.id)) {
+          var _this$props$room3;
+
+          axios.get("/api/v1/rooms/".concat((_this$props$room3 = this.props.room) === null || _this$props$room3 === void 0 ? void 0 : _this$props$room3.id, "/showReceivedChan"));
         }
       }
     }
   }, {
     key: "render",
     value: function render() {
-      var _this$props$room2;
+      var _this$props$room4;
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "header-choose-chancellor"
@@ -87661,7 +87665,7 @@ function (_Component) {
         className: "row"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-2"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, (_this$props$room2 = this.props.room) === null || _this$props$room2 === void 0 ? void 0 : _this$props$room2.second)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, (_this$props$room4 = this.props.room) === null || _this$props$room4 === void 0 ? void 0 : _this$props$room4.second)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-8"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "The president claims he has received these cards"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "under-title"
@@ -87765,6 +87769,7 @@ function (_Component) {
       var isChancellor = _this.props.authUser.id === ((_this$props$room$chan = _this.props.room.chancellor) === null || _this$props$room$chan === void 0 ? void 0 : _this$props$room$chan.id);
       var isKilled = _this.props.authUser.isKilled;
       var stage = _this.props.room.stage;
+      console.log(isKilled);
 
       switch (true) {
         case stage === 1 && isPresident:
@@ -87832,7 +87837,8 @@ var mapStateToProps = function mapStateToProps(state) {
       users = state.users;
   return {
     room: room,
-    authUser: users.authUser
+    authUser: users.authUser,
+    users: users.users
   };
 };
 
@@ -88736,6 +88742,7 @@ function (_Component) {
 
     _defineProperty(_assertThisInitialized(_this), "showUser", function (user) {
       var owner = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+      console.log(user);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         key: user.id,
         className: user.isKilled ? "player-name-div is-killed" : "player-name-div"
@@ -90137,6 +90144,14 @@ function (_Component) {
       }, _callee);
     })));
 
+    _defineProperty(_assertThisInitialized(_this), "getUsers", function () {
+      axios.get("/api/v1/rooms/".concat(_this.props.match.params.id, "/users")).then(function (response) {
+        console.log(response);
+
+        _this.props.dispatch(Object(_redux_actions_users_actions__WEBPACK_IMPORTED_MODULE_10__["setUsers"])(response.data.data));
+      });
+    });
+
     _defineProperty(_assertThisInitialized(_this), "setActive", function () {
       axios.post("/api/v1/rooms/".concat(_this.props.match.params.id, "/active"))["catch"](function (err) {
         console.log(err);
@@ -90179,9 +90194,8 @@ function (_Component) {
                 return this.getRoom();
 
               case 2:
-                Echo.join("room.".concat(this.props.room.id)).here(function (users) {
-                  _this2.props.dispatch(Object(_redux_actions_users_actions__WEBPACK_IMPORTED_MODULE_10__["setUsers"])(users));
-                }).joining(function (user) {
+                this.getUsers();
+                Echo.join("room.".concat(this.props.room.id)).joining(function (user) {
                   _this2.onUserJoin(user);
                 }).leaving(function (user) {
                   _this2.onUserLeave(user);
@@ -90218,26 +90232,30 @@ function (_Component) {
                   }
                 }).listen('.winner', function (e) {
                   clearInterval(_this2.state.timer);
+                  console.log(e);
 
                   _this2.props.dispatch(Object(_redux_actions_room_actions__WEBPACK_IMPORTED_MODULE_9__["setWinner"])(e.winner));
+
+                  if (e.authUser.id === _this2.props.authUser.id) {
+                    _this2.props.dispatch(Object(_redux_actions_users_actions__WEBPACK_IMPORTED_MODULE_10__["setAuthUser"])(e.authUser));
+                  }
                 }).listen('.set-inactive', function (e) {
                   _this2.props.dispatch(Object(_redux_actions_room_actions__WEBPACK_IMPORTED_MODULE_9__["editActive"])(0));
 
                   _this2.props.users.map(function (user) {
-                    console.log(user, user.isKilled);
-                    user.isKilled ? _this2.props.dispatch(Object(_redux_actions_users_actions__WEBPACK_IMPORTED_MODULE_10__["changeUserIsKilled"])(user.id)) : false;
+                    _this2.props.dispatch(Object(_redux_actions_users_actions__WEBPACK_IMPORTED_MODULE_10__["changeUserIsKilled"])(user.id, false));
                   });
                 }).listen('.killed-player', function (e) {
                   clearInterval(_this2.state.timer);
 
-                  _this2.props.dispatch(Object(_redux_actions_users_actions__WEBPACK_IMPORTED_MODULE_10__["changeUserIsKilled"])(e.killedPlayer.id));
-
-                  if (e.killedPlayer === _this2.props.authUser.id) {
+                  if (e.killedPlayer.id === _this2.props.authUser.id) {
                     _this2.props.dispatch(Object(_redux_actions_users_actions__WEBPACK_IMPORTED_MODULE_10__["setAuthUser"])(e.killedPlayer));
                   }
+
+                  _this2.props.dispatch(Object(_redux_actions_users_actions__WEBPACK_IMPORTED_MODULE_10__["changeUserIsKilled"])(e.killedPlayer.id, true));
                 });
 
-              case 3:
+              case 4:
               case "end":
                 return _context2.stop();
             }
@@ -90316,8 +90334,8 @@ function (_Component) {
           return _this3.test();
         }
       }, "Launch demo modal"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+        id: "test",
         className: "modal fade right",
-        id: "exampleModalPreview",
         tabIndex: "-1",
         role: "dialog",
         "aria-labelledby": "exampleModalPreviewLabel",
@@ -90582,10 +90600,11 @@ var deleteUser = function deleteUser(id) {
     id: id
   };
 };
-var changeUserIsKilled = function changeUserIsKilled(id) {
+var changeUserIsKilled = function changeUserIsKilled(id, value) {
   return {
     type: 'CHANGE_USER_IS_KILLED',
-    id: id
+    id: id,
+    value: value
   };
 };
 
@@ -90791,7 +90810,7 @@ function changeUserIsKilled(state, action) {
   })[0];
 
   var newUser = _objectSpread({}, user, {
-    isKilled: !user.isKilled
+    isKilled: action.value
   });
 
   var index = state.users.indexOf(user);

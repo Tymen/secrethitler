@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Http\Resources\User as UserResource;
 use App\Room;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
@@ -10,6 +11,7 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Auth;
 
 class WinnerEvent implements ShouldBroadcast
 {
@@ -17,17 +19,24 @@ class WinnerEvent implements ShouldBroadcast
 
     public $roomId;
     public $winner;
+    public $description;
+    public $authUser;
 
     /**
      * Create a new event instance.
      *
      * @param Room $room
      * @param $winner
+     * @param $description
      */
-    public function __construct(Room $room, $winner)
+    public function __construct(Room $room, $winner, $description = 'Party has all the policy cards')
     {
         $this->roomId = $room->id;
         $this->winner = $winner;
+        $this->description = $description;
+        $this->authUser = new UserResource(Auth::user());
+
+        event(new SetInactive($room));
     }
 
     /**

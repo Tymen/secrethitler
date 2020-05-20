@@ -38,10 +38,6 @@ class setPolicyEvent implements ShouldBroadcast
         }
         if($condition){
             event(new WinnerEvent($room, $winner));
-            event(new SetInactive($room));
-            $room->active = 0;
-            $room->roomState->reset();
-            $room->save();
         }
         $room->roomState->changeState(5);
         $room->roomState->startTimer($president->id);

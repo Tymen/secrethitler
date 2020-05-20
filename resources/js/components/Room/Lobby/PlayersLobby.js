@@ -57,6 +57,7 @@ class PlayersLobby extends Component {
     }
 
     showUser = (user, owner = false) => {
+        console.log(user)
         return (
             <div key={user.id} className={user.isKilled ? "player-name-div is-killed" : "player-name-div"}>
                 <p className="player-name">
