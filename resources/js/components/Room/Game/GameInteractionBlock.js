@@ -9,6 +9,7 @@ import ChosenChancellorOptions from "./ChosenChancellorOptions"
 
 import ChoosePolicy from "./ChoosePolicy";
 import SeePolicies from "./SeePolicies";
+import SelectNextPresident from "./SelectNextPresident";
 
 class GameInteractionBlock extends Component {
     loadComponents = () => {
@@ -38,7 +39,7 @@ class GameInteractionBlock extends Component {
             case stage === 10 && isPresident:
                 // See someone's role
             case stage === 11 && isPresident:
-                // Pick next president
+                return <SelectNextPresident  users={this.props.users}/>;
             case stage === 12 && isPresident:
                 // Kill player
             default:
