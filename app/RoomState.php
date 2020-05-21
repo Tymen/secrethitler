@@ -76,7 +76,9 @@ class RoomState extends Model
     {
         switch ($this->fascist_board_amount) {
             case 3:
-                // policy check event
+                $this->changeState(9);
+                $this->has_done = true;
+                break;
             case 4:
             case 5:
                 $this->changeState(12);
@@ -84,6 +86,7 @@ class RoomState extends Model
             default:
                 $this->room->rotatePresident();
         }
+        $this->save();
     }
 
     public function checkStateMid()

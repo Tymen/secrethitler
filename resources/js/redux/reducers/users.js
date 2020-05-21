@@ -9,19 +9,17 @@ const users = (state = {users: []}, action) => {
         case 'DELETE_USER':
             return {...state, users: state.users.filter(user => user.id !== action.id)};
         case 'CHANGE_USER_IS_KILLED':
-            return changeUserIsKilled(state, action);
+            return {...state, users: changeUserIsKilled(state, action)};
         default:
             return state
     }
 }
 
 function changeUserIsKilled(state, action) {
-    const user = state.users.filter(user => user.id === action.id)[0];
-    const newUser = {...user, isKilled: action.value}
-    const index = state.users.indexOf(user)
-
-    state.users.splice(index, 1, newUser)
-    return state
+    return state.users.map(user => {
+        user.id === action.id ? user.isKilled = action.value : false;
+        return user
+    })
 }
 
 export default users

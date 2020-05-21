@@ -328,9 +328,12 @@ class RoomsApiController extends Controller
                 $changePolicies->save();
                 event(new sendPoliciesChancellor($room, $getChan->id));
             } else {
-                $changePolicies->chosen_policies == "Fascist" ?
-                    $changePolicies->fascist_board_amount += 1 :
+                if ($changePolicies->chosen_policies == "Fascist") {
+                    $changePolicies->fascist_board_amount += 1;
+                    $changePolicies->has_done = false;
+                } else {
                     $changePolicies->liberal_board_amount += 1;
+                }
                 $changePolicies->chosen_policies = null;
                 $board = (object)[
                     "fascist" => $room->roomState->fascist_board_amount,
@@ -381,7 +384,8 @@ class RoomsApiController extends Controller
             $id = intval($request->uid);
         } else {
             $condition = [
-                ['id', '!=', Auth::id()]
+                ['id', '!=', Auth::id()],
+                ['is_killed', false]
             ];
 
             $chancellor ? $condition[] = ['id', '!=', $chancellor->id] : false;
@@ -412,10 +416,19 @@ class RoomsApiController extends Controller
     {
         $this->authorize('isPresident', $room);
 
-        $deadPlayer = User::find($request->uid);
-        $deadPlayer->is_killed = true;
-        $deadPlayer->voted = true;
-        $deadPlayer->save();
+        $users = $room->users()->where([
+            ['id', '!=', Auth::id()],
+            ['is_killed', false]
+        ])->get();
+
+        $deadPlayer = Arr::random($users->all());
+
+        if ($request->uid) {
+            $deadPlayer = User::find($request->uid);
+            $deadPlayer->is_killed = true;
+            $deadPlayer->voted = true;
+            $deadPlayer->save();
+        }
 
         event(new KilledPlayerEvent($room,
             [
@@ -453,10 +466,10 @@ class RoomsApiController extends Controller
         $users = $room->users;
         !$users->pluck('id')->contains(Auth::id())
             ? $users[] = (object)[
-                'id' => Auth::id(),
-                'username' => Auth::user()->username,
-                'is_killed' => Auth::user()->is_killed
-            ]
+            'id' => Auth::id(),
+            'username' => Auth::user()->username,
+            'is_killed' => Auth::user()->is_killed
+        ]
             : false;
 
         return new UserCollection($users);
@@ -464,11 +477,10 @@ class RoomsApiController extends Controller
 
     public function checkState(Room $room)
     {
-        $this->authorize('isHost', $room);
+        $this->authorize('isPresident', $room);
 
         $total = $room->users->count();
         $condition = !$room->roomState->has_done && $room->roomState->stage === 8;
-
         switch (true) {
             case ($total === 5 || $total === 6) && $condition:
                 $room->roomState->checkStateLow();

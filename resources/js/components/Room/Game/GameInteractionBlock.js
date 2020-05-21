@@ -8,6 +8,7 @@ import ChosenPresidentOptions from "./ChosenPresidentOptions";
 import ChosenChancellorOptions from "./ChosenChancellorOptions"
 import ChoosePolicy from "./ChoosePolicy";
 import KillAPlayer from "./KillAPlayer";
+import SeePolicies from "./SeePolicies";
 
 class GameInteractionBlock extends Component {
     loadComponents = () => {
@@ -15,7 +16,6 @@ class GameInteractionBlock extends Component {
         const isChancellor = this.props.authUser.id === this.props.room.chancellor?.id;
         const isKilled = this.props.authUser.isKilled;
         const stage = this.props.room.stage;
-        console.log(isKilled)
         switch (true) {
             case stage === 1 && isPresident:
                 return <ChooseChancellor/>;
@@ -33,9 +33,9 @@ class GameInteractionBlock extends Component {
                 return <ChancellorTruthBluff/>;
             case stage === 8:
                 return <ChosenChancellorOptions/>;
-            case stage === 9 && isPresident && !isKilled:
-                // President sees 3 policy cards
-            case stage === 10 && isPresident && !isKilled:
+            case stage === 9 && isPresident:
+                return <SeePolicies/>;
+            case stage === 10 && isPresident:
                 // See someone's role
             case stage === 11 && isPresident && !isKilled:
                 // Pick next president

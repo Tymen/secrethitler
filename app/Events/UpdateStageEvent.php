@@ -2,6 +2,8 @@
 
 namespace App\Events;
 
+use App\Room;
+use App\User;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -26,6 +28,10 @@ class UpdateStageEvent implements ShouldBroadcast
     {
         $this->roomId = $roomId;
         $this->stageNum = $stageNum;
+        $room = Room::find($roomId);
+        if ($stageNum === 9 || $stageNum === 12){
+            $room->roomState->startTimer($room->getUserByRole("President")->id);
+        }
     }
 
     /**

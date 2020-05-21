@@ -3,7 +3,6 @@ import {Link} from "react-router-dom";
 import {connect} from "react-redux";
 
 class PlayersLobby extends Component {
-
     checkPage = () => {
         if (this.props.page === "Game") {
             return `${this.props.users.length}/${this.props.room.max_players} Players`
@@ -57,7 +56,6 @@ class PlayersLobby extends Component {
     }
 
     showUser = (user, owner = false) => {
-        console.log(user)
         return (
             <div key={user.id} className={user.isKilled ? "player-name-div is-killed" : "player-name-div"}>
                 <p className="player-name">

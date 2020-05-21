@@ -172,7 +172,6 @@ class Room extends Component {
 
     getUsers = () => {
         axios.get(`/api/v1/rooms/${this.props.match.params.id}/users`).then(response => {
-            console.log(response)
             this.props.dispatch(setUsers(response.data.data))
         })
     }
