@@ -29,8 +29,7 @@ class CanJoinRoom
 
         if (Auth::user()->room_id === $room->id) {
             return $next($request);
-        }
-        else if ($room->active) {
+        } else if ($room->active) {
             return redirect('/')->with(['message' => 'Game has already started']);
         }
 
