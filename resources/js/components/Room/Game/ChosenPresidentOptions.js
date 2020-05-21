@@ -24,7 +24,7 @@ class ChosenPresidentOptions extends Component {
     }
     showPresidentOptions = () => {
         const liberal = <img src="/images/liberal-article.png" className="answer-images"/>;
-        const fascist = <img src="/images/faci ç  st-article.png" className="answer-images"/>;
+        const fascist = <img src="/images/facist-article.png" className="answer-images"/>;
 
         return this.state.presidentAnswer.map(option => {
             return option === 'Liberal' ? liberal : fascist

@@ -85,7 +85,6 @@ class Room extends Component {
             })
             .listen('.winner', (e) => {
                 clearInterval(this.state.timer);
-                console.log(e)
                 this.props.dispatch(setWinner(e.winner));
                 if(e.authUser.id === this.props.authUser.id){
                     this.props.dispatch(setAuthUser(e.authUser));

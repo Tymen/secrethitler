@@ -87617,7 +87617,7 @@ function (_Component) {
         className: "answer-images"
       });
       var fascist = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        src: "/images/faci \xE7  st-article.png",
+        src: "/images/facist-article.png",
         className: "answer-images"
       });
       return _this.state.presidentAnswer.map(function (option) {
@@ -90232,7 +90232,6 @@ function (_Component) {
                   }
                 }).listen('.winner', function (e) {
                   clearInterval(_this2.state.timer);
-                  console.log(e);
 
                   _this2.props.dispatch(Object(_redux_actions_room_actions__WEBPACK_IMPORTED_MODULE_9__["setWinner"])(e.winner));
 
