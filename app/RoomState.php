@@ -92,7 +92,7 @@ class RoomState extends Model
             case 2:
                 // see role event
             case 3:
-                // choose president event
+                $this->changeState(11);
             case 4:
             case 5:
                 // Killer event

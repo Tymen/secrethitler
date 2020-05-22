@@ -35,6 +35,7 @@ Route::namespace('Api')->group(function () {
                     Route::get('get_chancellor_policies', 'RoomsApiController@getChancellorPolicies');
 
                     Route::post('president', 'RoomsApiController@rotatePresident');
+                    Route::post('new_president', 'RoomsApiController@newPresident');
                     Route::post('set_policies', 'RoomsApiController@setPolicies');
                     Route::post('chancellor', 'RoomsApiController@setChancellor');
                     Route::post('president_truth_bluff', 'RoomsApiController@presidentTruthBluff');

@@ -29,7 +29,7 @@ class UpdateStageEvent implements ShouldBroadcast
         $this->roomId = $roomId;
         $this->stageNum = $stageNum;
         $room = Room::find($roomId);
-        if ($stageNum === 9){
+        if ($stageNum === 9 || $stageNum === 11){
             $room->roomState->startTimer($room->getUserByRole("President")->id);
         }
     }
