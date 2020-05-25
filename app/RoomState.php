@@ -80,6 +80,7 @@ class RoomState extends Model
                 $this->has_done = true;
                 break;
             case 4:
+                $this->room->rotatePresident();
                 break;
             case 5:
                 $this->changeState(12);
@@ -99,6 +100,7 @@ class RoomState extends Model
             case 3:
                 $this->changeState(11);
             case 4:
+                $this->room->rotatePresident();
             case 5:
                 $this->changeState(12);
                 break;
@@ -117,6 +119,7 @@ class RoomState extends Model
             case 3:
                 // choose president event
             case 4:
+                $this->room->rotatePresident();
             case 5:
                 $this->changeState(12);
                 break;
