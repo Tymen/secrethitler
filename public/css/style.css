@@ -830,6 +830,14 @@ body::-webkit-scrollbar-thumb {
     font-size: 23px;
     text-align: center;
 }
+.player-name-div button {
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.player-name-div button:focus {
+   outline: none !important;
+}
 
 .player-name-div p {
     text-align: left;
