@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Events\ChooseRoleEvent;
 use App\Events\KilledPlayerEvent;
 use App\Events\PresidentChosenTruthBluff;
 use App\Events\ChancellorChosenTruthBluff;
@@ -211,6 +212,18 @@ class RoomsApiController extends Controller
     {
         $this->authorize('isHost', $room);
 
+        $roomState = $room->roomState;
+
+        $roomState->ja = 0;
+        $roomState->nein = 0;
+        $roomState->save();
+
+        $room->users->map(function ($user) {
+            $user->voted = false;
+            $user->vote_type = NULL;
+            $user->save();
+        });
+
         event(new SetInactive($room));
 
         return response()->json(['message' => 'completed']);
@@ -339,6 +352,7 @@ class RoomsApiController extends Controller
                 $changePolicies->save();
                 event(new sendPoliciesChancellor($room, $getChan->id));
             } else {
+
                 if ($changePolicies->chosen_policies == "Fascist") {
                     $changePolicies->fascist_board_amount += 1;
                     $changePolicies->has_done = false;
@@ -351,6 +365,7 @@ class RoomsApiController extends Controller
                     "liberal" => $room->roomState->liberal_board_amount
                 ];
                 event(new setPolicyEvent($room, $board));
+                $changePolicies->save();
             }
             $changePolicies->save();
         } else {
@@ -423,6 +438,26 @@ class RoomsApiController extends Controller
         return response()->json(['message' => 'completed']);
     }
 
+    public function chooseRole(Room $room, Request $request)
+    {
+        $this->authorize('isPresident', $room);
+
+        $chosenPlayer = $request->user;
+        $role = '';
+
+        $user = User::find($chosenPlayer['id']);
+
+
+        if ($user->hasRole("Fascist")) {
+            $role = 'Fascist';
+        } else {
+            $role = "Liberal";
+        }
+
+        event(new ChooseRoleEvent($room, $role, $chosenPlayer));
+
+        return response()->json(['message' => 'completed']);
+    }
     public function killedPlayer(Room $room, Request $request)
     {
         $this->authorize('isPresident', $room);

@@ -93,7 +93,7 @@ class RoomState extends Model
     {
         switch ($this->fascist_board_amount) {
             case 2:
-                // see role event
+                $this->changeState(10);
             case 3:
                 $this->changeState(11);
             case 4:
@@ -110,7 +110,7 @@ class RoomState extends Model
         switch ($this->fascist_board_amount) {
             case 1:
             case 2:
-                // see role event
+                $this->changeState(10);
             case 3:
                 // choose president event
             case 4:

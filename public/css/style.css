@@ -1527,3 +1527,9 @@ div.options > input:checked + .container-choose-chancellor{
     justify-content: center;
     align-items: center;
 }
+
+.show-role{
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}

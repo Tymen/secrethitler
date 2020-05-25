@@ -7,6 +7,7 @@ import ChancellorTruthBluff from "./ChancellorTruthBluff";
 import ChosenPresidentOptions from "./ChosenPresidentOptions";
 import ChosenChancellorOptions from "./ChosenChancellorOptions"
 import ChoosePolicy from "./ChoosePolicy";
+import ChooseRole from "./ChooseRole";
 import KillAPlayer from "./KillAPlayer";
 import SeePolicies from "./SeePolicies";
 import SelectNextPresident from "./SelectNextPresident";
@@ -37,7 +38,7 @@ class GameInteractionBlock extends Component {
             case stage === 9 && isPresident:
                 return <SeePolicies/>;
             case stage === 10 && isPresident:
-            // See someone's role
+                return <ChooseRole users={this.props.users}/>;
             case stage === 11 && isPresident && !isKilled:
                 return <SelectNextPresident/>;
             case stage === 12 && isPresident && !isKilled:
