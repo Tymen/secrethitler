@@ -89483,8 +89483,6 @@ function (_Component) {
     _defineProperty(_assertThisInitialized(_this), "listener", function () {
       Echo["private"]("room.".concat(_this.props.room.id)).listen('.user-hosted', function (e) {
         _this.props.dispatch(Object(_redux_actions_room_actions__WEBPACK_IMPORTED_MODULE_3__["setNewOwner"])(e.user));
-
-        _this.componentDidMount();
       });
     });
 
@@ -89593,7 +89591,6 @@ function (_Component) {
             "aria-haspopup": "true",
             "aria-expanded": "false"
           }, user.username), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-            id: "dropperu",
             className: "dropdown-menu",
             "aria-labelledby": "dropdownMenuButton"
           }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
@@ -89632,11 +89629,6 @@ function (_Component) {
     key: "componentDidMount",
     value: function componentDidMount() {
       setTimeout(this.listener, 500);
-    }
-  }, {
-    key: "componentDidUpdate",
-    value: function componentDidUpdate(prevProps, prevState, snapshot) {
-      console.log(document.getElementById("dropperu"));
     }
   }, {
     key: "render",

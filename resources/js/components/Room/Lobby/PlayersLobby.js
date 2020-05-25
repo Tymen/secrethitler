@@ -13,7 +13,6 @@ class PlayersLobby extends Component {
         Echo.private(`room.${this.props.room.id}`)
             .listen('.user-hosted', (e) => {
                 this.props.dispatch(setNewOwner(e.user))
-                this.componentDidMount()
             })
     }
 
@@ -22,10 +21,6 @@ class PlayersLobby extends Component {
             return `${this.props.users.length}/${this.props.room.max_players} Players`
         }
         return 'Players in lobby'
-    }
-
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        console.log(document.getElementById("dropperu"))
     }
 
     checkFascists = (userId) => {
@@ -103,7 +98,7 @@ class PlayersLobby extends Component {
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             {user.username}
                         </button>
-                        <div id="dropperu" className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <a className="dropdown-item"
                                onClick={(e) => this.kickUser(e, user.id)}>Kick player</a>
                             <a className="dropdown-item"
