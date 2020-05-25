@@ -28,7 +28,21 @@ class setPolicyEvent implements ShouldBroadcast
         $this->roomID = $room->id;
         $this->policy = $board;
         $president = $room->getUserByRole('President');
-
+        $condition = false;
+        if ($room->roomState->fascist_board_amount >= 6){
+            $winner = "fascist";
+            $condition = true;
+        }else if($room->roomState->liberal_board_amount >= 5){
+            $winner = "liberal";
+            $condition = true;
+        }
+        if($condition){
+            event(new WinnerEvent($room, $winner));
+            event(new SetInactive($room));
+            $room->active = 0;
+            $room->roomState->reset();
+            $room->save();
+        }
         $room->roomState->changeState(5);
         $room->roomState->startTimer($president->id);
     }

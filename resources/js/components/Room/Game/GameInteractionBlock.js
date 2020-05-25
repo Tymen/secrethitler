@@ -14,6 +14,7 @@ class GameInteractionBlock extends Component {
         const isPresident = this.props.authUser.id === this.props.room.president?.id;
         const isChancellor = this.props.authUser.id === this.props.room.chancellor?.id;
         const stage = this.props.room.stage;
+
         switch (true) {
             case stage === 1 && isPresident:
                 return <ChooseChancellor users={this.props.users}/>;

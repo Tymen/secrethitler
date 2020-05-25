@@ -11,29 +11,18 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class ChooseRoleEvent implements ShouldBroadcast
+class SetInactive implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-
-    public $roomId;
-    public $role;
-    public $chosenPlayer;
-
+    private $roomID;
     /**
      * Create a new event instance.
      *
-     * @param Room $room
-     * @param $role
-     * @param $chosenPlayer
+     * @return void
      */
-    public function __construct(Room $room, $role, $chosenPlayer)
+    public function __construct(Room $room)
     {
-        $this->roomId = $room->id;
-        $this->role = $role;
-        $this->chosenPlayer = $chosenPlayer;
-
-        $room->roomState->has_done = true;
-        $room->roomState->save();
+        $this->roomID = $room->id;
     }
 
     /**
@@ -43,11 +32,10 @@ class ChooseRoleEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel("room.{$this->roomId}");
+        return new PresenceChannel("room.{$this->roomID}");
     }
-
     public function broadcastAs()
     {
-        return 'choose-role';
+        return "set-inactive";
     }
 }

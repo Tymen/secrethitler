@@ -6,6 +6,7 @@ use App\Events\ChooseRoleEvent;
 use App\Events\PresidentChosenTruthBluff;
 use App\Events\ChancellorChosenTruthBluff;
 use App\Events\resetStage;
+use App\Events\SetInactive;
 use App\Events\ShowChosenPoliciesPresident;
 use App\Events\ShowReceivedChan;
 use App\Events\TruthEvent;
@@ -108,15 +109,16 @@ class RoomsApiController extends Controller
         return response()->json(['message' => 'completed']);
     }
 
-    public function presidentTruthBluff(Room $room, Request $request){
+    public function presidentTruthBluff(Room $room, Request $request)
+    {
 
         $this->authorize('isPresident', $room);
 
         $chosenAnswer = $request->option;
         $roomState = $room->roomState;
-        if($chosenAnswer === null){
+        if ($chosenAnswer === null) {
             event(new PresidentChosenTruthBluff($room));
-        }else{
+        } else {
             event(new PresidentChosenTruthBluff($room));
             $roomState->received_pres = $chosenAnswer;
             $roomState->save();
@@ -133,9 +135,9 @@ class RoomsApiController extends Controller
 
         $chosenAnswer = $request->option;
         $roomState = $room->roomState;
-        if($chosenAnswer === null){
+        if ($chosenAnswer === null) {
             event(new ChancellorChosenTruthBluff($room));
-        }else{
+        } else {
             event(new ChancellorChosenTruthBluff($room));
             $roomState->received_chan = $chosenAnswer;
             $roomState->save();
@@ -164,7 +166,7 @@ class RoomsApiController extends Controller
         $hitler = 0;
         $countUsers = $room->users->count();
 
-        foreach($room->users as $u) {
+        foreach ($room->users as $u) {
 
             $u->hasRole('Fascist') ? $fascists[] = $u->id : false;
             $u->hasRole('Hitler') ? $hitler = $u->id : false;
@@ -201,12 +203,12 @@ class RoomsApiController extends Controller
         $roomState->nein = 0;
         $roomState->save();
 
-        $room->users->map(function($user) {
+        $room->users->map(function ($user) {
             $user->voted = false;
             $user->vote_type = NULL;
             $user->save();
         });
-
+        event(new SetInactive($room));
         $room->active = false;
         $room->save();
 
@@ -259,18 +261,21 @@ class RoomsApiController extends Controller
         $room->save();
         return response()->json(['message' => $room]);
     }
-    public function getBoard(Room $room){
+
+    public function getBoard(Room $room)
+    {
         $object = (object)[
             "fascist" => $room->roomState->fascist_board_amount,
             "liberal" => $room->roomState->liberal_board_amount
         ];
         return response()->json($object);
     }
+
     public function getPolicies(Room $room)
     {
 //        $randomInt = mt_rand(1, $total);
 //        $result = ($randomInt > $facist) ? "Liberal" : 1;
-        if (Auth::user()->hasrole("Chancellor") && $room->roomState->stage == 4){
+        if (Auth::user()->hasrole("Chancellor") && $room->roomState->stage == 4) {
             return response()->json(["result" => explode(" ", $room->roomState->chosen_policies)]);
         }
         $this->authorize('isPresident', $room);
@@ -279,10 +284,10 @@ class RoomsApiController extends Controller
         $changePolicies = $room->roomState;
 
         $result = [];
-        if ($changePolicies->chosen_policies == null){
-            if (($changePolicies->fascist_policies < 3) || $changePolicies->liberal_policies < 3){
-                $changePolicies-> fascist_policies = 11;
-                $changePolicies-> liberal_policies = 6;
+        if ($changePolicies->chosen_policies == null) {
+            if (($changePolicies->fascist_policies < 3) || $changePolicies->liberal_policies < 3) {
+                $changePolicies->fascist_policies = 11;
+                $changePolicies->liberal_policies = 6;
                 $changePolicies->save();
                 $liberal = 6;
                 $fascist = 11;
@@ -300,7 +305,7 @@ class RoomsApiController extends Controller
                     $changePolicies->fascist_policies = $changePolicies->fascist_policies - 1 :
                     $changePolicies->liberal_policies = $changePolicies->liberal_policies - 1;
             }
-        }else {
+        } else {
             $result = explode(" ", $changePolicies->chosen_policies);
         }
         $response = [
@@ -318,30 +323,35 @@ class RoomsApiController extends Controller
         $validation = $this->policyValidation($room, $request);
 
         if ($validation) {
-             (strtolower($request->removed) === "fascist") ?
+            (strtolower($request->removed) === "fascist") ?
                 $changePolicies->chosen_fascist += 1 :
                 $changePolicies->chosen_liberal += 1;
 
-            $chosenPoliciesArr = explode(" ",$changePolicies->chosen_policies);
+            $chosenPoliciesArr = explode(" ", $changePolicies->chosen_policies);
             $getIndexPolicy = (array_search($request->removed, $chosenPoliciesArr));
             unset($chosenPoliciesArr[$getIndexPolicy]);
 
             $changePolicies->chosen_policies = implode(" ", $chosenPoliciesArr);
-            if(Auth::user()->hasrole("President")){
+            if (Auth::user()->hasrole("President")) {
                 $getChan = $room->getUserByRole('Chancellor');
                 $changePolicies->received_chan = $changePolicies->chosen_policies;
                 $changePolicies->save();
                 event(new sendPoliciesChancellor($room, $getChan->id));
-            }else {
-                $changePolicies->chosen_policies == "Fascist"?
-                    $changePolicies->fascist_board_amount += 1:
+            } else {
+                if($changePolicies->chosen_policies == "Fascist"){
+                    $changePolicies->fascist_board_amount += 1;
+                    $changePolicies->has_done = false;
+                }else{
                     $changePolicies->liberal_board_amount += 1;
+                }
+
                 $changePolicies->chosen_policies = null;
                 $board = (object)[
                     "fascist" => $room->roomState->fascist_board_amount,
                     "liberal" => $room->roomState->liberal_board_amount
                 ];
                 event(new setPolicyEvent($room, $board));
+                $changePolicies->save();
             }
             $changePolicies->save();
         } else {
@@ -367,11 +377,13 @@ class RoomsApiController extends Controller
         event(new ShowReceivedChan($room));
         return response()->json(["message" => "Completed"]);
     }
+
     public function resetStage(Room $room)
     {
         $room->roomState->changeStage(1);
         return response()->json(["message" => "Completed"]);
     }
+
     public function setChancellor(Room $room, Request $request)
     {
         $this->authorize('isPresident', $room);
@@ -414,9 +426,19 @@ class RoomsApiController extends Controller
     {
         $this->authorize('isPresident', $room);
 
-        $chosenPlayer = $request->uid;
+        $chosenPlayer = $request->user;
+        $role = '';
 
-        event(new ChooseRoleEvent($room ,$chosenPlayer));
+        $user = User::find($chosenPlayer['id']);
+
+
+        if ($user->hasRole("Fascist")) {
+            $role = 'Fascist';
+        } else {
+            $role = "Liberal";
+        }
+
+        event(new ChooseRoleEvent($room, $role, $chosenPlayer));
 
         return response()->json(['message' => 'completed']);
     }
@@ -438,5 +460,27 @@ class RoomsApiController extends Controller
         !$room->users()->pluck('voted')->contains(false) ? $roomState->voteHandler() : false;
 
         return response()->json(['message' => 'completed']);
+    }
+
+    public function checkState(Room $room)
+    {
+        $this->authorize('isHost', $room);
+
+        $total = $room->users->count();
+        $condition = !$room->roomState->has_done && $room->roomState->stage === 8;
+
+        switch (true) {
+            case ($total === 5 || $total === 6) && $condition:
+                $room->roomState->checkStateLow();
+                break;
+            case ($total === 7 || $total === 8) && $condition:
+                $room->roomState->checkStateMid();
+                break;
+            case ($total === 9 || $total === 10) && $condition:
+                $room->roomState->checkStateHigh();
+                break;
+            default:
+                $room->rotatePresident();
+        }
     }
 }
