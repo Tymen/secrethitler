@@ -614,7 +614,24 @@ body::-webkit-scrollbar-thumb {
 .message-container:first-child {
     margin-top: 10px;
 }
-
+.modal-body {
+    background-color: #171616;
+}
+.modal-footer {
+    background-color: #171616;
+}
+.modal-footer button {
+    background-color: #d0211c;
+}
+.winner {
+    margin: 0 auto;
+    display: block;
+    margin-top: 70px;
+}
+.section-heading {
+    font-size: 120px;
+    color:#AF2E2E;
+}
 .time {
     margin: -23px 0px 0px 10px;
     font-size: 10px;
@@ -936,6 +953,7 @@ div.options > input:checked + .container-choose-chancellor{
 
 /*Large devices (desktops, less than 1200px)*/
 @media (max-width: 1199.98px) {
+
     .join-room {
         width: 300px!important;
         padding: 0px;
@@ -961,7 +979,7 @@ div.options > input:checked + .container-choose-chancellor{
     }
 
     .login-bolletjes {
-        width: 22%;
+        width: 41%;
     }
 
     /*this is for the in game layout*/
@@ -1057,7 +1075,7 @@ div.options > input:checked + .container-choose-chancellor{
     }
 
     .input-login {
-        width: 215%;
+        width: 100%;
     }
 
     .btn-custom {
@@ -1065,7 +1083,6 @@ div.options > input:checked + .container-choose-chancellor{
         height: 2.5vw;
         padding: 0.005rem;
         font-weight: 100;
-        float: right;
         font-size: 1.3vw;
     }
 
@@ -1083,7 +1100,7 @@ div.options > input:checked + .container-choose-chancellor{
     }
 
     .login-bolletjes {
-        width: 23%;
+        width: 52%;
     }
 
     /*this is for the in game layout*/
@@ -1150,9 +1167,16 @@ div.options > input:checked + .container-choose-chancellor{
         max-height: 200px;
     }
     .card-login {
-        height: 57%;
+        top: 30%;
+        height: 26%;
+        width: 400px;
     }
-
+    .btn-container {
+        width: 100%;
+    }
+    .btn-custom {
+        width: 100%;
+    }
     .card-header-login {
         font-size: 1.4vw;
     }
@@ -1218,6 +1242,13 @@ div.options > input:checked + .container-choose-chancellor{
 
 /*// Extra small devices (portrait phones, less than 576px)*/
 @media (max-width: 575.98px) {
+    .card-login {
+        height: 18% !important;
+        width: 300px!important;
+    }
+    .input-room-name {
+        width: 250px;
+    }
     .home-bolletjes {
         width: 100%;
     }
@@ -1226,10 +1257,10 @@ div.options > input:checked + .container-choose-chancellor{
         width: 100%;
     }
     .join-room {
-        width: 170px!important;
+        width: 250px!important;
     }
     .create-room {
-        width: 170px;
+        width: 250px;
     }
     .form-group {
         margin-bottom: 0.3rem;

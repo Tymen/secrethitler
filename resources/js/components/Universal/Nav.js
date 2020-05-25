@@ -41,20 +41,17 @@ class Nav extends Component {
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav mr-auto">
                         <Link className="navbar-brand" to="/">
-                            <li className="navbar-logo"><img src="/images/Secrethitler-no-bg.png"></img></li>
+                            <li className="navbar-logo text-center"><img src="/images/Secrethitler-no-bg.png"></img></li>
                         </Link>
                     </ul>
                     <ul className="navbar-nav ml-auto">
                         <Link className="nav-item" to="/gamerules">
                             <li className="nav-link">Gamerules</li>
                         </Link>
-                        <Link className="nav-item" to="/profile">
-                            <li className="nav-link">Profile</li>
-                        </Link>
                         <Link className="nav-item" to="/about">
                             <li className="nav-link">About</li>
                         </Link>
-                        {this.authCheck()}
+                        <span className="text-center">{this.authCheck()}</span>
                     </ul>
 
                 </div>
