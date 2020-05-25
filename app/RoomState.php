@@ -80,11 +80,13 @@ class RoomState extends Model
                 $this->has_done = true;
                 break;
             case 4:
+                break;
             case 5:
                 $this->changeState(12);
                 break;
             default:
                 $this->room->rotatePresident();
+                break;
         }
         $this->save();
     }
@@ -102,6 +104,7 @@ class RoomState extends Model
                 break;
             default:
                 $this->room->rotatePresident();
+                break;
         }
     }
 
@@ -119,6 +122,7 @@ class RoomState extends Model
                 break;
             default:
                 $this->room->rotatePresident();
+                break;
         }
     }
 }
