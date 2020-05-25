@@ -3,7 +3,6 @@
 namespace App\Events;
 
 use App\Room;
-use App\User;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -12,27 +11,27 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class UpdateStageEvent implements ShouldBroadcast
+class KilledPlayerEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $roomId;
-    public $stageNum;
+    public $killedPlayer;
 
     /**
      * Create a new event instance.
-     * @param $roomId
-     * @param $stageNum
+     *
+     * @param Room $room
+     * @param $killedPlayer
      */
-    public function __construct($roomId, $stageNum)
+    public function __construct(Room $room, $killedPlayer)
     {
-        $this->roomId = $roomId;
-        $this->stageNum = $stageNum;
-        $room = Room::find($roomId);
+        $this->roomId = $room->id;
+        $this->killedPlayer = $killedPlayer;
 
-        if ($stageNum === 9 || $stageNum === 12 || $stageNum === 11 || $stageNum === 10){
-            $room->roomState->startTimer($room->getUserByRole("President")->id);
-        }
+        $room->roomState->has_done = true;
+        $room->roomState->save();
+        $room->rotatePresident();
     }
 
     /**
@@ -47,6 +46,6 @@ class UpdateStageEvent implements ShouldBroadcast
 
     public function broadcastAs()
     {
-        return 'update-stage';
+        return 'killed-player';
     }
 }

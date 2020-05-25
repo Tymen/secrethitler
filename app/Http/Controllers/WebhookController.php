@@ -45,6 +45,7 @@ class WebhookController extends Controller
         $user->voted = false;
         $user->vote_type = NULL;
         $user->room_id = NULL;
+        $user->is_killed = false;
         $user->save();
 
         if ($room->users->isEmpty()) {

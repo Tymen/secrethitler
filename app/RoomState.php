@@ -28,6 +28,7 @@ class RoomState extends Model
         $this->save();
         event(new UpdateStageEvent($this->room->id, $value));
     }
+
     public function reset()
     {
         $this->ja = 0;
@@ -42,18 +43,19 @@ class RoomState extends Model
         $this->stage = 0;
         $this->save();
     }
+
     public function voteHandler()
     {
         $room = $this->load('room', 'room.users')->room;
         if ($this->ja > $this->nein) {
             $condition = $this->fascist_board_amount >= 4 && $room->getUserByRole('Chancellor')->hasRole('Hitler');
-            $event = $condition ? new WinnerEvent($room, "fascist") : new VotesDoneEvent($room);
+            $event = $condition ? new WinnerEvent($room, "fascist", 'Hitler has been elected as the chancellor') : new VotesDoneEvent($room);
             event($event);
         } else {
             $room->rotatePresident();
         }
 
-        foreach ($room->users as $user) {
+        foreach ($room->users()->where('is_killed', false)->get() as $user) {
             $user->voted = false;
             $user->save();
         }
@@ -79,7 +81,8 @@ class RoomState extends Model
                 break;
             case 4:
             case 5:
-                // Killer event
+                $this->changeState(12);
+                break;
             default:
                 $this->room->rotatePresident();
         }
@@ -95,7 +98,8 @@ class RoomState extends Model
                 $this->changeState(11);
             case 4:
             case 5:
-                // Killer event
+                $this->changeState(12);
+                break;
             default:
                 $this->room->rotatePresident();
         }
@@ -111,7 +115,8 @@ class RoomState extends Model
                 // choose president event
             case 4:
             case 5:
-                // Killer event
+                $this->changeState(12);
+                break;
             default:
                 $this->room->rotatePresident();
         }

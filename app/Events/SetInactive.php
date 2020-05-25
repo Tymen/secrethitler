@@ -23,6 +23,20 @@ class SetInactive implements ShouldBroadcast
     public function __construct(Room $room)
     {
         $this->roomID = $room->id;
+
+        $roomState = $room->roomState;
+
+        $roomState->reset();
+
+        $room->users->map(function ($user) {
+            $user->voted = false;
+            $user->vote_type = NULL;
+            $user->is_killed = false;
+            $user->save();
+        });
+
+        $room->active = false;
+        $room->save();
     }
 
     /**

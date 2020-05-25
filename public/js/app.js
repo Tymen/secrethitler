@@ -86762,7 +86762,6 @@ function (_Component) {
         }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
           className: "in-game"
         }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_Lobby_PlayersLobby__WEBPACK_IMPORTED_MODULE_2__["default"], {
-          users: this.props.users,
           page: "Game",
           fascists: this.state.fascists,
           hitler: this.state.hitler
@@ -86824,9 +86823,11 @@ function (_Component) {
 }(react__WEBPACK_IMPORTED_MODULE_1__["Component"]);
 
 var mapStateToProps = function mapStateToProps(state) {
-  var room = state.room;
+  var room = state.room,
+      users = state.users;
   return {
-    room: room
+    room: room,
+    users: users.users
   };
 };
 
@@ -87171,7 +87172,9 @@ function (_Component) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "showOptions", function () {
-      return _this.props.users.map(function (user) {
+      return _this.props.users.filter(function (user) {
+        return !user.isKilled;
+      }).map(function (user) {
         var _this$props$authUser;
 
         if (user.id !== ((_this$props$authUser = _this.props.authUser) === null || _this$props$authUser === void 0 ? void 0 : _this$props$authUser.id)) {
@@ -87262,7 +87265,8 @@ var mapStateToProps = function mapStateToProps(state) {
       room = state.room;
   return {
     authUser: users.authUser,
-    room: room
+    room: room,
+    users: users.users
   };
 };
 
@@ -87639,15 +87643,19 @@ function (_Component) {
       var _this$props$room;
 
       if (((_this$props$room = this.props.room) === null || _this$props$room === void 0 ? void 0 : _this$props$room.second) <= 0) {
-        if (this.props.room.president.id === this.props.authUser.id) {
-          axios.get("/api/v1/rooms/".concat(this.props.room.id, "/showReceivedChan"));
+        var _this$props$room2, _this$props$room2$pre, _this$props$authUser;
+
+        if (((_this$props$room2 = this.props.room) === null || _this$props$room2 === void 0 ? void 0 : (_this$props$room2$pre = _this$props$room2.president) === null || _this$props$room2$pre === void 0 ? void 0 : _this$props$room2$pre.id) === ((_this$props$authUser = this.props.authUser) === null || _this$props$authUser === void 0 ? void 0 : _this$props$authUser.id)) {
+          var _this$props$room3;
+
+          axios.get("/api/v1/rooms/".concat((_this$props$room3 = this.props.room) === null || _this$props$room3 === void 0 ? void 0 : _this$props$room3.id, "/showReceivedChan"));
         }
       }
     }
   }, {
     key: "render",
     value: function render() {
-      var _this$props$room2;
+      var _this$props$room4;
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "header-choose-chancellor"
@@ -87655,7 +87663,7 @@ function (_Component) {
         className: "row"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-2"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, (_this$props$room2 = this.props.room) === null || _this$props$room2 === void 0 ? void 0 : _this$props$room2.second)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, (_this$props$room4 = this.props.room) === null || _this$props$room4 === void 0 ? void 0 : _this$props$room4.second)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-8"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "The president claims he has received these cards"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "under-title"
@@ -87702,8 +87710,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ChosenPresidentOptions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./ChosenPresidentOptions */ "./resources/js/components/Room/Game/ChosenPresidentOptions.js");
 /* harmony import */ var _ChosenChancellorOptions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./ChosenChancellorOptions */ "./resources/js/components/Room/Game/ChosenChancellorOptions.js");
 /* harmony import */ var _ChoosePolicy__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./ChoosePolicy */ "./resources/js/components/Room/Game/ChoosePolicy.js");
-/* harmony import */ var _SeePolicies__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./SeePolicies */ "./resources/js/components/Room/Game/SeePolicies.js");
-/* harmony import */ var _SelectNextPresident__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./SelectNextPresident */ "./resources/js/components/Room/Game/SelectNextPresident.js");
+/* harmony import */ var _KillAPlayer__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./KillAPlayer */ "./resources/js/components/Room/Game/KillAPlayer.js");
+/* harmony import */ var _SeePolicies__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./SeePolicies */ "./resources/js/components/Room/Game/SeePolicies.js");
+/* harmony import */ var _SelectNextPresident__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./SelectNextPresident */ "./resources/js/components/Room/Game/SelectNextPresident.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -87723,6 +87732,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -87759,46 +87769,44 @@ function (_Component) {
 
       var isPresident = _this.props.authUser.id === ((_this$props$room$pres = _this.props.room.president) === null || _this$props$room$pres === void 0 ? void 0 : _this$props$room$pres.id);
       var isChancellor = _this.props.authUser.id === ((_this$props$room$chan = _this.props.room.chancellor) === null || _this$props$room$chan === void 0 ? void 0 : _this$props$room$chan.id);
+      var isKilled = _this.props.authUser.isKilled;
       var stage = _this.props.room.stage;
 
       switch (true) {
         case stage === 1 && isPresident:
-          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ChooseChancellor__WEBPACK_IMPORTED_MODULE_1__["default"], {
-            users: _this.props.users
-          });
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ChooseChancellor__WEBPACK_IMPORTED_MODULE_1__["default"], null);
 
-        case stage === 2:
+        case stage === 2 && !isKilled:
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Vote__WEBPACK_IMPORTED_MODULE_3__["default"], null);
 
-        case stage === 3 && isPresident:
+        case stage === 3 && isPresident && !isKilled:
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ChoosePolicy__WEBPACK_IMPORTED_MODULE_8__["default"], null);
 
-        case stage === 4 && isChancellor:
+        case stage === 4 && isChancellor && !isKilled:
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ChoosePolicy__WEBPACK_IMPORTED_MODULE_8__["default"], null);
 
-        case stage === 5 && isPresident:
+        case stage === 5 && isPresident && !isKilled:
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_PresidentTruthBluff__WEBPACK_IMPORTED_MODULE_4__["default"], null);
 
         case stage === 6:
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ChosenPresidentOptions__WEBPACK_IMPORTED_MODULE_6__["default"], null);
 
-        case stage === 7 && isChancellor:
+        case stage === 7 && isChancellor && !isKilled:
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ChancellorTruthBluff__WEBPACK_IMPORTED_MODULE_5__["default"], null);
 
         case stage === 8:
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ChosenChancellorOptions__WEBPACK_IMPORTED_MODULE_7__["default"], null);
 
         case stage === 9 && isPresident:
-          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_SeePolicies__WEBPACK_IMPORTED_MODULE_9__["default"], null);
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_SeePolicies__WEBPACK_IMPORTED_MODULE_10__["default"], null);
 
         case stage === 10 && isPresident: // See someone's role
 
-        case stage === 11 && isPresident:
-          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_SelectNextPresident__WEBPACK_IMPORTED_MODULE_10__["default"], {
-            users: _this.props.users
-          });
+        case stage === 11 && isPresident && !isKilled:
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_SelectNextPresident__WEBPACK_IMPORTED_MODULE_11__["default"], null);
 
-        case stage === 12 && isPresident: // Kill player
+        case stage === 12 && isPresident && !isKilled:
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_KillAPlayer__WEBPACK_IMPORTED_MODULE_9__["default"], null);
 
         default:
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -87832,11 +87840,184 @@ var mapStateToProps = function mapStateToProps(state) {
       users = state.users;
   return {
     room: room,
-    authUser: users.authUser
+    authUser: users.authUser,
+    users: users.users
   };
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(mapStateToProps)(GameInteractionBlock));
+
+/***/ }),
+
+/***/ "./resources/js/components/Room/Game/KillAPlayer.js":
+/*!**********************************************************!*\
+  !*** ./resources/js/components/Room/Game/KillAPlayer.js ***!
+  \**********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+
+var KillAPlayer =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(KillAPlayer, _Component);
+
+  function KillAPlayer() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    _classCallCheck(this, KillAPlayer);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(KillAPlayer)).call.apply(_getPrototypeOf2, [this].concat(args)));
+
+    _defineProperty(_assertThisInitialized(_this), "state", {
+      checkedUser: ''
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "handleSubmit", function () {
+      axios.post("/api/v1/rooms/".concat(_this.props.room.id, "/killed_player"), {
+        uid: _this.state.checkedUser
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "isChecked", function (userId) {
+      _this.setState({
+        checkedUser: userId
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "showOptions", function () {
+      return _this.props.users.filter(function (user) {
+        return !user.isKilled;
+      }).map(function (user) {
+        var _this$props$authUser;
+
+        if (user.id !== ((_this$props$authUser = _this.props.authUser) === null || _this$props$authUser === void 0 ? void 0 : _this$props$authUser.id)) {
+          if (user.id === _this.state.checkedUser) {
+            return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+              className: "options active",
+              key: user.id
+            }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+              className: "container-choose-chancellor"
+            }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+              type: "radio",
+              name: "radio",
+              onChange: function onChange() {
+                return _this.isChecked(user.id);
+              }
+            }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+              name: user.id,
+              className: "checkbox"
+            }), user.username));
+          } else {
+            return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+              className: "options",
+              key: user.id
+            }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+              className: "container-choose-chancellor"
+            }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+              type: "radio",
+              name: "radio",
+              onChange: function onChange() {
+                return _this.isChecked(user.id);
+              }
+            }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+              name: user.id,
+              className: "checkbox"
+            }), user.username));
+          }
+        }
+      });
+    });
+
+    return _this;
+  }
+
+  _createClass(KillAPlayer, [{
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps, prevState, snapshot) {
+      var _this$props$room;
+
+      if (((_this$props$room = this.props.room) === null || _this$props$room === void 0 ? void 0 : _this$props$room.second) <= 0) {
+        this.handleSubmit();
+      }
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this$props$room2,
+          _this2 = this;
+
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "header-choose-chancellor"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "row"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-2"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, (_this$props$room2 = this.props.room) === null || _this$props$room2 === void 0 ? void 0 : _this$props$room2.second)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-8"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Choose the player you want to kill"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "under-title"
+      }, "(select one player and click submit to continue)")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-2"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        type: "submit",
+        className: "btn btn btn-explanation btn-chancellor",
+        onClick: function onClick(e) {
+          e.preventDefault();
+
+          _this2.handleSubmit();
+        }
+      }, "submit"))), this.showOptions()));
+    }
+  }]);
+
+  return KillAPlayer;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+
+var mapStateToProps = function mapStateToProps(state) {
+  var room = state.room,
+      users = state.users;
+  return {
+    room: room,
+    authUser: users.authUser,
+    users: users.users
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps)(KillAPlayer));
 
 /***/ }),
 
@@ -88341,7 +88522,8 @@ var mapStateToProps = function mapStateToProps(state) {
       room = state.room;
   return {
     authUser: users.authUser,
-    room: room
+    room: room,
+    users: users.users
   };
 };
 
@@ -88874,63 +89056,62 @@ function (_Component) {
       axios.post("/api/v1/rooms/".concat(_this.props.room.id, "/kick/").concat(id));
     });
 
-    _defineProperty(_assertThisInitialized(_this), "showPlayers", function () {
+    _defineProperty(_assertThisInitialized(_this), "showUser", function (user) {
+      var owner = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        key: user.id,
+        className: user.isKilled ? "player-name-div is-killed" : "player-name-div"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "player-name"
+      }, owner ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-crown"
+      }) : false, "\xA0", user.username), user.isKilled ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "is-killed-icon fas fa-skull-crossbones"
+      }) : false, _this.checkFascists(user.id), _this.checkRole(user.id));
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "ownerView", function () {
       return _this.props.users.map(function (user) {
-        var _this$props$authUser, _this$props$room$owne, _this$props$room$owne3;
+        var _this$props$room$owne;
 
-        if (((_this$props$authUser = _this.props.authUser) === null || _this$props$authUser === void 0 ? void 0 : _this$props$authUser.id) === ((_this$props$room$owne = _this.props.room.owner) === null || _this$props$room$owne === void 0 ? void 0 : _this$props$room$owne.id)) {
-          var _this$props$room$owne2;
-
-          if (((_this$props$room$owne2 = _this.props.room.owner) === null || _this$props$room$owne2 === void 0 ? void 0 : _this$props$room$owne2.id) === user.id) {
-            return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-              key: user.id,
-              className: "player-name-div"
-            }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-              className: "player-name"
-            }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-              className: "fas fa-crown"
-            }), "\xA0", user.username), _this.checkFascists(user.id), _this.checkRole(user.id));
-          } else {
-            return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-              key: user.id,
-              className: "player-name-div"
-            }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-              className: "player-name dropdown-toggle",
-              type: "button",
-              id: "dropdownMenuButton",
-              "data-toggle": "dropdown",
-              "aria-haspopup": "true",
-              "aria-expanded": "false"
-            }, user.username), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-              className: "dropdown-menu",
-              "aria-labelledby": "dropdownMenuButton"
-            }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-              className: "dropdown-item",
-              onClick: function onClick(e) {
-                return _this.kickUser(e, user.id);
-              }
-            }, "Kick ", user.username)), _this.checkFascists(user.id), _this.checkRole(user.id));
-          }
-        }
-
-        if (((_this$props$room$owne3 = _this.props.room.owner) === null || _this$props$room$owne3 === void 0 ? void 0 : _this$props$room$owne3.id) === user.id) {
-          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-            key: user.id,
-            className: "player-name-div"
-          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-            className: "player-name"
-          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-            className: "fas fa-crown"
-          }), "\xA0", user.username), _this.checkFascists(user.id), _this.checkRole(user.id));
+        if (((_this$props$room$owne = _this.props.room.owner) === null || _this$props$room$owne === void 0 ? void 0 : _this$props$room$owne.id) === user.id) {
+          return _this.showUser(user, true);
         } else {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
             key: user.id,
-            className: "player-name-div"
+            className: user.isKilled ? "player-name-div is-killed" : "player-name-div"
           }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-            className: "player-name"
-          }, user.username), _this.checkFascists(user.id), _this.checkRole(user.id));
+            className: "player-name dropdown-toggle",
+            type: "button",
+            id: "dropdownMenuButton",
+            "data-toggle": "dropdown",
+            "aria-haspopup": "true",
+            "aria-expanded": "false"
+          }, user.username), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            className: "dropdown-menu",
+            "aria-labelledby": "dropdownMenuButton"
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+            className: "dropdown-item",
+            onClick: function onClick(e) {
+              return _this.kickUser(e, user.id);
+            }
+          }, "Kick ", user.username)), user.isKilled ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+            className: "is-killed-icon fas fa-skull-crossbones"
+          }) : false, _this.checkFascists(user.id), _this.checkRole(user.id));
         }
       });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "showPlayers", function () {
+      var _this$props$authUser, _this$props$room$owne3;
+
+      var defaultView = _this.props.users.map(function (user) {
+        var _this$props$room$owne2;
+
+        return ((_this$props$room$owne2 = _this.props.room.owner) === null || _this$props$room$owne2 === void 0 ? void 0 : _this$props$room$owne2.id) === user.id ? _this.showUser(user, true) : _this.showUser(user);
+      });
+
+      return ((_this$props$authUser = _this.props.authUser) === null || _this$props$authUser === void 0 ? void 0 : _this$props$authUser.id) === ((_this$props$room$owne3 = _this.props.room.owner) === null || _this$props$room$owne3 === void 0 ? void 0 : _this$props$room$owne3.id) ? _this.ownerView() : defaultView;
     });
 
     return _this;
@@ -88955,7 +89136,8 @@ var mapStateToProps = function mapStateToProps(state) {
       room = state.room;
   return {
     authUser: users.authUser,
-    room: room
+    room: room,
+    users: users.users
   };
 };
 
@@ -90125,6 +90307,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _appSettings__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../appSettings */ "./resources/js/appSettings.js");
 /* harmony import */ var _components_Universal_Notification__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../components/Universal/Notification */ "./resources/js/components/Universal/Notification.js");
 /* harmony import */ var _redux_actions_room_actions__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../redux/actions/room-actions */ "./resources/js/redux/actions/room-actions.js");
+/* harmony import */ var _redux_actions_users_actions__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../redux/actions/users-actions */ "./resources/js/redux/actions/users-actions.js");
 
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -90169,6 +90352,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
+
 var Room =
 /*#__PURE__*/
 function (_Component) {
@@ -90182,7 +90366,6 @@ function (_Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Room).call(this, props));
 
     _defineProperty(_assertThisInitialized(_this), "state", {
-      users: [],
       leftUsers: [],
       loggedIn: false,
       loaded: false,
@@ -90212,12 +90395,10 @@ function (_Component) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "onUserJoin", function (user) {
-      if (!_this.state.users.some(function (u) {
+      if (!_this.props.users.some(function (u) {
         return u.id === user.id;
       })) {
-        _this.setState({
-          users: [].concat(_toConsumableArray(_this.state.users), [user])
-        });
+        _this.props.dispatch(Object(_redux_actions_users_actions__WEBPACK_IMPORTED_MODULE_10__["addUser"])(user));
       }
 
       if (_this.state.leftUsers.some(function (id) {
@@ -90241,13 +90422,12 @@ function (_Component) {
           return id === user.id;
         })) {
           _this.setState({
-            users: _this.state.users.filter(function (u) {
-              return u.id !== user.id;
-            }),
             leftUsers: _this.state.leftUsers.filter(function (id) {
               return id !== user.id;
             })
           });
+
+          _this.props.dispatch(Object(_redux_actions_users_actions__WEBPACK_IMPORTED_MODULE_10__["deleteUser"])(user.id));
 
           _this.props.room.owner.id === user.id ? _this.getRoom() : false;
         }
@@ -90278,6 +90458,12 @@ function (_Component) {
         }
       }, _callee);
     })));
+
+    _defineProperty(_assertThisInitialized(_this), "getUsers", function () {
+      axios.get("/api/v1/rooms/".concat(_this.props.match.params.id, "/users")).then(function (response) {
+        _this.props.dispatch(Object(_redux_actions_users_actions__WEBPACK_IMPORTED_MODULE_10__["setUsers"])(response.data.data));
+      });
+    });
 
     _defineProperty(_assertThisInitialized(_this), "setActive", function () {
       axios.post("/api/v1/rooms/".concat(_this.props.match.params.id, "/active"))["catch"](function (err) {
@@ -90321,11 +90507,8 @@ function (_Component) {
                 return this.getRoom();
 
               case 2:
-                Echo.join("room.".concat(this.props.room.id)).here(function (users) {
-                  _this2.setState({
-                    users: users
-                  });
-                }).joining(function (user) {
+                this.getUsers();
+                Echo.join("room.".concat(this.props.room.id)).joining(function (user) {
                   _this2.onUserJoin(user);
                 }).leaving(function (user) {
                   _this2.onUserLeave(user);
@@ -90364,11 +90547,27 @@ function (_Component) {
                   clearInterval(_this2.state.timer);
 
                   _this2.props.dispatch(Object(_redux_actions_room_actions__WEBPACK_IMPORTED_MODULE_9__["setWinner"])(e.winner));
+
+                  if (e.authUser.id === _this2.props.authUser.id) {
+                    _this2.props.dispatch(Object(_redux_actions_users_actions__WEBPACK_IMPORTED_MODULE_10__["setAuthUser"])(e.authUser));
+                  }
                 }).listen('.set-inactive', function (e) {
                   _this2.props.dispatch(Object(_redux_actions_room_actions__WEBPACK_IMPORTED_MODULE_9__["editActive"])(0));
+
+                  _this2.props.users.map(function (user) {
+                    _this2.props.dispatch(Object(_redux_actions_users_actions__WEBPACK_IMPORTED_MODULE_10__["changeUserIsKilled"])(user.id, false));
+                  });
+                }).listen('.killed-player', function (e) {
+                  clearInterval(_this2.state.timer);
+
+                  if (e.killedPlayer.id === _this2.props.authUser.id) {
+                    _this2.props.dispatch(Object(_redux_actions_users_actions__WEBPACK_IMPORTED_MODULE_10__["setAuthUser"])(e.killedPlayer));
+                  }
+
+                  _this2.props.dispatch(Object(_redux_actions_users_actions__WEBPACK_IMPORTED_MODULE_10__["changeUserIsKilled"])(e.killedPlayer.id, true));
                 });
 
-              case 3:
+              case 4:
               case "end":
                 return _context2.stop();
             }
@@ -90397,7 +90596,8 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this3 = this;
+      var _this3 = this,
+          _this$props$users;
 
       if (this.props.room.active) {
         return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_components_Room_Game__WEBPACK_IMPORTED_MODULE_2__["default"], {
@@ -90406,8 +90606,7 @@ function (_Component) {
           },
           rotatePresident: function rotatePresident() {
             return _this3.rotatePresident();
-          },
-          users: this.state.users
+          }
         });
       }
 
@@ -90432,11 +90631,9 @@ function (_Component) {
         className: "room-name"
       }, "Room: ", this.props.room.name), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("p", {
         className: "player-count"
-      }, this.state.users.length, "/", this.props.room.max_players, " Players"))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+      }, (_this$props$users = this.props.users) === null || _this$props$users === void 0 ? void 0 : _this$props$users.length, "/", this.props.room.max_players, " Players"))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
         className: "row"
-      }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_components_Room_Lobby_PlayersLobby__WEBPACK_IMPORTED_MODULE_5__["default"], {
-        users: this.state.users
-      }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_components_Room_Lobby_ChatLobby__WEBPACK_IMPORTED_MODULE_4__["default"], null)), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_components_Room_Lobby_PlayersLobby__WEBPACK_IMPORTED_MODULE_5__["default"], null), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_components_Room_Lobby_ChatLobby__WEBPACK_IMPORTED_MODULE_4__["default"], null)), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
         className: "row"
       }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_components_Room_Lobby__WEBPACK_IMPORTED_MODULE_3__["default"], {
         setActive: function setActive() {
@@ -90449,8 +90646,8 @@ function (_Component) {
           return _this3.test();
         }
       }, "Launch demo modal"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+        id: "test",
         className: "modal fade right",
-        id: "exampleModalPreview",
         tabIndex: "-1",
         role: "dialog",
         "aria-labelledby": "exampleModalPreviewLabel",
@@ -90485,7 +90682,8 @@ var mapStateToProps = function mapStateToProps(state) {
       room = state.room;
   return {
     authUser: users.authUser,
-    room: room
+    room: room,
+    users: users.users
   };
 };
 
@@ -90680,16 +90878,45 @@ var deleteAllMessages = function deleteAllMessages() {
 /*!*****************************************************!*\
   !*** ./resources/js/redux/actions/users-actions.js ***!
   \*****************************************************/
-/*! exports provided: setAuthUser */
+/*! exports provided: setAuthUser, setUsers, addUser, deleteUser, changeUserIsKilled */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setAuthUser", function() { return setAuthUser; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setUsers", function() { return setUsers; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addUser", function() { return addUser; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteUser", function() { return deleteUser; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "changeUserIsKilled", function() { return changeUserIsKilled; });
 var setAuthUser = function setAuthUser(authUser) {
   return {
     type: 'SET_AUTH_USER',
     authUser: authUser
+  };
+};
+var setUsers = function setUsers(users) {
+  return {
+    type: 'SET_USERS',
+    users: users
+  };
+};
+var addUser = function addUser(user) {
+  return {
+    type: 'ADD_USER',
+    user: user
+  };
+};
+var deleteUser = function deleteUser(id) {
+  return {
+    type: 'DELETE_USER',
+    id: id
+  };
+};
+var changeUserIsKilled = function changeUserIsKilled(id, value) {
+  return {
+    type: 'CHANGE_USER_IS_KILLED',
+    id: id,
+    value: value
   };
 };
 
@@ -90838,6 +91065,14 @@ var room = function room() {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -90845,7 +91080,9 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 var users = function users() {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
+    users: []
+  };
   var action = arguments.length > 1 ? arguments[1] : undefined;
 
   switch (action.type) {
@@ -90854,10 +91091,39 @@ var users = function users() {
         authUser: action.authUser
       });
 
+    case 'SET_USERS':
+      return _objectSpread({}, state, {
+        users: action.users
+      });
+
+    case 'ADD_USER':
+      return _objectSpread({}, state, {
+        users: [].concat(_toConsumableArray(state.users), [action.user])
+      });
+
+    case 'DELETE_USER':
+      return _objectSpread({}, state, {
+        users: state.users.filter(function (user) {
+          return user.id !== action.id;
+        })
+      });
+
+    case 'CHANGE_USER_IS_KILLED':
+      return _objectSpread({}, state, {
+        users: changeUserIsKilled(state, action)
+      });
+
     default:
       return state;
   }
 };
+
+function changeUserIsKilled(state, action) {
+  return state.users.map(function (user) {
+    user.id === action.id ? user.isKilled = action.value : false;
+    return user;
+  });
+}
 
 /* harmony default export */ __webpack_exports__["default"] = (users);
 
@@ -90899,8 +91165,8 @@ var store = Object(redux__WEBPACK_IMPORTED_MODULE_0__["createStore"])(_reducers_
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! E:\Programma's\Documents\A-Coderen\Coderen\The%20SS%20-%20SecretHitler\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! E:\Programma's\Documents\A-Coderen\Coderen\The%20SS%20-%20SecretHitler\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\joost\Desktop\The%20SS%20-%20SecretHitler\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\joost\Desktop\The%20SS%20-%20SecretHitler\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

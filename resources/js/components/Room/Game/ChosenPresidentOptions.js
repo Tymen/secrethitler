@@ -17,8 +17,8 @@ class ChosenPresidentOptions extends Component {
     }
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (this.props.room?.second <= 0) {
-            if (this.props.room.president.id === this.props.authUser.id ){
-                axios.get(`/api/v1/rooms/${this.props.room.id}/showReceivedChan`)
+            if (this.props.room?.president?.id === this.props.authUser?.id ){
+                axios.get(`/api/v1/rooms/${this.props.room?.id}/showReceivedChan`)
             }
         }
     }

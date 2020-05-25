@@ -6,8 +6,8 @@ import PresidentTruthBluff from "./PresidentTruthBluff";
 import ChancellorTruthBluff from "./ChancellorTruthBluff";
 import ChosenPresidentOptions from "./ChosenPresidentOptions";
 import ChosenChancellorOptions from "./ChosenChancellorOptions"
-
 import ChoosePolicy from "./ChoosePolicy";
+import KillAPlayer from "./KillAPlayer";
 import SeePolicies from "./SeePolicies";
 import SelectNextPresident from "./SelectNextPresident";
 
@@ -15,33 +15,33 @@ class GameInteractionBlock extends Component {
     loadComponents = () => {
         const isPresident = this.props.authUser.id === this.props.room.president?.id;
         const isChancellor = this.props.authUser.id === this.props.room.chancellor?.id;
+        const isKilled = this.props.authUser.isKilled;
         const stage = this.props.room.stage;
-
         switch (true) {
             case stage === 1 && isPresident:
-                return <ChooseChancellor users={this.props.users}/>;
-            case stage === 2:
+                return <ChooseChancellor/>;
+            case stage === 2 && !isKilled:
                 return <Vote/>;
-            case stage === 3 && isPresident:
+            case stage === 3 && isPresident && !isKilled:
                 return <ChoosePolicy/>;
-            case stage === 4 && isChancellor :
+            case stage === 4 && isChancellor && !isKilled:
                 return <ChoosePolicy/>;
-            case stage === 5 && isPresident:
+            case stage === 5 && isPresident && !isKilled:
                 return <PresidentTruthBluff/>;
             case stage === 6:
                 return <ChosenPresidentOptions/>;
-            case stage === 7 && isChancellor:
+            case stage === 7 && isChancellor && !isKilled:
                 return <ChancellorTruthBluff/>;
             case stage === 8:
                 return <ChosenChancellorOptions/>;
             case stage === 9 && isPresident:
                 return <SeePolicies/>;
             case stage === 10 && isPresident:
-                // See someone's role
-            case stage === 11 && isPresident:
-                return <SelectNextPresident  users={this.props.users}/>;
-            case stage === 12 && isPresident:
-                // Kill player
+            // See someone's role
+            case stage === 11 && isPresident && !isKilled:
+                return <SelectNextPresident/>;
+            case stage === 12 && isPresident && !isKilled:
+                return <KillAPlayer/>;
             default:
                 return (
                     <div>
@@ -65,6 +65,6 @@ class GameInteractionBlock extends Component {
 
 const mapStateToProps = state => {
     const {room, users} = state;
-    return {room: room, authUser: users.authUser}
+    return {room: room, authUser: users.authUser, users: users.users}
 }
 export default connect(mapStateToProps)(GameInteractionBlock);
