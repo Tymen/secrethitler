@@ -6,6 +6,7 @@ use App\Events\KilledPlayerEvent;
 use App\Events\PresidentChosenTruthBluff;
 use App\Events\ChancellorChosenTruthBluff;
 use App\Events\resetStage;
+use App\Events\RotatePresidentEvent;
 use App\Events\SetInactive;
 use App\Events\ShowChosenPoliciesPresident;
 use App\Events\ShowReceivedChan;
@@ -195,7 +196,17 @@ class RoomsApiController extends Controller
 
         return response()->json(['message' => 'completed']);
     }
-
+    public function newPresident(Room $room, Request $request)
+    {
+        $this->authorize('isPresident', $room);
+        $president = $room->getUserByRole('President');
+        $president->removeRole('President');
+        $id = intval($request->uid);
+        $newPres = User::find($id);
+        $newPres->assignRole('President');
+        event(new RotatePresidentEvent($room, ['id' => $id, 'username' => $newPres->username]));
+        return response()->json(['message' => 'completed']);
+    }
     public function setInactive(Room $room)
     {
         $this->authorize('isHost', $room);

@@ -9,6 +9,7 @@ import ChosenChancellorOptions from "./ChosenChancellorOptions"
 import ChoosePolicy from "./ChoosePolicy";
 import KillAPlayer from "./KillAPlayer";
 import SeePolicies from "./SeePolicies";
+import SelectNextPresident from "./SelectNextPresident";
 
 class GameInteractionBlock extends Component {
     loadComponents = () => {
@@ -35,10 +36,8 @@ class GameInteractionBlock extends Component {
                 return <ChosenChancellorOptions/>;
             case stage === 9 && isPresident:
                 return <SeePolicies/>;
-            case stage === 10 && isPresident:
-                // See someone's role
             case stage === 11 && isPresident && !isKilled:
-                // Pick next president
+                return <SelectNextPresident/>;
             case stage === 12 && isPresident && !isKilled:
                 return <KillAPlayer/>;
             default:
