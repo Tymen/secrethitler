@@ -4,6 +4,8 @@ import Lobby from "../components/Room/Lobby";
 import ChatLobby from "../components/Room/Lobby/ChatLobby";
 import PlayersLobby from "../components/Room/Lobby/PlayersLobby";
 import {connect} from 'react-redux';
+import {messagesConfig} from "../appSettings";
+import Notification from "../components/Universal/Notification";
 
 import {
     setBoardFascist,
@@ -19,28 +21,28 @@ import {
     setPolicies,
     setWinner
 } from "../redux/actions/room-actions";
-
+import {addUser, changeUserIsKilled, deleteUser, setUsers, setAuthUser} from "../redux/actions/users-actions";
 
 class Room extends Component {
 
     state = {
-        users: [],
         leftUsers: [],
         loggedIn: false,
         loaded: false,
         timer: 0,
+        getMsg: messagesConfig.pages.home,
     }
-
+    constructor(props) {
+        super(props);
+        this.child = React.createRef();
+    };
     async componentDidMount() {
 
         await this.getRoom()
 
+        this.getUsers()
+
         Echo.join(`room.${this.props.room.id}`)
-            .here((users) => {
-                this.setState({
-                    users: users
-                })
-            })
             .joining((user) => {
                 this.onUserJoin(user)
             })
@@ -84,23 +86,39 @@ class Room extends Component {
             .listen('.winner', (e) => {
                 clearInterval(this.state.timer);
                 this.props.dispatch(setWinner(e.winner));
+                if(e.authUser.id === this.props.authUser.id){
+                    this.props.dispatch(setAuthUser(e.authUser));
+                }
             })
             .listen('.set-inactive', (e) => {
                 this.props.dispatch(editActive(0))
+                this.props.users.map(user => {
+                   this.props.dispatch(changeUserIsKilled(user.id, false))
+                })
+            })
+            .listen('.killed-player', (e) => {
+                clearInterval(this.state.timer);
+                if(e.killedPlayer.id === this.props.authUser.id){
+                    this.props.dispatch(setAuthUser(e.killedPlayer));
+                }
+                this.props.dispatch(changeUserIsKilled(e.killedPlayer.id, true));
             })
     }
 
     componentWillUnmount() {
         Echo.leave(`room.${this.props.room.id}`)
     }
+
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (this.props.room.winner){
             this.winner();
         }
     }
+
     winner = () => {
         $('.modal').modal();
     }
+
     timer = () => {
         const timer = setInterval(() => {
             this.setState({timer: timer})
@@ -117,10 +135,8 @@ class Room extends Component {
     }
 
     onUserJoin = (user) => {
-        if (!this.state.users.some(u => u.id === user.id)) {
-            this.setState({
-                users: [...this.state.users, user]
-            })
+        if (!this.props.users.some(u => u.id === user.id)) {
+            this.props.dispatch(addUser(user))
         }
 
         if (this.state.leftUsers.some(id => id === user.id)) {
@@ -137,9 +153,9 @@ class Room extends Component {
         setTimeout(() => {
             if (this.state.leftUsers.some(id => id === user.id)) {
                 this.setState({
-                    users: this.state.users.filter(u => u.id !== user.id),
                     leftUsers: this.state.leftUsers.filter(id => id !== user.id),
                 })
+                this.props.dispatch(deleteUser(user.id))
 
                 this.props.room.owner.id === user.id ? this.getRoom() : false;
             }
@@ -152,10 +168,20 @@ class Room extends Component {
         })
 
         this.timer()
-    };
+    }
+
+    getUsers = () => {
+        axios.get(`/api/v1/rooms/${this.props.match.params.id}/users`).then(response => {
+            this.props.dispatch(setUsers(response.data.data))
+        })
+    }
 
     setActive = () => {
         axios.post(`/api/v1/rooms/${this.props.match.params.id}/active`)
+            .catch(err => {
+                console.log(err)
+                this.child.getNotify({type: "error", title: "Room", message: err.response.data.message});
+        })
     };
 
     setInactive = () => {
@@ -164,18 +190,20 @@ class Room extends Component {
             }
         )
     };
+
     removeWinnerWindow = () =>{
         this.props.dispatch(setWinner(null));
     };
+
     render() {
         if (this.props.room.active) {
             return (
-                <Game setInactive={() => this.setInactive()} rotatePresident={() => this.rotatePresident()}
-                      users={this.state.users}/>
+                <Game setInactive={() => this.setInactive()} rotatePresident={() => this.rotatePresident()}/>
             )
         }
         return (
             <div className="in-lobby">
+                <Notification onRef={ref => (this.child = ref)} />
                 <div className="container">
                     <div className="row">
                         <img className="home-logo" src="/images/Secrethitler-no-bg.png"/>
@@ -183,11 +211,11 @@ class Room extends Component {
                     <div className="row">
                         <div className="room-info">
                             <p className="room-name">Room: {this.props.room.name}</p>
-                            <p className="player-count">{this.state.users.length}/{this.props.room.max_players} Players</p>
+                            <p className="player-count">{this.props.users?.length}/{this.props.room.max_players} Players</p>
                         </div>
                     </div>
                     <div className="row">
-                        <PlayersLobby users={this.state.users}/>
+                        <PlayersLobby/>
                         <ChatLobby/>
 
                     </div>
@@ -199,7 +227,7 @@ class Room extends Component {
                 <button onClick={() => this.test()}>
                     Launch demo modal
                 </button>
-                <div className="modal fade right" id="exampleModalPreview" tabIndex="-1" role="dialog"
+                <div id="test" className="modal fade right" tabIndex="-1" role="dialog"
                      aria-labelledby="exampleModalPreviewLabel" aria-hidden="true">
                     <div className="modal-dialog-full-width modal-dialog momodel modal-fluid"
                          role="document">
@@ -223,7 +251,7 @@ class Room extends Component {
 
 const mapStateToProps = state => {
     const {users, room} = state
-    return {authUser: users.authUser, room: room}
+    return {authUser: users.authUser, room: room, users: users.users}
 }
 
 export default connect(mapStateToProps)(Room)

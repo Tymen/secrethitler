@@ -31,7 +31,7 @@ class Room extends Model
 
     public function rotatePresident()
     {
-        $users = $this->users;
+        $users = $this->users()->where('is_killed', '=', false)->get();
         $userIds = $users->pluck('id')->all();
 
         $president = $this->getUserByRole('President');

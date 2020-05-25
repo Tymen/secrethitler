@@ -8,7 +8,7 @@ class ChooseChancellor extends Component {
     }
 
     handleSubmit = () => {
-        axios.post(`/api/v1/rooms/${this.props.room.id}/chancellor`, {uid: this.state.checkedUser})
+        axios.post(`/api/v1/rooms/${this.props.room.id}/new_president`, {uid: this.state.checkedUser})
     }
 
     isChecked = (userId) => {
@@ -24,7 +24,7 @@ class ChooseChancellor extends Component {
     }
 
     showOptions = () => {
-        return this.props.users.filter(user => !user.isKilled).map(user => {
+        return this.props.users.map(user => {
             if (user.id !== this.props.authUser?.id) {
                 if (user.id === this.state.checkedUser) {
                     return (
@@ -62,7 +62,7 @@ class ChooseChancellor extends Component {
                             <p>{this.props.room?.second}</p>
                         </div>
                         <div className="col-8">
-                            <p>Choose one of the players to be the chancellor</p>
+                            <p>Choose one of the players to be the president</p>
                             <p className="under-title">(select one player and click submit to continue)</p>
                         </div>
                         <div className="col-2">

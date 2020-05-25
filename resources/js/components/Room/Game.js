@@ -25,6 +25,8 @@ class Game extends Component {
             }).catch(err => {
             })
         setTimeout(this.getFascists, 1000)
+        setTimeout(() => $('#highlight-div').addClass('highlight'), 2500)
+        setTimeout(() =>  $('#highlight-div').removeClass('highlight'), 4500)
     }
 
     getFascists = () => {
@@ -57,7 +59,7 @@ class Game extends Component {
                     <div className="row">
                         <div className="col-md-2 col-12 bg-dark col-wrap">
                             <div className="in-game">
-                                <PlayersLobby users={this.props.users} page='Game' fascists={this.state.fascists}
+                                <PlayersLobby page='Game' fascists={this.state.fascists}
                                               hitler={this.state.hitler}/>
                             </div>
                         </div>
@@ -83,8 +85,9 @@ class Game extends Component {
                         <div className="col-2 bg-grey">
 
                         </div>
-                        <div className="col-7 bg-dark-grey">
+                        <div id="highlight-div" className="col-7 bg-dark-grey">
                             <GameInteractionBlock users={this.props.users}/>
+                            <div className="ball-5"></div>
                         </div>
                         <div className="col-3 bg-grey">
                             <button onClick={() => this.props.setInactive()}>Inactive</button>
@@ -106,8 +109,8 @@ class Game extends Component {
 }
 
 const mapStateToProps = state => {
-    const {room} = state
-    return {room: room}
+    const {room, users} = state
+    return {room: room, users: users.users}
 }
 export default connect(mapStateToProps)(Game)
 

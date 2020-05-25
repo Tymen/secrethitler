@@ -26,6 +26,7 @@ Route::namespace('Api')->group(function () {
 
                 Route::prefix('{room}')->group(function () {
                     Route::get('/', 'RoomsApiController@show');
+                    Route::get('/users', 'RoomsApiController@users');
                     Route::get('fascists', 'RoomsApiController@getFascists');
                     Route::get('get_policies', 'RoomsApiController@getPolicies');
                     Route::get('getboard', 'RoomsApiController@getBoard');
@@ -35,6 +36,7 @@ Route::namespace('Api')->group(function () {
                     Route::get('get_chancellor_policies', 'RoomsApiController@getChancellorPolicies');
 
                     Route::post('president', 'RoomsApiController@rotatePresident');
+                    Route::post('new_president', 'RoomsApiController@newPresident');
                     Route::post('set_policies', 'RoomsApiController@setPolicies');
                     Route::post('chancellor', 'RoomsApiController@setChancellor');
                     Route::post('president_truth_bluff', 'RoomsApiController@presidentTruthBluff');
@@ -44,6 +46,7 @@ Route::namespace('Api')->group(function () {
 
                     Route::post('chosen_president_options', 'RoomsApiController@showChosenPresidentPolicies');
                     Route::post('chosen_chancellor_options', 'RoomsApiController@showChosenChancellorPolicies');
+                    Route::post('killed_player', 'RoomsApiController@killedPlayer');
 
                     Route::post('choose_role', 'RoomsApiController@chooseRole');
                     Route::post('change_host', 'RoomsApiController@changeHost');

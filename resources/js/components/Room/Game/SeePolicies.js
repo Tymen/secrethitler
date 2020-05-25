@@ -8,17 +8,17 @@ class ChosenPresidentOptions extends Component {
     }
 
     componentDidMount() {
-        axios.get(`/api/v1/rooms/${this.props.room.id}/get_president_policies`)
+        axios.get(`/api/v1/rooms/${this.props.room.id}/get_policies`)
             .then(response => {
                 this.setState({
-                    presidentAnswer: response.data.options,
+                    presidentAnswer: response.data.result,
                 })
-            }).catch(error => {})
+            })
     }
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (this.props.room?.second <= 0) {
-            if (this.props.room?.president?.id === this.props.authUser?.id ){
-                axios.get(`/api/v1/rooms/${this.props.room?.id}/showReceivedChan`)
+            if (this.props.room.president.id === this.props.authUser.id ){
+                axios.post(`/api/v1/rooms/${this.props.room.id}/check`)
             }
         }
     }
@@ -40,7 +40,7 @@ class ChosenPresidentOptions extends Component {
                         <p>{this.props.room?.second}</p>
                     </div>
                     <div className="col-8">
-                        <p>The president claims he has received these cards</p>
+                        <p>The next president will receive these cards</p>
                         <p className="under-title"></p>
                     </div>
                     <div className="col-2">

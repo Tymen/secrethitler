@@ -3,15 +3,20 @@
 namespace App\Http\Controllers\Api;
 
 use App\Events\ChooseRoleEvent;
+use App\Events\KilledPlayerEvent;
 use App\Events\PresidentChosenTruthBluff;
 use App\Events\ChancellorChosenTruthBluff;
 use App\Events\resetStage;
+use App\Events\RotatePresidentEvent;
 use App\Events\SetInactive;
 use App\Events\ShowChosenPoliciesPresident;
 use App\Events\ShowReceivedChan;
 use App\Events\TruthEvent;
+use App\Events\WinnerEvent;
+use App\Http\Resources\UserCollection;
 use App\Room;
 use App\User;
+use App\Http\Resources\User as UserResource;
 use App\RoomState;
 use Illuminate\Http\Request;
 use App\Events\KickUserEvent;
@@ -192,7 +197,17 @@ class RoomsApiController extends Controller
 
         return response()->json(['message' => 'completed']);
     }
-
+    public function newPresident(Room $room, Request $request)
+    {
+        $this->authorize('isPresident', $room);
+        $president = $room->getUserByRole('President');
+        $president->removeRole('President');
+        $id = intval($request->uid);
+        $newPres = User::find($id);
+        $newPres->assignRole('President');
+        event(new RotatePresidentEvent($room, ['id' => $id, 'username' => $newPres->username]));
+        return response()->json(['message' => 'completed']);
+    }
     public function setInactive(Room $room)
     {
         $this->authorize('isHost', $room);
@@ -208,9 +223,8 @@ class RoomsApiController extends Controller
             $user->vote_type = NULL;
             $user->save();
         });
+
         event(new SetInactive($room));
-        $room->active = false;
-        $room->save();
 
         return response()->json(['message' => 'completed']);
     }
@@ -338,13 +352,13 @@ class RoomsApiController extends Controller
                 $changePolicies->save();
                 event(new sendPoliciesChancellor($room, $getChan->id));
             } else {
-                if($changePolicies->chosen_policies == "Fascist"){
+
+                if ($changePolicies->chosen_policies == "Fascist") {
                     $changePolicies->fascist_board_amount += 1;
                     $changePolicies->has_done = false;
-                }else{
+                } else {
                     $changePolicies->liberal_board_amount += 1;
                 }
-
                 $changePolicies->chosen_policies = null;
                 $board = (object)[
                     "fascist" => $room->roomState->fascist_board_amount,
@@ -396,7 +410,8 @@ class RoomsApiController extends Controller
             $id = intval($request->uid);
         } else {
             $condition = [
-                ['id', '!=', Auth::id()]
+                ['id', '!=', Auth::id()],
+                ['is_killed', false]
             ];
 
             $chancellor ? $condition[] = ['id', '!=', $chancellor->id] : false;
@@ -409,6 +424,7 @@ class RoomsApiController extends Controller
 
         abort_unless($user, 400, 'User does not exist');
         abort_unless(Auth::id() !== $id, 400, 'Can not assign yourself');
+        abort_unless(!$user->is_killed, 400, 'This user has been killed!');
 
         if ($chancellor) {
             abort_if($chancellor->id === $id, 400, 'Can not choose last chancellor again');
@@ -442,6 +458,35 @@ class RoomsApiController extends Controller
 
         return response()->json(['message' => 'completed']);
     }
+    public function killedPlayer(Room $room, Request $request)
+    {
+        $this->authorize('isPresident', $room);
+
+        $users = $room->users()->where([
+            ['id', '!=', Auth::id()],
+            ['is_killed', false]
+        ])->get();
+
+        $deadPlayer = Arr::random($users->all());
+
+        if ($request->uid) {
+            $deadPlayer = User::find($request->uid);
+            $deadPlayer->is_killed = true;
+            $deadPlayer->voted = true;
+            $deadPlayer->save();
+        }
+
+        event(new KilledPlayerEvent($room,
+            [
+                'id' => $deadPlayer->id,
+                'username' => $deadPlayer->username,
+                'isKilled' => $deadPlayer->is_killed
+            ]));
+
+        if ($deadPlayer->hasRole('Hitler')) {
+            event(new WinnerEvent($room, 'liberal', 'Hitler has been killed!'));
+        }
+    }
 
     public function setVote(Room $room, Request $request)
     {
@@ -462,13 +507,26 @@ class RoomsApiController extends Controller
         return response()->json(['message' => 'completed']);
     }
 
+    public function users(Room $room)
+    {
+        $users = $room->users;
+        !$users->pluck('id')->contains(Auth::id())
+            ? $users[] = (object)[
+            'id' => Auth::id(),
+            'username' => Auth::user()->username,
+            'is_killed' => Auth::user()->is_killed
+        ]
+            : false;
+
+        return new UserCollection($users);
+    }
+
     public function checkState(Room $room)
     {
-        $this->authorize('isHost', $room);
+        $this->authorize('isPresident', $room);
 
         $total = $room->users->count();
         $condition = !$room->roomState->has_done && $room->roomState->stage === 8;
-
         switch (true) {
             case ($total === 5 || $total === 6) && $condition:
                 $room->roomState->checkStateLow();
