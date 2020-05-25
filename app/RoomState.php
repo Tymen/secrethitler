@@ -80,11 +80,14 @@ class RoomState extends Model
                 $this->has_done = true;
                 break;
             case 4:
+                $this->room->rotatePresident();
+                break;
             case 5:
                 $this->changeState(12);
                 break;
             default:
                 $this->room->rotatePresident();
+                break;
         }
         $this->save();
     }
@@ -93,15 +96,17 @@ class RoomState extends Model
     {
         switch ($this->fascist_board_amount) {
             case 2:
-                // see role event
+                $this->changeState(10);
             case 3:
                 $this->changeState(11);
             case 4:
+                $this->room->rotatePresident();
             case 5:
                 $this->changeState(12);
                 break;
             default:
                 $this->room->rotatePresident();
+                break;
         }
     }
 
@@ -110,15 +115,17 @@ class RoomState extends Model
         switch ($this->fascist_board_amount) {
             case 1:
             case 2:
-                // see role event
+                $this->changeState(10);
             case 3:
                 // choose president event
             case 4:
+                $this->room->rotatePresident();
             case 5:
                 $this->changeState(12);
                 break;
             default:
                 $this->room->rotatePresident();
+                break;
         }
     }
 }

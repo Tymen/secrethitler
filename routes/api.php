@@ -48,6 +48,7 @@ Route::namespace('Api')->group(function () {
                     Route::post('chosen_chancellor_options', 'RoomsApiController@showChosenChancellorPolicies');
                     Route::post('killed_player', 'RoomsApiController@killedPlayer');
 
+                    Route::post('choose_role', 'RoomsApiController@chooseRole');
                     Route::post('change_host', 'RoomsApiController@changeHost');
                     Route::post('active', 'RoomsApiController@setActive');
                     Route::post('check', 'RoomsApiController@checkState');

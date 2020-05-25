@@ -87691,6 +87691,217 @@ var mapStateToProps = function mapStateToProps(state) {
 
 /***/ }),
 
+/***/ "./resources/js/components/Room/Game/ChooseRole.js":
+/*!*********************************************************!*\
+  !*** ./resources/js/components/Room/Game/ChooseRole.js ***!
+  \*********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+
+var ChooseRole =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(ChooseRole, _Component);
+
+  function ChooseRole() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    _classCallCheck(this, ChooseRole);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(ChooseRole)).call.apply(_getPrototypeOf2, [this].concat(args)));
+
+    _defineProperty(_assertThisInitialized(_this), "state", {
+      checkedUser: '',
+      checked: false,
+      role: ''
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "showRole", function () {
+      var liberal = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        src: "/images/liberal-role-cardSmall-JPG.jpg",
+        className: "answer-images"
+      });
+      var fascist = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        src: "/images/fascist-role-cardJPG.jpg",
+        className: "answer-images"
+      });
+      return _this.state.role === 'Fascist' ? fascist : liberal;
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "handleSubmit", function () {
+      axios.post("/api/v1/rooms/".concat(_this.props.room.id, "/choose_role"), {
+        user: _this.state.checkedUser
+      }).then(function (response) {
+        console.log(response);
+
+        _this.setState({
+          checked: true
+        });
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "isChecked", function (user) {
+      _this.setState({
+        checkedUser: user
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "showOptions", function () {
+      return _this.props.users.map(function (user) {
+        var _this$props$authUser;
+
+        if (user.id !== ((_this$props$authUser = _this.props.authUser) === null || _this$props$authUser === void 0 ? void 0 : _this$props$authUser.id)) {
+          if (user.id === _this.state.checkedUser.id) {
+            return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+              className: "options active",
+              key: user.id
+            }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+              className: "container-choose-chancellor"
+            }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+              type: "radio",
+              name: "radio",
+              onChange: function onChange() {
+                return _this.isChecked(user);
+              }
+            }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+              name: user.id,
+              className: "checkbox"
+            }), user.username));
+          } else {
+            return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+              className: "options",
+              key: user.id
+            }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+              className: "container-choose-chancellor"
+            }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+              type: "radio",
+              name: "radio",
+              onChange: function onChange() {
+                return _this.isChecked(user);
+              }
+            }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+              name: user.id,
+              className: "checkbox"
+            }), user.username));
+          }
+        }
+      });
+    });
+
+    return _this;
+  }
+
+  _createClass(ChooseRole, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      var channel = Echo["private"]("room.".concat(this.props.room.id));
+      channel.listen('.choose-role', function (e) {
+        _this2.setState({
+          role: e.role
+        });
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this3 = this;
+
+      if (this.state.checked) {
+        var _this$props$room;
+
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "header-choose-chancellor"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "row"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "col-2"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, (_this$props$room = this.props.room) === null || _this$props$room === void 0 ? void 0 : _this$props$room.second)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "col-8"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.state.checkedUser.username, " has this role:")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "col-2"
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "show-role"
+        }, this.showRole())));
+      } else {
+        var _this$props$room2;
+
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "header-choose-chancellor"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "row"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "col-2"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, (_this$props$room2 = this.props.room) === null || _this$props$room2 === void 0 ? void 0 : _this$props$room2.second)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "col-8"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Choose one of the players to see there role"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+          className: "under-title"
+        }, "(select one player and click submit to continue)")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "col-2"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          type: "submit",
+          className: "btn btn btn-explanation btn-chancellor",
+          onClick: function onClick(e) {
+            e.preventDefault();
+
+            _this3.handleSubmit();
+          }
+        }, "submit"))), this.showOptions()));
+      }
+    }
+  }]);
+
+  return ChooseRole;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+
+var mapStateToProps = function mapStateToProps(state) {
+  var room = state.room,
+      users = state.users;
+  return {
+    room: room,
+    authUser: users.authUser
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps)(ChooseRole));
+
+/***/ }),
+
 /***/ "./resources/js/components/Room/Game/ChosenChancellorOptions.js":
 /*!**********************************************************************!*\
   !*** ./resources/js/components/Room/Game/ChosenChancellorOptions.js ***!
@@ -87984,9 +88195,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ChosenPresidentOptions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./ChosenPresidentOptions */ "./resources/js/components/Room/Game/ChosenPresidentOptions.js");
 /* harmony import */ var _ChosenChancellorOptions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./ChosenChancellorOptions */ "./resources/js/components/Room/Game/ChosenChancellorOptions.js");
 /* harmony import */ var _ChoosePolicy__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./ChoosePolicy */ "./resources/js/components/Room/Game/ChoosePolicy.js");
-/* harmony import */ var _KillAPlayer__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./KillAPlayer */ "./resources/js/components/Room/Game/KillAPlayer.js");
-/* harmony import */ var _SeePolicies__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./SeePolicies */ "./resources/js/components/Room/Game/SeePolicies.js");
-/* harmony import */ var _SelectNextPresident__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./SelectNextPresident */ "./resources/js/components/Room/Game/SelectNextPresident.js");
+/* harmony import */ var _ChooseRole__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./ChooseRole */ "./resources/js/components/Room/Game/ChooseRole.js");
+/* harmony import */ var _KillAPlayer__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./KillAPlayer */ "./resources/js/components/Room/Game/KillAPlayer.js");
+/* harmony import */ var _SeePolicies__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./SeePolicies */ "./resources/js/components/Room/Game/SeePolicies.js");
+/* harmony import */ var _SelectNextPresident__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./SelectNextPresident */ "./resources/js/components/Room/Game/SelectNextPresident.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -88006,6 +88218,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -88072,15 +88285,18 @@ function (_Component) {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ChosenChancellorOptions__WEBPACK_IMPORTED_MODULE_7__["default"], null);
 
         case stage === 9 && isPresident:
-          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_SeePolicies__WEBPACK_IMPORTED_MODULE_10__["default"], null);
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_SeePolicies__WEBPACK_IMPORTED_MODULE_11__["default"], null);
 
-        case stage === 10 && isPresident: // See someone's role
+        case stage === 10 && isPresident:
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ChooseRole__WEBPACK_IMPORTED_MODULE_9__["default"], {
+            users: _this.props.users
+          });
 
         case stage === 11 && isPresident && !isKilled:
-          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_SelectNextPresident__WEBPACK_IMPORTED_MODULE_11__["default"], null);
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_SelectNextPresident__WEBPACK_IMPORTED_MODULE_12__["default"], null);
 
         case stage === 12 && isPresident && !isKilled:
-          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_KillAPlayer__WEBPACK_IMPORTED_MODULE_9__["default"], null);
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_KillAPlayer__WEBPACK_IMPORTED_MODULE_10__["default"], null);
 
         default:
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
