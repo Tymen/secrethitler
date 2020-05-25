@@ -3,7 +3,6 @@
 namespace App\Events;
 
 use App\Room;
-use App\User;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -12,27 +11,29 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class UpdateStageEvent implements ShouldBroadcast
+class ChooseRoleEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $roomId;
-    public $stageNum;
+    public $role;
+    public $chosenPlayer;
 
     /**
      * Create a new event instance.
-     * @param $roomId
-     * @param $stageNum
+     *
+     * @param Room $room
+     * @param $role
+     * @param $chosenPlayer
      */
-    public function __construct($roomId, $stageNum)
+    public function __construct(Room $room, $role, $chosenPlayer)
     {
-        $this->roomId = $roomId;
-        $this->stageNum = $stageNum;
-        $room = Room::find($roomId);
+        $this->roomId = $room->id;
+        $this->role = $role;
+        $this->chosenPlayer = $chosenPlayer;
 
-        if ($stageNum === 9 || $stageNum === 12 || $stageNum === 11 || $stageNum === 10){
-            $room->roomState->startTimer($room->getUserByRole("President")->id);
-        }
+        $room->roomState->has_done = true;
+        $room->roomState->save();
     }
 
     /**
@@ -42,11 +43,11 @@ class UpdateStageEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PresenceChannel("room.{$this->roomId}");
+        return new PrivateChannel("room.{$this->roomId}");
     }
 
     public function broadcastAs()
     {
-        return 'update-stage';
+        return 'choose-role';
     }
 }

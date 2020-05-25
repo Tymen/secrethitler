@@ -3,7 +3,6 @@ import {Link} from "react-router-dom";
 import {connect} from "react-redux";
 
 class PlayersLobby extends Component {
-
     checkPage = () => {
         if (this.props.page === "Game") {
             return `${this.props.users.length}/${this.props.room.max_players} Players`
@@ -56,60 +55,50 @@ class PlayersLobby extends Component {
         axios.post(`/api/v1/rooms/${this.props.room.id}/kick/${id}`)
     }
 
-    showPlayers = () => {
+    showUser = (user, owner = false) => {
+        return (
+            <div key={user.id} className={user.isKilled ? "player-name-div is-killed" : "player-name-div"}>
+                <p className="player-name">
+                    {owner ? <i className="fas fa-crown"></i> : false}
+                    &nbsp;{user.username}
+                </p>
+                {user.isKilled ? <i className="is-killed-icon fas fa-skull-crossbones"></i> : false}
+                {this.checkFascists(user.id)}
+                {this.checkRole(user.id)}
+            </div>
+        )
+    }
+
+    ownerView = () => {
         return this.props.users.map(user => {
-            if (this.props.authUser?.id === this.props.room.owner?.id) {
-                if (this.props.room.owner?.id === user.id) {
-                    return (
-                        <div key={user.id} className="player-name-div">
-                            <p className="player-name">
-                                <i className="fas fa-crown"></i>
-                                &nbsp;{user.username}
-                            </p>
-                            {this.checkFascists(user.id)}
-                            {this.checkRole(user.id)}
-                        </div>
-                    )
-                } else {
-                    return (
-                        <div key={user.id} className="player-name-div">
-                            <p className="player-name dropdown-toggle" type="button" id="dropdownMenuButton"
-                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                {user.username}
-                            </p>
-                            <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a className="dropdown-item"
-                                   onClick={(e) => this.kickUser(e, user.id)}>Kick {user.username}</a>
-                            </div>
-                            {this.checkFascists(user.id)}
-                            {this.checkRole(user.id)}
-                        </div>
-                    )
-                }
-            }
             if (this.props.room.owner?.id === user.id) {
-                return (
-                    <div key={user.id} className="player-name-div">
-                        <p className="player-name">
-                            <i className="fas fa-crown"></i>
-                            &nbsp;{user.username}
-                        </p>
-                        {this.checkFascists(user.id)}
-                        {this.checkRole(user.id)}
-                    </div>
-                )
+                return this.showUser(user, true)
             } else {
                 return (
-                    <div key={user.id} className="player-name-div">
-                        <p className="player-name">
+                    <div key={user.id} className={user.isKilled ? "player-name-div is-killed" : "player-name-div"}>
+                        <p className="player-name dropdown-toggle" type="button" id="dropdownMenuButton"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             {user.username}
                         </p>
+                        <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a className="dropdown-item"
+                               onClick={(e) => this.kickUser(e, user.id)}>Kick {user.username}</a>
+                        </div>
+                        {user.isKilled ? <i className="is-killed-icon fas fa-skull-crossbones"></i> : false}
                         {this.checkFascists(user.id)}
                         {this.checkRole(user.id)}
                     </div>
                 )
             }
         })
+    }
+
+    showPlayers = () => {
+        const defaultView = this.props.users.map(user => {
+            return this.props.room.owner?.id === user.id ? this.showUser(user, true) : this.showUser(user)
+        })
+
+        return this.props.authUser?.id === this.props.room.owner?.id ? this.ownerView() : defaultView;
     }
 
     render() {
@@ -130,7 +119,7 @@ class PlayersLobby extends Component {
 
 const mapStateToProps = state => {
     const {users, room} = state
-    return {authUser: users.authUser, room: room}
+    return {authUser: users.authUser, room: room, users: users.users}
 }
 
 export default connect(mapStateToProps)(PlayersLobby)

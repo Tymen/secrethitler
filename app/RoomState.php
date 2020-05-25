@@ -28,6 +28,7 @@ class RoomState extends Model
         $this->save();
         event(new UpdateStageEvent($this->room->id, $value));
     }
+
     public function reset()
     {
         $this->ja = 0;
@@ -42,18 +43,19 @@ class RoomState extends Model
         $this->stage = 0;
         $this->save();
     }
+
     public function voteHandler()
     {
         $room = $this->load('room', 'room.users')->room;
         if ($this->ja > $this->nein) {
             $condition = $this->fascist_board_amount >= 4 && $room->getUserByRole('Chancellor')->hasRole('Hitler');
-            $event = $condition ? new WinnerEvent($room, "fascist") : new VotesDoneEvent($room);
+            $event = $condition ? new WinnerEvent($room, "fascist", 'Hitler has been elected as the chancellor') : new VotesDoneEvent($room);
             event($event);
         } else {
             $room->rotatePresident();
         }
 
-        foreach ($room->users as $user) {
+        foreach ($room->users()->where('is_killed', false)->get() as $user) {
             $user->voted = false;
             $user->save();
         }
@@ -74,27 +76,37 @@ class RoomState extends Model
     {
         switch ($this->fascist_board_amount) {
             case 3:
-                // policy check event
+                $this->changeState(9);
+                $this->has_done = true;
+                break;
             case 4:
+                $this->room->rotatePresident();
+                break;
             case 5:
-                // Killer event
+                $this->changeState(12);
+                break;
             default:
                 $this->room->rotatePresident();
+                break;
         }
+        $this->save();
     }
 
     public function checkStateMid()
     {
         switch ($this->fascist_board_amount) {
             case 2:
-                // see role event
+                $this->changeState(10);
             case 3:
-                // choose president event
+                $this->changeState(11);
             case 4:
+                $this->room->rotatePresident();
             case 5:
-                // Killer event
+                $this->changeState(12);
+                break;
             default:
                 $this->room->rotatePresident();
+                break;
         }
     }
 
@@ -103,14 +115,17 @@ class RoomState extends Model
         switch ($this->fascist_board_amount) {
             case 1:
             case 2:
-                // see role event
+                $this->changeState(10);
             case 3:
                 // choose president event
             case 4:
+                $this->room->rotatePresident();
             case 5:
-                // Killer event
+                $this->changeState(12);
+                break;
             default:
                 $this->room->rotatePresident();
+                break;
         }
     }
 }

@@ -683,7 +683,7 @@ body::-webkit-scrollbar-thumb {
 
 .player-name-block {
     margin: 0 0 0 -26px;
-    width: 135%;
+    width: 106%;
     height: 45px;
     background-color: #828282;
     max-width: none;
@@ -740,7 +740,7 @@ body::-webkit-scrollbar-thumb {
     border-top: 1px solid #9ea2a2 !important;
 }
 .name-of-room {
-    padding-top: 7px;
+    padding-top: 3px;
     color: #ffff;
     font-size: 20px;
 }
@@ -819,6 +819,33 @@ body::-webkit-scrollbar-thumb {
     color: white;
     border-bottom: 1px solid white;
     /*overflow: hidden;*/
+}
+
+.is-killed {
+    background:rgba(255,3,0,0.39);
+}
+.is-killed p {
+    opacity: 0.3;
+}
+.is-killed .president-container{
+    opacity: 0.3;
+}
+.is-killed  img {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 50px;
+    opacity: 0.3;
+}
+
+.is-killed-icon {
+    position: absolute;
+    right: 0;
+    top: 30%;
+    width: 50px;
+    font-size: 23px;
+    text-align: center;
 }
 
 .player-name-div p {
@@ -1243,7 +1270,7 @@ div.options > input:checked + .container-choose-chancellor{
 /*// Extra small devices (portrait phones, less than 576px)*/
 @media (max-width: 575.98px) {
     .card-login {
-        height: 18% !important;
+        height: 23% !important;
         width: 300px!important;
     }
     .input-room-name {
@@ -1530,4 +1557,10 @@ div.options > input:checked + .container-choose-chancellor{
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.show-role{
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
 }
