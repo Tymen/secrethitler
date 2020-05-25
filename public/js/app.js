@@ -87800,6 +87800,8 @@ function (_Component) {
         case stage === 9 && isPresident:
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_SeePolicies__WEBPACK_IMPORTED_MODULE_10__["default"], null);
 
+        case stage === 10 && isPresident: // See someone's role
+
         case stage === 11 && isPresident && !isKilled:
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_SelectNextPresident__WEBPACK_IMPORTED_MODULE_11__["default"], null);
 

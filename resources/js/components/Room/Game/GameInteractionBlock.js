@@ -36,6 +36,8 @@ class GameInteractionBlock extends Component {
                 return <ChosenChancellorOptions/>;
             case stage === 9 && isPresident:
                 return <SeePolicies/>;
+            case stage === 10 && isPresident:
+            // See someone's role
             case stage === 11 && isPresident && !isKilled:
                 return <SelectNextPresident/>;
             case stage === 12 && isPresident && !isKilled:
