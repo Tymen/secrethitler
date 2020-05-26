@@ -1342,6 +1342,9 @@ div.options > input:checked + .container-choose-chancellor{
     .president-container-p{
         margin: -8px 0 0px 10px;
     }
+    .chat {
+        width: 200%!important;
+    }
 }
 
 @media (min-width: 1620px) and (max-width: 2051px) {
