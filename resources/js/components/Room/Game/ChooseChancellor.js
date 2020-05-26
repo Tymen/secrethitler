@@ -25,7 +25,7 @@ class ChooseChancellor extends Component {
 
     showOptions = () => {
         return this.props.users.filter(user => !user.isKilled).map(user => {
-            if (user.id !== this.props.authUser?.id) {
+            if (user.id !== this.props.authUser?.id || user.id !== this.props.room.chancellor?.id ) {
                 if (user.id === this.state.checkedUser) {
                     return (
                         <div className="options active" key={user.id}>
