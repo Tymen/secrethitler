@@ -37,7 +37,7 @@ class Room extends Component {
         this.child = React.createRef();
     };
     async componentDidMount() {
-
+        // $('.modal').modal();
         await this.getRoom()
 
         this.getUsers()
@@ -194,7 +194,10 @@ class Room extends Component {
     removeWinnerWindow = () =>{
         this.props.dispatch(setWinner(null));
     };
-
+    getWinnerTeam = () => {
+        const winner =  this.props.room.winner === 'fascist' ? 'winner-fascist' : 'winner-liberal'
+        return <h1 className={`${winner} text-center wow fadeIn pt-3`}>-{this.props.room.winner}s-</h1>
+    };
     render() {
         if (this.props.room.active) {
             return (
@@ -233,8 +236,8 @@ class Room extends Component {
                          role="document">
                         <div className="modal-content-full-width modal-content ">
                             <div className="modal-body">
-
-                                <h1 className="section-heading text-center wow fadeIn my-5 pt-3">The {this.props.room.winner}s have won the game</h1>
+                                <img className="winner" src="/images/winner.png"/>
+                                {this.getWinnerTeam()}
                             </div>
                             <div className="modal-footer-full-width  modal-footer">
                                 <button type="button" className="btn btn-danger btn-md btn-rounded"

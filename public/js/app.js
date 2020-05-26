@@ -86377,7 +86377,7 @@ function (_Component) {
           return _this3.child = ref;
         }
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        className: "login-bolletjes",
+        className: "d-none d-lg-block login-bolletjes",
         src: "/images/login-bolletjes.svg"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "card-login rounded-bottom-left"
@@ -86564,7 +86564,7 @@ function (_Component) {
           return _this3.child = ref;
         }
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        className: "login-bolletjes",
+        className: "d-none d-lg-block login-bolletjes",
         src: "/images/login-bolletjes.svg"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "card-login rounded-bottom-left"
@@ -86634,13 +86634,7 @@ function (_Component) {
       }, "Already have an account? Sign in ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
         className: "btn-link",
         to: "/auth/login"
-      }, "here")))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col"
-      })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "box"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "box_2"
-      })));
+      }, "here"))))))))));
     }
   }]);
 
@@ -89645,6 +89639,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _redux_actions_room_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../redux/actions/room-actions */ "./resources/js/redux/actions/room-actions.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -89669,6 +89664,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
+
 var PlayersLobby =
 /*#__PURE__*/
 function (_Component) {
@@ -89686,6 +89682,12 @@ function (_Component) {
     }
 
     _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(PlayersLobby)).call.apply(_getPrototypeOf2, [this].concat(args)));
+
+    _defineProperty(_assertThisInitialized(_this), "listener", function () {
+      Echo["private"]("room.".concat(_this.props.room.id)).listen('.user-hosted', function (e) {
+        _this.props.dispatch(Object(_redux_actions_room_actions__WEBPACK_IMPORTED_MODULE_3__["setNewOwner"])(e.user));
+      });
+    });
 
     _defineProperty(_assertThisInitialized(_this), "checkPage", function () {
       if (_this.props.page === "Game") {
@@ -89755,6 +89757,11 @@ function (_Component) {
       axios.post("/api/v1/rooms/".concat(_this.props.room.id, "/kick/").concat(id));
     });
 
+    _defineProperty(_assertThisInitialized(_this), "hostUser", function (e, id) {
+      e.preventDefault();
+      axios.post("/api/v1/rooms/".concat(_this.props.room.id, "/host/").concat(id));
+    });
+
     _defineProperty(_assertThisInitialized(_this), "showUser", function (user) {
       var owner = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -89779,7 +89786,7 @@ function (_Component) {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
             key: user.id,
             className: user.isKilled ? "player-name-div is-killed" : "player-name-div"
-          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
             className: "player-name dropdown-toggle",
             type: "button",
             id: "dropdownMenuButton",
@@ -89794,7 +89801,12 @@ function (_Component) {
             onClick: function onClick(e) {
               return _this.kickUser(e, user.id);
             }
-          }, "Kick ", user.username)), user.isKilled ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          }, "Kick player"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+            className: "dropdown-item",
+            onClick: function onClick(e) {
+              return _this.hostUser(e, user.id);
+            }
+          }, "Give host")), user.isKilled ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
             className: "is-killed-icon fas fa-skull-crossbones"
           }) : false, _this.checkFascists(user.id), _this.checkRole(user.id));
         }
@@ -89817,6 +89829,11 @@ function (_Component) {
   }
 
   _createClass(PlayersLobby, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      setTimeout(this.listener, 500);
+    }
+  }, {
     key: "render",
     value: function render() {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -90003,13 +90020,11 @@ function (_Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "navbar-nav mr-auto"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-        className: "navbar-brand",
+        className: "nav-item",
         to: "/"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-        className: "navbar-logo"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        src: "/images/Secrethitler-no-bg.png"
-      })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+        className: "nav-link"
+      }, "Home"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "navbar-nav ml-auto"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
         className: "nav-item",
@@ -90018,15 +90033,12 @@ function (_Component) {
         className: "nav-link"
       }, "Gamerules")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
         className: "nav-item",
-        to: "/profile"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-        className: "nav-link"
-      }, "Profile")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-        className: "nav-item",
         to: "/about"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         className: "nav-link"
-      }, "About")), this.authCheck())));
+      }, "About")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "text-center"
+      }, this.authCheck()))));
     }
   }]);
 
@@ -91186,6 +91198,13 @@ function (_Component) {
       _this.props.dispatch(Object(_redux_actions_room_actions__WEBPACK_IMPORTED_MODULE_9__["setWinner"])(null));
     });
 
+    _defineProperty(_assertThisInitialized(_this), "getWinnerTeam", function () {
+      var winner = _this.props.room.winner === 'fascist' ? 'winner-fascist' : 'winner-liberal';
+      return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("h1", {
+        className: "".concat(winner, " text-center wow fadeIn pt-3")
+      }, "-", _this.props.room.winner, "s-");
+    });
+
     _this.child = react__WEBPACK_IMPORTED_MODULE_1___default.a.createRef();
     return _this;
   }
@@ -91358,9 +91377,10 @@ function (_Component) {
         className: "modal-content-full-width modal-content "
       }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
         className: "modal-body"
-      }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("h1", {
-        className: "section-heading text-center wow fadeIn my-5 pt-3"
-      }, "The ", this.props.room.winner, "s have won the game")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("img", {
+        className: "winner",
+        src: "/images/winner.png"
+      }), this.getWinnerTeam()), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
         className: "modal-footer-full-width  modal-footer"
       }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
         type: "button",
@@ -91468,7 +91488,7 @@ if (document.getElementById('index')) {
 /*!****************************************************!*\
   !*** ./resources/js/redux/actions/room-actions.js ***!
   \****************************************************/
-/*! exports provided: setRoom, editActive, setPresident, setChancellor, setStage, setSecond, addMessage, presidentChosenAnswer, chancellorChosenAnswer, setPolicies, setBoardFascist, setBoardLiberal, setWinner, deleteAllMessages, electionTracker */
+/*! exports provided: setRoom, editActive, setPresident, setChancellor, setStage, setSecond, addMessage, presidentChosenAnswer, chancellorChosenAnswer, setPolicies, setBoardFascist, setBoardLiberal, setWinner, deleteAllMessages, setNewOwner, electionTracker */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -91487,6 +91507,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setBoardLiberal", function() { return setBoardLiberal; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setWinner", function() { return setWinner; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteAllMessages", function() { return deleteAllMessages; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setNewOwner", function() { return setNewOwner; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "electionTracker", function() { return electionTracker; });
 var setRoom = function setRoom(room) {
   return {
@@ -91569,6 +91590,12 @@ var setWinner = function setWinner(value) {
 var deleteAllMessages = function deleteAllMessages() {
   return {
     type: 'DELETE_ALL_MESSAGES'
+  };
+};
+var setNewOwner = function setNewOwner(user) {
+  return {
+    type: 'SET_OWNER',
+    user: user
   };
 };
 var electionTracker = function electionTracker(value) {
@@ -91756,6 +91783,11 @@ var room = function room() {
     case 'ELECTION_TRACKER':
       return _objectSpread({}, state, {
         electionTracker: action.value
+      });
+
+    case 'SET_OWNER':
+      return _objectSpread({}, state, {
+        owner: action.user
       });
 
     default:

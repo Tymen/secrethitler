@@ -63,7 +63,7 @@ export default class Register extends Component {
         return (
             <div className="container_register">
                 <Notification onRef={ref => (this.child = ref)}/>
-                <img className="login-bolletjes" src="/images/login-bolletjes.svg"/>
+                <img className="d-none d-lg-block login-bolletjes" src="/images/login-bolletjes.svg"/>
                 <div className="card-login rounded-bottom-left">
                     <h5 className="card-header-login">Register</h5>
                     <div className="card-body">
@@ -103,18 +103,9 @@ export default class Register extends Component {
                                     </div>
                                 </form>
                             </div>
-                            <div className="col">
-
-                            </div>
                         </div>
                     </div>
                 </div>
-                <div className="box">
-                    <div></div>
-                    <div className="box_2"></div>
-
-                </div>
-
             </div>
         );
     }

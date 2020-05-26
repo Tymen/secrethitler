@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Api;
 
+
+use App\Events\HostUserEvent;
 use App\Events\ChooseRoleEvent;
 use App\Events\KilledPlayerEvent;
 use App\Events\PresidentChosenTruthBluff;
@@ -268,11 +270,18 @@ class RoomsApiController extends Controller
         return response()->json(['message' => 'completed']);
     }
 
-    public function changeHost(Room $room, Request $request)
+    public function hostUser(Room $room, User $user)
     {
         $this->authorize('isHost', $room);
-        $room->user_id = $request->newUserHost;
+
+        $room->user_id = $user->id;
         $room->save();
+
+        $collection = collect(['id' => $user['id'], 'username' => $user['username'], 'isKilled' => $user['is_killed']]);
+
+
+        event(new HostUserEvent($room->id, $collection));
+
         return response()->json(['message' => $room]);
     }
 
