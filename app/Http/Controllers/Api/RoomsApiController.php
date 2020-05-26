@@ -51,18 +51,23 @@ class RoomsApiController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      */
+    // Create a room
     public function store(Request $request)
     {
-        $this->authorize('store', Room::class);
+        $this->authorize('store', Room::class); // User role validation
 
+        // Input validation
         $validator = Validator::make($request->all(), [
             'name' => 'required|unique:rooms|max:15|min:3',
         ]);
 
+        // When the validator fails this will happen
         if ($validator->fails()) {
             return response()->json($validator->errors(), 400);
         }
 
+
+        // Creating a new room
         $room = new Room();
         $room->name = $request->name;
         $room->user_id = Auth::user()->id;
@@ -73,6 +78,7 @@ class RoomsApiController extends Controller
         $roomState->room_id = $room->id;
         $roomState->save();
 
+        // Sending a event to update the state of the front-end
         event(new RoomsUpdatedEvent());
 
         return response()->json(['message' => 'completed', 'id' => $room->id]);
@@ -101,28 +107,33 @@ class RoomsApiController extends Controller
         //
     }
 
+    // Change a room to active
     public function setActive(Room $room)
     {
         $this->authorize('canActivate', $room);
 
-        $room->divideRoles();
-        $room->rotatePresident();
+        $room->divideRoles(); // Give every player in a room a role
+        $room->rotatePresident(); // Change the president role in the room.
 
-        $room->active = true;
+        $room->active = true; // Set the collumn active to true;
         $room->save();
 
+        // Send a event to start the game for every player that's in the room
         event(new StartGameEvent($room->id));
 
         return response()->json(['message' => 'completed']);
     }
 
+    // Get the policies that the president has received.
     public function presidentTruthBluff(Room $room, Request $request)
     {
 
-        $this->authorize('isPresident', $room);
+        $this->authorize('isPresident', $room); // User role validation
 
-        $chosenAnswer = $request->option;
-        $roomState = $room->roomState;
+        $chosenAnswer = $request->option; // Getting policy list if it is in the request.
+        $roomState = $room->roomState; // Get the room model
+
+        // If the user sended chosenanswer it will replace the truth with the given answers.
         if ($chosenAnswer === null) {
             event(new PresidentChosenTruthBluff($room));
         } else {
@@ -135,13 +146,16 @@ class RoomsApiController extends Controller
         return response()->json(['message' => 'completed']);
     }
 
+    // Get the policies a changellor has received from the president.
     public function chancellorTruthBluff(Room $room, Request $request)
     {
 
         $this->authorize('isChancellor', $room);
 
-        $chosenAnswer = $request->option;
-        $roomState = $room->roomState;
+        $chosenAnswer = $request->option; // Getting policy list if it is in the request.
+        $roomState = $room->roomState; // Get the room model
+
+        // If the user sended chosenanswer it will replace the truth with the given answers.
         if ($chosenAnswer === null) {
             event(new ChancellorChosenTruthBluff($room));
         } else {
@@ -155,6 +169,7 @@ class RoomsApiController extends Controller
 
     public function getPresidentPolicies(Room $room)
     {
+        // Get the truth policies from the president
         $options = $room->roomState->received_pres;
 
         return response()->json(['options' => explode(' ', $options)]);
@@ -162,11 +177,13 @@ class RoomsApiController extends Controller
 
     public function getChancellorPolicies(Room $room)
     {
+        // Get the truth policies from the chancellor
         $options = $room->roomState->received_chan;
 
         return response()->json(['options' => explode(' ', $options)]);
     }
 
+    // See who is fascist in this room
     public function getFascists(Room $room)
     {
         $fascists = [];
@@ -191,31 +208,41 @@ class RoomsApiController extends Controller
         return response()->json($data);
     }
 
+    // Change the state to 1 and rotate the president
     public function rotatePresident(Room $room)
     {
-        $this->authorize('inRoom', $room);
+        $this->authorize('inRoom', $room); // User role validation
 
-        $room->rotatePresident();
+        $room->rotatePresident(); // Rotate the president.
 
         return response()->json(['message' => 'completed']);
     }
+
+    // On a certain point in the game the president can choose the next president.
     public function newPresident(Room $room, Request $request)
     {
-        $this->authorize('isPresident', $room);
-        $president = $room->getUserByRole('President');
-        $president->removeRole('President');
-        $id = intval($request->uid);
-        $newPres = User::find($id);
-        $newPres->assignRole('President');
+        $this->authorize('isPresident', $room); // User role validation
+
+        $president = $room->getUserByRole('President'); // Get the current president
+        $president->removeRole('President'); // Remove the role president from the user
+
+        $id = intval($request->uid); // Get the ID from the request. The id is of the new president.
+        $newPres = User::find($id); // Find the user with this id.
+        $newPres->assignRole('President'); // Asign the president role to this user.
+
+        // Send a event that everyone updates the stage and the game.
         event(new RotatePresidentEvent($room, ['id' => $id, 'username' => $newPres->username]));
         return response()->json(['message' => 'completed']);
     }
+
+    // Change a room to inactive
     public function setInactive(Room $room)
     {
-        $this->authorize('isHost', $room);
+        $this->authorize('isHost', $room); // User role validation
 
-        $roomState = $room->roomState;
+        $roomState = $room->roomState; // Get the state of the current room.
 
+        // reset some values to 0
         $roomState->ja = 0;
         $roomState->nein = 0;
         $roomState->save();
@@ -226,6 +253,7 @@ class RoomsApiController extends Controller
             $user->save();
         });
 
+        // Send everyone back to the lobby
         event(new SetInactive($room));
 
         return response()->json(['message' => 'completed']);
@@ -238,10 +266,12 @@ class RoomsApiController extends Controller
      * @return \Illuminate\Http\JsonResponse
      * @throws \Exception
      */
+    // Delete a room
     public function destroy(Room $room)
     {
-        $this->authorize('isHost', $room);
+        $this->authorize('isHost', $room); // User role validation
 
+        // Remove the room from the users and the role.
         foreach ($room->users as $user) {
             $user->room_id = NULL;
             $user->hasRole('President') ? $user->removeRole("President") : false;
@@ -251,25 +281,28 @@ class RoomsApiController extends Controller
 
         RoomState::destroy($room->roomState->id);
 
-        $room->delete();
+        $room->delete(); // Delete the room in the database
 
-        event(new RoomsUpdatedEvent());
+        event(new RoomsUpdatedEvent()); // Send a event that makes the room disapear.
 
         return response()->json(['message' => 'completed']);
     }
 
+    // Remove user from a game
     public function kickUser(Room $room, User $user)
     {
-        $this->authorize('isHost', $room);
+        $this->authorize('isHost', $room); // User role validation
 
+        // Remove the room id from the user.
         $user->room_id = NULL;
         $user->save();
 
-        event(new KickUserEvent($room->id, $user->id));
+        event(new KickUserEvent($room->id, $user->id)); // Send event that a user has been kicked.
 
         return response()->json(['message' => 'completed']);
     }
 
+    // Change the host of a room.
     public function hostUser(Room $room, User $user)
     {
         $this->authorize('isHost', $room);
@@ -285,8 +318,10 @@ class RoomsApiController extends Controller
         return response()->json(['message' => $room]);
     }
 
+    // Get the amound of policies on the play board
     public function getBoard(Room $room)
     {
+        // Create a new object with the values of the different boards
         $object = (object)[
             "fascist" => $room->roomState->fascist_board_amount,
             "liberal" => $room->roomState->liberal_board_amount
@@ -294,20 +329,29 @@ class RoomsApiController extends Controller
         return response()->json($object);
     }
 
+    // Get the policies
     public function getPolicies(Room $room)
     {
 //        $randomInt = mt_rand(1, $total);
 //        $result = ($randomInt > $facist) ? "Liberal" : 1;
+
+        // If a user is a chancellor it will receive the cards in de policy
         if (Auth::user()->hasrole("Chancellor") && $room->roomState->stage == 4) {
             return response()->json(["result" => explode(" ", $room->roomState->chosen_policies)]);
         }
-        $this->authorize('isPresident', $room);
+
+        $this->authorize('isPresident', $room); // User role validation
+
         $fascist = $room->roomState->fascist_policies;
         $liberal = $room->roomState->liberal_policies;
+
         $changePolicies = $room->roomState;
 
         $result = [];
+
+        // if the database collumn is null it will get what's in it.
         if ($changePolicies->chosen_policies == null) {
+            // this will reset the data base policies.
             if (($changePolicies->fascist_policies < 3) || $changePolicies->liberal_policies < 3) {
                 $changePolicies->fascist_policies = 11;
                 $changePolicies->liberal_policies = 6;
