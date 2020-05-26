@@ -67,3 +67,8 @@ export const deleteAllMessages = () => ({
     type: 'DELETE_ALL_MESSAGES',
 })
 
+export const electionTracker = value => ({
+    type: 'ELECTION_TRACKER',
+    value
+})
+

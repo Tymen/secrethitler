@@ -2,7 +2,9 @@
 
 namespace App;
 
+use App\Events\ElectionTrackerEvent;
 use App\Events\RotatePresidentEvent;
+use App\Events\setPolicyEvent;
 use App\Events\StartTimerEvent;
 use App\Events\UpdateStageEvent;
 use App\Events\VotesDoneEvent;
@@ -53,6 +55,35 @@ class RoomState extends Model
             event($event);
         } else {
             $room->rotatePresident();
+            if ($this->election_tracker === 3) {
+                $this->election_tracker = 1;
+
+
+                $total = $this->fascist_policies + $this->liberal_policies;
+
+                $chance = round($this->fascist_policies / $total * 100);
+                $random = round(rand(0, 100));
+                $result = $random < $chance ? "Fascist" : "Liberal";
+
+                if ($result == "Fascist") {
+                    $this->fascist_policies -= 1;
+                    $this->fascist_board_amount += 1;
+                } else {
+                    $this->liberal_policies -= 1;
+                    $this->liberal_board_amount += 1;
+                }
+
+                $board = (object)[
+                    "fascist" => $this->fascist_board_amount,
+                    "liberal" => $this->liberal_board_amount
+                ];
+                $this->save();
+                event(new setPolicyEvent($room, $board, 1));
+
+            } else {
+                $this->election_tracker += 1;
+            }
+            event(new ElectionTrackerEvent($room->id, $this->election_tracker));
         }
 
         foreach ($room->users()->where('is_killed', false)->get() as $user) {

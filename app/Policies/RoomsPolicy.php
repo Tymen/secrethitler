@@ -29,6 +29,13 @@ class RoomsPolicy
             : Response::deny('You are not the host');
     }
 
+    public function canActivate(User $user, Room $room)
+    {
+        return $user->id === $room->user_id && $room->users->count() >= 2
+            ? Response::allow()
+            : Response::deny('The minimum amount of players to start has to be 5');
+    }
+
     public function isPresident(User $user, Room $room)
     {
         return $room->users->contains($user) && $user->hasRole("President")

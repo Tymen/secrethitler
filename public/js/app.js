@@ -87263,10 +87263,10 @@ var mapStateToProps = function mapStateToProps(state) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Board; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _redux_actions_room_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../redux/actions/room-actions */ "./resources/js/redux/actions/room-actions.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -87288,6 +87288,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
 var Board =
 /*#__PURE__*/
 function (_Component) {
@@ -87300,11 +87301,20 @@ function (_Component) {
   }
 
   _createClass(Board, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this = this;
+
+      Echo["private"]("room.".concat(this.props.room.id)).listen('.election-tracker', function (e) {
+        _this.props.dispatch(Object(_redux_actions_room_actions__WEBPACK_IMPORTED_MODULE_2__["electionTracker"])(e.electionTracker));
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         className: "img-fluid",
-        src: "/images/board/liberal-" + this.props.liberal + ".jpg"
+        src: "/images/board/liberal/liberal-" + this.props.liberal + '-' + this.props.room.electionTracker + ".jpg"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         className: "img-fluid",
         src: "/images/board/fascist-" + this.props.fascist + ".jpg"
@@ -87315,7 +87325,16 @@ function (_Component) {
   return Board;
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
+var mapStateToProps = function mapStateToProps(state) {
+  var room = state.room,
+      users = state.users;
+  return {
+    room: room,
+    users: users.users
+  };
+};
 
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps)(Board));
 
 /***/ }),
 
@@ -89319,9 +89338,9 @@ var mapStateToProps = function mapStateToProps(state) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Lobby; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -89332,13 +89351,16 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -89348,29 +89370,71 @@ function (_Component) {
   _inherits(Lobby, _Component);
 
   function Lobby() {
+    var _getPrototypeOf2;
+
+    var _this;
+
     _classCallCheck(this, Lobby);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(Lobby).apply(this, arguments));
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(Lobby)).call.apply(_getPrototypeOf2, [this].concat(args)));
+
+    _defineProperty(_assertThisInitialized(_this), "state", {
+      loaded: false
+    });
+
+    return _this;
   }
 
   _createClass(Lobby, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      setTimeout(function () {
+        _this2.setState({
+          loaded: true
+        });
+      }, 1000);
+    }
+  }, {
     key: "render",
     value: function render() {
-      var _this = this;
+      var _this$props$room,
+          _this$props$room$owne,
+          _this$props$authUser,
+          _this3 = this;
 
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "btn start-game",
-        onClick: function onClick() {
-          return _this.props.setActive();
-        }
-      }, "Start game!"));
+      if (((_this$props$room = this.props.room) === null || _this$props$room === void 0 ? void 0 : (_this$props$room$owne = _this$props$room.owner) === null || _this$props$room$owne === void 0 ? void 0 : _this$props$room$owne.id) === ((_this$props$authUser = this.props.authUser) === null || _this$props$authUser === void 0 ? void 0 : _this$props$authUser.id)) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          className: "btn start-game",
+          onClick: function onClick() {
+            return _this3.props.setActive();
+          }
+        }, "Start game!"));
+      } else {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null);
+      }
     }
   }]);
 
   return Lobby;
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
+var mapStateToProps = function mapStateToProps(state) {
+  var users = state.users,
+      room = state.room;
+  return {
+    authUser: users.authUser,
+    room: room,
+    users: users.users
+  };
+};
 
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps)(Lobby));
 
 /***/ }),
 
@@ -91404,7 +91468,7 @@ if (document.getElementById('index')) {
 /*!****************************************************!*\
   !*** ./resources/js/redux/actions/room-actions.js ***!
   \****************************************************/
-/*! exports provided: setRoom, editActive, setPresident, setChancellor, setStage, setSecond, addMessage, presidentChosenAnswer, chancellorChosenAnswer, setPolicies, setBoardFascist, setBoardLiberal, setWinner, deleteAllMessages */
+/*! exports provided: setRoom, editActive, setPresident, setChancellor, setStage, setSecond, addMessage, presidentChosenAnswer, chancellorChosenAnswer, setPolicies, setBoardFascist, setBoardLiberal, setWinner, deleteAllMessages, electionTracker */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -91423,6 +91487,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setBoardLiberal", function() { return setBoardLiberal; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setWinner", function() { return setWinner; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteAllMessages", function() { return deleteAllMessages; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "electionTracker", function() { return electionTracker; });
 var setRoom = function setRoom(room) {
   return {
     type: 'SET_ROOM',
@@ -91504,6 +91569,12 @@ var setWinner = function setWinner(value) {
 var deleteAllMessages = function deleteAllMessages() {
   return {
     type: 'DELETE_ALL_MESSAGES'
+  };
+};
+var electionTracker = function electionTracker(value) {
+  return {
+    type: 'ELECTION_TRACKER',
+    value: value
   };
 };
 
@@ -91680,6 +91751,11 @@ var room = function room() {
     case 'CHANCELLOR_CHOSEN_ANSWER':
       return _objectSpread({}, state, {
         chancellorAnswer: action.value
+      });
+
+    case 'ELECTION_TRACKER':
+      return _objectSpread({}, state, {
+        electionTracker: action.value
       });
 
     default:

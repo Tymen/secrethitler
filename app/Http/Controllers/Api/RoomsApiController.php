@@ -101,7 +101,7 @@ class RoomsApiController extends Controller
 
     public function setActive(Room $room)
     {
-        $this->authorize('isHost', $room);
+        $this->authorize('canActivate', $room);
 
         $room->divideRoles();
         $room->rotatePresident();
@@ -364,7 +364,7 @@ class RoomsApiController extends Controller
                     "fascist" => $room->roomState->fascist_board_amount,
                     "liberal" => $room->roomState->liberal_board_amount
                 ];
-                event(new setPolicyEvent($room, $board));
+                event(new setPolicyEvent($room, $board, 5));
                 $changePolicies->save();
             }
             $changePolicies->save();
