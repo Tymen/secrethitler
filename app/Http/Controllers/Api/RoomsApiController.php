@@ -317,6 +317,7 @@ class RoomsApiController extends Controller
 
         return response()->json(['message' => $room]);
     }
+
     // Get the amound of policies on the play board
     public function getBoard(Room $room)
     {
