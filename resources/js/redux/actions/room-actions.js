@@ -66,4 +66,8 @@ export const setWinner = value => ({
 export const deleteAllMessages = () => ({
     type: 'DELETE_ALL_MESSAGES',
 })
+export const setNewOwner = user => ({
+    type: 'SET_OWNER',
+    user
+})
 

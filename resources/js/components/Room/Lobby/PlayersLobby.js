@@ -1,8 +1,21 @@
 import React, {Component} from 'react';
 import {Link} from "react-router-dom";
 import {connect} from "react-redux";
+import {setNewOwner} from "../../../redux/actions/room-actions";
 
 class PlayersLobby extends Component {
+
+    componentDidMount() {
+        setTimeout(this.listener, 500)
+    }
+
+    listener = () => {
+        Echo.private(`room.${this.props.room.id}`)
+            .listen('.user-hosted', (e) => {
+                this.props.dispatch(setNewOwner(e.user))
+            })
+    }
+
     checkPage = () => {
         if (this.props.page === "Game") {
             return `${this.props.users.length}/${this.props.room.max_players} Players`
@@ -55,6 +68,11 @@ class PlayersLobby extends Component {
         axios.post(`/api/v1/rooms/${this.props.room.id}/kick/${id}`)
     }
 
+    hostUser = (e, id) => {
+            e.preventDefault()
+            axios.post(`/api/v1/rooms/${this.props.room.id}/host/${id}`)
+    }
+
     showUser = (user, owner = false) => {
         return (
             <div key={user.id} className={user.isKilled ? "player-name-div is-killed" : "player-name-div"}>
@@ -76,13 +94,15 @@ class PlayersLobby extends Component {
             } else {
                 return (
                     <div key={user.id} className={user.isKilled ? "player-name-div is-killed" : "player-name-div"}>
-                        <p className="player-name dropdown-toggle" type="button" id="dropdownMenuButton"
+                        <button className="player-name dropdown-toggle" type="button" id="dropdownMenuButton"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             {user.username}
-                        </p>
+                        </button>
                         <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <a className="dropdown-item"
-                               onClick={(e) => this.kickUser(e, user.id)}>Kick {user.username}</a>
+                               onClick={(e) => this.kickUser(e, user.id)}>Kick player</a>
+                            <a className="dropdown-item"
+                               onClick={(e) => this.hostUser(e, user.id)}>Give host</a>
                         </div>
                         {user.isKilled ? <i className="is-killed-icon fas fa-skull-crossbones"></i> : false}
                         {this.checkFascists(user.id)}
@@ -97,7 +117,6 @@ class PlayersLobby extends Component {
         const defaultView = this.props.users.map(user => {
             return this.props.room.owner?.id === user.id ? this.showUser(user, true) : this.showUser(user)
         })
-
         return this.props.authUser?.id === this.props.room.owner?.id ? this.ownerView() : defaultView;
     }
 
