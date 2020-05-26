@@ -31,7 +31,7 @@ class RoomsPolicy
 
     public function canActivate(User $user, Room $room)
     {
-        return $user->id === $room->user_id && $room->users->count() >= 2
+        return $user->id === $room->user_id && $room->users->count() >= 5
             ? Response::allow()
             : Response::deny('The minimum amount of players to start has to be 5');
     }
