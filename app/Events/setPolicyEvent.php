@@ -23,7 +23,7 @@ class setPolicyEvent implements ShouldBroadcast
      * @param $roomID
      * @param $policy
      */
-    public function __construct(Room $room, $board)
+    public function __construct(Room $room, $board, $stage)
     {
         $this->roomID = $room->id;
         $this->policy = $board;
@@ -39,7 +39,7 @@ class setPolicyEvent implements ShouldBroadcast
         if($condition){
             event(new WinnerEvent($room, $winner));
         }
-        $room->roomState->changeState(5);
+        $room->roomState->changeState($stage);
         $room->roomState->startTimer($president->id);
     }
 

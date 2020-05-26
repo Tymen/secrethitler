@@ -4,7 +4,7 @@ import ChatLobby from "./Lobby/ChatLobby";
 import {connect} from 'react-redux';
 import Board from "../../components/Room/Game/Board";
 import GameInteractionBlock from "./Game/GameInteractionBlock";
-import {setBoardLiberal, setBoardFascist} from "../../redux/actions/room-actions";
+import {setBoardLiberal, setBoardFascist, electionTracker} from "../../redux/actions/room-actions";
 
 
 class Game extends Component {
