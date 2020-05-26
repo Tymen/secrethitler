@@ -50,7 +50,7 @@ export default class Login extends Component {
         return (
             <div className="container_login ">
                 <Notification onRef={ref => (this.child = ref)} />
-                <img className="login-bolletjes" src="/images/login-bolletjes.svg"/>
+                <img className="d-none d-lg-block login-bolletjes" src="/images/login-bolletjes.svg"/>
                 <div className="card-login rounded-bottom-left">
                     <h5 className="card-header-login">Login</h5>
                     <div className="card-body">

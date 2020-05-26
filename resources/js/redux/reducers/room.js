@@ -30,6 +30,8 @@ const room = (state = {messages: []}, action) => {
             return {...state, presidentAnswer: action.value};
         case 'CHANCELLOR_CHOSEN_ANSWER':
             return {...state, chancellorAnswer: action.value};
+        case 'SET_OWNER':
+            return {...state, owner: action.user};
         default:
             return state
     }
