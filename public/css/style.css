@@ -628,9 +628,13 @@ body::-webkit-scrollbar-thumb {
     display: block;
     margin-top: 70px;
 }
-.section-heading {
+.winner-fascist {
     font-size: 120px;
     color:#AF2E2E;
+}
+.winner-liberal {
+    font-size: 120px;
+    color:#6A96C0;
 }
 .time {
     margin: -23px 0px 0px 10px;
