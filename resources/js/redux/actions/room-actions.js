@@ -71,3 +71,8 @@ export const setNewOwner = user => ({
     user
 })
 
+export const electionTracker = value => ({
+    type: 'ELECTION_TRACKER',
+    value
+})
+

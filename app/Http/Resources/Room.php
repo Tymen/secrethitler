@@ -33,6 +33,7 @@ class Room extends JsonResource
             'ja' => $this->roomState->ja,
             'nein' => $this->roomState->nein,
             'chosen_policies' => $this->roomState->chosen_policies,
+            'electionTracker' => $this->roomState->election_tracker,
         ];
     }
 }
