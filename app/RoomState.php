@@ -110,9 +110,6 @@ class RoomState extends Model
                 $this->has_done = true;
                 break;
             case 4:
-                $this->room->rotatePresident();
-                $this->has_done = true;
-                break;
             case 5:
                 $this->changeState(12);
                 $this->has_done = true;
